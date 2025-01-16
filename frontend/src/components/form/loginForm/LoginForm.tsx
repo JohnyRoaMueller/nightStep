@@ -28,4 +28,4 @@ function LoginForm() {
         </form>
 )}
 
-export default LoginForm<<
+export default LoginForm
