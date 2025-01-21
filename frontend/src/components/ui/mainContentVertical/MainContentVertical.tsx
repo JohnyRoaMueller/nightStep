@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 export interface ClubType {
     id: number,
     name: string,
-    desc: string,
+    disctrict: string,
+    description: string,
+    picAdresses: string[]
 }
 
 
@@ -21,7 +23,10 @@ function MainContentVertical() {
         useEffect(() => {
             fetch('http://localhost:8080/home')
                 .then(response => response.json())
-                .then(data => setClubs(data))
+                .then(data => {
+                    console.log(data)
+                    setClubs(data)
+                })
         }, [])
     
 
@@ -51,6 +56,9 @@ function MainContentVertical() {
 
 
     return(
+
+
+
         <Grid container spacing={1}>
             {clubs.map((club) => {
                 return (

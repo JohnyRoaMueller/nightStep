@@ -11,7 +11,9 @@ import { useEffect, useState } from "react";
 
 import { ClubType } from "./components/ui/mainContentVertical/mainContentVertical";
 import Club from "./pages/Club";
-import DynamicClubRoutes from "./routes/dynamicClubRoutes";
+import Registration from "./pages/Registration";
+import RegistrationHost from "./pages/RegistrationHost";
+import RegistrationGuest from "./pages/RegistrationGuest";
 
 
 
@@ -28,6 +30,11 @@ function App() {
             <Route index element={<Home />} />
             <Route path="home" element={<Home></Home>} />
             <Route path="login" element={<Login/>} ></Route>
+
+            <Route path="register" element={<Registration/>} ></Route>
+            <Route path="register/host" element={<RegistrationHost/>} ></Route>
+            <Route path="register/guest" element={<RegistrationGuest/>} ></Route>
+
             <Route path="find" element={<Find/>} ></Route>
             <Route path="contact" element={<Contact />} ></Route>
             <Route path="test" element={<Test/>} ></Route>

@@ -25,7 +25,7 @@ export const AppbarContentBoxStyle = {
     display: {xs: 'none', sm: 'flex'},
     gap: '1.5rem',
     justifyContent: 'center',
-    paddingRight: '13%'
+    paddingRight: '5%'
 }
 
 export const AppbarPartBorder = {

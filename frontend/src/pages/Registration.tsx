@@ -1,11 +1,13 @@
 import { ThemeProvider } from "@emotion/react";
 import theme from "../theme/theme";
-import { Box } from "@mui/material";
+import { Box, Button} from "@mui/material";
+
 import { FullscreenFlexBox } from "../styles/containerStyles/FullscreenFlexBox";
 import Appbar from "../components/ui/appbar/Appbar";
 import { VerticalCentered } from "../styles/containerStyles/VerticalCenteredBox";
 import Footer from "../components/ui/footer/Footer";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 
 export default function Test() {
@@ -13,12 +15,26 @@ export default function Test() {
 
     return (
         <ThemeProvider theme={theme}>
-        <Box id="Test-FullscreenFlexBox" sx={FullscreenFlexBox}>
+        <Box id="Registration-FullscreenFlexBox" sx={FullscreenFlexBox}>
           <Appbar/>
-          <Box id="Test-VerticalCentered" sx={VerticalCentered}>
+          <Box id="Registration-VerticalCentered" sx={VerticalCentered}>
             {/* ↓↓↓ My Content ↓↓↓ */}
             <Box>
-                my test content
+                my Registration content
+            </Box>
+            <Box>
+                <Link to={"guest"}>
+                    <Button>
+                        Guest
+                    </Button>
+                </Link>
+            </Box>
+            <Box>
+                <Link to={"host"}>
+                    <Button>
+                        Host
+                    </Button>
+                </Link>
             </Box>
             {/* ↑↑↑ My Content ↑↑↑ */}
           </Box>
