@@ -1,9 +1,9 @@
 
 
 enum Roles {
-    GUEST = 'GUEST',
-    HOST = 'HOST',
-    ADMIN = 'ADMIN'
+    GUEST = "GUEST",
+    HOST = "HOST",
+    ADMIN = "ADMIN"
 }
 
 export default Roles

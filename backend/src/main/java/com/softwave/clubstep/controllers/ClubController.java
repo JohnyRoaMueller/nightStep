@@ -27,9 +27,7 @@ import com.softwave.clubstep.domain.repository.ClubRepository;
 public class ClubController {
     
     private final ClubRepository clubRepo;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    
 
 
     public ClubController(ClubRepository clubRepo) {
@@ -62,40 +60,5 @@ während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat)
 		picAdresses.add("C:\\vscode-projects\\clubstep-project\\uploads\\images\\AboutBlank\\AboutBlank.png");
 
         clubRepo.save(new Club(name, district, clubAdress, clubDescription, picAdresses));
-    }
-
-    @CrossOrigin(origins = "http://localhost:5173") // Erlaube den Zugriff nur von diesem Origin
-    @PostMapping("/register")
-    public void createUser(@RequestBody RegisteringUser registeringUser) {
-
-        System.out.println(registeringUser);
-
-        switch(registeringUser.getRole()) {
-            case GUEST:
-                System.out.println("guest created");
-                Guest newGuest = new Guest();
-                    newGuest.setSalutation(registeringUser.getSalutation());
-                    newGuest.setFirstname(registeringUser.getFirstname());
-                    newGuest.setLastname(registeringUser.getLastname());
-                    newGuest.setStreet(registeringUser.getStreet());
-                    newGuest.setHousenumber(registeringUser.getHousenumber());
-                    newGuest.setPhonenumber(registeringUser.getPhonenumber());
-                    System.out.println("Guest Lastnaem: " + newGuest.getLastname() + "Guest housenumber: " + newGuest.getHousenumber());
-                UserAuth newUserAuth = new UserAuth();
-                    newUserAuth.setEmail(registeringUser.getEmail());
-                    newUserAuth.setPassword(passwordEncoder.encode(""));
-                    newUserAuth.setRole(registeringUser.getRole());
-                    System.out.println(newUserAuth.getPassword());
-                    
-                    
-                break;
-
-            case HOST:
-                System.out.println("host created");
-                break;
-
-            default:
-                System.out.println("not fitting userrole found");
-        }
     }
 }
