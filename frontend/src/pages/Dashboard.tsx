@@ -12,12 +12,12 @@ import Footer from '../components/base/footer/Footer';
 import Base from '../components/base/base';
 
 
-export default function Contact() {
+export default function Dashboard() {
   return (
     <Base children={
       <>
         {/* ↓↓↓ My Content ↓↓↓ */} {/* ↓↓↓ My Content ↓↓↓ */}
-          <ContactForm></ContactForm>
+            my dashbaord Content
         {/* ↑↑↑ My Content ↑↑↑ */} {/* ↑↑↑ My Content ↑↑↑ */}
         </>
             }>

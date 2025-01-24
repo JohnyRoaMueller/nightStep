@@ -49,6 +49,7 @@ function RegisterGuestForm() {
             }
         )
 
+
         const resetData = { ...formData }
         Object.keys(resetData).forEach(key => {
             resetData[key] = ""

@@ -39,9 +39,10 @@ export const FooterTextBox = {
 import { colors } from "@mui/material"
 
 export const FooterGridBox = {
+    
  
     width: '90%',
-    height: '200px',
+    height: '250px',
 
     alignSelf: 'center',
 

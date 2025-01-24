@@ -1,28 +1,24 @@
 import { Box, Button, TextField, ThemeProvider, Typography } from "@mui/material"
-import Appbar from "../components/ui/appbar/Appbar"
-import { FullscreenFlexBox } from "../styles/containerStyles/FullscreenFlexBox"
-import { VerticalCentered } from "../styles/containerStyles/VerticalCenteredBox"
+import Appbar from "../components/base/appbar/Appbar"
 import theme from "../theme/theme"
-import Footer from "../components/ui/footer/Footer"
+import Footer from "../components/base/footer/Footer"
 import LoginForm from "../components/form/loginForm/LoginForm"
 import { Link } from "react-router-dom"
+import Base from "../components/base/base"
 
 
 export default function Login() {
     return (
-        <ThemeProvider theme={theme}>
-        <Box id="Login-FullscreenFlexBox" sx={FullscreenFlexBox}>
-          <Appbar/>
-          <Box id="Login-VerticalCentered" sx={VerticalCentered}>
+      <Base children={
+        <>
             {/* ↓↓↓ My Content ↓↓↓ */}
             <Box>
                 My Content Login
             </Box>
             <LoginForm></LoginForm>
             {/* ↑↑↑ My Content ↑↑↑ */}
-          </Box>
-          <Footer/>
-        </Box>
-      </ThemeProvider>
+            </>
+            }>
+            </Base>
     )
 }

@@ -13,7 +13,13 @@ function LoginForm() {
                     <TextField label="Password" variant="standard"></TextField>
                 </Box>
                 <Box sx={{paddingTop: '10%'}}>
-                    <Button type="submit">login</Button>
+                    <Link to="">
+                        <Button type="submit">
+                            <Typography>
+                                login
+                            </Typography>
+                        </Button>
+                    </Link>
                 </Box>
                 <Box>
                     <Link to="/register">

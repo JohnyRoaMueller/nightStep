@@ -1,6 +1,4 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
-    "terminal.scroll"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
-
-

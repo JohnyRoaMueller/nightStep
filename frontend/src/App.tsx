@@ -14,6 +14,7 @@ import Club from "./pages/Club";
 import Registration from "./pages/Registration";
 import RegistrationHost from "./pages/RegistrationHost";
 import RegistrationGuest from "./pages/RegistrationGuest";
+import Dashboard from "./pages/Dashboard";
 
 
 
@@ -39,7 +40,10 @@ function App() {
             <Route path="contact" element={<Contact />} ></Route>
             <Route path="test" element={<Test/>} ></Route>
             <Route path="*" element={<NoMatch />} ></Route>`
+
             <Route path="/find/:clubName" element={<Club/>} ></Route>
+
+            <Route path="/dashboard" element={<Dashboard/>} ></Route>
         </Routes>
       </BrowserRouter>
     </>

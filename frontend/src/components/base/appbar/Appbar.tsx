@@ -1,7 +1,8 @@
-import { Box, Link } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../../theme/theme'; // Dein Theme-Import
-import { AppbarFrameBoxStyle, AppbarContentBoxStyle, AppbarPartBorder, appbarLinkColor } from './AppbarStyles';
+import { ThemeProvider } from "@emotion/react";
+import theme from "../../../theme/theme";
+import { Box, Link } from "@mui/material";
+import { AppbarContentBoxStyle, AppbarFrameBoxStyle, appbarLinkColor, AppbarPartBorder } from "./AppbarStyles";
+
 
 export default function Appbar() {
   return (
