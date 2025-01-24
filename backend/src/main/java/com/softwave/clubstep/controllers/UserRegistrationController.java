@@ -14,6 +14,7 @@ public class UserRegistrationController {
 
 
     UserRegistrationService userRegistrationService;
+    
 
 
     public UserRegistrationController(UserRegistrationService userRegistrationService) {
@@ -24,6 +25,8 @@ public class UserRegistrationController {
     @CrossOrigin(origins = "http://localhost:5173") // Erlaube den Zugriff nur von diesem Origin
     @PostMapping("/register")
     public void createUser(@RequestBody RegisteringUser registeringUser) {
+
+        System.out.println("asdasd");
 
         userRegistrationService.registerUser(registeringUser);
 

@@ -2,6 +2,7 @@ package com.softwave.clubstep;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -46,8 +47,6 @@ public class ClubstepApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
-
 
 
 		String name = "clubName";

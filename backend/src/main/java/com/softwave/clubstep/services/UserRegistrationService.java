@@ -34,6 +34,7 @@ public class UserRegistrationService {
         this.userAuthRepo = userAuthRepo;
         this.guestRepo = guestRepo;
         this.hostRepo = hostRepo;
+        
     }
 
 

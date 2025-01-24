@@ -12,7 +12,7 @@ import jakarta.persistence.MappedSuperclass;
 public class BaseUser {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     private String salutation;
