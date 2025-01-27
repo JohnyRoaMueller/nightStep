@@ -12,9 +12,6 @@ export default function Login() {
       <Base children={
         <>
             {/* ↓↓↓ My Content ↓↓↓ */}
-            <Box>
-                My Content Login
-            </Box>
             <LoginForm></LoginForm>
             {/* ↑↑↑ My Content ↑↑↑ */}
             </>

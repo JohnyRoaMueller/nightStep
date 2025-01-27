@@ -49,8 +49,8 @@ function ContactForm() {
     return (
         <Box id="Contact-FormContainer" sx={ContactFormContainer}>
             <Box sx={ContactFormHeaderBox}>
-            <Typography sx={ContactFormHeaderTypo}>Got a question or just want to say hi?</Typography>
-            <Typography sx={ContactFormHeaderTypo}>Drop us a message, and we’ll get back to you soon!</Typography>
+                <Typography sx={ContactFormHeaderTypo}>Got a question or just want to say hi?</Typography>
+                <Typography sx={ContactFormHeaderTypo}>Drop us a message, and we’ll get back to you soon!</Typography>
             </Box>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>

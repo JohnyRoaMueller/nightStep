@@ -43,7 +43,7 @@ export const cardContentHoverStyle = {
 
     width: '80%',
 
-    placeSelf: 'center',
+    marginLeft: '10%',
 
     borderTop: '0.2em solid',
     borderRight: '0.1em solid',

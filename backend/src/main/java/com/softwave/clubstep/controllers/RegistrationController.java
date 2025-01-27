@@ -7,28 +7,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softwave.clubstep.base.RegisteringUser;
-import com.softwave.clubstep.services.UserRegistrationService;
+import com.softwave.clubstep.services.RegistrationService;
 
 @RestController
-public class UserRegistrationController {
+public class RegistrationController {
 
 
-    UserRegistrationService userRegistrationService;
+    RegistrationService registrationService;
     
 
 
-    public UserRegistrationController(UserRegistrationService userRegistrationService) {
-        this.userRegistrationService = userRegistrationService;
+    public RegistrationController(RegistrationService userRegistrationService) {
+        this.registrationService = userRegistrationService;
     }
     
     
-    @CrossOrigin(origins = "http://localhost:5173") // Erlaube den Zugriff nur von diesem Origin
     @PostMapping("/register")
     public void createUser(@RequestBody RegisteringUser registeringUser) {
 
-        System.out.println("asdasd");
-
-        userRegistrationService.registerUser(registeringUser);
+        registrationService.registerUser(registeringUser);
 
     }
 

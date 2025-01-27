@@ -16,18 +16,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    /**
+     * Cross-Origin Resource Sharing (CORS) is a security feature implemented by web-
+     * browsers to control how resources on a web server can be requested from a different domain.
+     * 
+     * 
+     */
 
     
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        System.out.println("setting CORS-configs");
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("*"));
-        config.setAllowedMethods(Arrays.asList("*"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://192.168.178.28:5173"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(false);
-        config.applyPermitDefaultValues();
-
+        config.setAllowCredentials(true);
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }

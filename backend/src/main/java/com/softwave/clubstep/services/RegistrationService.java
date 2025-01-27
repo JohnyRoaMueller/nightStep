@@ -17,7 +17,7 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 
 @Service
-public class UserRegistrationService {
+public class RegistrationService {
 
 
     private PasswordEncoder passwordEncoder;
@@ -29,7 +29,7 @@ public class UserRegistrationService {
     private HostRepository hostRepo;
 
 
-    public UserRegistrationService(PasswordEncoder passwordEncoder, UserAuthRepository userAuthRepo, GuestRepository guestRepo, HostRepository hostRepo) {
+    public RegistrationService(PasswordEncoder passwordEncoder, UserAuthRepository userAuthRepo, GuestRepository guestRepo, HostRepository hostRepo) {
         this.passwordEncoder = passwordEncoder;
         this.userAuthRepo = userAuthRepo;
         this.guestRepo = guestRepo;

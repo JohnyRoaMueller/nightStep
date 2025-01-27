@@ -2,22 +2,22 @@ import theme from "../../../theme/theme";
 
 
 export const loginFormContainer = {
-
-    display: 'flex',
-    flexDirection: 'column',
+    width: '40%',
+    height: '80%',
 
     zIndex: '1',
 
-    paddingTop: '15%',
-    paddingRight: '15%',
-    paddingLeft: '15%',
+    padding: '50px',
 
     alignItems: 'center',
 
-    borderTop: '0.2em solid',
-    borderLeft: '0.2em solid',
-    borderRight: '0.2em solid',
-    borderRadius: '30px 30px 0px 0px',
+    border: '0.2em solid',
+    borderRadius: '10%',
+
+    display: 'flex', // Flexbox aktivieren
+    flexDirection: 'column', // Elemente in eine Spalte anordnen
+    justifyContent: 'center', // Vertikale Zentrierung
+    height: '100%', // Vollständige Höhe einnehmen
 
 
     // theme styling

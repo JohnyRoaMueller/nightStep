@@ -19,8 +19,8 @@ export default function Contact() {
         {/* ↓↓↓ My Content ↓↓↓ */} {/* ↓↓↓ My Content ↓↓↓ */}
           <ContactForm></ContactForm>
         {/* ↑↑↑ My Content ↑↑↑ */} {/* ↑↑↑ My Content ↑↑↑ */}
-        </>
-            }>
-            </Base>
+      </>
+        }>
+        </Base>
   );
 }

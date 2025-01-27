@@ -42,13 +42,13 @@ Spring abstrahiert diese Technik, sodass Entwickler mit Annotationen wie
 während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat) verarbeitet werden.
 */}
 
-    @CrossOrigin(origins = "http://localhost:5173") // Erlaube den Zugriff nur von diesem Origin
+
     @GetMapping("/home")
     public Iterable<Club> getClubs() {
         return clubRepo.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:5173") // Erlaube den Zugriff nur von diesem Origin
+    
     @PostMapping("/add")
     public void addClubs() {
 
@@ -60,5 +60,6 @@ während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat)
 		picAdresses.add("C:\\vscode-projects\\clubstep-project\\uploads\\images\\AboutBlank\\AboutBlank.png");
 
         clubRepo.save(new Club(name, district, clubAdress, clubDescription, picAdresses));
+        System.out.println("Club added");
     }
 }

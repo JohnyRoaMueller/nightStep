@@ -1,45 +1,50 @@
+import { Visibility } from "@mui/icons-material"
 import zIndex from "@mui/material/styles/zIndex"
-import { borderBottom } from "@mui/system"
+import { borderBottom, width } from "@mui/system"
 
 
 export const AppbarFrameBoxStyle = {
-    height: '50px',
+    height: '5vh',
     width: '100%',
-
     flexShrink: '0',
 
-    position: 'sticky',
-    top: '0px',
+
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
 
     zIndex: '100',
 
+    borderBottom: '0.2em solid',
+
+    marginBottom: '2em',
+
+
+    '.AppbarTypo': {
+        display: 'none',
+    },
+
+    'AppbarIcon': {
+        display: 'flex',
+    },
+
 
     // theme styling
-    backgroundColor: (theme) => theme.palette.primary.main
+    backgroundColor: (theme) => theme.palette.primary.main,
+
+    '@media (min-width: 600px)': {
+
+        '.AppbarIcon': {display: 'none'},
+        '.AppbarTypo': {display: 'flex'},
+
+    },
 }
 
 export const AppbarContentBoxStyle = {
-    display: {xs: 'none', sm: 'flex'},
+    display: 'flex',
     gap: '1.5rem',
     justifyContent: 'center',
     paddingRight: '5%'
-}
-
-export const AppbarPartBorder = {
-
-    top: '50px',
-
-    width: '90%',
-
-    borderBottom: '5px solid',
-
-    position: 'sticky',
-
-    zIndex: '100',
-
 }
 
 export const appbarLinkColor = {

@@ -40,24 +40,30 @@ import { colors } from "@mui/material"
 
 export const FooterGridBox = {
     
- 
-    width: '90%',
-    height: '250px',
+    display: 'flex',
 
-    alignSelf: 'center',
+    witdh: '75%',
+    height: '10vh',
 
     flexShrink: '0',
 
     bgcolor: 'text.disabled',
 
-    borderTop: 5,
+    borderTop: '0.2em solid',
+    paddingTop: '2em',
+    paddingBottom: '1em',
 
-    display: 'flex',
+    // marginTop: 'auto',
+
     alignItems: 'center',
+    justifyContent: 'center',
 
     // theme styling 
-    backgroundColor: (theme) => theme.palette.primary.main
+    backgroundColor: (theme) => theme.palette.primary.main,
 
+    '@media (min-width: 600px)': {
+        width: '75%'
+    },
 }
 
 export const FooterImgBox = {

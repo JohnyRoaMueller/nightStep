@@ -45,21 +45,24 @@ public class SecurityConfig {
     
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        String[] allowedPaths = { "/", "/home", "/login", "/register"};
+        String[] allowedPaths = { "/", "/home", "api/login", "/register", "/add"};
         http.
             csrf(AbstractHttpConfigurer::disable); // POST request now possible // google it!
             
         http
-            .cors(cors -> cors.configurationSource(webConfig.corsConfigurationSource()))
+            .cors(cors -> {
+                System.out.println("CORS-Konfiguration angewendet");
+                cors.configurationSource(webConfig.corsConfigurationSource());
+            })
                 .sessionManagement((sessionManagement) -> 
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(allowedPaths).permitAll() // Zugriff ohne Auth
                 .requestMatchers(HttpMethod.POST, "/register" ).permitAll()
-          
+                .requestMatchers(HttpMethod.GET, "/home").permitAll()
 
-        );
+            );
 
 		return http.build();
 	}
