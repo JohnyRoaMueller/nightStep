@@ -45,7 +45,7 @@ public class SecurityConfig {
     
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        String[] allowedPaths = { "/", "/home", "api/login", "/register", "/add"};
+        String[] allowedPaths = { "/", "/home", "/api/login", "/register", "/add"};
         http.
             csrf(AbstractHttpConfigurer::disable); // POST request now possible // google it!
             
@@ -59,8 +59,8 @@ public class SecurityConfig {
 //.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(allowedPaths).permitAll() // Zugriff ohne Auth
-                .requestMatchers(HttpMethod.POST, "/register" ).permitAll()
-                .requestMatchers(HttpMethod.GET, "/home").permitAll()
+                .requestMatchers(HttpMethod.POST, "/**" ).permitAll()
+                .requestMatchers(HttpMethod.GET, "/**").permitAll()
 
             );
 

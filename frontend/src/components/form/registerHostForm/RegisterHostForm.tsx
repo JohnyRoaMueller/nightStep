@@ -33,10 +33,10 @@ function RegisterHostForm() {
     }
 
     
-    const handleSubmit = () => {
-        alert(JSON.stringify(formData, null, 4))
+    const handleSubmit = (event) => {
+        event.preventDefault() 
 
-        fetch('http://192.168.178.28:8080/register',
+        fetch('http://10.0.2.24:8080/register',
             {
                 headers: {
                     'Accept': 'application/json',

@@ -21,16 +21,36 @@ function LoginForm() {
             ...prevData,
             [name]: value,
         }))
+        console.log(loginData)
     }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        fetch("http://192.168.178.28:8080/api/login", {
+        console.log("loginData JSON: ", loginData)
+        console.log("loginData String:", JSON.stringify(loginData))
+
+        fetch("http://172.20.10.13:8080/api/login", { 
             method: "POST",
-            body: JSON.stringify(loginData)
+            body: JSON.stringify(loginData),
+            headers: {
+                "Content-type": "application/json",
+                "Accept": "*",
+                    },
         })
-        console.log(JSON.stringify(loginData))
+        .then((response) => {
+            console.log(response);
+            console.log(response.text());
+        })
+
+
+
+        const resetData = { ...loginData }
+        Object.keys(loginData).forEach(key => {
+            resetData[key] = "";
+        });
+        setLoginData(resetData)
     }
 
 
@@ -40,8 +60,8 @@ function LoginForm() {
         <Box id={"LoginFormContainer"} sx={loginFormContainer}>
             <form onSubmit={handleSubmit}>
                 <Box id={"LoginFormTypoBox"} sx={LoginFormTypoBox}>
-                    <TextField onChange={handleChange} label="Benutzername" variant="standard"></TextField>
-                    <TextField label="Password" variant="standard"></TextField>
+                    <TextField label="Benutzername" variant="standard" name="email" value={loginData.email} onChange={handleChange}></TextField>
+                    <TextField label="Password" variant="standard" name="password" value={loginData.password} onChange={handleChange}></TextField>
                 </Box>
                 <Box sx={{paddingTop: '10%'}}>
 

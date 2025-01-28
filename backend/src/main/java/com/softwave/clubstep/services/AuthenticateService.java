@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import com.softwave.clubstep.domain.entities.UserAuth;
+import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.security.authentication.JwtProvider;
 
 @Service
@@ -16,7 +17,7 @@ public class AuthenticateService {
     JwtProvider jwtProvider;
 
     @Autowired
-    UserAuth userAuth;
+    UserAuthRepository userAuthRepo;
 
     public ResponseEntity<String> authenticateUser(String username) {
 

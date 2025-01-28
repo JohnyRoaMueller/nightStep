@@ -14,10 +14,8 @@ export const registerHostFormContainer = {
 
     alignItems: 'center',
 
-    borderTop: '0.2em solid',
-    borderLeft: '0.2em solid',
-    borderRight: '0.2em solid',
-    borderRadius: '30px 30px 0px 0px',
+    border: '0.2em solid',
+    borderRadius: '10%',
     
     // theme styling
     backgroundColor: (theme) => theme.palette.background.paper

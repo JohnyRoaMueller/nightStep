@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Login from "../../../pages/Login";
 import { useNavigate } from "react-router-dom";
 
-import placeholder from 'C:\\VS_Code_projects\\clubstep-project\\uploads\\clubstep\\Platzhalter_Clubbild.png'
+import placeholder from 'C:\\vscode-projects\\clubstep-project\\uploads\\clubstep\\Platzhalter_Clubbild.png'
 
 
 export interface ClubType {
@@ -22,13 +22,14 @@ function MainContentVertical() {
     
     const [clubs, setClubs] = useState<ClubType[]>([])
         useEffect(() => {
-            fetch('http://192.168.178.28:8080/home')
+            fetch(/*'http://192.168.178.28:8080/home'*/"http://172.20.10.13:8080/home")
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
                     setClubs(data)
                 })
         }, [])
+  
     
 
 

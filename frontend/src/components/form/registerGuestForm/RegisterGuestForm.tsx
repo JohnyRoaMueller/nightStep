@@ -35,10 +35,12 @@ function RegisterGuestForm() {
     }
 
     
-    const handleSubmit = () => {
-        alert(JSON.stringify(formData, null, 4))
+    const handleSubmit = (event) => {
+        event.preventDefault()
 
-        fetch('http://192.168.178.28:8080/register',
+        console.log(formData)
+
+        fetch('http://10.0.2.24:8080/register',
             {
                 headers: {
                     'Accept': 'application/json',
@@ -67,25 +69,25 @@ function RegisterGuestForm() {
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={4}>
-                            <TextField label="Anrede" name="salutation" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Anrede" name="salutation" variant="standard" value={formData.salutation} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             { /* leeres grid */ }
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="Vorname" name="firstname" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Vorname" name="firstname" variant="standard" value={formData.firstname} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="Nachname" name="lastname" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Nachname" name="lastname" variant="standard" value={formData.lastname} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={8}>
-                            <TextField label="Straße" name="street" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Straße" name="street" variant="standard" value={formData.street} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={4}>
-                            <TextField label="Hausnummer" name="housenumber" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Hausnummer" name="housenumber" variant="standard" value={formData.housenumber} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <TextField label="Rufnummer" name="phonenumber" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Rufnummer" name="phonenumber" variant="standard" value={formData.phonenumber} onChange={handleChange} fullWidth></TextField>
                         </Grid>
 
                         <hr style={{ border: "5px solid", width: "90%", marginTop: "20px" }}></hr>
@@ -94,7 +96,7 @@ function RegisterGuestForm() {
                             {/* leeres grid */ }
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="E-Mail" name="email" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="E-Mail" name="email" variant="standard" value={formData.email} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={3}>
                             {/* leeres grid */ }
@@ -103,7 +105,7 @@ function RegisterGuestForm() {
                             {/* leeres grid */ }
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="Password" name="password" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Password" name="password" variant="standard" value={formData.password} onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={3}>
                             {/* leeres grid */ }
