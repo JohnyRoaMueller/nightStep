@@ -42,8 +42,8 @@ export const FooterGridBox = {
     
     display: 'flex',
 
-    witdh: '75%',
-    height: '10vh',
+    width: '100%',
+    height: '15vh',
 
     flexShrink: '0',
 
@@ -61,9 +61,7 @@ export const FooterGridBox = {
     // theme styling 
     backgroundColor: (theme) => theme.palette.primary.main,
 
-    '@media (min-width: 600px)': {
-        width: '75%'
-    },
+
 }
 
 export const FooterImgBox = {

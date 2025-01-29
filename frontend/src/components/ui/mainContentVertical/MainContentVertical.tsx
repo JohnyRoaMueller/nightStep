@@ -22,7 +22,7 @@ function MainContentVertical() {
     
     const [clubs, setClubs] = useState<ClubType[]>([])
         useEffect(() => {
-            fetch(/*'http://192.168.178.28:8080/home'*/"http://172.20.10.13:8080/home")
+            fetch(/*'http://192.168.178.28:8080/home'*/"http://10.0.2.24:8080/home")
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)

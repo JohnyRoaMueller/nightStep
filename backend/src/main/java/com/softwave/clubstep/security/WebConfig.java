@@ -27,8 +27,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         System.out.println("setting CORS-configs");
+
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://10.0.2.24:5173", "http://192.168.178.28:5173", "http://172.20.10.13:5173"));
+        config.setAllowedOrigins(Arrays.asList("http://172.20.10.13:5173", "http://10.0.2.24:5173/")); // setting url who have access
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);

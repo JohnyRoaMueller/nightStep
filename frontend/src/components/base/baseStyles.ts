@@ -1,4 +1,5 @@
 import { height } from "@mui/system"
+import theme from "../../theme/theme"
 
 export const FullscreenFlexBox = {
 
@@ -16,7 +17,7 @@ export const FullscreenFlexBox = {
     overflow: 'auto',
 
     // theme styling 
-    backgroundColor: 'black'
+    backgroundColor: (theme) => theme.palette.background.default,
 }
 
 export const VerticalCentered = {

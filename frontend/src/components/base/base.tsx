@@ -18,11 +18,11 @@ function Base({children}: BaseProps) {
         <>
         <ThemeProvider theme={theme}>
             <Box id="FullscreenFlexBox" sx={FullscreenFlexBox}>
-                    <Box id="VerticalCentered" sx={VerticalCentered}>
-                        <Appbar/>
-                        {children}
-                    </Box>
-                    <Footer/>
+                <Appbar/>
+                <Box id="VerticalCentered" sx={VerticalCentered}>
+                    {children}
+                </Box>
+                <Footer/>
             </Box>
         </ThemeProvider>
         </>

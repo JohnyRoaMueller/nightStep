@@ -58,12 +58,10 @@ public class SecurityConfig {
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(allowedPaths).permitAll() // Zugriff ohne Auth
+                .requestMatchers("/**").permitAll() // Zugriff ohne Auth
                 .requestMatchers(HttpMethod.POST, "/**" ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
-
             );
-
 		return http.build();
 	}
 
