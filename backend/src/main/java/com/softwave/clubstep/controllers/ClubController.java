@@ -43,7 +43,7 @@ während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat)
 */}
 
 
-    @GetMapping("/home")
+    @GetMapping("api/home")
     public Iterable<Club> getClubs() {
         return clubRepo.findAll();
     }
