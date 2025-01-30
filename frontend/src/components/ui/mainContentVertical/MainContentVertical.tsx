@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Login from "../../../pages/Login";
 import { useNavigate } from "react-router-dom";
 
-import placeholder from 'C:\\vscode-projects\\clubstep-project\\uploads\\clubstep\\Platzhalter_Clubbild.png'
+import placeholder from 'C:\\VS_Code_projects\\clubstep-project\\uploads\\clubstep\\Platzhalter_Clubbild.png'
 import axios from "axios";
 
 
@@ -23,21 +23,29 @@ function MainContentVertical() {
 
 
     const urls = [
-        'http://10.0.2.24:8080/api/home', // pc
-        'http://172.20.10.13:80801/api/home', // mobile
+        'http://192.168.178.28:8080/api/home', // pc home
+        'http://10.0.2.24:8080/api/home', // pc damago
+        'http://172.20.10.13:8080/api/home', // mobile
+        'http://192.168.178.28:8080/api/home', // pc home
       ];
 
 
         const fetchData = async() => {
-            for(const url of urls) {
-                let response = await fetch(url)
-                if      (!response.ok) {throw new Error(`fetching ${url} failed`)}
-                else if ( response.ok) {
-                    console.log(`fetching ${url} successful`)
-                    let data = await response.json() 
-                    return(data)
+                for(const url of urls) {
+                    try {
+                    console.log("iteration")
+                    let response = await fetch(url)
+                    if      (!response.ok) {throw new Error(`fetching ${url} failed`)}
+                    else if ( response.ok) {
+                        console.log(`fetching ${url} successful`)
+                        let data = await response.json() 
+                        return(data)
+                    }
+                } catch (error) {
+                    console.log(`${error.message}`)
+                    continue
                 }
-            }
+            } 
         }
 
 
@@ -115,5 +123,3 @@ function MainContentVertical() {
 
 
 export default MainContentVertical
-
-
