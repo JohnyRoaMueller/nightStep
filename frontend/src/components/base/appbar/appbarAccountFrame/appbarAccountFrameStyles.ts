@@ -4,8 +4,8 @@ import { height } from "@mui/system";
 export const outerBox = {
     position: 'absolute',
 
-    top: '5%',
-    left: '5%',
+    top: '0%',
+    left: '0%',
 
     transform: 'translate(-5%, -5%)',
 

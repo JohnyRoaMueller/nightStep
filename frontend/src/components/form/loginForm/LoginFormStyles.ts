@@ -2,23 +2,34 @@ import theme from "../../../theme/theme";
 
 
 export const loginFormContainer = {
-    width: '40%',
-    height: '80%',
+    /*
+    width: '20%',
+    height: '40%',
+    */
+
+    width: '100%',
+    height: '100%',
+
 
     zIndex: '1',
 
-    padding: '50px',
 
     alignItems: 'center',
 
     border: '0.2em solid',
-    borderRadius: '10%',
+    borderRadius: '20%',
 
     display: 'flex', // Flexbox aktivieren
     flexDirection: 'column', // Elemente in eine Spalte anordnen
     justifyContent: 'center', // Vertikale Zentrierung
-    height: '100%', // Vollständige Höhe einnehmen
 
+    '@media (max-width: 600px)': {
+        width: '100%',         /* Formular nimmt 100% der Breite des Containers ein */
+        height: 'auto',        /* Höhe passt sich dem Inhalt an */
+        padding: '10%',        /* Padding für etwas Abstand */
+        margin: '0',           /* Kein zusätzlicher Abstand */
+        borderRadius: '8px',   /* Ecken abrunden */
+      },
 
     // theme styling
     backgroundColor: (theme) => theme.palette.background.paper

@@ -3,7 +3,8 @@
 import { Box, Grid, Link } from "@mui/material";
 import { FooterGridBox, FooterImgBox, footerLinkColor, GridWrapper, marginBox, singleGrid } from "./FooterStyles";
 
-import logo from 'C:\\VS_Code_projects\\clubstep-project\\uploads\\clubstep\\clubStep-Logo.jpg';
+import logo from 'C:\\vscode-projects\\clubstep-project\\uploads\\clubstep\\clubStep-Logo.jpg';
+
 
 export default function Footer() {
 

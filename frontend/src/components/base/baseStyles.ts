@@ -3,8 +3,8 @@ import theme from "../../theme/theme"
 
 export const FullscreenFlexBox = {
 
-    height: '100vh',
-    width: '100vw',
+    height: '100%',
+    width: '100%',
 
     display: 'flex',               // Aktiviert Flexbox
 
@@ -14,7 +14,8 @@ export const FullscreenFlexBox = {
 
     alignItems: 'center',
 
-    overflow: 'auto',
+    flexGrow: 1,
+
 
     // theme styling 
     backgroundColor: (theme) => theme.palette.background.default,
@@ -34,7 +35,6 @@ export const VerticalCentered = {
     
     height: 'auto',
      // Nimmt die volle Höhe des Bildschirms ein
-    flexGrow: 1,         // Der Footer bleibt am unteren Ende
 
     position: 'relative',
 
