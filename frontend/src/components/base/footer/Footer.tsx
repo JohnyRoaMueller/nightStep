@@ -3,7 +3,9 @@
 import { Box, Grid, Link } from "@mui/material";
 import { FooterGridBox, FooterImgBox, footerLinkColor, GridWrapper, marginBox, singleGrid } from "./FooterStyles";
 
-import logo from 'C:\\vscode-projects\\clubstep-project\\uploads\\clubstep\\clubStep-Logo.jpg';
+
+
+const logo = './uploads/clubstep/clubStep-Logo.jpg'
 
 
 export default function Footer() {

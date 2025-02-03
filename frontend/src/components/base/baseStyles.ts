@@ -6,6 +6,8 @@ export const FullscreenFlexBox = {
     height: '100%',
     width: '100%',
 
+    minHeight: '100vh',
+
     display: 'flex',               // Aktiviert Flexbox
 
     flexDirection: 'column',
