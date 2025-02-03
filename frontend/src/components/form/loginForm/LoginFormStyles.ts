@@ -32,7 +32,7 @@ export const loginFormContainer = {
       },
 
     // theme styling
-    backgroundColor: (theme) => theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper
 }
 
 export const LoginFormTypoBox = {

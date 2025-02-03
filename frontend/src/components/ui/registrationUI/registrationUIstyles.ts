@@ -29,11 +29,15 @@ export const guestButton = {
     height: '100%',
     width: '100%',
 
-    backgroundColor: theme.palette.primary.default
-}
-
-export const guestButtonTypo = {
-
+    fontFamaly: theme.typography.button.fontFamily,
+    fontWeight: theme.typography.button.fontWeight, 
+    fontSize: theme.typography.button.fontSize,
+    textTransform: theme.typography.button.textTransform,
+    color: theme.typography.button.color,
+    backgroundColor: theme.typography.button.backgroundColor,
+    '$:hover': {
+        backgroundColor: theme.typography.button.backgroundColor
+    },
 }
 //---------------------------------------------------
 
@@ -52,10 +56,14 @@ export const hostButton = {
     height: '100%',
     width: '100%',
 
-    backgroundColor: theme.palette.primary.main
-}
-
-export const hostButtonTypo = {
-
+    fontFamaly: theme.typography.button.fontFamily,
+    fontWeight: theme.typography.button.fontWeight, 
+    fontSize: theme.typography.button.fontSize,
+    textTransform: theme.typography.button.textTransform,
+    color: theme.typography.button.color,
+    backgroundColor: theme.typography.button.backgroundColor,
+    '$:hover': {
+        backgroundColor: theme.typography.button.backgroundColor
+    },
 }
 //---------------------------------------------------
