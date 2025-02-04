@@ -1,14 +1,34 @@
 import { createTheme, ThemeOptions } from '@mui/material';
 
-const theme = createTheme({
+const theme: ThemeOptions = createTheme({
   palette: {
     primary: {
       main: '#ff8000',
       contrastText: '#808080',
     },
+    secondary: {
+      main: '#00bcd4', // Türkis-Blau als sekundäre Farbe
+      contrastText: '#ffffff', // Weiß für besseren Kontrast
+    },
     background: {
       default: '#666666',
       paper: '#4D4D4D',
+    },
+    success: {
+      main: '#4caf50', // Grünton für positive Aktionen
+      contrastText: '#ffffff',
+    },
+    error: {
+      main: '#f44336', // Rotes Highlight für Fehler
+      contrastText: '#ffffff',
+    },
+    warning: {
+      main: '#ffeb3b', // Gelb für Warnungen
+      contrastText: '#000000', // Dunklerer Text für Kontrast
+    },
+    info: {
+      main: '#2196f3', // Blau für Info-Status
+      contrastText: '#ffffff',
     },
   },
   typography: {
@@ -42,6 +62,10 @@ const theme = createTheme({
     },
     // Button
     button: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      justifyText: 'center',
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 500,
       fontSize: '0.875rem',
