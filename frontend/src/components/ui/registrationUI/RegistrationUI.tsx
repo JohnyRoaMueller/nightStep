@@ -1,52 +1,53 @@
-import { Avatar, Box, getImageListItemBarUtilityClass, Typography, useTheme } from "@mui/material"
-import { guest, guestButton, host, hostButton, image, imageBackdrop, imageMarked, imageSrc, imageSrcGuest, imageSrcHost, typoH2, wrapper } from "./registrationUIstyles"
-import GroupIcon from '@mui/icons-material/Group';
-import SpeakerGroupIcon from '@mui/icons-material/SpeakerGroup';
-import { Button } from "../../../styled-components/styledButton";
-import { TypoH1, TypoH2 } from "../../../styled-components/styledTypographie";
-import { Link } from "react-router";
+import React from "react";
+import { Link } from "react-router-dom"; // Hier react-router-dom nutzen!
+import {
+  RegistrationWrapper,
+  OptionContainer,
+  OptionButton,
+  ImageSrcGuest,
+  ImageSrcHost,
+  ImageBackdrop,
+  StyledTypoH2,
+  ImageMarked,
+  ImageHeader,
+} from "./registrationUI.styles.ts";
 
+function RegistrationUI() {
+  return (
+    <RegistrationWrapper>
+      {/* Guest-Option */}
+      <OptionContainer>
+        <OptionButton variant="contained">
+          <Link to="/register/guest">
+            <ImageHeader>
+              <StyledTypoH2 variant="h2" className="MuiTypoH2-root">
+                join as a guest
+              </StyledTypoH2>
+              <ImageMarked className="MuiImageMarked-root" />
+            </ImageHeader>
+            <ImageSrcGuest />
+            <ImageBackdrop className="MuiImageBackdrop-root" />
+          </Link>
+        </OptionButton>
+      </OptionContainer>
 
-function ResistrationUI() {
-
-
-    return ( 
-        <>
-            <Box sx={wrapper}>
-
-                <Box sx={guest}>
-                    <Button sx={guestButton}>
-                        <Link to={"/register/guest"}>
-                            <Box sx={imageSrcGuest}/>
-                            <Box sx={imageBackdrop} className="MuiImageBackdrop-root"/>
-                            <Box sx={image}>
-                                <TypoH2 sx={typoH2} className="MuiTypoH2-root">
-                                    join as a guest
-                                </TypoH2>
-                                <Box sx={imageMarked} className="MuiImageMarked-root"/>
-                            </Box>
-                        </Link>
-                    </Button>
-                </Box>
-
-                <Box sx={guest}>
-                    <Button sx={guestButton}>
-                        <Link to={"/register/host"}>
-                            <Box sx={imageSrcHost}/>
-                            <Box sx={imageBackdrop} className="MuiImageBackdrop-root"/>
-                            <Box sx={image}>
-                                <TypoH2 sx={typoH2} className="MuiTypoH2-root">
-                                    join as a host
-                                </TypoH2>
-                                <Box sx={imageMarked} className="MuiImageMarked-root"/>
-                            </Box>
-                        </Link>
-                    </Button>
-                </Box>
-
-            </Box>    
-        </>
-    )
+      {/* Host-Option */}
+      <OptionContainer>
+        <OptionButton variant="contained">
+          <Link to="/register/host">
+            <ImageHeader>
+              <StyledTypoH2 variant="h2" className="MuiTypoH2-root">
+                join as a host
+              </StyledTypoH2>
+              <ImageMarked className="MuiImageMarked-root" />
+            </ImageHeader>
+            <ImageSrcHost />
+            <ImageBackdrop className="MuiImageBackdrop-root" />
+          </Link>
+        </OptionButton>
+      </OptionContainer>
+    </RegistrationWrapper>
+  );
 }
 
-export default ResistrationUI
+export default RegistrationUI;
