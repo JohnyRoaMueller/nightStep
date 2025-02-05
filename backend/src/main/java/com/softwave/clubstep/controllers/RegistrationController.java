@@ -22,8 +22,9 @@ public class RegistrationController {
     }
     
     
-    @PostMapping("api/register")
+    @PostMapping("/api/register")
     public void createUser(@RequestBody RegisteringUser registeringUser) {
+
 
         registrationService.registerUser(registeringUser);
 

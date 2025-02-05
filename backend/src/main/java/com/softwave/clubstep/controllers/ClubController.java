@@ -49,7 +49,7 @@ während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat)
     }
 
     
-    @PostMapping("/add")
+    @PostMapping("api/add")
     public void addClubs() {
 
         String name = "clubName";

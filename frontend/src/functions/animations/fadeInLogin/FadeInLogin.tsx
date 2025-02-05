@@ -1,14 +1,13 @@
-import { Box, Fade } from "@mui/material";
+import { Fade } from "@mui/material";
 import LoginForm from "../../../components/form/loginForm/LoginForm";
-import ClearIcon from '@mui/icons-material/Clear';
-import { leftSide, login, rightSide } from "./fadeInLoginStyles";
+import { OverlayLeft, OverlayRight, LoginBox, ClearIconStyled } from "./fadeInLoginStyles";
 
 type fadeInLoginFancyprops = {
     flag: boolean;
     handleClearIconClick: () => void;
 };
 
-export const fadeInLogin = ({ flag, handleClearIconClick }: fadeInLoginFancyprops) => {
+const fadeInLogin = ({ flag, handleClearIconClick }: fadeInLoginFancyprops) => {
     if (!flag) return null;
 
     const overlayElements = [];
@@ -18,10 +17,7 @@ export const fadeInLogin = ({ flag, handleClearIconClick }: fadeInLoginFancyprop
         for (let TopL = 0; TopL <= 75; TopL += 25) {
             overlayElements.push(
                 <Fade in={flag} timeout={(500 - (TopL * 10))} key={`left-${LeftL}-${TopL}`}>
-                    <Box sx={leftSide({ LeftL, TopL })}>
-                        {/* optional checking values */}
-
-                    </Box>
+                    <OverlayLeft left={LeftL} top={TopL} />
                 </Fade>
             );
         }
@@ -32,10 +28,7 @@ export const fadeInLogin = ({ flag, handleClearIconClick }: fadeInLoginFancyprop
         for (let BottomR = 0; BottomR <= 75; BottomR += 25) {
             overlayElements.push(
                 <Fade in={flag} timeout={(500 - (BottomR * 10))} key={`right-${rightR}-${BottomR}`}>
-                    <Box sx={rightSide({ rightR, BottomR })}>
-                        {/* optional checking values */}
-
-                    </Box>
+                    <OverlayRight right={rightR} bottom={BottomR} />
                 </Fade>
             );
         }
@@ -44,12 +37,14 @@ export const fadeInLogin = ({ flag, handleClearIconClick }: fadeInLoginFancyprop
     // Login Box
     overlayElements.push(
         <Fade in={flag} timeout={1000}>
-            <Box sx={login}>
-                <ClearIcon onClick={handleClearIconClick} />
+            <LoginBox>
+                <ClearIconStyled onClick={handleClearIconClick} />
                 <LoginForm />
-            </Box>
+            </LoginBox>
         </Fade>
     );
 
-    return (<>{overlayElements}</>)
+    return <>{overlayElements}</>;
 };
+
+export default fadeInLogin

@@ -33,7 +33,7 @@ public class LoginController {
     PasswordEncoder passwordEncoder;
 
 
-    @PostMapping("api/login")
+    @PostMapping("/api/login")
     public ResponseEntity<String> login(@RequestBody UserAuth request) {
         System.out.println("api/login erreicht");
 
@@ -50,12 +50,13 @@ public class LoginController {
             UserAuth presentUserAuth = userOpt.get();
             
             String databasePassword = presentUserAuth.getPassword();
-
             boolean passwordCheck = passwordEncoder.matches(requestPassword, databasePassword);
 
             if (passwordCheck) {
+                String token = jwtProvider.getToken(presentUserAuth.getEmail());
+                System.out.println(token);
                 System.out.println("Login succesfully");
-                return ResponseEntity.ok("Login succesfully");
+                return ResponseEntity.ok(token);
             } else {
                 System.out.println("Password is wrong");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password is wrong");

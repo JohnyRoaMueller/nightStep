@@ -1,5 +1,11 @@
 package com.softwave.clubstep.enums;
 
 public enum Roles {
-    GUEST, HOST, ADMIN;
+    GUEST("GUEST"), HOST("HOST"), ADMIN("ADMIN");
+
+    private String role;
+
+    Roles(String role) {
+        this.role = role;
+    }
 }

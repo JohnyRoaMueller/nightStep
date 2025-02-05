@@ -1,111 +1,127 @@
-import { Visibility } from "@mui/icons-material"
-import zIndex from "@mui/material/styles/zIndex"
-import { borderBottom, height, positions, width } from "@mui/system"
+import { Box, styled, Typography } from "@mui/material";
+import PersonIcon from '@mui/icons-material/Person';
+import { Link } from "react-router-dom";
+import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
+// Appbar Frame
+export const AppbarFrame = styled(Box)`
+  height: 7vh;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 100;
+  border-bottom: 0.2em solid;
+  margin-bottom: 2em;
 
-export const AppbarFrameBoxStyle = {
-    height: '7vh',
-    width: '100%',
-    flexShrink: '0',
+  .AppbarTypo {
+    display: none;
+  }
 
+  .AppbarIcon {
+    display: flex;
+  }
 
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+  background-color: ${(props) => props.theme.palette.primary.main};
 
-    zIndex: '100',
-
-    borderBottom: '0.2em solid',
-
-    marginBottom: '2em',
-
-
-    '.AppbarTypo': {
-        display: 'none',
-    },
-
-    'AppbarIcon': {
-        display: 'flex',
-    },
-
-
-    // theme styling
-    backgroundColor: (theme) => theme.palette.primary.main,
-
-    '@media (min-width: 600px)': {
-
-        '.AppbarIcon': {display: 'none'},
-        '.AppbarTypo': {display: 'flex'},
-
-    },
-}
-
-export const AppbarContentBoxStyle = {
-    position : 'relative',
-
-    width: '75%',
-    height: '100%',
-
-    right: '50%', // moves to 50% of the width of parent container
-    transform: 'translateX(50%)', // moves on x axis 50% of width of current element
-                                // positive value moves right- and  negative to left side
-
-    display: 'flex',
-    flexDirection: 'row',
-    
-}
-
-
-export const appbarLinkBoxLeft = {
-    position: 'relative',
-
-    left: '0%',
-
-    height: '100%',
-    
-
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-}
-
-export const appbarLinkBoxRight = {
-    position: 'absolute',
-
-    right: '0%',
-
-    height: '100%',
-    
-    
-    display: 'flex',
-    alignItems: 'center',
-
-    gap: 13
-}
-
-export const appbarMenuBox = {
-    position: 'absolute',
-
-    height: '100%',
-
-    right: '50%',
-    transform: 'translateX(50%)',
-    display: 'flex',        // Flexbox-Container
-    alignItems: 'center',   // Zentriert die Items innerhalb des Containers
-}
-
-export const accountLinkBox = {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 1,
-}
-
-
-export const appbarLinkColor = {
-    color: 'black',
-    
-    '&:hover': {
-        color: 'inherit'
+  @media (min-width: 600px) {
+    .AppbarIcon {
+      display: none;
     }
-}
+    .AppbarTypo {
+      display: flex;
+    }
+  }
+`;
 
+// Appbar Content
+export const AppbarContent = styled(Box)`
+  position: relative;
+  width: 75%;
+  height: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  display: flex;
+  flex-direction: row;
+`;
+
+// Appbar Link Box Left
+export const AppbarLinkBoxLeft = styled(Box)`
+  position: relative;
+  left: 0%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20%;
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+
+  @media (min-width: 600px) {
+    display: flex;
+  }
+
+`;
+
+// Appbar Link Box Right
+export const AppbarLinkBoxRight = styled(Box)`
+  position: absolute;
+  right: 0%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+`;
+
+// Appbar Menu Box
+export const AppbarMenuBox = styled(Box)`
+  position: absolute;
+  height: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  display: flex;
+  align-items: center;
+`;
+
+// Account Link Box
+export const AccountLinkBox = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  
+`;
+
+// Account Icon Box
+export const AccountLink = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+`;
+
+// Account Icon
+export const AccountIcon = styled(PersonIcon)`
+  font-size: 24px;
+  color: black;
+`;
+
+export const AppbarLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
+export const TypoBody1Link = styled(TypoBody1)`
+    font-weight: 600;
+`;
+
+export const TypoBody1HOM = styled(TypoBody1)`
+    display: none;
+
+    font-weight: 600;
+
+    @media (min-width: 600px) {
+        display: block;
+    }
+`;

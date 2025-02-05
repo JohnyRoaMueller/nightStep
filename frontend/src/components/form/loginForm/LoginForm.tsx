@@ -2,6 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { loginFormContainer, loginFormTextField, LoginFormTypoBox } from "./loginFormStyles";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Token } from "@mui/icons-material";
 
 interface loginDataType {
     email: string,
@@ -31,7 +32,7 @@ function LoginForm() {
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        fetch("http://172.20.10.13:8080/api/login", { 
+        fetch("http://10.0.2.24:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {
@@ -40,8 +41,14 @@ function LoginForm() {
                     },
         })
         .then((response) => {
-            console.log(response);
-            console.log(response.text());
+            if (response.ok) {
+                console.log("response:", response)
+                return response.text();
+            }
+        })
+        .then((data) => {
+            console.log("data", data)
+            localStorage.setItem("token", data)
         })
 
 

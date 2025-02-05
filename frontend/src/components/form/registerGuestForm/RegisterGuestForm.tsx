@@ -40,7 +40,7 @@ function RegisterGuestForm() {
 
         console.log(formData)
 
-        fetch('http://10.0.2.24:8080/register',
+        fetch('http://10.0.2.24:8080/api/register',
             {
                 headers: {
                     'Accept': 'application/json',

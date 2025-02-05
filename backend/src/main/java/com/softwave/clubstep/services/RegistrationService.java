@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +63,7 @@ public class RegistrationService {
                     newUserAuth.setRole(registeringUser.getRole());       
                 guestRepo.save(newGuest);
                 userAuthRepo.save(newUserAuth);
-                System.out.println("guest created :" + newGuest);       
+                System.out.println("guest created :" + newGuest);      
                 break;
 
             case HOST:

@@ -3,10 +3,9 @@ import { cardContentHoverStyle, CardContentStyle, cardContentTypoBox, CardStylin
 import { useEffect, useState } from "react";
 import Login from "../../../pages/Login";
 import { useNavigate } from "react-router-dom";
-
-import placeholder from 'C:\\vscode-projects\\clubstep-project\\uploads\\clubstep\\Platzhalter_Clubbild.png'
 import axios from "axios";
 
+const placeholder = "./public/uploads/clubstep/Platzhalter_Clubbild.png"
 
 export interface ClubType {
     id: number,
@@ -24,9 +23,7 @@ function MainContentVertical() {
 
     const urls = [
         'http://10.0.2.24:8080/api/home', // pc damago
-        'http://172.20.10.13:8080/api/home', // mobile
-
-        'http://192.168.178.28:8080/api/home', // pc home
+    //    'http://192.168.178.28:8080/api/home', // pc home
       ];
 
 

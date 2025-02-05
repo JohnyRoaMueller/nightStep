@@ -29,7 +29,7 @@ export const OptionContainer = styled(Box)(({ theme }) => ({
   alignSelf: "center",
 
   "@media(min-width: 600px)": {
-    height: "58%",
+    height: "75%",
     width: "50%",
   },
 }));

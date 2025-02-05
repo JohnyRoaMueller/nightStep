@@ -37,7 +37,14 @@ const theme: ThemeOptions = createTheme({
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '1rem',
       lineHeight: 1.5,
-      color: '#FFFFFF', // Weiß für Text auf dunklem Hintergrund
+      color: '#000000', // Schwarz für Text auf dunklem Hintergrund
+    },
+    // Body Text (Sekundärer Text)
+    body2: {
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      fontSize: '0.875rem',
+      lineHeight: 1.4,
+      color: '#B3B3B3', // Helle Grautöne für weniger wichtige Informationen
     },
     // Überschrift 1
     h1: {
@@ -52,13 +59,6 @@ const theme: ThemeOptions = createTheme({
       fontWeight: 600,
       fontSize: '2.25rem',
       color: '#ff8000', // Setze auch hier deine Hauptfarbe
-    },
-    // Body Text (Sekundärer Text)
-    body2: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontSize: '0.875rem',
-      lineHeight: 1.4,
-      color: '#B3B3B3', // Helle Grautöne für weniger wichtige Informationen
     },
     // Button
     button: {
