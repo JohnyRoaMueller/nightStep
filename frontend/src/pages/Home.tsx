@@ -1,13 +1,13 @@
 import { HomeHeader } from '../components/ui/header/homeHeader/HomeHeader';
 import Base from '../components/base/base';
-import MainContentVertical from '../components/ui/mainContentVertical/MainContentVertical';
+import MainContentVerticalUI from '../components/ui/mainContentVertical/MainContentVerticalUI';
 
 export default function Home() {
   return (
     <Base>
       {/* ↓↓↓ My Content ↓↓↓ */}
-      <HomeHeader />
-      <MainContentVertical/>
+      {/* <HomeHeader /> */}
+      <MainContentVerticalUI/>
       {/* ↑↑↑ My Content ↑↑↑ */}
     </Base>
   );

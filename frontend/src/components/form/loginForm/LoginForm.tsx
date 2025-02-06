@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { loginFormContainer, loginFormTextField, LoginFormTypoBox } from "./loginFormStyles";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Token } from "@mui/icons-material";
 
@@ -10,6 +10,8 @@ interface loginDataType {
 }
 
 function LoginForm() {
+
+    const location = useLocation()
 
     const [loginData, setLoginData] = useState({
         email: "",
@@ -80,7 +82,8 @@ function LoginForm() {
 
                 </Box>
                 <Box>
-                    <Link to="/register">
+                    <Link to={location.pathname === "/register" ? "#" : "/register"} 
+                          onClick={() => {if (location.pathname === "/register") document.getElementById("login-register-transition-appbar-clear-icon")?.click()}}>
                         <Button sx={{marginTop: '15%'}}>
                             <Typography>
                                 sign up here
@@ -94,3 +97,4 @@ function LoginForm() {
 )}
 
 export default LoginForm
+

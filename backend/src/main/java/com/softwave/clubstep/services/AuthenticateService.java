@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
-import com.softwave.clubstep.security.authentication.JwtProvider;
 
 @Service
 public class AuthenticateService {
     
     @Autowired
-    JwtProvider jwtProvider;
+    JwtService jwtProvider;
 
     @Autowired
     UserAuthRepository userAuthRepo;

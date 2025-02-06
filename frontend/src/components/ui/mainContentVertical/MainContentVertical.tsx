@@ -1,9 +1,7 @@
 import { Box, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { cardContentHoverStyle, CardContentStyle, cardContentTypoBox, CardStyling, GridStyling, picStyle } from "./MainContentVerticalStyles";
+import { cardContentHoverStyle, CardContentStyle, cardContentTypoBox, CardStyling, picStyle } from "./MainContentVerticalStyles";
 import { useEffect, useState } from "react";
-import Login from "../../../pages/Login";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const placeholder = "./public/uploads/clubstep/Platzhalter_Clubbild.png"
 
@@ -23,7 +21,7 @@ function MainContentVertical() {
 
     const urls = [
         'http://10.0.2.24:8080/api/home', // pc damago
-    //    'http://192.168.178.28:8080/api/home', // pc home
+    //  'http://192.168.178.28:8080/api/home', // pc home
       ];
 
 
@@ -31,16 +29,20 @@ function MainContentVertical() {
                 for(const url of urls) {
                     try {
                     console.log("iteration")
-                    let response = await fetch(url)
+                    const response = await fetch(url)
                     if      (!response.ok) {throw new Error(`fetching ${url} failed`)}
                     else if ( response.ok) {
                         console.log(`fetching ${url} successful`)
-                        let data = await response.json() 
+                        const data = await response.json() 
                         return(data)
                     }
-                } catch (error) {
-                    console.log(`${error.message} at ${url}`)
-                    continue
+                } catch (error: unknown) {
+                    if (error instanceof Error) {
+                        console.log(`${error.message} at ${url}`)
+                    } else {
+                        console.log('unknown error for' + url)
+                    }
+                    continue;
                 }
             } 
         }

@@ -3,8 +3,9 @@ import theme from "../../theme/theme";
 import { Box } from "@mui/material";
 import { FullscreenFlexBox, VerticalCentered } from "./baseStyles";
 
-import Appbar from "./appbar/Appbar";
+
 import Footer from "./footer/Footer";
+import { Appbar } from "./appbar/Appbar";
 
 
 

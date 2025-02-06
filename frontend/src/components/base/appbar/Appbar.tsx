@@ -14,20 +14,21 @@ import {
 import fadeInLogin from "../../../functions/animations/fadeInLogin/FadeInLogin";
 import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
-export default function Appbar() {
-  const [flag, setFlag] = useState(false);
+export function Appbar() {
+  const [fadeFlag, setFadeFlag] = useState(false);
+
 
   const handleClick = () => {
-    setFlag(true);
+    setFadeFlag(true);
   };
 
   const handleClearIconClick = () => {
-    setFlag(false);
+    setFadeFlag(false);
   };
 
   return (
     <>
-      {fadeInLogin({ flag, handleClearIconClick })}
+      {fadeInLogin({ fadeFlag, handleClearIconClick })}
       <AppbarFrame>
         <AppbarContent>
           <AppbarLinkBoxLeft>
@@ -58,3 +59,4 @@ export default function Appbar() {
     </>
   );
 }
+

@@ -1,4 +1,4 @@
-package com.softwave.clubstep.security.authentication;
+package com.softwave.clubstep.services;
 
 import java.security.Key;
 import java.util.Date;
@@ -44,9 +44,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 
 @Component
-public class JwtProvider {
+public class JwtService {
 
-    public JwtProvider() {};
+    public JwtService() {};
 
 
 
