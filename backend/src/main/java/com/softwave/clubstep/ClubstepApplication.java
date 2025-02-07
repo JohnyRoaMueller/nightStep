@@ -59,8 +59,19 @@ public class ClubstepApplication implements CommandLineRunner {
 		clubRepo.deleteAll();
 
 		Club clubOne = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		Club clubTwo = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		Club clubThree = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		Club clubFour = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		Club clubFive = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		Club clubSix = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		
 
 		clubRepo.save(clubOne);
+		clubRepo.save(clubTwo);
+		clubRepo.save(clubThree);
+		clubRepo.save(clubFour);
+		clubRepo.save(clubFive);
+		clubRepo.save(clubSix);
 
 
 		System.out.println("Club gespeichert: " + clubOne);

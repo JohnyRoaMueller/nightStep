@@ -1,6 +1,7 @@
 import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import { registerHostFormButton, registerHostFormButtonTypography, registerHostFormContainer, registerHostFormHeaderBox, registerHostFormHeaderTypo } from './registerHostFormStyles'
+import Roles from '../../../../enums/Roles'
 
 
 
@@ -17,7 +18,7 @@ function RegisterHostForm() {
         rufnummer: "",
         betreff: "",
         nachricht: "",
-        userrole: "HOST"
+        role: Roles.HOST,
     })
 
     const handleChange = (event) => {
@@ -28,13 +29,19 @@ function RegisterHostForm() {
             ...prevData,
             [name]: value,
         }));
+
         console.log("value changed")
-        console.log(formData.firma)
+        console.log(formData)
+
+        
     }
 
     
     const handleSubmit = (event) => {
         event.preventDefault() 
+
+        console.log("log before fetch")
+        console.log(formData.role)
 
         fetch('http://10.0.2.24:8080/api/register',
             {
@@ -46,6 +53,8 @@ function RegisterHostForm() {
                 body: JSON.stringify(formData)
             }
         )
+
+
 
         const resetData = { ...formData }
         Object.keys(resetData).forEach(key => {

@@ -1,7 +1,7 @@
 
 
 import { Box, Grid, Link } from "@mui/material";
-import { FooterGridBox, FooterImgBox, footerLinkColor, GridWrapper, marginBox, singleGrid } from "./FooterStyles";
+import { FooterGridBox, FooterImgBox, footerLinkColor, GridWrapper, singleGrid } from "./FooterStyles";
 
 
 

@@ -1,7 +1,11 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
-import { registerGuestFormButton, registerGuestFormButtonTypography, registerGuestFormContainer, registerGuestFormHeaderBox, registerGuestFormHeaderTypo } from './registerGuestFormStyle'
 import Roles from '../../../../enums/Roles'
+import { CategoryHeader, FormContainer, FormTextfield, Line, RegisterButton, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
+import { Menu, MenuItem, NativeSelect, Select, TextField } from '@mui/material'
+import { TypoH1, TypoH2 } from '../../../styled-components/styledTypographie'
+
+
+
 
 
 
@@ -60,65 +64,52 @@ function RegisterGuestForm() {
     }
         
 
+    const genderList = [
+        "male",
+        "female",
+        "divers"
+    ]
+
+
     return (
-        <Box id="RegisterGuest-FormContainer" sx={registerGuestFormContainer}>
-            <Box sx={registerGuestFormHeaderBox}>
-            <Typography sx={registerGuestFormHeaderTypo}>Stay up-to-date with the Berlin club scene and get informed about upcoming events.</Typography>
-            <Typography sx={registerGuestFormHeaderTypo}>Register as a guest!</Typography>
-            </Box>
-                <form onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={4}>
-                            <TextField label="Anrede" name="salutation" variant="standard" value={formData.salutation} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            { /* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Vorname" name="firstname" variant="standard" value={formData.firstname} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Nachname" name="lastname" variant="standard" value={formData.lastname} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <TextField label="Straße" name="street" variant="standard" value={formData.street} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <TextField label="Hausnummer" name="housenumber" variant="standard" value={formData.housenumber} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField label="Rufnummer" name="phonenumber" variant="standard" value={formData.phonenumber} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-
-                        <hr style={{ border: "5px solid", width: "90%", marginTop: "20px" }}></hr>
-
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="E-Mail" name="email" variant="standard" value={formData.email} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Password" name="password" variant="standard" value={formData.password} onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={12}
-                            sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
-                                <Button sx={registerGuestFormButton} type="submit">
-                                    <Typography sx={registerGuestFormButtonTypography}>register</Typography>
-                                </Button>
-                        </Grid>
-                    </Grid>
-                </form>
-        </Box>
+        <>
+            <FormContainer>
+                <Line>
+                    <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
+                </Line>
+               <Line>
+               </Line>
+               <Line>
+                    <TextfieldLong helperText='firstname' variant='standard'/>
+               </Line>
+               <Line>
+                    <TextfieldLong helperText='lastname' variant='standard'/>
+               </Line>
+               <Line>
+                    <TextfieldLong helperText='email' variant='standard'/>
+               </Line>
+               <Line>
+                    <TextfieldLong helperText='confirm email' variant='standard'/>
+               </Line>
+               <Line>
+                    <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
+                </Line>
+                <Line>
+                    <TextfieldShort helperText='gender' variant='standard' select slotProps={{select: {native: true}}}> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                            {genderList.map((gender) => <option value={gender}>{gender}</option>)}
+                    </TextfieldShort>
+                </Line>
+               <Line>
+                    <TextfieldShort helperText='day'/><TextfieldShort helperText='month'/><TextfieldShort helperText='year'/>
+               </Line>
+               <Line>
+                    <TextfieldMedium helperText='username'/>
+                    <RegisterButton>
+                        Create Account
+                    </RegisterButton>
+               </Line>
+            </FormContainer>
+        </>
     )
 }
 

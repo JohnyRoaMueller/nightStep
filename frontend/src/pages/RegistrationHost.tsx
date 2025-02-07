@@ -17,13 +17,10 @@ export default function Test() {
       <Base children={
         <>
             {/* ↓↓↓ My Content ↓↓↓ */}
-            <Box>
-                my RegistrationHost content
-            </Box>
             <RegisterHostForm/>
             {/* ↑↑↑ My Content ↑↑↑ */}
-            </>
+        </>
             }>
-            </Base>
+      </Base>
     )
 }

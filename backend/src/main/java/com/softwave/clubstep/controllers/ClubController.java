@@ -59,7 +59,10 @@ während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat)
 		List<String> picAdresses = new ArrayList<String>();
 		picAdresses.add("C:\\vscode-projects\\clubstep-project\\uploads\\images\\AboutBlank\\AboutBlank.png");
 
+        
         clubRepo.save(new Club(name, district, clubAdress, clubDescription, picAdresses));
-        System.out.println("Club added");
+
+
+        System.out.println("Clubs added");
     }
 }
