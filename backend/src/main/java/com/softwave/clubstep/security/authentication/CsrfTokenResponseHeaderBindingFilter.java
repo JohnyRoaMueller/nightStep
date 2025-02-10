@@ -10,7 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/** stolen on Stackoverflow, have to researche again */
+/** stolen on Stackoverflow, have to researche again */ /* not in use now */
 
 public class CsrfTokenResponseHeaderBindingFilter extends OncePerRequestFilter {
     protected static final String REQUEST_ATTRIBUTE_NAME = "_csrf";

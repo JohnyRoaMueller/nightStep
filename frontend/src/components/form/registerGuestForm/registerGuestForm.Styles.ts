@@ -13,8 +13,6 @@ export const FormContainer = styled(Box)`
     flex-direction: column;
     flex-grow: 1;
 
-    z-index: 1200;
-
     @media (min-width: 600px) {
         width: 50%
     }
@@ -96,7 +94,9 @@ export const RegisterButton = styled(Button)`
     margin-left: 6%;
     margin-bottom: 5%;
 
-    padding: 3%;
+    padding-left: 10%;
+    padding-right: 10%;
+
 
 
     background-color: black;

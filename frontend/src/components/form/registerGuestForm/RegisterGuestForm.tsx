@@ -27,6 +27,7 @@ function RegisterGuestForm() {
 
 
     const handleChange = (event) => {
+        
         console.log(event)
         console.log(event.target)
         const {name, value} = event.target
@@ -40,7 +41,9 @@ function RegisterGuestForm() {
 
     
     const handleSubmit = (event) => {
-        event.preventDefault()
+
+        console.log("submit!!")
+
 
         console.log(formData)
 
@@ -61,6 +64,8 @@ function RegisterGuestForm() {
             resetData[key] = ""
         })
         setFormData(resetData)
+
+        event.preventDefault()
     }
         
 
@@ -74,40 +79,43 @@ function RegisterGuestForm() {
     return (
         <>
             <FormContainer>
-                <Line>
-                    <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
-                </Line>
-               <Line>
-               </Line>
-               <Line>
-                    <TextfieldLong helperText='firstname' variant='standard'/>
-               </Line>
-               <Line>
-                    <TextfieldLong helperText='lastname' variant='standard'/>
-               </Line>
-               <Line>
-                    <TextfieldLong helperText='email' variant='standard'/>
-               </Line>
-               <Line>
-                    <TextfieldLong helperText='confirm email' variant='standard'/>
-               </Line>
-               <Line>
-                    <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
-                </Line>
-                <Line>
-                    <TextfieldShort helperText='gender' variant='standard' select slotProps={{select: {native: true}}}> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
-                            {genderList.map((gender) => <option value={gender}>{gender}</option>)}
-                    </TextfieldShort>
-                </Line>
-               <Line>
-                    <TextfieldShort helperText='day'/><TextfieldShort helperText='month'/><TextfieldShort helperText='year'/>
-               </Line>
-               <Line>
-                    <TextfieldMedium helperText='username'/>
-                    <RegisterButton>
-                        Create Account
-                    </RegisterButton>
-               </Line>
+                <form typeof='submit'>
+                    <Line>
+                        <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='firstname' helperText='firstname' variant='standard' key='textfield-firstname'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='lastname' helperText='lastname' variant='standard' key='textfield-lastname'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='email' helperText='email' variant='standard' key='textfield-email'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='emailConfirm' helperText='confirm email' variant='standard' key='textfield-confirmEmail' />
+                    </Line>
+                    <Line>
+                        <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                                {genderList.map((gender) => <option value={gender}>{gender}</option>)}
+                        </TextfieldMedium>
+                        <TextfieldShort name='day' helperText='day' key='textfield-day'/>
+                        <TextfieldShort name='month' helperText='month' key='textfield-month'/>
+                        <TextfieldShort name='year' helperText='year' key='textfield-year'/>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name='username' helperText='username' key='textfield-username'/>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name= 'password' helperText ='password' key='textfield-password'></TextfieldMedium>
+                        <RegisterButton type='submit' onSubmit={handleSubmit} key='Button-register'>
+                            Create Account
+                        </RegisterButton>
+                    </Line>
+                </form>
             </FormContainer>
         </>
     )

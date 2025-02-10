@@ -10,7 +10,7 @@ import {
   AppbarLink,
   TypoBody1HOM,
   TypoBody1Link,
-} from "./AppbarStyles";
+} from "./Appbar.styles";
 import fadeInLogin from "../../../functions/animations/fadeInLogin/FadeInLogin";
 import { TypoBody1 } from "../../../styled-components/styledTypographie";
 

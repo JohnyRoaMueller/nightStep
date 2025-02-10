@@ -12,6 +12,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * This class implements AuthenticationEntryPoint to handle authentication errors.
+ * When an unauthenticated user tries to access a protected resource, it sends a 401 Unauthorized response.
+ */
 
 @Component
 public class AuthEntryPoint implements AuthenticationEntryPoint {
@@ -24,6 +28,5 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();
         writer.println("Error: " + authException.getMessage());
-    }
-    
+    } 
 }

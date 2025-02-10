@@ -34,7 +34,7 @@ function LoginForm() {
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        fetch("http://10.0.2.24:8080/api/login", { 
+        fetch("http://192.168.178.28:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {

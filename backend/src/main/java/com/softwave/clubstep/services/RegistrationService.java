@@ -76,7 +76,7 @@ public class RegistrationService {
                                             newUserAuth.setRole(registeringUser.getRole());       
                 hostRepo.save(newHost);
                 userAuthRepo.save(newUserAuth);
-                System.out.println("host created:" + newHost.getFirstname());
+                System.out.println("host created:" + newUserAuth.getPassword());
                 break;
 
             default:

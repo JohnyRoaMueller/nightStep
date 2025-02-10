@@ -83,6 +83,7 @@ export const AppbarMenuBox = styled(Box)`
   transform: translateX(50%);
   display: flex;
   align-items: center;
+
 `;
 
 // Account Link Box
@@ -109,7 +110,7 @@ export const AccountIcon = styled(PersonIcon)`
 
 export const AppbarLink = styled(Link)`
   text-decoration: none;
-  color: inherit;
+  color: black;
 `;
 
 export const TypoBody1Link = styled(TypoBody1)`

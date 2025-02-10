@@ -1,14 +1,15 @@
-import { ThemeProvider } from "@emotion/react";
-import theme from "../theme/theme";
-import { Box } from "@mui/material";
-import Appbar from "../components/base/appbar/Appbar";
-import Footer from "../components/base/footer/Footer";
-import { useState } from "react";
+
+import { Box, Button } from "@mui/material";
+
 import Base from "../components/base/base";
 
+const doClear = () => {
+    localStorage.clear();
+}
 
 
 export default function Test() {
+
 
 
     return (
@@ -17,6 +18,11 @@ export default function Test() {
                 {/* ↓↓↓ My Content ↓↓↓ */}
                 <Box>
                     my test content
+                </Box>
+                <Box>
+                    <Button onClick={doClear} sx={{backgroundColor: 'black'}}>
+                        clear localstorage
+                    </Button>
                 </Box>
                 {/* ↑↑↑ My Content ↑↑↑ */}
                 </>

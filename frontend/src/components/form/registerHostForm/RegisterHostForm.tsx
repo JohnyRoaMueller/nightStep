@@ -22,6 +22,7 @@ function RegisterHostForm() {
     })
 
     const handleChange = (event) => {
+        console.log("change")
         console.log(event)
         console.log(event.target)
         const {name, value} = event.target
@@ -42,8 +43,11 @@ function RegisterHostForm() {
 
         console.log("log before fetch")
         console.log(formData.role)
+        console.log(JSON.stringify(formData))
 
-        fetch('http://10.0.2.24:8080/api/register',
+        fetch(
+            "http://192.168.178.28:8080/api/register",
+            //'http://10.0.2.24:8080/api/register',
             {
                 headers: {
                     'Accept': 'application/json',
@@ -100,7 +104,7 @@ function RegisterHostForm() {
                             {/* leeres grid */ }
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="E-Mail" name="rufnummer" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="E-Mail" name="email" variant="standard" onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={3}>
                             {/* leeres grid */ }
@@ -109,7 +113,7 @@ function RegisterHostForm() {
                             {/* leeres grid */ }
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField label="Password" name="rufnummer" variant="standard" onChange={handleChange} fullWidth></TextField>
+                            <TextField label="Password" name="password" variant="standard" onChange={handleChange} fullWidth></TextField>
                         </Grid>
                         <Grid item xs={12} sm={3}>
                             {/* leeres grid */ }

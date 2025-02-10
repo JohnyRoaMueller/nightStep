@@ -13,7 +13,7 @@ import com.softwave.clubstep.domain.repository.UserAuthRepository;
 public class AuthenticateService {
     
     @Autowired
-    JwtService jwtProvider;
+    JwtService jwtService;
 
     @Autowired
     UserAuthRepository userAuthRepo;
@@ -22,7 +22,7 @@ public class AuthenticateService {
 
         System.out.println(username);
         
-        String token = jwtProvider.getToken(username);
+        String token = jwtService.getToken(username);
         
         String savedPassword = null;
 
