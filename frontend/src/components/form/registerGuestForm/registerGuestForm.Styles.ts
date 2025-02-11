@@ -2,7 +2,6 @@ import { Box, Button, styled, TextField } from "@mui/material";
 import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
 export const FormContainer = styled(Box)`
-    background-color: grey;
 
     position: relative;
     align-self: flex-start;
@@ -13,10 +12,12 @@ export const FormContainer = styled(Box)`
     flex-direction: column;
     flex-grow: 1;
 
-    @media (min-width: 600px) {
-        width: 50%
-    }
+    box-sizing: border-box;
 
+    @media (min-width: 600px) {
+        width: 50%;
+        border: 0.3em solid black;
+    } 
 
 `;
 
@@ -49,16 +50,11 @@ export const FixedTextFieldProps = styled(TextField)`
         color: black;
     }
 
-    &:hover {
+    &:focus-within  {
         .MuiFormHelperText-root {
             color: white;
         }
     }
-
-    .MuiBackdrop-root.MuiBackdrop-invisible {
-        z-index: 1200;
-    }
-
 
 
 `;
@@ -89,21 +85,50 @@ export const FixedTextFieldProps = styled(TextField)`
 
     `;
 
+export const TermsWrapper = styled(Box)`
+
+    text-align: center;
+    align-self: center;
+
+    width: 50%;
+
+    margin-left: 3%;
+    margin-bottom: 3%;
+
+
+
+    display: flex;
+    flex-direction: column;
+
+    @media(min-width: 600px) {
+        margin-left: 1%;
+        margin-bottom: 3%;
+    }
+
+
+`;
+
 export const RegisterButton = styled(Button)`
 
     margin-left: 6%;
     margin-bottom: 5%;
 
-    padding-left: 10%;
-    padding-right: 10%;
-
+    padding-left: 5%;
+    padding-right: 5%;
 
 
     background-color: black;
 
 
     &:hover {
-    border: 3px solid PapayaWhip
+        border: 3px solid PapayaWhip
     }
 
+    @media(min-width: 600px) {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+
+
 `;
+

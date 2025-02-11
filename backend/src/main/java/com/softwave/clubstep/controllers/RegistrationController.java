@@ -25,8 +25,6 @@ public class RegistrationController {
 
         Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
-        logger.info("User role: {}", registeringUser.getRole());
-
         registrationService.registerUser(registeringUser);
 
     }

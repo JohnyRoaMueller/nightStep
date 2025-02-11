@@ -15,11 +15,15 @@ public class BaseUser {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    private String salutation;
+    private String gender;
     
     private String firstname;
 
     private String lastname;
+
+    private String birthday;
+
+    private String email;
 
     private String street;
 
@@ -32,16 +36,21 @@ public class BaseUser {
     
     public BaseUser(
     // userId will be generated automatically
-    String salutation,
+    String gender,
     String firstname,
     String lastname,
+    String birthday,
+    String email,
     String street,
     String housenumber,
     String phonenumber
     )
     {
+    this.gender = gender;
     this.firstname = firstname;
     this.lastname = lastname;
+    this.birthday = birthday;
+    this.email = email;
     this.street = street;
     this.housenumber = housenumber;
     this.phonenumber = phonenumber;
@@ -54,12 +63,12 @@ public class BaseUser {
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
     
 
-    public String getSalutation() {
-        return salutation;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSalutation(String salutation) {
-        this.salutation = salutation;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getFirstname() {
@@ -76,6 +85,22 @@ public class BaseUser {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStreet() {

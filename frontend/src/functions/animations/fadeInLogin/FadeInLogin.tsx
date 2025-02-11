@@ -38,7 +38,7 @@ const fadeInLogin = ({ fadeFlag, handleClearIconClick }: fadeInLoginFancyprops) 
     overlayElements.push(
         <Fade in={fadeFlag} timeout={1000}>
             <LoginBox>
-                <ClearIconStyled id="login-register-transition-appbar-clear-icon" onClick={handleClearIconClick} />
+                <ClearIconStyled key="login-register-transition-appbar-clear-icon" onClick={handleClearIconClick}/>
                 <LoginForm />
             </LoginBox>
         </Fade>

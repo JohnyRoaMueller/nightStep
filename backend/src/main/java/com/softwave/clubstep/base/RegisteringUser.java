@@ -12,18 +12,22 @@ public class RegisteringUser {
 
 
     // UserAuth    
-    private String email;
+    private String username;
 
     private String password;
+
+    private String email;
 
     private Roles role;
 
     // Guest / Host
-    private String salutation;
+    private String gender;
     
     private String firstname;
 
     private String lastname;
+
+    private String birthday;
 
     private String street;
 
@@ -36,22 +40,27 @@ public class RegisteringUser {
     
     public RegisteringUser(
     // userId will be generated automatically
-    String email,
+    String username,
     String password,
+    String email,
     Roles role,
-    String salutation,
+    String gender,
     String firstname,
     String lastname,
+    String birthday,
     String street,
     String housenumber,
     String phonenumber
     )
     {
-    this.email = email;
+    this.username = username;
     this.password = password;
+    this.email = email;
     this.role = role;
+    this.gender = gender;
     this.firstname = firstname;
     this.lastname = lastname;
+    this.birthday = birthday;
     this.street = street;
     this.housenumber = housenumber;
     this.phonenumber = phonenumber;
@@ -64,12 +73,12 @@ public class RegisteringUser {
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
     
     // UserAuth
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
     
     public String getPassword() {
@@ -78,6 +87,14 @@ public class RegisteringUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Roles getRole() {
@@ -89,12 +106,12 @@ public class RegisteringUser {
     }
 
     // Guest / Host
-    public String getSalutation() {
-        return salutation;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSalutation(String salutation) {
-        this.salutation = salutation;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getFirstname() {
@@ -111,6 +128,14 @@ public class RegisteringUser {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getStreet() {

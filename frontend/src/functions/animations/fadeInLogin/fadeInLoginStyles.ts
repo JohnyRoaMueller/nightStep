@@ -14,7 +14,7 @@ export const OverlayLeft = styled(Box)<overlayLeftProps>`
   width: 25%;
   background-color: black;
   z-index: 1000;
-  pointer-events: none;
+  pointer-events: auto;
 `;
 
 type overlayLeft = {
@@ -29,7 +29,7 @@ export const OverlayRight = styled(Box)<overlayLeft>`
   width: 25%;
   background-color: black;
   z-index: 1000;
-  pointer-events: none;
+  pointer-events: auto;
 `;
 
 export const LoginBox = styled(Box)`

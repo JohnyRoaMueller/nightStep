@@ -41,14 +41,7 @@ Spring abstrahiert diese Technik, sodass Entwickler mit Annotationen wie
 @RestController und @GetMapping arbeiten können,
 während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat) verarbeitet werden.
 */}
-
-
-    @GetMapping("api/home")
-    public Iterable<Club> getClubs() {
-        return clubRepo.findAll();
-    }
-
-    
+  
     @PostMapping("api/add")
     public void addClubs() {
 

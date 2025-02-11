@@ -1,15 +1,14 @@
 import { useParams } from "react-router";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { ClubType } from "../components/ui/mainContentVertical/mainContentVertical";
 import NoMatch from "./NoMatch";
-
+import { ClubType } from "../components/ui/mainContentVertical/MainContentVerticalUI";
 export default function Club() {
   const { clubName } = useParams();
   const [clubs, setClubs] = useState<ClubType[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/home')
+    fetch('http://10.0.2.24:8080/api/home')
       .then(response => response.json())
       .then(data => setClubs(data));
   }, []);
@@ -18,9 +17,13 @@ export default function Club() {
 
   if (checkIfExists) {
     return (
-      <Box>
-        data from {clubName}
-      </Box>
-    );
+    <>
+      {clubs.map((club) => (
+        <Box>
+          {club.name}
+        </Box>
+      ))}
+    </>
+    )
   } else return (<NoMatch />);
 }

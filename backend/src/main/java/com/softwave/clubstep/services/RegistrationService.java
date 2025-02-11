@@ -47,33 +47,34 @@ public class RegistrationService {
             
             case GUEST:
                 Guest newGuest = new Guest();
-                                            newGuest.setSalutation(registeringUser.getSalutation());
                                             newGuest.setFirstname(registeringUser.getFirstname());
                                             newGuest.setLastname(registeringUser.getLastname());
-                                            newGuest.setStreet(registeringUser.getStreet());
-                                            newGuest.setHousenumber(registeringUser.getHousenumber());
-                                            newGuest.setPhonenumber(registeringUser.getPhonenumber());
+                                            newGuest.setEmail(registeringUser.getEmail());
+                                            newGuest.setGender(registeringUser.getGender());
+                                            newGuest.setBirthday(registeringUser.getBirthday());
                                             //-----------------------------------------------------//
-                                            newUserAuth.setEmail(registeringUser.getEmail());
+                                            newUserAuth.setUsername(registeringUser.getUsername());
                                             newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
+                                            newUserAuth.setEmail(registeringUser.getEmail());
                                             newUserAuth.setRole(registeringUser.getRole());       
                 guestRepo.save(newGuest);
                 userAuthRepo.save(newUserAuth);
-                System.out.println("guest created :" + newGuest.getFirstname());      
+                System.out.println("guest created :" + newGuest.getFirstname());   
+                System.out.println("guest created :" + newUserAuth.getPassword());      
                 break;
 
             case HOST:
                 Host newHost = new Host();
-                                            newHost.setSalutation(registeringUser.getSalutation());
                                             newHost.setFirstname(registeringUser.getFirstname());
                                             newHost.setLastname(registeringUser.getLastname());
-                                            newHost.setStreet(registeringUser.getStreet());
-                                            newHost.setHousenumber(registeringUser.getHousenumber());
-                                            newHost.setPhonenumber(registeringUser.getPhonenumber());
+                                            newHost.setEmail(registeringUser.getEmail());
+                                            newHost.setGender(registeringUser.getGender());
+                                            newHost.setBirthday(registeringUser.getBirthday());
                                             //-----------------------------------------------------//
-                                            newUserAuth.setEmail(registeringUser.getEmail());
+                                            newUserAuth.setUsername(registeringUser.getUsername());
                                             newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
-                                            newUserAuth.setRole(registeringUser.getRole());       
+                                            newUserAuth.setEmail(registeringUser.getEmail());
+                                            newUserAuth.setRole(registeringUser.getRole());   
                 hostRepo.save(newHost);
                 userAuthRepo.save(newUserAuth);
                 System.out.println("host created:" + newUserAuth.getPassword());
