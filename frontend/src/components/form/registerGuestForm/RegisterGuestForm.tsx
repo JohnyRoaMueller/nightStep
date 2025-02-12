@@ -121,12 +121,15 @@ function RegisterGuestForm() {
         to: number,
     };
     function fillList({ list, from, to }: FillList): void {
-        for(let i = from; i <= to; i++) list.push(i)
+        if(from < to) {
+            for(let i = from; i <= to; i++) list.push(i)
+        } else if(from > to) {
+            for(let i = from; i >= to; i--) list.push(i)} 
     }
 
-    fillList({ list: dayList, from: 0, to: 31});
-    fillList({ list: monthList, from: 0, to: 12});
-    fillList({ list: yearList, from: 1950, to: 2024});
+    fillList({ list: dayList, from: 1, to: 31});
+    fillList({ list: monthList, from: 1, to: 12});
+    fillList({ list: yearList, from: 2024, to: 1950});
 
 
 

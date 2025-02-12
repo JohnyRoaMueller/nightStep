@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { loginFormContainer, loginFormTextField, LoginFormTypoBox } from "./loginFormStyles";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { Token } from "@mui/icons-material";
 
 interface loginDataType {
@@ -14,9 +14,13 @@ function LoginForm() {
     const location = useLocation()
 
     const [loginData, setLoginData] = useState({
-        email: "",
+        username: "",
         password: "",
     })
+
+    const UserContext = createContext(loginData)
+
+    const [userdata, setUserdata] = useState("")
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -34,7 +38,7 @@ function LoginForm() {
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        fetch("http://192.168.178.28:8080/api/login", { 
+        fetch("http://10.0.2.24:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {
@@ -48,12 +52,27 @@ function LoginForm() {
                 return response.text();
             }
         })
-        .then((data) => {
-            console.log("data", data)
-            localStorage.setItem("token", data)
+        .then((jwtToken) => {
+            console.log("jwtToken", jwtToken)
+            localStorage.setItem("jwtToken", jwtToken)
         })
+        .then(data => {
+            const jwtToken = localStorage.getItem('jwtToken');
 
-
+            console.log("zweiter fetch")
+        
+            return fetch('http://10.0.2.24:8080/api/userdata', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    'Authorization': 'Bearer ' + jwtToken // Include the jwtToken in the Authorization header
+                }
+            })
+        })
+        .then(async (userdata) => {
+            const userdataString = await userdata.text()
+            setUserdata(userdataString)
+        })
 
         const resetData = { ...loginData }
         Object.keys(loginData).forEach(key => {
@@ -69,7 +88,7 @@ function LoginForm() {
         <Box id={"LoginFormContainer"} sx={loginFormContainer}>
             <form onSubmit={handleSubmit}>
                 <Box id={"LoginFormTypoBox"} sx={LoginFormTypoBox}>
-                    <TextField label="Benutzername" variant="standard" name="email" value={loginData.email} onChange={handleChange}></TextField>
+                    <TextField label="Benutzername" variant="standard" name="username" value={loginData.username} onChange={handleChange}></TextField>
                     <TextField label="Password" variant="standard" name="password" value={loginData.password} onChange={handleChange}></TextField>
                 </Box>
                 <Box sx={{paddingTop: '10%'}}>
@@ -87,6 +106,9 @@ function LoginForm() {
                         <Button sx={{marginTop: '15%'}}>
                             <Typography>
                                 sign up here
+                            </Typography>
+                            <Typography>
+                                {userdata}
                             </Typography>
                         </Button>
                     </Link>

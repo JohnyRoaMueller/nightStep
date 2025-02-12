@@ -23,7 +23,7 @@ public class RegistrationController {
     @PostMapping("/api/register")
     public void createUser(@RequestBody RegisteringUser registeringUser) {
 
-        Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+        System.out.println("/api/register erreicht");
 
         registrationService.registerUser(registeringUser);
 

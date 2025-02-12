@@ -41,9 +41,10 @@ public class LoginController {
         /* Password extracted from the HTTP request */
         String requestPassword = request.getPassword();
 
+
         /* try to find existing user in Database */
         /* var of type "Object" can have a value or not */
-        Optional<UserAuth> userOpt = userAuthRepo.findByEmail(request.getEmail());
+        Optional<UserAuth> userOpt = userAuthRepo.findByUsername(request.getUsername());
 
         /* check if userOpt is present */
         if (userOpt.isPresent()) {
@@ -54,7 +55,7 @@ public class LoginController {
             boolean passwordCheck = passwordEncoder.matches(requestPassword, databasePassword);
 
             if (passwordCheck) {
-                String token = jwtProvider.getToken(presentUserAuth.getEmail());
+                String token = jwtProvider.getToken(presentUserAuth.getUsername());
                 System.out.println(token);
                 System.out.println("Login succesfully");
                 return ResponseEntity.ok(token);
