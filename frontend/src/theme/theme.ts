@@ -37,7 +37,7 @@ const theme: ThemeOptions = createTheme({
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '1rem',
       lineHeight: 1.5,
-      color: '#000000', // Schwarz für Text auf dunklem Hintergrund
+      color: '#FFFFFF', // Weiß für Text auf dunklem Hintergrund
     },
     // Body Text (Sekundärer Text)
     body2: {

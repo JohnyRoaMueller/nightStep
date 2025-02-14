@@ -10,8 +10,13 @@ import {
   AppbarLink,
   TypoBody1HOM,
   TypoBody1Link,
+  AppbarLogoBox,
+  NightStepLogo,
 } from "./Appbar.styles";
 import fadeInLogin from "../../../functions/animations/fadeInLogin/FadeInLogin";
+
+
+
 
 export function Appbar() {
   const [fadeFlag, setFadeFlag] = useState(false);
@@ -56,9 +61,11 @@ export function Appbar() {
       <AppbarFrame>
         <AppbarContent>
           <AppbarLinkBoxLeft>
-            <AppbarLink to={"/home"}>
-              <TypoBody1Link>home</TypoBody1Link>
-            </AppbarLink>
+            <AppbarLogoBox>
+              <AppbarLink to={"/home"}>
+                <NightStepLogo/>
+              </AppbarLink>
+            </AppbarLogoBox>
             <AppbarLink to={"/find"}>
               <TypoBody1Link>find</TypoBody1Link>
             </AppbarLink>

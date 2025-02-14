@@ -61,6 +61,8 @@ export const FixedTextFieldProps = styled(TextField)`
 
     export const TextfieldShort = styled(FixedTextFieldProps)`
 
+
+
         margin: 3%;
 
         width: 15%;
@@ -68,6 +70,8 @@ export const FixedTextFieldProps = styled(TextField)`
     `;
 
     export const TextfieldMedium = styled(FixedTextFieldProps)`
+  
+
         margin: 3%;
 
         width: 33%;
@@ -75,6 +79,8 @@ export const FixedTextFieldProps = styled(TextField)`
     `;
 
     export const TextfieldLong = styled(FixedTextFieldProps)`
+
+
         margin: 3%;
 
         width: 90%;

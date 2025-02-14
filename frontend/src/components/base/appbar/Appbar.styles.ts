@@ -1,7 +1,25 @@
+// import NightStepLogo from '../../../assets/images/nightStepLogo-WhiteOnBlack.svg?react'; // ?react suffix very relevant! tried import SVG for 4 hours
 import { Box, styled, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
 import { TypoBody1 } from "../../../styled-components/styledTypographie";
+
+
+export const NightStepLogo = styled('div')`
+  width: 50px;
+  height: 50px;
+  background-image: url('/uploads/clubstep/nightStepLogo_orangeOnBlack_noBackground.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 35%;
+
+  /* Bild wird auf Graustufen und danach invertiert */
+  filter: invert(100%) brightness(100%) grayscale(100%);
+
+  &:hover {
+    filter: invert(0%) brightness(100%) grayscale(0%); /* Beim Hover wird der Filter entfernt */
+  }
+`;
 
 // Appbar Frame
 export const AppbarFrame = styled(Box)`
@@ -14,6 +32,7 @@ export const AppbarFrame = styled(Box)`
   z-index: 100;
   border-bottom: 0.2em solid;
   margin-bottom: 2em;
+  overflow: hidden;
 
   .AppbarTypo {
     display: none;
@@ -23,7 +42,7 @@ export const AppbarFrame = styled(Box)`
     display: flex;
   }
 
-  background-color: ${(props) => props.theme.palette.primary.main};
+  background-color: black;
 
   @media (min-width: 600px) {
     .AppbarIcon {
@@ -63,6 +82,15 @@ export const AppbarLinkBoxLeft = styled(Box)`
     display: flex;
   }
 
+`;
+
+export const AppbarLogoBox = styled(Box)`
+      display: 'flex';
+      justifyContent: 'center'; 
+      alignItems: 'center'; 
+      width: '1vw'; 
+      height: '1vh'; 
+      overflow: 'hidden';
 `;
 
 // Appbar Link Box Right
@@ -105,16 +133,22 @@ export const AccountLink = styled(Box)`
 // Account Icon
 export const AccountIcon = styled(PersonIcon)`
   font-size: 24px;
-  color: black;
+  color: white;
 `;
 
 export const AppbarLink = styled(Link)`
   text-decoration: none;
-  color: black;
 `;
 
 export const TypoBody1Link = styled(TypoBody1)`
     font-weight: 600;
+
+    
+  &:hover {
+    color: #ff8000; /* Beim Hover wird der Filter entfernt */
+  }
+
+
 `;
 
 export const TypoBody1HOM = styled(TypoBody1)`
@@ -124,5 +158,9 @@ export const TypoBody1HOM = styled(TypoBody1)`
 
     @media (min-width: 600px) {
         display: block;
+    }
+
+    &:hover {
+      color: #ff8000; /* Beim Hover wird der Filter entfernt */
     }
 `;

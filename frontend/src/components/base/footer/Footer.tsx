@@ -1,36 +1,36 @@
-
-
-import { Box, Grid, Link } from "@mui/material";
-import { FooterGridBox, FooterImgBox, footerLinkColor, GridWrapper, singleGrid } from "./FooterStyles";
-
-
-
-const logo = './uploads/clubstep/clubStep-Logo.jpg'
-
+import { Link } from "react-router-dom";
+import { CleanLink, ContentFrame, FooterFrame, NightStepLogo, TypoBody1Link } from "./Footer.styles";
+import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
 export default function Footer() {
 
     return (
-            <Box id="FooterBox" sx={FooterGridBox}>
-                <Grid container spacing={0} sx={GridWrapper} >
-                    <Grid item xs={4} sx={singleGrid} >
-                        <Box id="FooterImgBox" sx={FooterImgBox}>
-                            <img src={logo} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }}></img>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={4} sx={singleGrid}>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                    </Grid>
-                    <Grid item xs={4} sx={singleGrid}>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                        <Link href="#" sx={footerLinkColor}>PseudoLink</Link>
-                    </Grid>
-                </Grid>
-            </Box>
+        <>
+            <FooterFrame>
+                <ContentFrame>
+                    <NightStepLogo/>
+                </ContentFrame>
+                <ContentFrame>
+                    <CleanLink to={'/aboutUs'}>
+                        <TypoBody1Link>
+                            about us
+                        </TypoBody1Link>
+                    </CleanLink>
+                    <CleanLink to={'/contact'}>
+                        <TypoBody1Link>
+                            contact
+                        </TypoBody1Link>
+                    </CleanLink>
+                    <CleanLink to={'#'}>
+                        <TypoBody1Link>
+                            imprint
+                        </TypoBody1Link>
+                    </CleanLink>
+                </ContentFrame>
+                <ContentFrame>
+
+                </ContentFrame>
+            </FooterFrame>
+        </>
     )
 }

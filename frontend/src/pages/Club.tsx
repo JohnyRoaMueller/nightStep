@@ -3,6 +3,8 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import NoMatch from "./NoMatch";
 import { ClubType } from "../components/ui/mainContentVertical/MainContentVerticalUI";
+
+
 export default function Club() {
   const { clubName } = useParams();
   const [clubs, setClubs] = useState<ClubType[]>([]);

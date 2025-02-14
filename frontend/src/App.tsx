@@ -14,6 +14,7 @@ import Registration from "./pages/Registration";
 import RegistrationHost from "./pages/RegistrationHost";
 import RegistrationGuest from "./pages/RegistrationGuest";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
             <Route path="register/guest" element={<RegistrationGuest/>} ></Route>
 
             <Route path="find" element={<Find/>} ></Route>
+
+            <Route path="aboutUs" element={<About/>} ></Route>
 
             <Route path="contact" element={<Contact />} ></Route>
 
