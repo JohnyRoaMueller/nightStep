@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Typography, Link } from "@mui/material";
 import {
   AppbarFrame,
   AppbarContent,
@@ -13,7 +12,7 @@ import {
   AppbarLogoBox,
   NightStepLogo,
 } from "./Appbar.styles";
-import { fadeInLogin, fadeInLogout }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
+import { fadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
 
 
 

@@ -1,12 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [react()],
   server: {
-    host: '0.0.0.0',  // Lauscht auf allen Interfaces
-    port: 5173,       // Standard-Port für Vite (kannst du auch anpassen)
+    host: '0.0.0.0',  // listen to all Interfaces -> needed to get access to data from db when starting on mobile
+    port: 5173,       // standard Vite Port
   }
 })

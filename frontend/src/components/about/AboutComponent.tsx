@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../styled-components/styledTypographie";
-import {  AnimationWrapper, ContentBox, ContentWrapper, FootWrapperLeft, FootWrapperRight, LeftStep, RightStep, ShoeAnimationLeft, ShoeAnimationRight } from "./aboutComponent.styles";
-import React from "react";
-import { clipPath } from "framer-motion/client";
+import { useEffect } from "react";
+import { TypoBody1, TypoBody2, TypoH1 } from "../../styled-components/styledTypographie";
+import {  AnimationWrapper, ContentBox, ContentWrapper, FootWrapperLeft, FootWrapperRight, LeftStep, RightStep } from "./aboutComponent.styles";
 
 function createRightStep() {
     const steps = [];
@@ -25,10 +23,10 @@ export function AboutComponent() {
 
 
     useEffect(() => {
-        // Alle Elemente mit der Klasse "step" auswählen
+        // select all elements with the class "step"
         const steps = document.querySelectorAll('.step');
     
-        // Observer konfigurieren: 
+        // configure observer:
         // -> const observer = new IntersectionObserver(callback, options);
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -41,15 +39,14 @@ export function AboutComponent() {
             }
           });
         }, {
-          root: null, // viewport als Bezugsgröße
+          root: null, 
           rootMargin: "-33% 0px -33% 0px",
-          threshold: 1, // Sobald ein Pixel in dem Bereich ist
+          threshold: 1, // how many pixel are inside till visible
         });
     
-        // Beobachte jedes Step-Element
+        // observe every step element
         steps.forEach(step => observer.observe(step));
     
-        // Aufräumen beim Unmount
         return () => observer.disconnect();
       }, []);
 

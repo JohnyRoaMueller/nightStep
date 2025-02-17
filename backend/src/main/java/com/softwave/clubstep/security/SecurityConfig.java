@@ -1,14 +1,11 @@
 package com.softwave.clubstep.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -52,7 +49,7 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/**").permitAll() // Zugriff ohne Auth 
+                .requestMatchers("/**").permitAll() // access without auth 
             )
 
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -68,10 +65,9 @@ public class SecurityConfig {
 
 
     
-    {/* Für einfachen Zugriff auf BCryptEncoder */}
+    {/* declaring Encoder as a Bean to get access to it on other Components */}
     
-    {/* JavaDoc zeigt, dass sich durch aufrufen des leeren Konstruktors
-        sich das Object durch mehrere Konstruktorenaufrufe (this()) bildet */}
+    {/* Source code shows chained constructores (with this()), when calling the empty one */}
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

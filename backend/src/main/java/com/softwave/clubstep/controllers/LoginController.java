@@ -2,23 +2,18 @@ package com.softwave.clubstep.controllers;
 
 import java.util.Optional;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
-import com.softwave.clubstep.base.BaseUser;
 import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.JwtService;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller

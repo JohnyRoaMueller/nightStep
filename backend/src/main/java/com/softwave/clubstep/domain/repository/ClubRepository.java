@@ -10,7 +10,5 @@ import com.softwave.clubstep.domain.entities.Club;
 @RepositoryRestResource
 public interface ClubRepository extends CrudRepository<Club, Long> {
 
-
-
     List<Club> findByAddress(String address);
 }

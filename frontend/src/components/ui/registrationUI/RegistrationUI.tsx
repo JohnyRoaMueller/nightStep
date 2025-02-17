@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Hier react-router-dom nutzen!
+import { Link } from "react-router-dom";
 import {
   RegistrationWrapper,
   OptionContainer,

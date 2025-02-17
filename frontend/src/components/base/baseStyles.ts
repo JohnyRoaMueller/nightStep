@@ -1,6 +1,3 @@
-import { height } from "@mui/system"
-import theme from "../../theme/theme"
-
 export const FullscreenFlexBox = {
 
     height: '100%',
@@ -8,7 +5,7 @@ export const FullscreenFlexBox = {
 
     minHeight: '100vh',
 
-    display: 'flex',               // Aktiviert Flexbox
+    display: 'flex',             
 
     flexDirection: 'column',
 
@@ -25,18 +22,17 @@ export const FullscreenFlexBox = {
 
 export const VerticalCentered = {
 
-    width: '100%',        // Feste Breite beibehalten
+    width: '100%',       
 
     bgcolor: 'grey.300',
     
-    display: 'flex',      // Flexbox aktivieren
+    display: 'flex',      
     flexDirection: 'column',
-    alignItems: 'center', /* Vertikal zentrieren */
+    alignItems: 'center', 
 
     boxSizing: 'border-box',
     
     height: 'auto',
-     // Nimmt die volle Höhe des Bildschirms ein
 
     position: 'relative',
 

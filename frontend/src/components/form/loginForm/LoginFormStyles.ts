@@ -19,16 +19,16 @@ export const loginFormContainer = {
     border: '0.2em solid',
     borderRadius: '20%',
 
-    display: 'flex', // Flexbox aktivieren
-    flexDirection: 'column', // Elemente in eine Spalte anordnen
-    justifyContent: 'center', // Vertikale Zentrierung
+    display: 'flex', 
+    flexDirection: 'column', 
+    justifyContent: 'center', 
 
     '@media (max-width: 600px)': {
-        width: '100%',         /* Formular nimmt 100% der Breite des Containers ein */
-        height: 'auto',        /* Höhe passt sich dem Inhalt an */
-        padding: '10%',        /* Padding für etwas Abstand */
-        margin: '0',           /* Kein zusätzlicher Abstand */
-        borderRadius: '8px',   /* Ecken abrunden */
+        width: '100%',         
+        height: 'auto',        
+        padding: '10%',        
+        margin: '0',           
+        borderRadius: '8px',   
       },
 
     // theme styling

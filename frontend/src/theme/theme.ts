@@ -7,58 +7,58 @@ const theme: ThemeOptions = createTheme({
       contrastText: '#808080',
     },
     secondary: {
-      main: '#00bcd4', // Türkis-Blau als sekundäre Farbe
-      contrastText: '#ffffff', // Weiß für besseren Kontrast
+      main: '#00bcd4', // Turquoise blue as the secondary color
+      contrastText: '#ffffff', // White for better contrast
     },
     background: {
       default: '#666666',
       paper: '#4D4D4D',
     },
     success: {
-      main: '#4caf50', // Grünton für positive Aktionen
+      main: '#4caf50', // Green tone for positive actions
       contrastText: '#ffffff',
     },
     error: {
-      main: '#f44336', // Rotes Highlight für Fehler
+      main: '#f44336', // Red highlight for errors
       contrastText: '#ffffff',
     },
     warning: {
-      main: '#ffeb3b', // Gelb für Warnungen
-      contrastText: '#000000', // Dunklerer Text für Kontrast
+      main: '#ffeb3b', // Yellow for warnings
+      contrastText: '#000000', // Darker text for contrast
     },
     info: {
-      main: '#2196f3', // Blau für Info-Status
+      main: '#2196f3', // Blue for info status
       contrastText: '#ffffff',
     },
   },
   typography: {
-    // Standard Schriftgröße für den Body
+    // Default font size for the body
     body1: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '1.2rem',
       lineHeight: 1.5,
-      color: '#FFFFFF', // Weiß für Text auf dunklem Hintergrund
+      color: '#FFFFFF', // White text on dark background
     },
-    // Body Text (Sekundärer Text)
+    // Body text (secondary text)
     body2: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '1rem',
       lineHeight: 1.4,
-      color: '#B3B3B3', // Helle Grautöne für weniger wichtige Informationen
+      color: '#B3B3B3', // Light gray for less important info
     },
-    // Überschrift 1
+    // Heading 1
     h1: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 700,
       fontSize: '3rem',
-      color: '#ff8000', // Hauptfarbe für auffällige Überschrift
+      color: '#ff8000', // Primary color for striking headlines
     },
-    // Überschrift 2
+    // Heading 2
     h2: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontWeight: 600,
       fontSize: '2.25rem',
-      color: '#ff8000', // Setze auch hier deine Hauptfarbe
+      color: '#ff8000', // Also set primary color here
     },
     // Button
     button: {
@@ -73,14 +73,14 @@ const theme: ThemeOptions = createTheme({
       color: '#FFFFFF',
       backgroundColor: '#ff8000',
       '&:hover': {
-        backgroundColor: '#e67600', // Etwas dunkleres Orange für den Hover-Effekt
+        backgroundColor: '#e67600', // Slightly darker orange on hover
       },
     },
-    // Caption (Kleine Beschriftungen)
+    // Caption (small labels)
     caption: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       fontSize: '0.75rem',
-      color: '#808080', // Dunkelgrau für Bildunterschriften und kleine Texte
+      color: '#808080', // Dark gray for captions and small text
     },
   },
 });

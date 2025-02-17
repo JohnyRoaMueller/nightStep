@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import { Box, Button, Typography } from "@mui/material";
 import { Transform, Translate } from "@mui/icons-material";
 
-// Wrapper, der den gesamten Bereich umfasst
 export const RegistrationWrapper = styled(Box)({
   height: "100vh",
   width: "100%",
@@ -22,7 +21,6 @@ export const RegistrationWrapper = styled(Box)({
   },
 });
 
-// Container für jede Option (Guest/Host)
 export const OptionContainer = styled(Box)(({ theme }) => ({
   height: "40%",
   width: "80%",
@@ -34,7 +32,6 @@ export const OptionContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-// Button-Style für die Optionen
 export const OptionButton = styled(Button)({
   height: "100%",
   width: "100%",
@@ -54,7 +51,6 @@ export const OptionButton = styled(Button)({
   },
 });
 
-// Hintergrundbild für die "Guest"-Option
 export const ImageSrcGuest = styled(Box)({
   backgroundImage: "url('./public/uploads/clubstep/registerGuest.jpeg')",
   position: "absolute",
@@ -62,7 +58,7 @@ export const ImageSrcGuest = styled(Box)({
   right: 0,
   top: 0,
   bottom: 0,
-  backgroundSize: 'cover',  // Das Bild wird so skaliert, dass es vollständig in den Container passt
+  backgroundSize: 'cover',  // picture get scaled into frame
 
 });
 
@@ -74,11 +70,11 @@ export const ImageSrcHost = styled(Box)({
   right: 0,
   top: 0,
   bottom: 0,
-  backgroundSize: "cover",  // Das Bild wird so skaliert, dass es vollständig in den Container passt
+  backgroundSize: "cover", 
 
 });
 
-// Schwarzer Overlay-Hintergrund (Backdrop)
+// black overlay (backdrop)
 export const ImageBackdrop = styled(Box)({
   position: "absolute",
   left: 0,
@@ -90,7 +86,6 @@ export const ImageBackdrop = styled(Box)({
   transition: "opacity 0.9s ease",
 });
 
-// Container für den Text-Overlay (Positionierung und Farbe)
 export const ImageHeader = styled(Box)({
   height: '15%',
   width: '100%',
@@ -102,7 +97,6 @@ export const ImageHeader = styled(Box)({
   justifyContent: "center",
 });
 
-// Typographie für den Overlay-Text
 export const StyledTypoH2 = styled(Typography)({
   fontSize: "1.5rem",
   opacity: 0,
@@ -113,7 +107,7 @@ export const StyledTypoH2 = styled(Typography)({
   }
 });
 
-// Kleiner Strich unter dem Text
+// little black line on the buttons
 export const ImageMarked = styled(Box)({
   height: '5%',
   width: '20%',

@@ -35,11 +35,10 @@ public class ClubController {
     }
 
 {/*
-Spring-Endpunkte basieren auf Java-Servlets.
-Servlets verarbeiten HTTP-Anfragen und geben Antworten zurück (meist HTML oder JSON).
-Spring abstrahiert diese Technik, sodass Entwickler mit Annotationen wie
-@RestController und @GetMapping arbeiten können,
-während die Anfragen im Hintergrund durch einen Servlet-Container (z.B. Tomcat) verarbeitet werden.
+Spring endpoints are based on Java Servlets.
+Servlets handle HTTP requests and return responses, usually in the form of HTML or JSON.
+Spring abstracts this technology, allowing developers to work with annotations like
+@RestController and @GetMapping, while the requests are processed in the background by a Servlet container (e.g., Tomcat).
 */}
   
     @PostMapping("api/add")

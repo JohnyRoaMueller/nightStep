@@ -1,4 +1,4 @@
-import { Box, ThemeProvider } from "@mui/material";
+import { Box } from "@mui/material";
 import Base from "../components/base/base";
 
 export default function Find() {

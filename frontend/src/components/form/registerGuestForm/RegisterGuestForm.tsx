@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, FormContainer, FormTextfield, Line, RegisterButton, TermsTypo, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
-import { Box, Checkbox, FormControlLabel, Menu, MenuItem, NativeSelect, Select, TextField } from '@mui/material'
-import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from '../../../styled-components/styledTypographie'
-import { CheckBox } from '@mui/icons-material'
-
+import { CategoryHeader, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
+import { Checkbox } from '@mui/material'
+import { TypoBody1, TypoH2 } from '../../../styled-components/styledTypographie'
 
 
 

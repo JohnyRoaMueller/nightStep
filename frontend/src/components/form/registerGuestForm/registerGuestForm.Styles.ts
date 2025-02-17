@@ -1,5 +1,4 @@
 import { Box, Button, styled, TextField } from "@mui/material";
-import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
 export const FormContainer = styled(Box)`
 

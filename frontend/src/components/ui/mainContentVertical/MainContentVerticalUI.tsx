@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ClubCard, ClubCardContent, ClubCardMedia, ClubCardNameTypoH2, ClubCardTypoH2, ClubNameTypo, GridContainer, GridContainerWrapper, GridItem, } from "./mainContentVertical.styles";
-import { TypoBody1, TypoBody2, TypoH2 } from "../../../styled-components/styledTypographie";
+import { ClubCard, ClubCardContent, ClubCardMedia, ClubNameTypo, GridContainer, GridItem, } from "./mainContentVertical.styles";
+import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
 
 
@@ -21,7 +21,7 @@ function MainContentVerticalUI() {
 
 
     const urls = [
-        'http://10.0.2.24:8080/api/home', // pc damago
+        // 'http://10.0.2.24:8080/api/home', // pc damago
         'http://192.168.178.28:8080/api/home', // pc home
       ];
 
@@ -51,7 +51,7 @@ function MainContentVerticalUI() {
             }
         };
     
-        fetchData();  // Aufruf der Funktion direkt im useEffect
+        fetchData();  // calling the async function inside the useEffekt()
     }, []);
 
 
