@@ -15,38 +15,47 @@ import RegistrationHost from "./pages/RegistrationHost";
 import RegistrationGuest from "./pages/RegistrationGuest";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
+import Imprint from "./pages/Imprint";
+import Base from "@emotion/styled/base";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
+
       <BrowserRouter>
-        <Routes>
-            <Route index element={<Home />} />
+      <ScrollToTop/>
+          <Routes>
 
-            <Route path="home" element={<Home></Home>} />
+              <Route index element={<Home />} />
 
-            <Route path="login" element={<Login/>} ></Route>
+              <Route path="/home" element={<Home></Home>} />
 
-            <Route path="register" element={<Registration/>} ></Route>
+              <Route path="/login" element={<Login/>} ></Route>
 
-            <Route path="register/host" element={<RegistrationHost/>} ></Route>
+              <Route path="/register" element={<Registration/>} ></Route>
 
-            <Route path="register/guest" element={<RegistrationGuest/>} ></Route>
+              <Route path="/register/host" element={<RegistrationHost/>} ></Route>
 
-            <Route path="find" element={<Find/>} ></Route>
+              <Route path="/register/guest" element={<RegistrationGuest/>} ></Route>
 
-            <Route path="aboutUs" element={<About/>} ></Route>
+              <Route path="/find" element={<Find/>} ></Route>
 
-            <Route path="contact" element={<Contact />} ></Route>
+              <Route path="/aboutUs" element={<About/>} ></Route>
 
-            <Route path="test" element={<Test/>} ></Route>
-            
-            <Route path="*" element={<NoMatch />} ></Route>`
+              <Route path="/contact" element={<Contact />} ></Route>
 
-            <Route path="/find/:clubName" element={<Club/>} ></Route>
+              <Route path="/imprint" element={<Imprint />} ></Route>
 
-            <Route path="/dashboard" element={<Dashboard/>} ></Route>
-        </Routes>
+              <Route path="/test" element={<Test/>} ></Route>
+              
+              <Route path="/*" element={<NoMatch />} ></Route>`
+
+              <Route path="/find/:clubName" element={<Club/>} ></Route>
+
+              <Route path="/dashboard" element={<Dashboard/>} ></Route>
+          </Routes>
+
       </BrowserRouter>
     </>
   )

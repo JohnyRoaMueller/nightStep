@@ -19,11 +19,12 @@ export const NightStepLogo = styled('div')`
   &:hover {
     filter: invert(0%) brightness(100%) grayscale(0%); /* Beim Hover wird der Filter entfernt */
   }
+
 `;
 
 // Appbar Frame
 export const AppbarFrame = styled(Box)`
-  height: 7vh;
+  height: 10vh;
   width: 100%;
   flex-shrink: 0;
   display: flex;
@@ -34,24 +35,8 @@ export const AppbarFrame = styled(Box)`
   margin-bottom: 2em;
   overflow: hidden;
 
-  .AppbarTypo {
-    display: none;
-  }
-
-  .AppbarIcon {
-    display: flex;
-  }
-
   background-color: black;
 
-  @media (min-width: 600px) {
-    .AppbarIcon {
-      display: none;
-    }
-    .AppbarTypo {
-      display: flex;
-    }
-  }
 `;
 
 // Appbar Content
@@ -63,6 +48,8 @@ export const AppbarContent = styled(Box)`
   transform: translateX(50%);
   display: flex;
   flex-direction: row;
+
+  
 `;
 
 // Appbar Link Box Left
@@ -73,10 +60,6 @@ export const AppbarLinkBoxLeft = styled(Box)`
   display: flex;
   align-items: center;
   gap: 20%;
-
-  @media (max-width: 600px) {
-    display: none;
-  }
 
   @media (min-width: 600px) {
     display: flex;
@@ -128,6 +111,8 @@ export const AccountLink = styled(Box)`
   align-items: center;
   gap: 10px;
 
+  
+
 `;
 
 // Account Icon
@@ -142,10 +127,13 @@ export const AppbarLink = styled(Link)`
 
 export const TypoBody1Link = styled(TypoBody1)`
     font-weight: 600;
-
     
   &:hover {
     color: #ff8000; /* Beim Hover wird der Filter entfernt */
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 
 
@@ -155,6 +143,8 @@ export const TypoBody1HOM = styled(TypoBody1)`
     display: none;
 
     font-weight: 600;
+
+    text-decoration: none;
 
     @media (min-width: 600px) {
         display: block;

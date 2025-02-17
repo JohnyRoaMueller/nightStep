@@ -32,7 +32,7 @@ export const OverlayRight = styled(Box)<overlayLeft>`
   pointer-events: auto;
 `;
 
-export const LoginBox = styled(Box)`
+export const LoginLogoutBox = styled(Box)`
   position: absolute;
   left: 50%;
   bottom: 50%;

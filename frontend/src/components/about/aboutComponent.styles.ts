@@ -1,23 +1,45 @@
 import { Box, keyframes, styled } from "@mui/material";
 
+export const ContentWrapper = styled(Box)`
+
+    display: flex;
+
+    flex-direction: column;
+
+    position: relative;
+
+    left: 0;
+
+    width: 100%;
+    height: auto;
+
+
+
+`;
+
 export const ContentBox = styled(Box)`
 
-    border: 1px solid red;
+    width: 66%;
+    height: auto;
 
-    width: 30vw;
+    margin-bottom: 10%;
 
-    height: 60vh;
+    margin: 5%;
 
 `;
 
 export const AnimationWrapper = styled(Box)`
-    border: 3px solid green;
-
     position: absolute;
 
     right: 0;
 
     width: 20%;
+    height: auto;
+
+    max-height: 100%;
+
+    overflow: hidden;
+    
 
     display: flex;
     flex-direction: row;
@@ -32,8 +54,6 @@ export const AnimationWrapper = styled(Box)`
 `;
 
 export const FootWrapperLeft = styled(Box)`
-    border: 1px solid red;
-
 
 
     display: flex;
@@ -49,7 +69,7 @@ export const FootWrapperLeft = styled(Box)`
 `;
 
 export const FootWrapperRight = styled(Box)`
-    border: 1px solid red;
+
 
 
 
@@ -75,10 +95,15 @@ export const LeftStep = styled(Box)`
     background-size: cover;
     background-position: center;
 
+
+    transition: opacity 0.5s ease-in-out;
+
     margin-bottom: 10vh;
 
     width: 100%;
     height: 10vh;
+
+    overflowX: hidden;
 
 `;
 
@@ -90,9 +115,14 @@ export const RightStep = styled(Box)`
     background-size: cover;
     background-position: center;
 
+
+    transition: opacity 0.3s ease-in-out;
+
     margin-top: 10vh;
 
     width: 100%;
     height: 10vh;
+
+    overflowX: hidden;
 
 `;

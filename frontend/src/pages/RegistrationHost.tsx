@@ -10,17 +10,18 @@ import Base from "../components/base/base";
 
 
 
-export default function Test() {
+export default function RegistrationHost() {
 
 
     return (
-      <Base children={
+      <Base>
         <>
             {/* ↓↓↓ My Content ↓↓↓ */}
             <RegisterHostForm/>
             {/* ↑↑↑ My Content ↑↑↑ */}
+
         </>
-            }>
+
       </Base>
     )
 }

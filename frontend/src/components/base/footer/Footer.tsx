@@ -21,7 +21,7 @@ export default function Footer() {
                             contact
                         </TypoBody1Link>
                     </CleanLink>
-                    <CleanLink to={'#'}>
+                    <CleanLink to={'/imprint'}>
                         <TypoBody1Link>
                             imprint
                         </TypoBody1Link>

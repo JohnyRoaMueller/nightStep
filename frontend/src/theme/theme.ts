@@ -35,14 +35,14 @@ const theme: ThemeOptions = createTheme({
     // Standard Schriftgröße für den Body
     body1: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontSize: '1rem',
+      fontSize: '1.2rem',
       lineHeight: 1.5,
       color: '#FFFFFF', // Weiß für Text auf dunklem Hintergrund
     },
     // Body Text (Sekundärer Text)
     body2: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      fontSize: '0.875rem',
+      fontSize: '1rem',
       lineHeight: 1.4,
       color: '#B3B3B3', // Helle Grautöne für weniger wichtige Informationen
     },

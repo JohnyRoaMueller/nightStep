@@ -13,7 +13,7 @@ import {
   AppbarLogoBox,
   NightStepLogo,
 } from "./Appbar.styles";
-import fadeInLogin from "../../../functions/animations/fadeInLogin/FadeInLogin";
+import { fadeInLogin, fadeInLogout }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
 
 
 
@@ -57,7 +57,8 @@ export function Appbar() {
 
   return (
     <>
-      {fadeInLogin({ fadeFlag, handleClearIconClick })}
+      {fadeInLogin({ fadeFlag, userdata, handleClearIconClick })}
+
       <AppbarFrame>
         <AppbarContent>
           <AppbarLinkBoxLeft>
@@ -69,24 +70,19 @@ export function Appbar() {
             <AppbarLink to={"/find"}>
               <TypoBody1Link>find</TypoBody1Link>
             </AppbarLink>
-            <AppbarLink to={"/contact"}>
-              <TypoBody1Link>contact</TypoBody1Link>
-            </AppbarLink>
             <AppbarLink to={"/test"}>
               <TypoBody1Link>test</TypoBody1Link>
             </AppbarLink>
           </AppbarLinkBoxLeft>
 
             <AppbarLinkBoxRight>
-              <Link onClick={handleClick}>
+              <AppbarLink onClick={handleClick} to={"#"}>
                   <AccountLinkBox>
                     <AccountIcon />
                     <TypoBody1HOM>{isLoggedIn ? userdata : "Mein Konto"}</TypoBody1HOM> {/* HOM -> HiddenOnMobile */}
                   </AccountLinkBox>
-              </Link>
+              </AppbarLink>
             </AppbarLinkBoxRight>
-
-
         </AppbarContent>
       </AppbarFrame>
     </>

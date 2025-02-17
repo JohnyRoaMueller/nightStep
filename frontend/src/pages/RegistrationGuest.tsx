@@ -6,7 +6,7 @@ import RegisterGuestForm from "../components/form/registerGuestForm/RegisterGues
 
 
 
-export default function Test() {
+export default function RegistrationGuest() {
 
 
     return (

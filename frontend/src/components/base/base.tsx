@@ -6,6 +6,7 @@ import { FullscreenFlexBox, VerticalCentered } from "./baseStyles";
 
 import Footer from "./footer/Footer";
 import { Appbar } from "./appbar/Appbar";
+import ScrollToTop from "../ScrollToTop";
 
 
 
@@ -23,7 +24,6 @@ function Base({children}: BaseProps) {
                 <Box id="VerticalCentered" sx={VerticalCentered}>
                     {children}
                 </Box>
-
             </Box>
             <Footer/>
         </ThemeProvider>

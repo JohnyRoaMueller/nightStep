@@ -1,132 +1,209 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
-import { registerHostFormButton, registerHostFormButtonTypography, registerHostFormContainer, registerHostFormHeaderBox, registerHostFormHeaderTypo } from './registerHostFormStyles'
 import Roles from '../../../../enums/Roles'
+import { CategoryHeader, FormContainer, Line, RegisterButton, TermsTypo, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerHostForm.Styles.ts'
+import { Box, Checkbox, FormControlLabel, Menu, MenuItem, NativeSelect, Select, TextField } from '@mui/material'
+import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from '../../../styled-components/styledTypographie'
+import { CheckBox } from '@mui/icons-material'
+
+
 
 
 
 
 function RegisterHostForm() {
 
-    const [formData, setFormData] = useState({
-        firma: "",
-        anrede: "",
-        titel: "",
-        vorname: "",
-        nachname: "",
-        email: "",
-        rufnummer: "",
-        betreff: "",
-        nachricht: "",
-        role: Roles.HOST,
+    type TermsAccepted = boolean;
+    const [termsAccepted, setTermsAccepted] = useState<TermsAccepted>(false)
+
+    type Date = {
+        day: string,
+        month: string,
+        year: string,
+    }
+    const [date, setDate] = useState<Date>({
+        day: "",
+        month: "",
+        year: "",
     })
 
-    const handleChange = (event) => {
-        console.log("change")
-        console.log(event)
-        console.log(event.target)
-        const {name, value} = event.target
+    type InputEvent = React.ChangeEvent<HTMLInputElement>
+
+    const handleDateChange = (event: InputEvent) => {
+
+        const name = event.target.name
+        const value = event.target.value
+        setDate((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+
+    type FormData = {
+        firstname: string;
+        lastname: string;
+        email: string;
+        emailConfirm: string;
+        gender: string;
+        birthday: string;
+        username: string;
+        password: string;
+        role: Roles;
+    };
+    const [formData, setFormData] = useState<FormData>({
+        firstname: "",
+        lastname: "",
+        email: "",
+        emailConfirm: "",
+        gender: "",
+        birthday: "",
+        username: "",
+        password: "",
+        role: Roles.HOST
+    })
+
+
+    const handleChange = (event: InputEvent) => {
+
+        const name = event.target.name
+        const value = event.target.value
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-
-        console.log("value changed")
-        console.log(formData)
-
-        
     }
 
-    
-    const handleSubmit = (event) => {
-        event.preventDefault() 
+    const handleCheckbox = () => {
+        if (!termsAccepted) {
+        setTermsAccepted(true)
+        } else {
+            setTermsAccepted(false)
+        }
+    }
 
-        console.log("log before fetch")
-        console.log(formData.role)
-        console.log(JSON.stringify(formData))
 
-        fetch(
-            "http://192.168.178.28:8080/api/register",
-            //'http://10.0.2.24:8080/api/register',
+    type ButtonEvent = React.MouseEvent<HTMLButtonElement>
+
+    const handleSubmit = (event: ButtonEvent) => {
+        event.preventDefault();
+
+        fetch('http://10.0.2.24:8080/api/register',
             {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 method: 'POST',
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    ...formData,
+                    birthday: `${date.day}-${date.month}-${date.year}`
+                })
             }
         )
 
-
-
-        const resetData = { ...formData }
-        Object.keys(resetData).forEach(key => {
-            resetData[key] = ""
+        setFormData({
+            firstname: "",
+            lastname: "",
+            email: "",
+            emailConfirm: "",
+            gender: "",
+            birthday: "",
+            username: "",
+            password: "",
+            role: Roles.HOST
         })
-        setFormData(resetData)
+
+        setTermsAccepted(false)
     }
         
 
+    const genderList = [
+        "male",
+        "female",
+        "divers"
+    ]
+
+    const dayList: number[] = [];
+    const monthList: number[] = [];
+    const yearList: number[] = [];
+
+    type FillList = {
+        list: number[],
+        from: number,
+        to: number,
+    };
+    function fillList({ list, from, to }: FillList): void {
+        if(from < to) {
+            for(let i = from; i <= to; i++) list.push(i)
+        } else if(from > to) {
+            for(let i = from; i >= to; i--) list.push(i)} 
+    }
+
+    fillList({ list: dayList, from: 1, to: 31});
+    fillList({ list: monthList, from: 1, to: 12});
+    fillList({ list: yearList, from: 2024, to: 1950});
+
+
     return (
-        <Box id="RegisterGuest-FormContainer" sx={registerHostFormContainer}>
-            <Box sx={registerHostFormHeaderBox}>
-            <Typography sx={registerHostFormHeaderTypo}>Show Berlin your club and reach the community with your events.</Typography>
-            <Typography sx={registerHostFormHeaderTypo}>Register as a host!</Typography>
-            </Box>
-                <form onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={4}>
-                            <TextField label="Anrede" name="anrede" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            { /* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Vorname" name="vorname" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Nachname" name="nachname" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <TextField label="Straße" name="Straße" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <TextField label="Hausnummer" name="Hausnummer" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField label="Rufnummer" name="rufnummer" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
+        <>
+            <FormContainer>
+                <form typeof='submit' onSubmit={handleSubmit}>
+                    <Line>
+                        <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='firstname'helperText='firstname*' required variant='standard' value={formData.firstname} onChange={handleChange} key='textfield-firstname'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='lastname' helperText='lastname*' required variant='standard' required value={formData.lastname} onChange={handleChange} key='textfield-lastname'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='email' helperText='email*' required variant='standard' value={formData.email} onChange={handleChange} key='textfield-email'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='emailConfirm' helperText='confirm email*' required variant='standard' value={formData.emailConfirm} onChange={handleChange} key='textfield-confirmEmail' />
+                    </Line>
+                    <Line>
+                        <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                                <option value='' disabled>{"▒"}</option>
+                                {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
+                        </TextfieldMedium>
 
-                        <hr style={{ border: "5px solid", width: "90%", marginTop: "20px" }}></hr>
+                        <TextfieldShort name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} key='textfield-day' id='textfield-day'>
+                                <option value='' disabled>{"▒"}</option>
+                                {dayList.map((day) => <option value={day} key={day}>{day}</option>)}
+                        </TextfieldShort>
 
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="E-Mail" name="email" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField label="Password" name="password" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={3}>
-                            {/* leeres grid */ }
-                        </Grid>
-                        <Grid item xs={12} sm={12}
-                            sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
-                                <Button sx={registerHostFormButton} type="submit">
-                                    <Typography sx={registerHostFormButtonTypography}>register</Typography>
-                                </Button>
-                        </Grid>
-                    </Grid>
+                        <TextfieldShort name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} key='textfield-month' id='textfield-month'>
+                                <option value='' disabled>{"▒"}</option>
+                                {monthList.map((month) => <option value={month} key={month}>{month}</option>)}
+                        </TextfieldShort>
+
+                        <TextfieldShort name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} key='textfield-year' id='textfield-year'>
+                                <option value='' disabled>{"▒"}</option>
+                                {yearList.map((year) => <option value={year} key={year}>{year}</option>)}
+                        </TextfieldShort>
+
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name='username' helperText='username*' required value={formData.username} onChange={handleChange} key='textfield-username'/>
+                        <TermsWrapper>
+                            <Checkbox required checked={termsAccepted} onChange={handleCheckbox}/>
+                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
+                        </TermsWrapper>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name= 'password' helperText ='password*' required value={formData.password} onChange={handleChange} key='textfield-password'></TextfieldMedium>
+                        <RegisterButton type='submit' key='Button-register'>
+                            Create Account
+                        </RegisterButton>
+                    </Line>
                 </form>
-        </Box>
+            </FormContainer>
+
+        </>
     )
 }
 

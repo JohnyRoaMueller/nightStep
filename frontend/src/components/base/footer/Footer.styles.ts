@@ -58,10 +58,6 @@ export const CleanLink = styled(Link)`
 `;
 
 export const TypoBody1Link = styled(TypoBody1)`
-    font-weight: 600;
-
-
-
     
     &:hover {
         color: #ff8000; /* Beim Hover wird der Filter entfernt */

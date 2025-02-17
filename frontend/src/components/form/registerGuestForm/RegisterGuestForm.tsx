@@ -132,28 +132,6 @@ function RegisterGuestForm() {
     fillList({ list: yearList, from: 2024, to: 1950});
 
 
-
-
-
-
-    /*
-    const dayList = []
-    const fillDayList = () => {
-        for(let i = 0; i <= 31; i++) dayList.push(i)}
-
-    const monthList = []
-    const fillMonthList = () => {
-        for(let i = 0; i <= 12; i++) monthList.push(i)
-    }
-
-    const yearList = []
-    const fillYearList = () => {
-        for(let i = 1933; i <= 2024; i++) fillYearList.push(i)
-    }
-        */
-
-
-
     return (
         <>
             <FormContainer>

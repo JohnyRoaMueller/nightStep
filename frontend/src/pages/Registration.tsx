@@ -8,7 +8,7 @@ import RegistrationUI from "../components/ui/registrationUI/RegistrationUI";
 
 
 
-export default function Test() {
+export default function Registration() {
 
 
     return (

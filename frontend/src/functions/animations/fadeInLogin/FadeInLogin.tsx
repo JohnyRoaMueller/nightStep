@@ -1,13 +1,14 @@
 import { Fade } from "@mui/material";
 import LoginForm from "../../../components/form/loginForm/LoginForm";
-import { OverlayLeft, OverlayRight, LoginBox, ClearIconStyled } from "./fadeInLoginStyles";
+import { OverlayLeft, OverlayRight, LoginBox, ClearIconStyled, LoginLogoutBox } from "./fadeInLoginStyles";
 
 type fadeInLoginFancyprops = {
     fadeFlag: boolean;
+    userdata: string;
     handleClearIconClick: () => void;
 };
 
-const fadeInLogin = ({ fadeFlag, handleClearIconClick }: fadeInLoginFancyprops) => {
+export const fadeInLogin = ({ fadeFlag, userdata, handleClearIconClick }: fadeInLoginFancyprops) => {
     if (!fadeFlag) return null;
 
     const overlayElements = [];
@@ -37,14 +38,12 @@ const fadeInLogin = ({ fadeFlag, handleClearIconClick }: fadeInLoginFancyprops) 
     // Login Box
     overlayElements.push(
         <Fade in={fadeFlag} timeout={1000}>
-            <LoginBox>
-                <ClearIconStyled key="login-register-transition-appbar-clear-icon" onClick={handleClearIconClick}/>
-                <LoginForm />
-            </LoginBox>
+                 <LoginLogoutBox>
+                    <ClearIconStyled key="login-register-transition-appbar-clear-icon" onClick={handleClearIconClick}/>
+                    <LoginForm></LoginForm>
+                </LoginLogoutBox>
         </Fade>
     );
 
     return <>{overlayElements}</>;
 };
-
-export default fadeInLogin
