@@ -40,7 +40,7 @@ export function Appbar() {
     if (jwtToken && jwtToken !== "" && jwtToken !== undefined) {
       setIsLoggedIn(true)
       console.log("fetch aus Appbar")
-      fetch('http://10.0.2.24:8080/api/userdata', {
+      fetch('http://192.168.178.28:8080/api/userdata', {
         method: "GET",
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -78,7 +78,7 @@ export function Appbar() {
               <AppbarLink onClick={handleClick} to={"#"}>
                   <AccountLinkBox>
                     <AccountIcon />
-                    <TypoBody1HOM>{isLoggedIn ? userdata : "Mein Konto"}</TypoBody1HOM> {/* HOM -> HiddenOnMobile */}
+                    <TypoBody1HOM>{isLoggedIn ? userdata : ""}</TypoBody1HOM> {/* HOM -> HiddenOnMobile */}
                   </AccountLinkBox>
               </AppbarLink>
             </AppbarLinkBoxRight>

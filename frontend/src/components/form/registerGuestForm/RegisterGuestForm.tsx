@@ -10,6 +10,8 @@ import { TypoBody1, TypoH2 } from '../../../styled-components/styledTypographie'
 
 function RegisterGuestForm() {
 
+    const [check, setCheck] = useState(false)
+
     type Date = {
         day: string,
         month: string,
@@ -69,13 +71,21 @@ function RegisterGuestForm() {
         }));
     }
 
+    const onCheckboxChange = () => {
+        if (!check) {
+            setCheck(true)
+        } else {
+            setCheck(false)
+        }
+    }
+
 
     type ButtonEvent = React.MouseEvent<HTMLButtonElement>
 
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        fetch('http://10.0.2.24:8080/api/register',
+        fetch('http://192.168.178.28:8080/api/register',
             {
                 headers: {
                     'Accept': 'application/json',
@@ -100,6 +110,7 @@ function RegisterGuestForm() {
             password: "",
             role: Roles.GUEST
         })
+        setCheck(false)
     }
         
 
@@ -177,7 +188,7 @@ function RegisterGuestForm() {
                     <Line>
                         <TextfieldMedium name='username' helperText='username' value={formData.username} onChange={handleChange} key='textfield-username'/>
                         <TermsWrapper>
-                            <Checkbox onChange={handleChange}/>
+                            <Checkbox required checked={check} onChange={onCheckboxChange} />
                             <TypoBody1>I have read and agree to the Terms of Use</TypoBody1>
                         </TermsWrapper>
                     </Line>

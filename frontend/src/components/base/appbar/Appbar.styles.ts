@@ -140,15 +140,13 @@ export const TypoBody1Link = styled(TypoBody1)`
 `;
 
 export const TypoBody1HOM = styled(TypoBody1)`
-    display: none;
 
     font-weight: 600;
 
     text-decoration: none;
 
-    @media (min-width: 600px) {
-        display: block;
-    }
+
+
 
     &:hover {
       color: #ff8000; /* Beim Hover wird der Filter entfernt */
