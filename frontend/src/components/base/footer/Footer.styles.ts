@@ -23,6 +23,8 @@ export const FooterFrame = styled(Box)`
     align-items: center;
     justify-content: center;
 
+    margin-top: auto;
+
 `;
 
 export const ContentFrame = styled(Box)`

@@ -22,8 +22,8 @@ function Base({children}: BaseProps) {
                 <Box id="VerticalCentered" sx={VerticalCentered}>
                     {children}
                 </Box>
+                <Footer/>
             </Box>
-            <Footer/>
         </ThemeProvider>
         </>
     )

@@ -1,8 +1,10 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { loginFormContainer, loginFormTextField, LoginFormTypoBox } from "./loginFormStyles";
+import { FormWrapper, LoginBox, LoginButton, LoginContainer, LoginFormContainer, loginFormContainer, loginFormTextField, LoginFormTypoBox, LoginTextField, SignInBox, SignInButton } from "./LoginForm.Styles";
 import { Link, useLocation } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 import { Token } from "@mui/icons-material";
+import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../../styled-components/styledTypographie";
+import { CleanLink } from "../../../styled-components/styledLink";
 
 interface loginDataType {
     email: string,
@@ -38,7 +40,8 @@ function LoginForm() {
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        fetch("http://192.168.178.28:8080/api/login", { 
+        fetch(//"http://192.168.178.28:8080/api/login"
+                "http://10.0.2.24:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {
@@ -85,38 +88,28 @@ function LoginForm() {
 
 
     return (
-        <Box id={"LoginFormContainer"} sx={loginFormContainer}>
+
             <form onSubmit={handleSubmit}>
-                <Box id={"LoginFormTypoBox"} sx={LoginFormTypoBox}>
-                    <TextField label="Benutzername" variant="standard" name="username" value={loginData.username} onChange={handleChange}></TextField>
-                    <TextField label="Password" variant="standard" name="password" value={loginData.password} onChange={handleChange}></TextField>
-                </Box>
-                <Box sx={{paddingTop: '10%'}}>
-
-                        <Button type="submit">
-                            <Typography>
-                                login
-                            </Typography>
-                        </Button>
-
-                </Box>
-                <Box>
-                    <Link to={location.pathname === "/register" ? "#" : "/register"} 
-                          onClick={() => {if (location.pathname === "/register") document.getElementById("login-register-transition-appbar-clear-icon")?.click()}}>
-                        <Button sx={{marginTop: '15%'}}>
-                            <Typography>
-                                sign up here
-                            </Typography>
-                            <Typography>
-                                {userdata}
-                            </Typography>
-                        </Button>
-                    </Link>
-                </Box>
-
+                <FormWrapper>
+                    <LoginBox>
+                        <LoginTextField label="Benutzername" variant="standard" name="username" value={loginData.username} onChange={handleChange}></LoginTextField>
+                        <LoginTextField label="Password" variant="standard" name="password" value={loginData.password} onChange={handleChange}></LoginTextField>
+                        <LoginButton type="submit"><TypoBody1>Login</TypoBody1></LoginButton>
+                    </LoginBox>
+                    <hr></hr>
+                    <SignInBox>
+                        <TypoH2>No account yet?</TypoH2>
+                        <CleanLink to={"/register"}>
+                            <SignInButton>sign in</SignInButton>
+                        </CleanLink>
+                    </SignInBox>
+                </FormWrapper>
             </form>
-        </Box>
+
 )}
 
 export default LoginForm
 
+
+
+{/*  <Link to={location.pathname === "/register" ? "#" : "/register"} onClick={() => {if (location.pathname === "/register") document.getElementById("login-register-transition-appbar-clear-icon")?.click()}}> </Link> */}

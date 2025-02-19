@@ -32,24 +32,35 @@ export const OverlayRight = styled(Box)<overlayLeft>`
   pointer-events: auto;
 `;
 
-export const LoginLogoutBox = styled(Box)`
-  position: absolute;
-  left: 50%;
-  bottom: 50%;
-  transform: translate(-50%, 50%);
-  height: 40%;
-  width: 40%;
+export const LoginLogoutOverlay = styled(Box)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+
   background-color: black;
   z-index: 1000;
   display: flex;
   justify-content: center;
-  border-radius: 20%;
+  align-items: center;
+
+  overflow: hidden;
+`;
+
+export const LoginLogoutBox = styled(Box)`
+  display: flex;
+  flex-direction: column;
+
 `;
 
 export const ClearIconStyled = styled(ClearIcon)`
-  position: absolute;
-  right: 0;
   color: white;
+
+  align-self: flex-end;
+
+  padding-bottom: 2%;
 `;
 
 
