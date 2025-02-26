@@ -59,20 +59,13 @@ export const LoginButton = styled(Button)`
 export const SignInBox = styled(Box)`
     display: flex;
     flex-direction: column;
+
     justify-items: center;
-    text-align: center;
 
 `;
 
 export const SignInButton = styled(Button)`
     border: 1px dotted white;
-    
+
+    width: 100%;
 `;
-
-export const SignInLink = styled(Link)`
-    text-decoration: none !important;
-
-`;
-
-
-

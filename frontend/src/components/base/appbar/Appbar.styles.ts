@@ -140,15 +140,28 @@ export const TypoBody1Link = styled(TypoBody1)`
 `;
 
 export const TypoBody1HOM = styled(TypoBody1)`
-
     font-weight: 600;
 
     text-decoration: none;
 
 
+  @media(min-width: 600px) {
+    display: block;
+  }
 
+@media (max-width: 600px) {
+    &.hiddenOnMobile {
+      display: none;
+    }
+  }
 
     &:hover {
       color: #ff8000; /* Beim Hover wird der Filter entfernt */
     }
+`;
+
+export const HiddenOnMobile = styled(Box)`
+  @media (max-width: 600px) {
+      display: none;
+  }
 `;

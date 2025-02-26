@@ -18,6 +18,7 @@ import About from "./pages/About";
 import Imprint from "./pages/Imprint";
 import Base from "@emotion/styled/base";
 import ScrollToTop from "./components/ScrollToTop";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -52,6 +53,8 @@ function App() {
               <Route path="/*" element={<NoMatch />} ></Route>`
 
               <Route path="/find/:clubName" element={<Club/>} ></Route>
+
+              <Route path="/uesr/:username" element={<User/>} ></Route>
 
               <Route path="/dashboard" element={<Dashboard/>} ></Route>
           </Routes>

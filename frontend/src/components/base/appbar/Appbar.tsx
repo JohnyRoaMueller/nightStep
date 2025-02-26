@@ -11,8 +11,11 @@ import {
   TypoBody1Link,
   AppbarLogoBox,
   NightStepLogo,
+  HiddenOnMobile,
 } from "./Appbar.styles";
-import { fadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
+import { FadeInLogin, fadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
+import { Box } from "@mui/material";
+import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
 
 
@@ -22,7 +25,7 @@ export function Appbar() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  const [userdata, setUserdata] = useState("")
+  const [username, setUsername] = useState("")
   
 
   const handleClick = () => {
@@ -34,30 +37,27 @@ export function Appbar() {
   };
 
   useEffect(() => {
-    const jwtToken = localStorage.getItem("jwtToken")
-    console.log("jwtToken: ", jwtToken)
-
-    if (jwtToken && jwtToken !== "" && jwtToken !== undefined) {
-      setIsLoggedIn(true)
       console.log("fetch aus Appbar")
-      fetch('http://192.168.178.28:8080/api/userdata', {
+      fetch('http://192.168.178.28:8080/api/me', {
         method: "GET",
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
-          'Authorization': 'Bearer ' + jwtToken // Include the jwtToken in the Authorization header
-        }
+        },
+        credentials: "include",
       })
       .then(async (response) => {
-        const userdata = await response.text()
-        setUserdata(userdata)
+        if(response.ok) {
+        const username = await response.text()
+        setUsername(username)
+        setIsLoggedIn(true)
+        }
       })
-    }
+
   }, [])
 
   return (
     <>
-      {fadeInLogin({ fadeFlag, userdata, handleClearIconClick })}
-
+      <FadeInLogin fadeFlag={fadeFlag} isLoggedIn={isLoggedIn} handleClearIconClick={handleClearIconClick} />
       <AppbarFrame>
         <AppbarContent>
           <AppbarLinkBoxLeft>
@@ -78,7 +78,9 @@ export function Appbar() {
               <AppbarLink onClick={handleClick} to={"#"}>
                   <AccountLinkBox>
                     <AccountIcon />
-                    <TypoBody1HOM>{isLoggedIn ? userdata : ""}</TypoBody1HOM> {/* HOM -> HiddenOnMobile */}
+                    <TypoBody1>
+                      {isLoggedIn ? username : <HiddenOnMobile className="hiddenOnMobile">Mein Konto</HiddenOnMobile>}
+                    </TypoBody1> {/* HOM -> HiddenOnMobile */}
                   </AccountLinkBox>
               </AppbarLink>
             </AppbarLinkBoxRight>

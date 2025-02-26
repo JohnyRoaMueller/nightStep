@@ -20,37 +20,39 @@ function MainContentVerticalUI() {
     const [clubs, setClubs] = useState<ClubType[]>([])
 
 
-    const urls = [
-        'http://10.0.2.24:8080/api/home', // pc damago
-        // 'http://192.168.178.28:8080/api/home', // pc home
-      ];
+    const url = 
+        // 'http://10.0.2.24:8080/api/home' // pc damago
+         'http://192.168.178.28:8080/api/home' // pc home
+
+
+    
+ 
 
 
       useEffect(() => {
         const fetchData = async () => {
-            for (const url of urls) {
                 try {
-                    console.log("iteration");
                     const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`fetching ${url} failed`);
-                    } else {
+
+                    if (!response.ok) throw new Error(`fetching ${url} failed`);
+
+                    else
+                    {
                         console.log(`fetching ${url} successful`);
                         const data = await response.json();
                         setClubs(data);
                         console.log(data)
                     }
-                } catch (error) {
-                    if (error instanceof Error) {
-                        console.log(`${error.message} at ${url}`);
-                    } else {
-                        console.log('unknown error for' + url);
-                    }
-                    continue;
+
+                } catch (error) { 
+                    
+                    if (error instanceof Error) console.log(`${error.message} at ${url}`);
+
+                    else console.log('unknown error for' + url);
                 }
-            }
         };
     
+
         fetchData();  // calling the async function inside the useEffekt()
     }, []);
 

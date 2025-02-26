@@ -31,7 +31,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, java.io.IOException {
 		// Get token from the Authorization header
-		String jws = request.getHeader(HttpHeaders.AUTHORIZATION);
+		String jws = request.getHeader(HttpHeaders.COOKIE);
 		if (jws != null) {
 			// Verify token and get user
 			String user = jwtService.getAuthUser(request);

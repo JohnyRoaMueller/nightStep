@@ -3,12 +3,16 @@ package com.softwave.clubstep.services;
 import java.security.Key;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -43,23 +47,27 @@ import jakarta.servlet.http.HttpServletRequest;
 
 
 
-@Component
+@Service
 public class JwtService {
 
-    public JwtService() {};
+    Logger logger = LoggerFactory.getLogger(JwtService.class);
 
-
-
-    //* Constants are capitalized - not a Enumaration */
-    static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    
     static final long EXPIRATIONTIME = 86400000;
 
     static final String PREFIX = "Bearer";
 
+    //* Constants are capitalized - not a Enumaration */
+    @Value("${jwt.secret}")
+    private String secretKeyString;
 
+    private Key KEY;
 
+    public JwtService() {}
 
+    @PostConstruct
+    public void keyInit() {
+        this.KEY = Keys.hmacShaKeyFor(secretKeyString.getBytes());
+    };
 
 
     public String getToken(String username) {
@@ -76,7 +84,7 @@ public class JwtService {
 
 
     public String getAuthUser(HttpServletRequest request) {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = request.getHeader(HttpHeaders.COOKIE).substring(4);
 
         if (token != null) {
             String user = Jwts.parserBuilder()

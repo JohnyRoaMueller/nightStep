@@ -14,8 +14,8 @@ export const RegistrationWrapper = styled(Box)({
   "@media(min-width: 600px)": {
     flexDirection: "row",
 
-    height: "100vh",
-    width: "100%",
+    height: "70vh",
+    width: "70%",
 
     gap: '3%',
   },

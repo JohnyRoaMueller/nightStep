@@ -53,9 +53,7 @@ public class BaseUser {
     this.phonenumber = phonenumber;
     };
 
-
-
-
+    
                   {/*getter / setter */}
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
     

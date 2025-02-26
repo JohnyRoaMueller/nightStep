@@ -1,5 +1,7 @@
 package com.softwave.clubstep.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,8 @@ import com.softwave.clubstep.domain.repository.UserAuthRepository;
 
 @Service
 public class AuthenticateService {
+
+    Logger logger = LoggerFactory.getLogger(AuthenticateService.class);
     
     @Autowired
     JwtService jwtService;
@@ -25,11 +29,15 @@ public class AuthenticateService {
         String savedPassword = null;
 
         
-        if (token != null) {return ResponseEntity.ok(token);} 
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("email or password is wrong");
 
+        if (token != null) {
+            logger.info("token aus getToken:", token);
+            return ResponseEntity.ok(token);
+        } 
+
+        else {
+            logger.info("Bad request vom AuthSerice");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("email or password is wrong");
+        }
     }
-    
-
-
 }
