@@ -1,5 +1,6 @@
 package com.softwave.clubstep.security.authentication;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,11 +22,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
-	private final JwtService jwtService;
 
-	public AuthenticationFilter(JwtService jwtService) {
-		this.jwtService = jwtService;
-	}
+	@Autowired
+	JwtService jwtService;
+
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

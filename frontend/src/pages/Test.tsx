@@ -12,7 +12,8 @@ const sendCookie = () => {
 }
 
     const logout = () => {
-        fetch("http://192.168.178.28:8080/api/logout", {
+        fetch(// "http://192.168.178.28:8080/api/logout", {
+                "http://10.0.2.24:8080/api/logout", {
             credentials: "include"
         })   
 }

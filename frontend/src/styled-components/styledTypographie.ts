@@ -35,3 +35,23 @@ export const TypoBody2 = styled(Typography)(({ theme }) => ({
     color: theme.typography.body2.color,
 }));
 
+export const TypoWarning = styled(Typography)(({ theme }) => ({
+    fontFamily: theme.typography.body1.fontFamily,
+    fontSize: theme.typography.body1.fontSize,
+    lineHeight: theme.typography.body1.lineHeight,
+    color: theme.palette.warning.main,
+    fontWeight: 600,
+    backgroundColor: theme.palette.warning.contrastText,
+    padding: '8px 12px',
+    borderRadius: '4px',
+  }));
+
+export const TypoError = styled(Typography)(({ theme }) => ({
+    fontFamily: theme.typography.body1.fontFamily,
+    fontSize: theme.typography.body1.fontSize,
+    lineHeight: theme.typography.body1.lineHeight,
+    color: theme.palette.error.main,
+    fontWeight: 600,
+    padding: '8px 12px',
+    borderRadius: '4px',
+})); 

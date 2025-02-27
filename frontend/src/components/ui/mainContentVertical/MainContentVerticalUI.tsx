@@ -21,8 +21,8 @@ function MainContentVerticalUI() {
 
 
     const url = 
-        // 'http://10.0.2.24:8080/api/home' // pc damago
-         'http://192.168.178.28:8080/api/home' // pc home
+         'http://10.0.2.24:8080/api/home' // pc damago
+         // 'http://192.168.178.28:8080/api/home' // pc home
 
 
     

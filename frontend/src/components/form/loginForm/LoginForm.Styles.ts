@@ -20,15 +20,12 @@ export const FormWrapper = styled(Box)`
 `;
 
 export const LoginBox = styled(Box)`
-
-
+    position: relative;
     display: flex;
     flex-direction: column;
     align-content: center;
 
     gap: 1em;
-
-
 
 
     @media (max-width: 600px): {
@@ -47,6 +44,11 @@ export const LoginTextField = styled(TextField)`
 
 `;
 
+export const LoginButtonWrapper = styled (Button)`
+    padding: 0;
+
+`;
+
 export const LoginButton = styled(Button)`
     border: 1px dotted white;
 
@@ -54,6 +56,22 @@ export const LoginButton = styled(Button)`
 
     background-color: black;
 
+`;
+
+export const LoginFailedPopUp = styled(Box)`
+  background-color: black;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  aligntext-align: center;
+  justify-items: center;
+  align-items: center;
+
+  pointer-events: none;
+  cursor: none;
+
+  z-index: 10;
 `;
 
 export const SignInBox = styled(Box)`

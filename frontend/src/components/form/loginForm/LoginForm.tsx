@@ -1,9 +1,9 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { FormWrapper, LoginBox, LoginButton, LoginContainer, LoginFormContainer, loginFormContainer, loginFormTextField, LoginFormTypoBox, LoginTextField, SignInBox, SignInButton } from "./LoginForm.Styles";
-import { Link, useLocation } from "react-router-dom";
+import { Box, Button, Fade, TextField, Typography } from "@mui/material";
+import { FormWrapper, LoginBox, LoginButton, LoginButtonWrapper, LoginFailedPopUp, LoginTextField, SignInBox, SignInButton } from "./LoginForm.Styles";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 import { Token } from "@mui/icons-material";
-import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../../styled-components/styledTypographie";
+import { TypoBody1, TypoBody2, TypoError, TypoH1, TypoH2, TypoWarning } from "../../../styled-components/styledTypographie";
 import { CleanLink } from "../../../styled-components/styledLink";
 
 interface loginDataType {
@@ -14,13 +14,24 @@ interface loginDataType {
 function LoginForm() {
 
     const location = useLocation()
+    const navigateTo = useNavigate();
+
 
     const [loginData, setLoginData] = useState({
         username: "",
         password: "",
     })
 
-    const UserContext = createContext(loginData)
+    const [popUpFlag, setPopUpFlag] = useState(false)
+
+
+    const handleFailedLogin = () => {
+        setPopUpFlag(true)
+
+        setTimeout(() => {
+            setPopUpFlag(false)
+        }, 1500)
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -38,8 +49,8 @@ function LoginForm() {
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        fetch("http://192.168.178.28:8080/api/login", {
-                // "http://10.0.2.24:8080/api/login", { 
+        fetch(//"http://192.168.178.28:8080/api/login", {
+                 "http://10.0.2.24:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {
@@ -48,6 +59,10 @@ function LoginForm() {
                     },
             credentials: "include"
         })
+        .then(response => {
+            if (response.ok) navigateTo("/home"); else handleFailedLogin()
+        })
+
         const resetData = { ...loginData }
         Object.keys(loginData).forEach(key => {
             resetData[key] = "";
@@ -65,7 +80,14 @@ function LoginForm() {
                     <LoginBox>
                         <LoginTextField label="Username" variant="standard" name="username" value={loginData.username} onChange={handleChange}></LoginTextField>
                         <LoginTextField label="Password" variant="standard" name="password" value={loginData.password} onChange={handleChange}></LoginTextField>
-                        <LoginButton type="submit"><TypoBody1>Login</TypoBody1></LoginButton>
+                        <LoginButtonWrapper>
+                            <LoginButton type="submit"><TypoBody1>Login</TypoBody1></LoginButton>
+                            <Fade in={popUpFlag} timeout={{enter: 300, exit: 300}}>
+                                <LoginFailedPopUp>
+                                    <TypoError>LOGIN FAILED</TypoError>
+                                </LoginFailedPopUp>
+                            </Fade>
+                        </LoginButtonWrapper>
                     </LoginBox>
                     <hr></hr>
                     <SignInBox>

@@ -86,8 +86,8 @@ function RegisterHostForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        fetch('http://192.168.178.28:8080/api/register',
-                // "http://10.0.2.24:8080/api/register",
+        fetch(//'http://192.168.178.28:8080/api/register',
+                 "http://10.0.2.24:8080/api/register",
             {
                 headers: {
                     'Accept': 'application/json',
