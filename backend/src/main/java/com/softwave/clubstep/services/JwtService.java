@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.security.authentication.AuthenticationFilter;
 
 import io.jsonwebtoken.*;
@@ -73,9 +74,10 @@ public class JwtService {
     };
 
 
-    public String getToken(String username) {
+    public String getToken(UserAuth loginRequest) {
         String token = Jwts.builder()
-                        .setSubject(username)
+                        .setSubject(loginRequest.getUsername())
+                        .claim("role", loginRequest.getRole())
                         .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                         .signWith(KEY)
                         .compact();
@@ -87,7 +89,12 @@ public class JwtService {
 
 
     public String getAuthUser(HttpServletRequest request) {
+
+        if (request.getHeader(HttpHeaders.COOKIE) == null) return null;
+
         String token = request.getHeader(HttpHeaders.COOKIE).substring(4);
+
+
 
         if (token != null) {
             String user = Jwts.parserBuilder()

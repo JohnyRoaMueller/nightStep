@@ -51,6 +51,8 @@ export function Appbar() {
         const username = await response.text()
         setUsername(username)
         setIsLoggedIn(true)
+        } else if (!response.ok) {
+          setIsLoggedIn(false)
         }
       })
 

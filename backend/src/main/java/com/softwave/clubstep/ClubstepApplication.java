@@ -40,6 +40,8 @@ public class ClubstepApplication implements CommandLineRunner {
 
 
 	public static void main(String[] args) {
+		
+
 		SpringApplication.run(ClubstepApplication.class, args);
 		System.out.println("Application started");
 	}
@@ -47,6 +49,8 @@ public class ClubstepApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
+
+
 
 
 		String name = "clubName";

@@ -1,6 +1,8 @@
 package com.softwave.clubstep.controllers;
 
 import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -51,23 +53,33 @@ public class LoginController {
 
 
     @PostMapping("/api/login")
-    public ResponseEntity<String> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
         System.out.println("api/login erreicht");
 
         UserAuth currentUser = userService.getUserOrNull(loginRequest.getUsername());
 
         if (currentUser == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
 
         if (!passwordService.comparePasswort(currentUser, loginRequest)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password is wrong");
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("message", "Password is wrong");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         }
 
         response.addCookie(
             cookieService.createJwtAuthCookie(
-                jwtProvider.getToken(
-                    loginRequest.getUsername())));
-        return ResponseEntity.ok("Login successful");
+                jwtProvider.getToken(loginRequest)));
+        
+        Map<String, Object> hashResponse = new HashMap<>();
+        hashResponse.put("username", currentUser.getUsername());
+        hashResponse.put("role", currentUser.getRole().toString());
+
+        return ResponseEntity.ok(hashResponse);
         }
 }

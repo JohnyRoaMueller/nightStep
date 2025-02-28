@@ -43,13 +43,13 @@ function LoginForm() {
     }
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        fetch(//"http://192.168.178.28:8080/api/login", {
+        const response = await fetch(//"http://192.168.178.28:8080/api/login", {
                  "http://10.0.2.24:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
@@ -59,10 +59,12 @@ function LoginForm() {
                     },
             credentials: "include"
         })
-        .then(response => {
-            if (response.ok) navigateTo("/home"); else handleFailedLogin()
-        })
-
+        if (response.ok) 
+        {
+            const responseJSON = await response.json();
+            sessionStorage.setItem("role", responseJSON.role)
+        }
+        
         const resetData = { ...loginData }
         Object.keys(loginData).forEach(key => {
             resetData[key] = "";

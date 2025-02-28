@@ -1,7 +1,4 @@
 import { Box, Button, Input, styled, TextField } from "@mui/material";
-import { TypoH2 } from "../../../styled-components/styledTypographie";
-import { Link } from "react-router-dom";
-
 
 export const FormWrapper = styled(Box)`
 

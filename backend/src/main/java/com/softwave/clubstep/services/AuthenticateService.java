@@ -24,7 +24,7 @@ public class AuthenticateService {
 
         System.out.println(username);
         
-        String token = jwtService.getToken(username);
+        String token = jwtService.getToken(null);
         
         String savedPassword = null;
 

@@ -26,11 +26,6 @@ export default function Footer() {
                             imprint
                         </TypoBody1Link>
                     </CleanLink>
-                    <CleanLink to={'/test'}>
-                        <TypoBody1Link>
-                            Logout
-                        </TypoBody1Link>
-                    </CleanLink>
                 </ContentFrame>
                 <ContentFrame>
 
