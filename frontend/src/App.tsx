@@ -7,7 +7,6 @@ import NoMatch from "./pages/NoMatch"
 import Find from "./pages/Find";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
-import { useEffect, useState } from "react";
 
 import Club from "./pages/Club";
 import Registration from "./pages/Registration";
@@ -16,7 +15,6 @@ import RegistrationGuest from "./pages/RegistrationGuest";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Imprint from "./pages/Imprint";
-import Base from "@emotion/styled/base";
 import ScrollToTop from "./components/ScrollToTop";
 import User from "./pages/User";
 
@@ -54,7 +52,7 @@ function App() {
 
               <Route path="/find/:clubName" element={<Club/>} ></Route>
 
-              <Route path="/uesr/:username" element={<User/>} ></Route>
+              <Route path="/user/:username" element={<User/>} ></Route>
 
               <Route path="/dashboard" element={<Dashboard/>} ></Route>
           </Routes>

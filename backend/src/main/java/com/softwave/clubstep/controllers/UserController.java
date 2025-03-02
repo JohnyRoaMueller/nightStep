@@ -1,5 +1,7 @@
 package com.softwave.clubstep.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +35,18 @@ public class UserController {
     
     
     @GetMapping("/api/me")
-    public ResponseEntity<String> getUser(HttpServletRequest request) {
+    public ResponseEntity<Map<String, String>> getUser(HttpServletRequest request) {
 
-      System.out.println("/api/me erreicht");
+      logger.info("/api/me reached");
 
-      String user = jwtService.getAuthUser(request);
+      Map<String, String> userinfo = jwtService.getAuthUser(request);
       
-      if (user == null) {
+      if (userinfo == null) {
           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
       } 
       
-      return ResponseEntity.ok(user);
+      logger.info("userinfo parsing to frontend: " + userinfo);
+      return ResponseEntity.ok(userinfo);
     }
 
 

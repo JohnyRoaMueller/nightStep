@@ -1,5 +1,7 @@
 package com.softwave.clubstep.security.authentication;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +36,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		String jws = request.getHeader(HttpHeaders.COOKIE);
 		if (jws != null) {
 			// Verify token and get user
-			String user = jwtService.getAuthUser(request);
+			Map<String, String> user = jwtService.getAuthUser(request);
 			// Authenticate
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
 					java.util.Collections.emptyList());

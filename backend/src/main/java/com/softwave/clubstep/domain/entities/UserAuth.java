@@ -30,7 +30,7 @@ public class UserAuth {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     private Roles role;
 
 

@@ -2,12 +2,15 @@ package com.softwave.clubstep.services;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.security.authentication.AuthenticationFilter;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.DefaultJwtParserBuilder;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,10 +78,10 @@ public class JwtService {
     };
 
 
-    public String getToken(UserAuth loginRequest) {
+    public String getToken(UserAuth currentUser) {
         String token = Jwts.builder()
-                        .setSubject(loginRequest.getUsername())
-                        .claim("role", loginRequest.getRole())
+                        .setSubject(currentUser.getUsername())
+                        .claim("role", currentUser.getRole().name())
                         .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
                         .signWith(KEY)
                         .compact();
@@ -88,24 +92,33 @@ public class JwtService {
     // eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImV4cCI6MTczNzgwMjQ0NX0.AT0xA48RmXSdTLFMx0wa4bJLU038R9-Xcbv16N6E2eE
 
 
-    public String getAuthUser(HttpServletRequest request) {
+    public Map<String, String> getAuthUser(HttpServletRequest request) {
 
-        if (request.getHeader(HttpHeaders.COOKIE) == null) return null;
+        String cookieHeader = request.getHeader(HttpHeaders.COOKIE);
+        if (cookieHeader == null) return null;
 
-        String token = request.getHeader(HttpHeaders.COOKIE).substring(4);
+        String token = cookieHeader.substring(4);
 
 
 
         if (token != null) {
-            String user = Jwts.parserBuilder()
+            Claims claims = Jwts.parserBuilder()
                 .setSigningKey(KEY)
                 .build()
                 .parseClaimsJws(token.replace(PREFIX, ""))
-                .getBody()
-                .getSubject();
+                .getBody();
 
-                if (user != null)
-                    return user;
+            String username = claims.getSubject();
+            String role = claims.get("role", String.class);
+
+            if (claims != null) {
+                Map<String, String> userinfo = new HashMap<>();
+                userinfo.put("username", username);
+                userinfo.put("role", role);
+                
+                logger.info("userinfo created: " + userinfo);
+                return userinfo;
+            }
         }
         return null;
     }

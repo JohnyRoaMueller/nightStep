@@ -2,6 +2,8 @@ import { Box, Button, Grid, TextField, Typography } from '@mui/material'
 import zIndex from '@mui/material/styles/zIndex'
 import { ContactFormButton, ContactFormButtonTypography, ContactFormContainer, ContactFormHeader, ContactFormHeaderBox, ContactFormHeaderTypo, FormGridContainer } from './ContactFormStyles'
 import { useState } from 'react'
+import { CallToMessage, DividingLine, FormContainer, Line, SubmitButton, TextfieldLong, TextfieldMedium, TextfieldShort } from './ContactForm.Styled'
+import { TypoBody2, TypoH1, TypoH2 } from '../../../styled-components/styledTypographie'
 
 
 
@@ -9,27 +11,19 @@ import { useState } from 'react'
 function ContactForm() {
 
     const [formData, setFormData] = useState({
-        firma: "",
-        anrede: "",
-        titel: "",
-        vorname: "",
-        nachname: "",
+        company: "",
+        name: "",
         email: "",
-        rufnummer: "",
-        betreff: "",
-        nachricht: "",
+        subject: "",
+        message: "",
     })
 
     const handleChange = (event) => {
-        console.log(event)
-        console.log(event.target)
         const {name, value} = event.target
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-        console.log("value changed")
-        console.log(formData.firma)
     }
 
     
@@ -47,49 +41,31 @@ function ContactForm() {
         
 
     return (
-        <Box id="Contact-FormContainer" sx={ContactFormContainer}>
-            <Box sx={ContactFormHeaderBox}>
-                <Typography sx={ContactFormHeaderTypo}>Got a question or just want to say hi?</Typography>
-                <Typography sx={ContactFormHeaderTypo}>Drop us a message, and we’ll get back to you soon!</Typography>
-            </Box>
-                <form onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}>
-                            <TextField label="Firma" name="firma" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField label="Anrede" name="anrede" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField label="Titel" name="titel" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField label="Vorname" name="vorname" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField label="Nachname" name="nachname" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField label="E-Mail" name="email" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField label="Rufnummer" name="rufnummer" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField label="Betreff" name="betreff" variant="standard" onChange={handleChange} fullWidth></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField label="Nachricht" name="nachricht" variant="outlined" onChange={handleChange} fullWidth multiline rows={8}></TextField>
-                        </Grid>
-                        <Grid item xs={12} sm={12}
-                            sx={{display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
-                                <Button sx={ContactFormButton} type="submit">
-                                    <Typography sx={ContactFormButtonTypography}>submit</Typography>
-                                </Button>
-                        </Grid>
-                    </Grid>
+        <>
+            <CallToMessage><TypoH1>Just leave a message</TypoH1></CallToMessage>
+            <FormContainer>
+                <form typeof='submit'>
+                    <Line>
+                        <TextfieldLong name='company' helperText='company' variant='standard' value={formData.company} onChange={handleChange}></TextfieldLong>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='name' helperText='name' variant='standard' value={formData.name} onChange={handleChange}></TextfieldLong>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='email' helperText='email' variant='standard' value={formData.email} onChange={handleChange}></TextfieldLong>
+                    </Line>
+                    <br></br>
+                    <Line>
+                        <TextfieldLong name='subject' helperText='subject' variant='filled' value={formData.subject} onChange={handleChange}></TextfieldLong>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='message' helperText='message' variant='filled' value={formData.message} onChange={handleChange} multiline minRows={4}></TextfieldLong>
+                    </Line>
+                    <SubmitButton onClick={handleSubmit}>send message</SubmitButton>
+                    
                 </form>
-        </Box>
+            </FormContainer>
+        </>
     )
 }
 

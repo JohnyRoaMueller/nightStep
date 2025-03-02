@@ -37,6 +37,7 @@ export const VerticalCentered = {
     position: 'relative',
 
     paddingBottom: '2em',
+    paddingTop: '2em',
 
     // theme styling
     background: (theme) => theme.palette.background.default,

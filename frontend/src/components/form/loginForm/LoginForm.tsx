@@ -49,8 +49,8 @@ function LoginForm() {
         console.log("loginData JSON: ", loginData)
         console.log("loginData String:", JSON.stringify(loginData))
 
-        const response = await fetch(//"http://192.168.178.28:8080/api/login", {
-                 "http://10.0.2.24:8080/api/login", { 
+        const response = await fetch("http://192.168.178.28:8080/api/login", {
+              //   "http://10.0.2.24:8080/api/login", { 
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {
@@ -61,15 +61,22 @@ function LoginForm() {
         })
         if (response.ok) 
         {
-            const responseJSON = await response.json();
-            sessionStorage.setItem("role", responseJSON.role)
+            navigateTo("/home")
+            window.location.reload();
         }
-        
-        const resetData = { ...loginData }
-        Object.keys(loginData).forEach(key => {
-            resetData[key] = "";
-        });
-        setLoginData(resetData)
+        if (!response.ok) 
+        {
+            setPopUpFlag(true)
+            setTimeout(() => {
+                setPopUpFlag(false)
+            }, 1000);
+
+            const resetData = { ...loginData }
+            Object.keys(loginData).forEach(key => {
+                resetData[key] = "";
+            });
+            setLoginData(resetData)
+        }
     }
 
 

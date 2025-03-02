@@ -59,8 +59,7 @@ public class RegistrationService {
                                             newUserAuth.setRole(registeringUser.getRole());       
                 guestRepo.save(newGuest);
                 userAuthRepo.save(newUserAuth);
-                System.out.println("guest created :" + newGuest.getFirstname());   
-                System.out.println("guest created :" + newUserAuth.getPassword());      
+                logger.info("new Guest created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
                 break;
 
             case HOST:
@@ -77,7 +76,7 @@ public class RegistrationService {
                                             newUserAuth.setRole(registeringUser.getRole());   
                 hostRepo.save(newHost);
                 userAuthRepo.save(newUserAuth);
-                System.out.println("host created:" + newUserAuth.getPassword());
+                logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());
                 break;
 
             default:

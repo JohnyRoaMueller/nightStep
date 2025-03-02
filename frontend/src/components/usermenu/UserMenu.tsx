@@ -1,5 +1,5 @@
 import { Box, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { ContentBox, MenuOption, MenuWrapper } from "./userMenu.Styles";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { LocalGasStation } from "@mui/icons-material";
@@ -9,11 +9,28 @@ function UserMenu() {
     const location = useLocation();
 
     const handleLogout = () => {
-        fetch("http://10.0.2.24:8080/api/logout", {
+        fetch(//"http://10.0.2.24:8080/api/logout", {
+            "http://192.168.178.28:8080/api/logout", {
             credentials: "include",
         })
         navigateTo("/home");
+        window.location.reload();
     }
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch("http://192.168.178.28:8080:/api/me", {
+                credentials: "include",
+            })
+            if (response.ok) 
+            {
+                const responseJSON = await response.json();
+                
+            }
+        }
+        fetchData()
+    })
+
 
 
     return (
@@ -22,9 +39,6 @@ function UserMenu() {
                 <ContentBox>
                     <MenuOption>
                         Profile
-                    </MenuOption>
-                    <MenuOption>
-                        Saved events
                     </MenuOption>
                     <MenuOption>
                         Settings

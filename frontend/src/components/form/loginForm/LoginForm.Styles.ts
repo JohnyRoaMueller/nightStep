@@ -69,6 +69,7 @@ export const LoginFailedPopUp = styled(Box)`
   cursor: none;
 
   z-index: 10;
+  
 `;
 
 export const SignInBox = styled(Box)`

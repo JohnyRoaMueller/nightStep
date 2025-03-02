@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Roles from '../../../../enums/Roles'
 import { CategoryHeader, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
 import { Checkbox } from '@mui/material'
-import { TypoBody1, TypoH2 } from '../../../styled-components/styledTypographie'
+import { TypoBody1, TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 
 
 
@@ -85,8 +85,8 @@ function RegisterGuestForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        fetch(//'http://192.168.178.28:8080/api/register',
-                 'http://10.0.2.24:8080/api/register',
+        fetch('http://192.168.178.28:8080/api/register',
+             //    'http://10.0.2.24:8080/api/register',
             {
                 headers: {
                     'Accept': 'application/json',
@@ -190,7 +190,7 @@ function RegisterGuestForm() {
                         <TextfieldMedium name='username' helperText='username' value={formData.username} onChange={handleChange} key='textfield-username'/>
                         <TermsWrapper>
                             <Checkbox required checked={check} onChange={onCheckboxChange} />
-                            <TypoBody1>I have read and agree to the Terms of Use</TypoBody1>
+                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>
                     <Line>

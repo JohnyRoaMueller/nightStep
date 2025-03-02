@@ -1,5 +1,7 @@
 package com.softwave.clubstep.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +23,9 @@ public class RegistrationController {
     @PostMapping("/api/register")
     public void createUser(@RequestBody RegisteringUser registeringUser) {
 
-        System.out.println("/api/register erreicht");
+        Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
+        logger.info("registration successfull");
         registrationService.registerUser(registeringUser);
-
     }
-
-
 }
