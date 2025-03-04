@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softwave.clubstep.base.RegisteringUser;
+import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
 import com.softwave.clubstep.domain.entities.Club;
 import com.softwave.clubstep.domain.entities.Guest;
 import com.softwave.clubstep.domain.entities.UserAuth;

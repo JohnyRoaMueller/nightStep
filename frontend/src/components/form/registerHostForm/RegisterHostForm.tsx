@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, FormContainer, Line, RegisterButton, TermsTypo, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerHostForm.Styles.ts'
-import { Box, Checkbox, FormControlLabel, Menu, MenuItem, NativeSelect, Select, TextField } from '@mui/material'
-import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from '../../../styled-components/styledTypographie'
-import { CheckBox } from '@mui/icons-material'
+import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerHostForm.Styles.ts'
+import { Checkbox } from '@mui/material'
+import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
+import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
 
 
 
@@ -38,6 +38,14 @@ function RegisterHostForm() {
         }))
     }
 
+    const SetNewDate = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            birthday: `${date.day}-${date.month}-${date.year}`
+        }))
+        console.log(formData.birthday)
+    }
+
     type FormData = {
         firstname: string;
         lastname: string;
@@ -47,8 +55,19 @@ function RegisterHostForm() {
         birthday: string;
         username: string;
         password: string;
+        nameOfVenue: string,
+        typeOfVenue: string,
+        capacity: string,
+        cityOfVenue: string,
+        streetOfVenue: string,
+        housenumberOfVenue: string,
+        postcodeOfVenue: string,
+        imageOne: File | null
+        imageTwo: File | null
+        imageThree: File | null
         role: Roles;
     };
+
     const [formData, setFormData] = useState<FormData>({
         firstname: "",
         lastname: "",
@@ -58,6 +77,16 @@ function RegisterHostForm() {
         birthday: "",
         username: "",
         password: "",
+        nameOfVenue: "",
+        typeOfVenue: "",
+        capacity: "",
+        cityOfVenue: "",
+        streetOfVenue: "",
+        housenumberOfVenue: "",
+        postcodeOfVenue: "",
+        imageOne: null,
+        imageTwo: null,
+        imageThree: null,
         role: Roles.HOST
     })
 
@@ -86,21 +115,35 @@ function RegisterHostForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        fetch('http://192.168.178.28:8080/api/register',
-              //   "http://10.0.2.24:8080/api/register",
+        const formDataObject = new FormData();
+        formDataObject.append("firstname", formData.firstname)
+        formDataObject.append("lastname", formData.lastname)
+        formDataObject.append("email", formData.email)
+        formDataObject.append("emailConfirm", formData.emailConfirm)
+        formDataObject.append("gender", formData.gender)
+        formDataObject.append("birthday", formData.birthday)
+        formDataObject.append("username", formData.username)
+        formDataObject.append("password", formData.password)
+        formDataObject.append("nameOfVenue", formData.nameOfVenue)
+        formDataObject.append("typeOfVenue", formData.typeOfVenue)
+        formDataObject.append("capacity", formData.capacity)
+        formDataObject.append("cityOfVenue", formData.cityOfVenue)
+        formDataObject.append("streetOfVenue", formData.streetOfVenue)
+        formDataObject.append("housenumberOfVenue", formData.housenumberOfVenue)
+        formDataObject.append("postcodeOfVenue", formData.postcodeOfVenue)
+        formDataObject.append("role", formData.role)
+        formDataObject.append("imageOne", formData.imageOne)
+        formDataObject.append("imageTwo", formData.imageTwo)
+        formDataObject.append("imageThree", formData.imageThree)
+
+        fetch(// 'http://192.168.178.28:8080/api/register/host',
+                 "http://10.0.2.24:8080/api/register/host",
             {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
                 method: 'POST',
-                body: JSON.stringify({
-                    ...formData,
-                    birthday: `${date.day}-${date.month}-${date.year}`
-                })
+                body: formDataObject,
             }
         )
-
+        // reseting form
         setFormData({
             firstname: "",
             lastname: "",
@@ -110,18 +153,65 @@ function RegisterHostForm() {
             birthday: "",
             username: "",
             password: "",
+            nameOfVenue: "",
+            typeOfVenue: "",
+            capacity: "",
+            cityOfVenue: "",
+            streetOfVenue: "",
+            housenumberOfVenue: "",
+            postcodeOfVenue: "",
+            imageOne: null,
+            imageTwo: null,
+            imageThree: null,
             role: Roles.HOST
         })
-
+        setImageUrls([])
         setTermsAccepted(false)
     }
+
+
+    const [imageUrls, setImageUrls] = useState<string[]>([])
+
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        console.log(file)
+        setFormData((prevData) => ({
+            ...prevData,
+            [event.target.name] : file
+        }))
+
+        const url = URL.createObjectURL(file); // Erstelle eine URL für die Datei
+        setImageUrls((prevData) => {
+            const newImageUrls = [...prevData]; // Kopiere das alte Array
+            newImageUrls[index] = url; // Ändere das gewünschte Element im neuen Array
+            return newImageUrls; // Gib das neue Array zurück
+        })
+      }
+    };
         
 
-    const genderList = [
-        "male",
-        "female",
-        "divers"
-    ]
+    const genderList = ["male","female","divers"]
+    
+    const typeOfVenueList = ["Nightclub", "Bar", "Restaurant", "Gallery", "Theater", "Hostel"]
+
+    const cityList = ["berlin"]
+    
+    const disctrictList = [
+        "Mitte",
+        "Friedrichshain-Kreuzberg",
+        "Pankow",
+        "Charlottenburg-Wilmersdorf",
+        "Spandau",
+        "Steglitz-Zehlendorf",
+        "Tempelhof-Schöneberg",
+        "Neukölln",
+        "Treptow-Köpenick",
+        "Marzahn-Hellersdorf",
+        "Lichtenberg",
+        "Reinickendorf"
+      ]; 
 
     const dayList: number[] = [];
     const monthList: number[] = [];
@@ -164,49 +254,94 @@ function RegisterHostForm() {
                         <TextfieldLong name='emailConfirm' helperText='confirm email*' required variant='standard' value={formData.emailConfirm} onChange={handleChange} key='textfield-confirmEmail' />
                     </Line>
                     <Line>
-                        <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
-                    </Line>
-                    <Line>
                         <TextfieldMedium name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
                                 <option value='' disabled>{"▒"}</option>
                                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
                         </TextfieldMedium>
 
-                        <TextfieldShort name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} key='textfield-day' id='textfield-day'>
+                        <TextfieldShort name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-day' id='textfield-day'>
                                 <option value='' disabled>{"▒"}</option>
                                 {dayList.map((day) => <option value={day} key={day}>{day}</option>)}
                         </TextfieldShort>
 
-                        <TextfieldShort name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} key='textfield-month' id='textfield-month'>
+                        <TextfieldShort name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-month' id='textfield-month'>
                                 <option value='' disabled>{"▒"}</option>
                                 {monthList.map((month) => <option value={month} key={month}>{month}</option>)}
                         </TextfieldShort>
 
-                        <TextfieldShort name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} key='textfield-year' id='textfield-year'>
+                        <TextfieldShort name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-year' id='textfield-year'>
                                 <option value='' disabled>{"▒"}</option>
                                 {yearList.map((year) => <option value={year} key={year}>{year}</option>)}
                         </TextfieldShort>
-
                     </Line>
                     <Line>
                         <TextfieldMedium name='username' helperText='username*' required value={formData.username} onChange={handleChange} key='textfield-username'/>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name= 'password' helperText ='password*' required value={formData.password} onChange={handleChange} key='textfield-password'></TextfieldMedium>
                         <TermsWrapper>
                             <Checkbox required checked={termsAccepted} onChange={handleCheckbox}/>
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>
                     <Line>
-                        <TextfieldMedium name= 'password' helperText ='password*' required value={formData.password} onChange={handleChange} key='textfield-password'></TextfieldMedium>
-                        <RegisterButton type='submit' key='Button-register'>
-                            Create Account
-                        </RegisterButton>
+                        <CategoryHeader><TypoH2>VENUE RELATED</TypoH2></CategoryHeader>
                     </Line>
+                    <Line>
+                        <TextfieldLong name='nameOfVenue'helperText='name of venue*' required variant='standard' value={formData.nameOfVenue} onChange={handleChange} key='textfield-nameOfVenue'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='typeOfVenue'helperText='type of venue*' required variant='standard' select slotProps={{select: {native: true}}} value={formData.typeOfVenue} onChange={handleChange} key='textfield-typeOfVenue'>
+                            <option value='' disabled>{"▒"}</option>
+                            {typeOfVenueList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
+                        </TextfieldLong>
+                    </Line>
+                    <Line>
+                    <TextfieldMedium name='capacity' helperText='capacity' variant='standard' value={formData.capacity} onChange={handleChange} key='textfield-capacity'></TextfieldMedium>
+                    </Line>
+                    <CategoryHeader><TypoBody2>ADDRESS OF VENUE</TypoBody2></CategoryHeader>
+                    <Line>
+                        <TextfieldLong name='cityOfVenue'helperText='city*' select slotProps={{select: {native: true}}} required variant='standard' value={formData.cityOfVenue} onChange={handleChange} key='textfield-cityOfVenue'>
+                            <option value='' disabled>{"▒"}</option>
+                            {cityList.map((city) => <option value={city} key={city}>{city}</option>)}
+                        </TextfieldLong>
+                    </Line>
+                    <Line>
+                        <TextfieldLong name='streetOfVenue'helperText='street*' required variant='standard' value={formData.streetOfVenue} onChange={handleChange} key='textfield-firstname'/>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name='housenumberOfVenue'helperText='housenumber*' required variant='standard' value={formData.housenumberOfVenue} onChange={handleChange} key='textfield-firstname'/>
+                        <TextfieldMedium name='postcodeOfVenue'helperText='postcode*' required variant='standard' value={formData.postcodeOfVenue} onChange={handleChange} key='textfield-firstname'/>
+                    </Line>
+                    <Line>
+                        <PictureHolder>
+                            {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
+                            <input name='imageOne' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 0)}></input>
+                            <img src={imageUrls[0]} style={{height: "100%", width: "100%"}} ></img>
+                        </PictureHolder>
+                    </Line>
+                    <Line>
+                    <PictureHolder>
+                        {!imageUrls[1] && <ImageTypoH2>Upload an image</ImageTypoH2>}
+                            <input name='imageTwo' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 1)}></input>
+                            <img src={imageUrls[1]} style={{height: "100%", width: "100%"}} ></img>
+                        </PictureHolder>
+                    </Line>
+                    <Line>
+                        <PictureHolder>
+                            {!imageUrls[2] && <ImageTypoH2>Upload an image</ImageTypoH2>}
+                            <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 2)}></input>
+                            <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
+                        </PictureHolder>
+                    </Line>
+                    <SubmitButton onClick={handleSubmit}>register</SubmitButton>
                 </form>
             </FormContainer>
 
         </>
     )
 }
+
 
 
 export default RegisterHostForm

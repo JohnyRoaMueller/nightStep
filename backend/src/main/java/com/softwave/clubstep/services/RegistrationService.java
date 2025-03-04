@@ -10,8 +10,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.softwave.clubstep.base.RegisteringUser;
-
+import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
+import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
 import com.softwave.clubstep.domain.entities.Guest;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
@@ -34,54 +34,45 @@ public class RegistrationService {
     @Autowired
     private HostRepository hostRepo;
 
-
-
-    public void registerUser(RegisteringUser registeringUser) {
-
-    
-        logger.debug("User role: {}", registeringUser.getRole());
+    public void registerGuestUser(RegisteringGuestUserDTO registeringUser) {
 
         UserAuth newUserAuth = new UserAuth();
+        Guest newGuest = new Guest();
 
-        switch(registeringUser.getRole()) {
-            
-            case GUEST:
-                Guest newGuest = new Guest();
-                                            newGuest.setFirstname(registeringUser.getFirstname());
-                                            newGuest.setLastname(registeringUser.getLastname());
-                                            newGuest.setEmail(registeringUser.getEmail());
-                                            newGuest.setGender(registeringUser.getGender());
-                                            newGuest.setBirthday(registeringUser.getBirthday());
-                                            //-----------------------------------------------------//
-                                            newUserAuth.setUsername(registeringUser.getUsername());
-                                            newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
-                                            newUserAuth.setEmail(registeringUser.getEmail());
-                                            newUserAuth.setRole(registeringUser.getRole());       
+            newGuest.setFirstname(registeringUser.getFirstname());
+            newGuest.setLastname(registeringUser.getLastname());
+            newGuest.setEmail(registeringUser.getEmail());
+            newGuest.setGender(registeringUser.getGender());
+            newGuest.setBirthday(registeringUser.getBirthday());
+            //-----------------------------------------------------//
+            newUserAuth.setUsername(registeringUser.getUsername());
+            newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
+            newUserAuth.setEmail(registeringUser.getEmail());
+            newUserAuth.setRole(registeringUser.getRole());  
+
                 guestRepo.save(newGuest);
                 userAuthRepo.save(newUserAuth);
                 logger.info("new Guest created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
-                break;
+    }   
 
-            case HOST:
-                Host newHost = new Host();
-                                            newHost.setFirstname(registeringUser.getFirstname());
-                                            newHost.setLastname(registeringUser.getLastname());
-                                            newHost.setEmail(registeringUser.getEmail());
-                                            newHost.setGender(registeringUser.getGender());
-                                            newHost.setBirthday(registeringUser.getBirthday());
-                                            //-----------------------------------------------------//
-                                            newUserAuth.setUsername(registeringUser.getUsername());
-                                            newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
-                                            newUserAuth.setEmail(registeringUser.getEmail());
-                                            newUserAuth.setRole(registeringUser.getRole());   
+    public void registerHostUser(RegistrationHostUserDTO registeringUser) {
+
+        UserAuth newUserAuth = new UserAuth();
+        Host newHost = new Host();
+
+            newHost.setFirstname(registeringUser.getFirstname());
+            newHost.setLastname(registeringUser.getLastname());
+            newHost.setEmail(registeringUser.getEmail());
+            newHost.setGender(registeringUser.getGender());
+            newHost.setBirthday(registeringUser.getBirthday());
+            //-----------------------------------------------------//
+            newUserAuth.setUsername(registeringUser.getUsername());
+            newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
+            newUserAuth.setEmail(registeringUser.getEmail());
+            newUserAuth.setRole(registeringUser.getRole());  
+
                 hostRepo.save(newHost);
                 userAuthRepo.save(newUserAuth);
-                logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());
-                break;
-
-            default:
-                System.out.println("not fitting userrole found");
-                break;
-        }
+                logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
     }   
 }

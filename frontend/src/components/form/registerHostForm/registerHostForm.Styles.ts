@@ -1,5 +1,5 @@
 import { Box, Button, styled, TextField } from "@mui/material";
-import { TypoBody1 } from "../../../styled-components/styledTypographie";
+import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
 
 export const FormContainer = styled(Box)`
 
@@ -42,6 +42,8 @@ export const Line = styled(Box)`
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+
+
 
 `;
 
@@ -137,4 +139,40 @@ export const RegisterButton = styled(Button)`
 
 
 `;
+
+export const HiddenInput = styled("input")(
+    {
+    opacity: "1",
+    }
+);
+
+
+export const PictureHolder = styled(Box)`
+    border: 2px dotted grey;
+    height: 300px;
+    width: 300px;
+
+    position: relative;
+
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    display: flex;
+
+    margin: 20px;
+
+`;
+
+export const ImageTypoH2 = styled(TypoH2)`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+
+    z-index: 10;
+`;
+
 

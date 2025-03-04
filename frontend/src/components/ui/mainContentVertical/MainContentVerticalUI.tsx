@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ClubCard, ClubCardContent, ClubCardMedia, ClubNameTypo, GridContainer, GridItem, } from "./mainContentVertical.styles";
-import { TypoBody1 } from "../../../styled-components/styledTypographie";
+import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubHeader, ClubNameTypo, GridContainer, GridItem, HeaderWrapper, VenueTypeHeader, WhiteLine, } from "./mainContentVertical.styles";
+import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
 
 
 
@@ -21,8 +21,8 @@ function MainContentVerticalUI() {
 
 
     const url = 
-        // 'http://10.0.2.24:8080/api/home' // pc damago
-          'http://192.168.178.28:8080/api/home' // pc home
+         'http://10.0.2.24:8080/api/home' // pc damago
+         // 'http://192.168.178.28:8080/api/home' // pc home
 
 
     
@@ -61,7 +61,12 @@ function MainContentVerticalUI() {
 
 
     return (
-        <>
+        <>      <HeaderWrapper>
+                    <VenueTypeHeader>
+                        <TypoH2>Clubs</TypoH2>
+                    </VenueTypeHeader>
+                    <WhiteLine/>
+                </HeaderWrapper>
                 <GridContainer>
                 {clubs.map((club) => (
                     <GridItem>
@@ -69,7 +74,7 @@ function MainContentVerticalUI() {
                             <ClubCardMedia component="img" image={placeholder}/>
                             <ClubCardContent>
                                 <ClubNameTypo>Clubname</ClubNameTypo>
-                                <TypoBody1>A club offering a vibrant atmosphere for socializing, networking, and entertainment. Enjoy great music, events, and a welcoming community for all members. Ideal for relaxation and making new connections. </TypoBody1>
+                                <ClubDescTypo>A club offering a vibrant atmosphere for socializing, networking, and entertainment. Enjoy great music, events, and a welcoming community for all members. Ideal for relaxation and making new connections. </ClubDescTypo>
                             </ClubCardContent>
 
                         </ClubCard>

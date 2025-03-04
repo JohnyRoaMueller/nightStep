@@ -1,9 +1,9 @@
-package com.softwave.clubstep.base;
+package com.softwave.clubstep.DTO;
 
 import com.softwave.clubstep.enums.Roles;
 
 
-public class RegisteringUser {
+public class RegisteringGuestUserDTO {
 
 
     // UserAuth    
@@ -31,9 +31,9 @@ public class RegisteringUser {
     private String phonenumber;
 
 
-    public RegisteringUser() {};
+    public RegisteringGuestUserDTO() {};
     
-    public RegisteringUser(
+    public RegisteringGuestUserDTO(
     // userId will be generated automatically
     String username,
     String password,

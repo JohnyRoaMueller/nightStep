@@ -2,8 +2,8 @@ package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
 
+import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
 import com.softwave.clubstep.base.BaseUser;
-import com.softwave.clubstep.base.RegisteringUser;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;

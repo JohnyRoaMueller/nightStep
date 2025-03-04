@@ -2,13 +2,17 @@
 import { Box, styled, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCircleOutlined';
 import { Link } from "react-router-dom";
 import { TypoBody1 } from "../../../styled-components/styledTypographie";
 
 
 export const NightStepLogo = styled('div')`
-  position: absolute;
-  transform: translate(-30%, -50%);
+  display: flex;
+  position: static;
+  transform: none;
 
 
   width: 50px;
@@ -18,18 +22,15 @@ export const NightStepLogo = styled('div')`
   background-position: center;
   border-radius: 35%;
 
-  /* Bild wird auf Graustufen und danach invertiert */
-  filter: invert(100%) brightness(100%) grayscale(100%);
 
-  &:hover {
-    filter: invert(0%) brightness(100%) grayscale(0%); /* Beim Hover wird der Filter entfernt */
-  }
 
-  @media (min-width: 600px) {
-    display: flex;
-    position: static;
-    transform: none;
-  }
+
+  filter: invert(0%) brightness(100%) grayscale(100%);
+
+&:hover {
+  filter: invert(0%) brightness(100%) grayscale(0%);
+}
+
 
 `;
 
@@ -51,12 +52,16 @@ export const AppbarFrame = styled(Box)`
 // Appbar Content
 export const AppbarContent = styled(Box)`
   position: relative;
-  width: 75%;
+  width: 85%;
   height: 100%;
   right: 50%;
   transform: translateX(50%);
   display: flex;
   flex-direction: row;
+
+  @media (min-width: 600px) {
+    width: 75%;
+  }
   
 
 `;
@@ -68,7 +73,7 @@ export const AppbarLinkBoxLeft = styled(Box)`
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 20%;
+  gap: 40%;
 
   @media (min-width: 600px) {
     display: flex;
@@ -83,16 +88,34 @@ export const AppbarLogoBox = styled(Box)`
       width: '1vw'; 
       height: '1vh'; 
       overflow: 'hidden';
+      align-self: center;
 `;
 
 // Appbar Link Box Right
-export const AppbarLinkBoxRight = styled(Box)`
+export const AppbarIconBoxRight = styled(Box)`
+
   position: absolute;
   right: 0%;
   height: 100%;
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 13px;
+  justify-content: center;
+
+
+
+`;
+
+export const AccountBox = styled(Box)`
+  display: flex;
+  flex-direction: row;
+  padding-left: 1.8em;
+
+  &:hover > * {
+    color: #ff8000;
+  }
+
+
 `;
 
 // Appbar Menu Box
@@ -106,28 +129,14 @@ export const AppbarMenuBox = styled(Box)`
 
 `;
 
-// Account Link Box
-export const AccountLinkBox = styled(Box)`
-  display: flex;
-  flex-direction: row;
-  gap: 1px;
-  
-`;
-
-// Account Icon Box
-export const AccountLink = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  
-
-`;
 
 // Account Icon
-export const AccountIcon = styled(PersonIcon)`
+export const AccountIcon = styled(AccountCircleRoundedIcon)`
   font-size: 24px;
   color: white;
+
+  font-size: 1.6rem;
+
 `;
 
 export const AppbarLink = styled(Link)`
@@ -164,9 +173,10 @@ export const TypoBody1HOM = styled(TypoBody1)`
     }
   }
 
-    &:hover {
+  &:hover {
       color: #ff8000; /* Beim Hover wird der Filter entfernt */
-    }
+  }
+
 `;
 
 export const HiddenOnMobile = styled(TypoBody1)`
@@ -178,17 +188,27 @@ export const HiddenOnMobile = styled(TypoBody1)`
 
 `;
 
-export const AppbarUnfoldMoreIcon = styled(UnfoldMoreIcon)`
+export const AppbarSearchIcon = styled(SearchIcon)`
   color: white;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+
+  font-size: 1.6rem;
+
+  padding-left: 1.2em;
+
+  &: hover {
+    color: #ff8000;
+  }
+
+`;
+
+
+export const AppbarUnfoldMoreIcon = styled(ArrowDropDownCircleOutlinedIcon)`
+  color: white;
   display: block;
 
-  @media(min-width: 600px) {
-    display: none;
-  }
+  font-size: 1.6rem;
+
+  padding-left: 1.2em;
 
 `;
 

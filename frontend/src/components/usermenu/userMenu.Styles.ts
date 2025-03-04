@@ -1,19 +1,22 @@
 import { Box, Button, styled } from "@mui/material";
 
 export const MenuWrapper = styled(Box)`
+
     display: flex;
     flex-direction: column;
+    gap: 1em;
 
-    gap: 3em;
+    width: 80vw;
 
     @media(min-width: 600px) {
-            flex-direction: row;
-            gap: 5em;
-            width: auto;
+        width: 40vh;
     }
+
 `;
 
 export const ContentBox = styled(Box)`
+
+    width: 100%;
 
     display: flex;
     flex-direction: column;
@@ -32,10 +35,19 @@ export const ContentBox = styled(Box)`
 export const MenuOption = styled(Button)`
     border: 1px dotted white;
 
-    width: 80vw; 
+    width: 100%; 
 
-    @media(min-width: 600px) {
-        width: 40vh;
-    }
+`;
+
+export const NameBox = styled(Box)`
+    display: flex;
+    flex-direction: row;
+
+    overflow: hidden;
+
+    width: 100%;
+    max-width: 100%;
+
+    align-items: center;
 
 `;

@@ -25,16 +25,6 @@ function RegisterGuestForm() {
 
     type InputEvent = React.ChangeEvent<HTMLInputElement>
 
-    const handleDateChange = (event: InputEvent) => {
-
-        const name = event.target.name
-        const value = event.target.value
-        setDate((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }))
-    }
-
     type FormData = {
         firstname: string;
         lastname: string;
@@ -59,6 +49,22 @@ function RegisterGuestForm() {
     })
 
 
+    const handleDateChange = (event: InputEvent) => {
+        const name = event.target.name
+        const value = event.target.value
+        setDate((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
+
+    const SetNewDate = () => {
+        setFormData((prevData) => ({
+            ...prevData,
+            birthday: `${date.day}-${date.month}-${date.year}`
+        }))
+        console.log(formData.birthday)
+    }
 
 
     const handleChange = (event: InputEvent) => {
@@ -85,18 +91,15 @@ function RegisterGuestForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        fetch('http://192.168.178.28:8080/api/register',
-             //    'http://10.0.2.24:8080/api/register',
+        fetch(// 'http://192.168.178.28:8080/api/register/guest',
+                 'http://10.0.2.24:8080/api/register/guest',
             {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 method: 'POST',
-                body: JSON.stringify({
-                    ...formData,
-                    birthday: `${date.day}-${date.month}-${date.year}`
-                })
+                body: JSON.stringify(formData)
             }
         )
 
@@ -170,17 +173,17 @@ function RegisterGuestForm() {
                                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
                         </TextfieldMedium>
 
-                        <TextfieldShort name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} key='textfield-day' id='textfield-day'>
+                        <TextfieldShort name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-day' id='textfield-day'>
                                 <option value='' disabled>{"▒"}</option>
                                 {dayList.map((day) => <option value={day} key={day}>{day}</option>)}
                         </TextfieldShort>
 
-                        <TextfieldShort name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} key='textfield-month' id='textfield-month'>
+                        <TextfieldShort name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-month' id='textfield-month'>
                                 <option value='' disabled>{"▒"}</option>
                                 {monthList.map((month) => <option value={month} key={month}>{month}</option>)}
                         </TextfieldShort>
 
-                        <TextfieldShort name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} key='textfield-year' id='textfield-year'>
+                        <TextfieldShort name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-year' id='textfield-year'>
                                 <option value='' disabled>{"▒"}</option>
                                 {yearList.map((year) => <option value={year} key={year}>{year}</option>)}
                         </TextfieldShort>

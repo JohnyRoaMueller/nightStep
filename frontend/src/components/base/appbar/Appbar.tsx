@@ -4,7 +4,6 @@ import {
   AppbarContent,
   AppbarLinkBoxLeft,
   AppbarLinkBoxRight,
-  AccountLinkBox,
   AccountIcon,
   AppbarLink,
   TypoBody1Link,
@@ -16,14 +15,21 @@ import {
   MobileMenuOption,
   MobileMenuOptionLink,
   TypoBody1MobileMenuOptionLink,
+  AccountBox,
+  AppbarSearchIcon,
+  AppbarIconBoxRight,
 } from "./Appbar.styles";
 import { FadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
 import { TypoBody1 } from "../../../styled-components/styledTypographie";
+import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 
 
 export function Appbar() {
+  const navigateTo = useNavigate();
+
   const [fadeFlag, setFadeFlag] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,7 +38,7 @@ export function Appbar() {
 
   const [role, setRole] = useState(null);
 
-  const [unfoldFlag, setUnfolgFlag] = useState("none");
+  const [unfoldFlag, setUnfolgFlag] = useState(false);
   
 
   const handleClick = () => {
@@ -44,22 +50,32 @@ export function Appbar() {
   };
 
   const handleUnfold = () => {
-    if ( unfoldFlag === "none") {
-      setUnfolgFlag("block")
+    if ( unfoldFlag == false) {
+      setUnfolgFlag(true)
     } else {
-      setUnfolgFlag("none")
+      setUnfolgFlag(false)
+    }
+  }
+
+  const handleClickUnfold = () => {
+    if (window.innerWidth <= 678) {
+      if (unfoldFlag == false) {
+        setUnfolgFlag(true)
+      } else {
+        setUnfolgFlag(false)
+      }
     }
   }
 
   const mobileOptionsVisitor = ["Search"]
   const mobileOptionsGuest = ["Search", "Saved events", "followed", "community" ];
-  const mobileoptionsHost = ["venues", "events", "guest list", "promote"];
+  const mobileOptionsHost = ["venues", "events", "guest list", "promote"];
 
     useEffect(() => {
       async function fetchData() {
 
-      const response = await fetch('http://192.168.178.28:8080/api/me', {
-             // 'http://10.0.2.24:8080/api/me', {
+      const response = await fetch(// 'http://192.168.178.28:8080/api/me', {
+                                  'http://10.0.2.24:8080/api/me', {
         method: "GET",
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -69,8 +85,8 @@ export function Appbar() {
       if (response.ok) 
       {
         const responseJSON = await response.json();
-        const role = responseJSON.role;
         setUsername(responseJSON.username);
+        setRole(responseJSON.role)
         setIsLoggedIn(true)
       }
       else if (!response.ok)
@@ -86,50 +102,41 @@ export function Appbar() {
       <FadeInLogin fadeFlag={fadeFlag} isLoggedIn={isLoggedIn} handleClearIconClick={handleClearIconClick} />
       <AppbarFrame>
         <AppbarContent>
-          <AppbarLinkBoxLeft>
             <AppbarLogoBox>
-              <AppbarLink to={"/"}>
-                <NightStepLogo/>
-              </AppbarLink>
+                <NightStepLogo onClick={() => navigateTo("/")}/>
             </AppbarLogoBox>
-            {role === "GUEST" || role === null && (
-              <>
-                <AppbarLink to={"/find"}>
-                  <TypoBody1Link>find</TypoBody1Link>
-                </AppbarLink>
-              </>
-            )}
-            {role === "HOST" && (
-              <>
-                <AppbarLink to={"/find"}>
-                  <TypoBody1Link>find</TypoBody1Link>
-                </AppbarLink>
-              </>
-            )}
-          </AppbarLinkBoxLeft>
-          <AppbarUnfoldMoreIcon onClick={handleUnfold}/>
-          <AppbarLinkBoxRight>
-              <AppbarLink onClick={handleClick} to={"#"}>
-                  <AccountLinkBox>
-                    <AccountIcon />
-                    <HiddenOnMobile>
-                      {isLoggedIn ? username : "Mein Konto"}
-                    </HiddenOnMobile> {/* HOM -> HiddenOnMobile */}
-                  </AccountLinkBox>
-              </AppbarLink>
-            </AppbarLinkBoxRight>
+          <AppbarIconBoxRight>
+          <AppbarSearchIcon onClick={() => navigateTo("/find")}/>
+          <AppbarUnfoldMoreIcon onClick={handleClickUnfold} onMouseEnter={handleUnfold} sx={{color: unfoldFlag ? "#ff8000" : "white", display: isLoggedIn ? "block" : "none"}}/>
+          <AccountBox onClick={handleClick}>
+          <AccountIcon />
+            <HiddenOnMobile>
+              {isLoggedIn ? username : "Mein Konto"}
+            </HiddenOnMobile> {/* HOM -> HiddenOnMobile */}
+          </AccountBox>
+          </AppbarIconBoxRight>
         </AppbarContent>
       </AppbarFrame>
-      <MobileMenuOptionsWrapper>
-              {mobileOptionsGuest.map((option) => (
-              <MobileMenuOption sx={{display: unfoldFlag}}>
-                <MobileMenuOptionLink to={`/${option}`}>
-                  <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
-                </MobileMenuOptionLink>
-              </MobileMenuOption>
-              ))}
+      <MobileMenuOptionsWrapper onMouseLeave={handleUnfold}>
+        {role === "GUEST" && 
+        mobileOptionsGuest.map((option) => (
+          <MobileMenuOption sx={{display: unfoldFlag ? "block" : "none"}}>
+            <MobileMenuOptionLink to={`/${option}`}>
+              <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
+            </MobileMenuOptionLink>
+          </MobileMenuOption>
+        ))}
+        {role === "HOST" && 
+        mobileOptionsHost.map((option) => (
+          <MobileMenuOption sx={{display: unfoldFlag ? "block" : "none"}}>
+            <MobileMenuOptionLink to={`/${option}`}>
+              <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
+            </MobileMenuOptionLink>
+          </MobileMenuOption>
+        ))}
       </MobileMenuOptionsWrapper>
     </>
   );
 }
+
 

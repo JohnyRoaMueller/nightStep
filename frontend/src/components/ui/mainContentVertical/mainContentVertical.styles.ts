@@ -1,5 +1,35 @@
 import { Box, Card, CardContent, CardMedia, Grid2, styled } from "@mui/material";
-import { TypoH2 } from "../../../styled-components/styledTypographie";
+import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
+
+export const HeaderWrapper = styled(Box)`
+
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    height: 5vh;
+    
+    align-items: center;
+
+    gap: 1%;
+
+`;
+
+
+export const VenueTypeHeader = styled(Box)`
+    width: auto;
+
+    padding: 2%;
+
+`;
+
+export const WhiteLine = styled(Box)`
+    width: 100%;
+    background-color: white;
+    height: 2px;
+
+    margin-right: 2%;
+
+`;
 
 
 export const GridContainer = styled(Box)`
@@ -40,8 +70,11 @@ export const GridItem = styled(Box)`
 `;
 
 export const ClubCard = styled(Card)`
+    box-sizing: content-box;
+    overflow: hidden;
     border-radius: 5%;
     max-height: 65vh;
+    min-height: 65vh;
 `;
 
 type ClubCardMediaProp = {
@@ -58,4 +91,13 @@ export const ClubCardContent = styled(CardContent)`
 export const ClubNameTypo = styled(TypoH2)`
     color: black;
     font-size: 1.5em;
+`;
+
+export const ClubDescTypo = styled(TypoBody1)`
+    font-size: 4vw;
+
+    @media(min-width: 600px) {
+        font-size: initial;
+    }
+
 `;
