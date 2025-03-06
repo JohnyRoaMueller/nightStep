@@ -54,20 +54,25 @@ public class ClubstepApplication implements CommandLineRunner {
 
 
 		String name = "clubName";
+		String type = "type";
+		int capacity = 0;
+		String city = "city";
 		String district = "clubDistrict";
-		String clubAdress = "clubAdress";
-		String clubDescription = "clubDescription";
+		String street = "street";
+		String houseNumber = "housenumber";
+		String postalCode = "postalCode";
+		String Description = "clubDescription";
 		List<String> picAdresses = new ArrayList<String>();
 		picAdresses.add("C:\\vscode-projects\\clubstep-project\\uploads\\images\\AboutBlank\\AboutBlank.png");
 
 		clubRepo.deleteAll();
 
-		Club clubOne = new Club(name, district, clubAdress, clubDescription, picAdresses);
-		Club clubTwo = new Club(name, district, clubAdress, clubDescription, picAdresses);
-		Club clubThree = new Club(name, district, clubAdress, clubDescription, picAdresses);
-		Club clubFour = new Club(name, district, clubAdress, clubDescription, picAdresses);
-		Club clubFive = new Club(name, district, clubAdress, clubDescription, picAdresses);
-		Club clubSix = new Club(name, district, clubAdress, clubDescription, picAdresses);
+		Club clubOne = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
+		Club clubTwo = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
+		Club clubThree = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
+		Club clubFour = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
+		Club clubFive = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
+		Club clubSix = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
 		
 
 		clubRepo.save(clubOne);

@@ -1,5 +1,7 @@
 package com.softwave.clubstep.DTO;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.enums.Roles;
@@ -20,9 +22,7 @@ public class RegistrationHostUserDTO {
     private String streetOfVenue;
     private String housenumberOfVenue;
     private String postcodeOfVenue;
-    private MultipartFile imageOne;
-    private MultipartFile imageTwo;
-    private MultipartFile imageThree;
+    private List<MultipartFile> images;
     private Roles role;  
 
     // Getter und Setter
@@ -147,28 +147,12 @@ public class RegistrationHostUserDTO {
         this.postcodeOfVenue = postcodeOfVenue;
     }
 
-    public MultipartFile getImageOne() {
-        return imageOne;
+    public List<MultipartFile> getImages() {
+        return images;
     }
 
-    public void setImageOne(MultipartFile imageOne) {
-        this.imageOne = imageOne;
-    }
-
-    public MultipartFile getImageTwo() {
-        return imageTwo;
-    }
-
-    public void setImageTwo(MultipartFile imageTwo) {
-        this.imageTwo = imageTwo;
-    }
-
-    public MultipartFile getImageThree() {
-        return imageThree;
-    }
-
-    public void setImageThree(MultipartFile imageThree) {
-        this.imageThree = imageThree;
+    public void setImages (List<MultipartFile> images) {
+        this.images = images;
     }
 
     public Roles getRole() {

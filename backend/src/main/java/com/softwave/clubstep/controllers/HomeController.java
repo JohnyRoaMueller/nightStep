@@ -13,9 +13,8 @@ public class HomeController {
     @Autowired
     ClubRepository clubRepository;
 
-    @GetMapping("api/home")
+    @GetMapping("/")
     public Iterable<Club> getClubs() {
         return clubRepository.findAll();
     }
-
 }

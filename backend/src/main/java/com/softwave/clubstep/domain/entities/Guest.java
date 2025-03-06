@@ -19,7 +19,7 @@ public class Guest extends BaseUser {
 
     /** ↓↓↓ cardinalities  ↓↓↓*/
     /** ↓↓↓ cardinalities  ↓↓↓*/
-    @ManyToMany(mappedBy = "follower")
+    @ManyToMany(mappedBy = "followers")
     private List<Club> followedClubs;
 
     

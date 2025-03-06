@@ -11,18 +11,20 @@ export interface ClubType {
     name: string,
     disctrict: string,
     description: string,
-    picAdresses: string[]
+    picAddresses: string;
+
 }
 
 
 function MainContentVerticalUI() {
 
     const [clubs, setClubs] = useState<ClubType[]>([])
+    const [imageUrls, setImageUrl] = useState<string>("");
 
 
     const url = 
-         'http://10.0.2.24:8080/api/home' // pc damago
-         // 'http://192.168.178.28:8080/api/home' // pc home
+         'http://10.0.2.24:8080/' // pc damago
+         // 'http://192.168.178.28:8080/' // pc home
 
 
     
@@ -38,7 +40,6 @@ function MainContentVerticalUI() {
 
                     else
                     {
-                        console.log(`fetching ${url} successful`);
                         const data = await response.json();
                         setClubs(data);
                         console.log(data)
@@ -51,7 +52,6 @@ function MainContentVerticalUI() {
                     else console.log('unknown error for' + url);
                 }
         };
-    
 
         fetchData();  // calling the async function inside the useEffekt()
     }, []);
@@ -68,7 +68,7 @@ function MainContentVerticalUI() {
                     <WhiteLine/>
                 </HeaderWrapper>
                 <GridContainer>
-                {clubs.map((club) => (
+                {clubs.map((club, imageUrls) => (
                     <GridItem>
                         <ClubCard>
                             <ClubCardMedia component="img" image={placeholder}/>
@@ -76,7 +76,6 @@ function MainContentVerticalUI() {
                                 <ClubNameTypo>Clubname</ClubNameTypo>
                                 <ClubDescTypo>A club offering a vibrant atmosphere for socializing, networking, and entertainment. Enjoy great music, events, and a welcoming community for all members. Ideal for relaxation and making new connections. </ClubDescTypo>
                             </ClubCardContent>
-
                         </ClubCard>
                     </GridItem >
                     ))}

@@ -61,7 +61,7 @@ function RegisterHostForm() {
         cityOfVenue: string,
         streetOfVenue: string,
         housenumberOfVenue: string,
-        postcodeOfVenue: string,
+        postcodeOfVenue: number | null,
         imageOne: File | null
         imageTwo: File | null
         imageThree: File | null
@@ -83,7 +83,7 @@ function RegisterHostForm() {
         cityOfVenue: "",
         streetOfVenue: "",
         housenumberOfVenue: "",
-        postcodeOfVenue: "",
+        postcodeOfVenue: null,
         imageOne: null,
         imageTwo: null,
         imageThree: null,
@@ -132,9 +132,9 @@ function RegisterHostForm() {
         formDataObject.append("housenumberOfVenue", formData.housenumberOfVenue)
         formDataObject.append("postcodeOfVenue", formData.postcodeOfVenue)
         formDataObject.append("role", formData.role)
-        formDataObject.append("imageOne", formData.imageOne)
-        formDataObject.append("imageTwo", formData.imageTwo)
-        formDataObject.append("imageThree", formData.imageThree)
+        formDataObject.append("images[]", formData.imageOne)
+        formDataObject.append("images[]", formData.imageTwo)
+        formDataObject.append("images[]", formData.imageThree)
 
         fetch(// 'http://192.168.178.28:8080/api/register/host',
                  "http://10.0.2.24:8080/api/register/host",
@@ -144,6 +144,8 @@ function RegisterHostForm() {
             }
         )
         // reseting form
+
+        /*
         setFormData({
             firstname: "",
             lastname: "",
@@ -165,7 +167,12 @@ function RegisterHostForm() {
             imageThree: null,
             role: Roles.HOST
         })
+        */
+
+        /*
         setImageUrls([])
+        */
+
         setTermsAccepted(false)
     }
 
