@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubHeader, ClubNameTypo, GridContainer, GridItem, HeaderWrapper, VenueTypeHeader, WhiteLine, } from "./mainContentVertical.styles";
+import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubNameTypo, GridContainer, GridItem, HeaderWrapper, VenueTypeHeader, WhiteLine, } from "./mainContentVertical.styles";
 import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
 
 
@@ -22,19 +22,19 @@ function MainContentVerticalUI() {
     const [imageUrls, setImageUrl] = useState<string>("");
 
 
-    const url = 
-         'http://10.0.2.24:8080/' // pc damago
+    const url = "http://192.168.179.3:8080/" // pc ASUS
+         // 'http://10.0.2.24:8080/' // pc damago
          // 'http://192.168.178.28:8080/' // pc home
 
 
-    
- 
-
 
       useEffect(() => {
+
+        let api_url =import.meta.env.VITE_APP_API_URL
+
         const fetchData = async () => {
                 try {
-                    const response = await fetch(url);
+                    const response = await fetch(api_url);
 
                     if (!response.ok) throw new Error(`fetching ${url} failed`);
 
