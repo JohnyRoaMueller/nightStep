@@ -65,6 +65,7 @@ public class ClubstepApplication implements CommandLineRunner {
 		List<String> picAdresses = new ArrayList<String>();
 		picAdresses.add("C:\\vscode-projects\\clubstep-project\\uploads\\images\\AboutBlank\\AboutBlank.png");
 
+		/**
 		clubRepo.deleteAll();
 
 		Club clubOne = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
@@ -73,7 +74,7 @@ public class ClubstepApplication implements CommandLineRunner {
 		Club clubFour = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
 		Club clubFive = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
 		Club clubSix = new Club(name, type, capacity, city, district, street, houseNumber, postalCode, Description, picAdresses);
-		
+
 
 		clubRepo.save(clubOne);
 		clubRepo.save(clubTwo);
@@ -84,7 +85,8 @@ public class ClubstepApplication implements CommandLineRunner {
 
 
 		System.out.println("Club gespeichert: " + clubOne);
-
+		*/
+		
 	}
 }
 

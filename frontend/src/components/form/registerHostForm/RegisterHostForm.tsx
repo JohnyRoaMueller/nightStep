@@ -136,8 +136,9 @@ function RegisterHostForm() {
         formDataObject.append("images[]", formData.imageTwo)
         formDataObject.append("images[]", formData.imageThree)
 
-        fetch(// 'http://192.168.178.28:8080/api/register/host',
-                 "http://10.0.2.24:8080/api/register/host",
+        const apiUrl =import.meta.env.VITE_APP_API_URL
+
+        fetch(`${apiUrl}/register/host`,
             {
                 method: 'POST',
                 body: formDataObject,

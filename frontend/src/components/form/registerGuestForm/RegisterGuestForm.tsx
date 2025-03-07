@@ -91,8 +91,9 @@ function RegisterGuestForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        fetch(// 'http://192.168.178.28:8080/api/register/guest',
-                 'http://10.0.2.24:8080/api/register/guest',
+        const apiUrl =import.meta.env.VITE_APP_API_URL
+
+        fetch(`${apiUrl}/register/guest`,
             {
                 headers: {
                     'Accept': 'application/json',

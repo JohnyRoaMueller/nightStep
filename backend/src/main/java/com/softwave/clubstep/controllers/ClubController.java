@@ -2,24 +2,9 @@ package com.softwave.clubstep.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
-import com.softwave.clubstep.domain.entities.Club;
-import com.softwave.clubstep.domain.entities.Guest;
-import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.repository.ClubRepository;
 
 
