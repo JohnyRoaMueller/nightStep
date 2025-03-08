@@ -20,7 +20,7 @@ public class HomeController {
 
     @GetMapping("/clubs")
     public Iterable<Club> getClubs() {
-        logger.info("/ reached");
+        logger.info("/api/clubs reached");
         return clubRepository.findAll();
     }
 }

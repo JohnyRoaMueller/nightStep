@@ -25,7 +25,7 @@ public class UploadService {
 
         logger.info("addImages begins");
 
-        String newDirPath = String.format("D:\\vscode-projects\\clubstep-project\\backend\\src\\main\\resources\\static\\uploads\\hostImages\\%s", username);
+        String newDirPath = String.format("./uploads/host_images/%s", username);
         if (!new File(newDirPath).exists() && !new File(newDirPath).isDirectory()) {
             new File(newDirPath).mkdirs();
         }
@@ -35,7 +35,7 @@ public class UploadService {
         initialStream.read(buffer);
 
         String currentFileName = image.getOriginalFilename();
-        String newImagePath = String.format("D:\\vscode-projects\\clubstep-project\\backend\\src\\main\\resources\\static\\uploads\\hostImages\\%s\\%s", username, currentFileName);
+        String newImagePath = String.format("./uploads/host_images/%s/%s", username, currentFileName);
 
         File targetFile = new File(newImagePath);
 

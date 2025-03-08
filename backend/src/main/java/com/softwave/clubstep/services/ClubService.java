@@ -59,7 +59,7 @@ public class ClubService {
         List<String> imagePaths = new ArrayList<String>();
 
         for (MultipartFile image : images) {
-            String path = String.format("D:\\vscode-projects\\clubstep-project\\backend\\src\\main\\resources\\static\\uploads\\hostImages\\%s\\%s", username, image.getOriginalFilename()); 
+            String path = String.format("/uploads/host_images/%s/%s", username, image.getOriginalFilename()); 
             imagePaths.add(path);
         }
 

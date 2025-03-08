@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubNameTypo, GridContainer, GridItem, HeaderWrapper, VenueTypeHeader, WhiteLine, } from "./mainContentVertical.styles";
 import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
+import { Height } from "@mui/icons-material";
 
 
 
@@ -21,6 +22,7 @@ export interface ClubType {
     picBlobs: Blob[];
 }
 
+const apiUrl =import.meta.env.VITE_APP_API_URL
 
 function MainContentVerticalUI() {
 
@@ -29,7 +31,7 @@ function MainContentVerticalUI() {
 
       useEffect(() => {
 
-        const apiUrl =import.meta.env.VITE_APP_API_URL
+
 
         const fetchData = async () => {
             try {
@@ -55,33 +57,11 @@ function MainContentVerticalUI() {
 
     }, []);
 
-
-    clubs.forEach(club => {      
-
-        const apiUrl =import.meta.env.VITE_APP_API_URL
-
-        const fetchImageBlobs = async () => {
-            try {
-                const imageResponse =  await fetch (`${apiUrl}/images/`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ imageAddress: `${club.picAddresses[0]}` })
-                });
-                const blob = await imageResponse.blob();
-                SetImages(prevBlobs => [...prevBlobs, blob])
-
-            } 
-            catch (error) 
-            {    
-                if (error instanceof Error) console.log(`${error.message} at ${apiUrl}/images`);
-                else console.log('unknown error for' + apiUrl);
-            }
-        }
-        fetchImageBlobs()
-    });
-
-
-
+    clubs.map((club) => console.log(club.picAddresses[0]))
+    clubs.map((club) => console.log(`${apiUrl}/images${club.picAddresses[0]}`))
+    clubs.map((club) => console.log(`${apiUrl}/images/${club.picAddresses[0].replace("/", "-")}`))
+    
+    const regex =/acb/
 
     return (
         <>      <HeaderWrapper>
@@ -94,7 +74,7 @@ function MainContentVerticalUI() {
                 {clubs.map((club) => (
                     <GridItem>
                         <ClubCard>
-                            <ClubCardMedia component="img" image={placeholder}/>
+                            <ClubCardMedia component="img" image={`${apiUrl}/images/${club.picAddresses[0].replace(/\//g, "-")}`}/>
                             <ClubCardContent>
                                 <ClubNameTypo>{club.name}</ClubNameTypo>
                                 <ClubDescTypo>A club offering a vibrant atmosphere for socializing, networking, and entertainment. Enjoy great music, events, and a welcoming community for all members. Ideal for relaxation and making new connections. </ClubDescTypo>

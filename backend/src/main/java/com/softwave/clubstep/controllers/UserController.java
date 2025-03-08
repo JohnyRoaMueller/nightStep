@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     public UserController() {};
@@ -34,7 +36,7 @@ public class UserController {
     CookieService cookieService;
     
     
-    @GetMapping("/api/me")
+    @GetMapping("/me")
     public ResponseEntity<Map<String, String>> getUser(HttpServletRequest request) {
 
       logger.info("/api/me reached");
@@ -50,7 +52,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/api/logout")
+    @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
 
       System.out.println("/api/logout erreicht");

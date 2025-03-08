@@ -22,7 +22,10 @@ function UserMenu() {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch("http://10.0.2.24:8080/api/me", {
+
+            const apiUrl = import.meta.env.VITE_APP_API_URL
+
+            const response = await fetch(`${apiUrl}/logout`, {
                 credentials: "include",
             })
             if (response.ok) 

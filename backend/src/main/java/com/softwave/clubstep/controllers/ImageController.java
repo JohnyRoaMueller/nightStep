@@ -1,6 +1,8 @@
 package com.softwave.clubstep.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
 
 import org.aspectj.internal.lang.annotation.ajcPrivileged;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,19 +25,34 @@ public class ImageController {
 
     Logger logger = LoggerFactory.getLogger(ImageController.class);
 
-    @PostMapping("/images/")
-    public ResponseEntity<File> getImage(@RequestBody Map<String, String> request) {
+    @GetMapping("/images/{pseudoImagePath}")
+    public ResponseEntity<byte[]> getImage(@PathVariable("pseudoImagePath") String pseudoImagePath) {
 
-        logger.info("bildpfad empfangen: " + request.get("imageAddress"));
+        logger.info("/images/{imagePath} reached");
 
-        File image = new File(request.get("imageAddress"));
+        logger.info("imagePath: {}", pseudoImagePath);
 
-        if (image.isFile()) {
-            logger.info("file geladen");
-        } else {
-            logger.info("file nicht geladen");
+        String imagePath = pseudoImagePath.replace("-", "/");
+        
+
+        File imageFile = new File(String.format("C:/vscode-projects/clubstep-project%s", imagePath));
+
+        if (!imageFile.exists()) { return ResponseEntity.notFound().build(); }
+
+        try
+        {
+            FileInputStream fileInputStream = new FileInputStream(imageFile);
+            byte[] imageBytes = new byte[(int) imageFile.length()];
+            fileInputStream.read(imageBytes);
+            
+            return ResponseEntity.ok()
+                                .contentType(MediaType.IMAGE_JPEG)
+                                .body(imageBytes);
         }
-
-        return ResponseEntity.ok().body(image);
+        catch(IOException e) 
+        {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
     }
 }

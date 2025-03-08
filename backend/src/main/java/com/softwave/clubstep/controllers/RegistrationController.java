@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ import com.softwave.clubstep.services.UploadService;
 import com.softwave.clubstep.services.UserService;
 
 @RestController
+@RequestMapping("/api")
 public class RegistrationController {
 
     @Autowired
@@ -49,18 +51,18 @@ public class RegistrationController {
     
     
     
-    @PostMapping("/api/register/guest")
+    @PostMapping("/register/guest")
     public void createGuestUser(@RequestBody RegisteringGuestUserDTO registeringGuest) {
 
-        logger.info("/api/register/guest");
+        logger.info("/register/guest");
 
         registrationService.registerGuestUser(registeringGuest);
     }
 
-    @PostMapping("/api/register/host")
+    @PostMapping("/register/host")
     public void createHostUser(@ModelAttribute RegistrationHostUserDTO registeringHost) throws IOException {
 
-        logger.info("/api/register/host reached");
+        logger.info("/register/host reached");
 
         registrationService.registerHostUser(registeringHost);
 
