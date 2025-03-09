@@ -60,8 +60,7 @@ function MainContentVerticalUI() {
     clubs.map((club) => console.log(club.picAddresses[0]))
     clubs.map((club) => console.log(`${apiUrl}/images${club.picAddresses[0]}`))
     clubs.map((club) => console.log(`${apiUrl}/images/${club.picAddresses[0].replace("/", "-")}`))
-    
-    const regex =/acb/
+
 
     return (
         <>      <HeaderWrapper>
@@ -71,9 +70,9 @@ function MainContentVerticalUI() {
                     <WhiteLine/>
                 </HeaderWrapper>
                 <GridContainer>
-                {clubs.map((club) => (
-                    <GridItem>
-                        <ClubCard>
+                {clubs.map((club) => (                                                                            
+                    <GridItem>                                                   {/**↓ PathVariable doesn't work with /image/path ↓*/}
+                        <ClubCard>                                           {/**↓ so converting / to - and converting back in backend ↓*/}
                             <ClubCardMedia component="img" image={`${apiUrl}/images/${club.picAddresses[0].replace(/\//g, "-")}`}/>
                             <ClubCardContent>
                                 <ClubNameTypo>{club.name}</ClubNameTypo>
