@@ -5,7 +5,7 @@ FROM openjdk:17-jdk
 WORKDIR /app
 
 # Kopiere das JAR-File aus deinem lokalen Build-Verzeichnis in den Container
-COPY ./build/libs/clubstep-0.0.1-SNAPSHOT.jar /nightstep/backend.jar
+COPY ./build/libs/nightstep-0.0.1-SNAPSHOT.jar /nightstep/backend.jar
 
 # Setze Umgebungsvariablen (falls benötigt)
 ENV SPRING_PROFILES_ACTIVE=prod
