@@ -7,9 +7,6 @@ WORKDIR /app
 # Kopiere das JAR-File aus deinem lokalen Build-Verzeichnis in den Container
 COPY ./build/libs/nightstep-0.0.1-SNAPSHOT.jar /nightstep/backend.jar
 
-# Setze Umgebungsvariablen (falls benötigt)
-ENV SPRING_PROFILES_ACTIVE=prod
-
 # Exponiere den Port, auf dem die Anwendung läuft
 EXPOSE 8080
 
