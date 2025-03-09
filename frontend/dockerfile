@@ -1,0 +1,23 @@
+# Verwende ein offizielles Node.js-Image mit der Version 20.16.0
+FROM node:20.16.0
+
+# Setze das Arbeitsverzeichnis im Container
+WORKDIR /app
+
+# Kopiere die package.json und package-lock.json (falls vorhanden)
+COPY package*.json ./
+
+# Installiere die Abhängigkeiten
+RUN npm install
+
+# Kopiere den restlichen Quellcode in den Container
+COPY . .
+
+# Baue die Anwendung für die Produktion (optional, je nach Bedarf)
+RUN npm run build
+
+# Exponiere den Port 5173, auf dem Vite läuft
+EXPOSE 5173
+
+# Befehl zum Starten der Anwendung im Entwicklungsmodus
+CMD ["npm", "run", "dev"]

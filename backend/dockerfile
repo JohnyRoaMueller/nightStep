@@ -1,0 +1,17 @@
+# Verwende ein offizielles OpenJDK-Image als Basis
+FROM openjdk:17-jdk
+
+# Setze das Arbeitsverzeichnis im Container
+WORKDIR /app
+
+# Kopiere das JAR-File aus deinem lokalen Build-Verzeichnis in den Container
+COPY ./build/libs/clubstep-0.0.1-SNAPSHOT.jar /nightstep/backend.jar
+
+# Setze Umgebungsvariablen (falls benötigt)
+ENV SPRING_PROFILES_ACTIVE=prod
+
+# Exponiere den Port, auf dem die Anwendung läuft
+EXPOSE 8080
+
+# Befehl zum Starten der Anwendung
+CMD ["java", "-jar", "/nightstep/backend.jar"]

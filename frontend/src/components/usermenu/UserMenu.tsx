@@ -1,8 +1,6 @@
-import { Box, TextField } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { ContentBox, MenuOption, MenuWrapper, NameBox, WhiteLine } from "./userMenu.Styles";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { LocalGasStation } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { ContentBox, MenuOption, MenuWrapper, NameBox } from "./userMenu.Styles";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { TypoH2 } from "../../styled-components/styledTypographie";
 
 function UserMenu() {

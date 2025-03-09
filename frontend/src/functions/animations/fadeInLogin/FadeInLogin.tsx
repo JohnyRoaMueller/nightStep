@@ -1,7 +1,6 @@
-import { Box, Fade } from "@mui/material";
+import {  Fade } from "@mui/material";
 import LoginForm from "../../../components/form/loginForm/LoginForm";
 import { OverlayLeft, OverlayRight, ClearIconStyled, LoginLogoutBox, LoginLogoutOverlay } from "./fadeInLoginStyles";
-import MainContentVerticalUI from "../../../components/ui/mainContentVertical/MainContentVerticalUI";
 import UserMenu from "../../../components/usermenu/UserMenu";
 
 type fadeInLoginFancyprops = {
