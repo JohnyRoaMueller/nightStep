@@ -5,7 +5,7 @@ import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubNameTypo, G
 
 function BarCards() {
 
-    interface ClubType {
+    interface BarType {
         id: number;
         name: string;
         type: string;
@@ -23,24 +23,30 @@ function BarCards() {
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
-    const [clubs, setClubs] = useState<ClubType[]>([])
+    const [bars, setBars] = useState<BarType[]>([])
 
       useEffect(() => {
 
-
+        setBars([])
 
         const fetchData = async () => {
             try {
                 const response = await fetch(`${apiUrl}/clubs`);
 
                 if (!response.ok) throw new Error(`fetching ${apiUrl} failed`);
-                else
-                {
-                    const data = await response.json();
-                    const shuffledData = [...data].sort(() => Math.random() - 0.5);
-                    setClubs(shuffledData);
-                    console.log(data)
-                }
+
+                const data = await response.json();
+
+                const loadedBars = [];
+
+                await data.forEach(venue => {
+                    if (venue.type ===  "Bar") {
+                        loadedBars.push(venue)
+                    }
+                });
+                console.log("bars after fetching: ", bars)
+
+                setBars(loadedBars);
 
             } 
             catch (error) 
@@ -65,13 +71,13 @@ const apiUrl =import.meta.env.VITE_APP_API_URL
                 </HeaderWrapper>     
                 
                 <GridContainer>
-                {clubs.map((club) => (                                                                            
+                {bars.map((bar) => (                                                                            
                     <GridItem>                                                   {/**↓ PathVariable doesn't work with /image/path ↓*/}
                         <ClubCard>                                           {/**↓ so converting / to - and converting back in backend ↓*/}
-                            <ClubCardMedia component="img" image={`${apiUrl}/images/${club.picAddresses[0].replace(/\//g, "-")}`}/>
+                            <ClubCardMedia component="img" image={`${apiUrl}/images/${bar.picAddresses[0].replace(/\//g, "-")}`}/>
                             <ClubCardContent>
-                                <ClubNameTypo>{club.name}</ClubNameTypo>
-                                <ClubDescTypo>{club.district}</ClubDescTypo>
+                                <ClubNameTypo>{bar.name}</ClubNameTypo>
+                                <ClubDescTypo>{bar.district}</ClubDescTypo>
                                 <ClubDescTypo>This is a club discription that gives you a impress of the Club</ClubDescTypo>
                             </ClubCardContent>
                         </ClubCard>

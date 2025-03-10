@@ -1,0 +1,49 @@
+[33m4bcafa0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m clear merge conflict
+[33m584b342[m adding Mock Accounts and infrastructur to add by Serverstart
+[33mcca98a0[m removed application.properties from repo
+[33m615c227[m fix in docker backend file
+[33m587fcdb[m dockerfile update
+[33m0afcb30[m added dockerfiles
+[33m0bb6811[m Set executable permissions for gradlew
+[33m960ecca[m changed root directory name
+[33mba44797[m Remove uploads folder from repository and add to .gitignore
+[33m9e8f64f[m Remove uploads folder from repository and add to .gitignore
+[33m5a052d5[m finally able to fetch images from backend
+[33mc0c3d33[m first step receiving blobs in frontend
+[33m02ebd19[m adding .env variable
+[33mbbdab2e[m handling blob in backend
+[33meee9f74[m handling blob data in host register form
+[33m0b33994[m new commit
+[33m4a4cf83[m deplaced login status fixed
+[33mf3f0605[m swtiched to postgresql
+[33mfa98c76[m new commit
+[33m2508894[m new commit
+[33me83a951[m new commit
+[33mdcda2d7[m new commit
+[33ma928c92[m new commit
+[33m9daf769[m new commit
+[33maacd0b6[m new commit
+[33m4792ddf[m new commit
+[33m73b6c05[m new commit
+[33m1d9801e[m new commit
+[33m06d926f[m new commit
+[33med685e8[m new commit
+[33m873863f[m new commit
+[33m2b7aa63[m new commit
+[33mdd52068[m new commit
+[33m56ed5d4[m new commit
+[33ma2e193b[m new commit
+[33m4f52f18[m new commit
+[33mc40b826[m new commit
+[33mf033cd6[m new commit
+[33m6b44b7b[m new commit
+[33mae77524[m new commit
+[33m5e51bb9[m neues commit
+[33me0faae8[m new commit
+[33m5991d15[m new commit
+[33m9813589[m new commit
+[33m4b86f1d[m new commit
+[33m41e5fc4[m Initial commit
+[33mdaf576b[m Initial commit
+[33m27259b4[m Update README.md
+[33md5e0a76[m Initial commit

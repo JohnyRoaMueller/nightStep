@@ -30,19 +30,28 @@ function ClubCards() {
 
       useEffect(() => {
 
-
+        setClubs([])
 
         const fetchData = async () => {
             try {
                 const response = await fetch(`${apiUrl}/clubs`);
 
+                console.log(response)
+
                 if (!response.ok) throw new Error(`fetching ${apiUrl} failed`);
-                else
-                {
-                    const data = await response.json();
-                    setClubs(data);
-                    console.log(data)
-                }
+
+                const data = await response.json();
+
+                const loadedClubs: any[] = []
+
+                await data.forEach(venue => {
+                    if (venue.type === "Club") {
+                        loadedClubs.push(venue)
+                    }
+                });
+
+                setClubs(loadedClubs)
+
 
             } 
             catch (error) 
@@ -56,9 +65,9 @@ function ClubCards() {
 
     }, []);
 
+    console.log("path logs down under")
     clubs.map((club) => console.log(club.picAddresses[0]))
     clubs.map((club) => console.log(`${apiUrl}/images${club.picAddresses[0]}`))
-    clubs.map((club) => console.log(`${apiUrl}/images/${club.picAddresses[0].replace("/", "-")}`))
     clubs.map((club) => console.log(`${apiUrl}/images/${club.picAddresses[0].replace(/\//g, "-")}`))
 
 

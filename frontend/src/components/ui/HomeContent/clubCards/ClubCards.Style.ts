@@ -42,6 +42,8 @@ export const GridContainer = styled(Box)`
 
     overflow-x: auto;
 
+    justify-content: flex-start;
+
     @media (min-width: 600px) {
         flex-wrap: wrap;
     }
