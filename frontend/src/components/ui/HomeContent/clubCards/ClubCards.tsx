@@ -59,6 +59,7 @@ function ClubCards() {
     clubs.map((club) => console.log(club.picAddresses[0]))
     clubs.map((club) => console.log(`${apiUrl}/images${club.picAddresses[0]}`))
     clubs.map((club) => console.log(`${apiUrl}/images/${club.picAddresses[0].replace("/", "-")}`))
+    clubs.map((club) => console.log(`${apiUrl}/images/${club.picAddresses[0].replace(/\//g, "-")}`))
 
 
     return (

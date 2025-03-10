@@ -37,7 +37,7 @@ public class ImageController {
         logger.info("imagePath: {}", imagePath);
         
 
-        File imageFile = new File(String.format("D:/vscode-projects/nightstep-project%s", imagePath));
+        File imageFile = new File(String.format("C:/vscode-projects/nightstep-project%s", imagePath));
 
         if (!imageFile.exists()) { return ResponseEntity.notFound().build(); }
 
