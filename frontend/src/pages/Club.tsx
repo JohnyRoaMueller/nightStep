@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import NoMatch from "./NoMatch";
-import { ClubType } from "../components/ui/mainContentVertical/MainContentVerticalUI";
+import { ClubType } from "../components/ui/HomeContent/clubCards/ClubCards";
 
 
 export default function Club() {

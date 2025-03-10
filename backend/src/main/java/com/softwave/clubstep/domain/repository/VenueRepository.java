@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.softwave.clubstep.domain.entities.Club;
+import com.softwave.clubstep.domain.entities.Venue;
 
 @RepositoryRestResource
-public interface ClubRepository extends CrudRepository<Club, Long> {
+public interface VenueRepository extends CrudRepository<Venue, Long> {
 
-    List<Club> findByName(String address);
+    List<Venue> findByName(String address);
 }

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softwave.clubstep.domain.entities.Club;
-import com.softwave.clubstep.domain.repository.ClubRepository;
+import com.softwave.clubstep.domain.entities.Venue;
+import com.softwave.clubstep.domain.repository.VenueRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -16,10 +16,10 @@ public class HomeController {
     Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired
-    ClubRepository clubRepository;
+    VenueRepository clubRepository;
 
     @GetMapping("/clubs")
-    public Iterable<Club> getClubs() {
+    public Iterable<Venue> getClubs() {
         logger.info("/api/clubs reached");
         return clubRepository.findAll();
     }

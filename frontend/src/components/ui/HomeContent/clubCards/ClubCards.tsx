@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubNameTypo, GridContainer, GridItem, HeaderWrapper, VenueTypeHeader, WhiteLine, } from "./mainContentVertical.styles";
-import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
+import { ClubCard, ClubCardContent, ClubCardMedia, ClubDescTypo, ClubNameTypo, GridContainer, GridItem, HeaderWrapper, VenueTypeHeader, WhiteLine, } from "./ClubCards.Style";
+import { TypoBody1, TypoH2 } from "../../../../styled-components/styledTypographie";
 import { Height } from "@mui/icons-material";
 
 
@@ -24,10 +24,9 @@ export interface ClubType {
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
-function MainContentVerticalUI() {
+function ClubCards() {
 
     const [clubs, setClubs] = useState<ClubType[]>([])
-    const [images, SetImages] = useState<Blob[]>([])
 
       useEffect(() => {
 
@@ -63,7 +62,8 @@ function MainContentVerticalUI() {
 
 
     return (
-        <>      <HeaderWrapper>
+        <>      
+                <HeaderWrapper>
                     <VenueTypeHeader>
                         <TypoH2>Clubs</TypoH2>
                     </VenueTypeHeader>
@@ -76,7 +76,8 @@ function MainContentVerticalUI() {
                             <ClubCardMedia component="img" image={`${apiUrl}/images/${club.picAddresses[0].replace(/\//g, "-")}`}/>
                             <ClubCardContent>
                                 <ClubNameTypo>{club.name}</ClubNameTypo>
-                                <ClubDescTypo>A club offering a vibrant atmosphere for socializing, networking, and entertainment. Enjoy great music, events, and a welcoming community for all members. Ideal for relaxation and making new connections. </ClubDescTypo>
+                                <ClubDescTypo>{club.district}</ClubDescTypo>
+                                <ClubDescTypo>This is a club discription that gives you a impress of the Club</ClubDescTypo>
                             </ClubCardContent>
                         </ClubCard>
                     </GridItem >
@@ -93,4 +94,4 @@ function MainContentVerticalUI() {
 
 }
 
-export default MainContentVerticalUI
+export default ClubCards

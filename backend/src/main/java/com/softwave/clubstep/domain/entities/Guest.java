@@ -20,7 +20,7 @@ public class Guest extends BaseUser {
     /** ↓↓↓ cardinalities  ↓↓↓*/
     /** ↓↓↓ cardinalities  ↓↓↓*/
     @ManyToMany(mappedBy = "followers")
-    private List<Club> followedClubs;
+    private List<Venue> followedClubs;
 
     
     /** ↑↑↑ cardinalities ↑↑↑ */
@@ -29,11 +29,11 @@ public class Guest extends BaseUser {
 
                 {/*getter / setter */}
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
-    public List<Club> getFollowedClub() {
+    public List<Venue> getFollowedClub() {
         return followedClubs;
     }
 
-    public void setFollowedClub(List<Club> followedClubs) {
+    public void setFollowedClub(List<Venue> followedClubs) {
         this.followedClubs = followedClubs;
     }
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}

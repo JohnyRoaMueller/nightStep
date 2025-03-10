@@ -30,12 +30,14 @@ public class ImageController {
 
         logger.info("/images/{imagePath} reached");
 
-        logger.info("imagePath: {}", pseudoImagePath);
+        logger.info("pseudoImagePath: {}", pseudoImagePath);
 
         String imagePath = pseudoImagePath.replace("-", "/");
+
+        logger.info("imagePath: {}", imagePath);
         
 
-        File imageFile = new File(String.format("C:/vscode-projects/clubstep-project%s", imagePath));
+        File imageFile = new File(String.format("D:/vscode-projects/nightstep-project%s", imagePath));
 
         if (!imageFile.exists()) { return ResponseEntity.notFound().build(); }
 

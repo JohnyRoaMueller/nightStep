@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Club {
+public class Venue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,9 +23,9 @@ public class Club {
     private String description;
 
     @ElementCollection
-    @CollectionTable(name = "club_pic_addresses", joinColumns = @JoinColumn(name = "club_id"))
-    @Column(name = "pic_address", columnDefinition = "TEXT")
-    private List<String> picAddresses;
+    @CollectionTable(name = "venue_image_Pathes", joinColumns = @JoinColumn(name = "venue_id"))
+    @Column(name = "image_address", columnDefinition = "TEXT")
+    private List<String> imagePaths;
 
     /** Beziehungen */
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,16 +34,16 @@ public class Club {
 
     @ManyToMany
     @JoinTable(
-        name = "club_follower",
-        joinColumns = @JoinColumn(name = "club_id"),
+        name = "venue_follower",
+        joinColumns = @JoinColumn(name = "venue_id"),
         inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
     private List<Guest> followers;
 
     /** Konstruktoren */
-    public Club() {}
+    public Venue() {}
 
-    public Club
+    public Venue
         (
         String name,
         String type,
@@ -54,7 +54,7 @@ public class Club {
         String houseNumber,
         String postalCode, 
         String description,
-        List<String> picAddresses
+        List<String> imagePaths
         )
         {
         this.name = name;
@@ -66,7 +66,7 @@ public class Club {
         this.houseNumber = houseNumber;
         this.postalCode = postalCode;
         this.description = description;
-        this.picAddresses = picAddresses;
+        this.imagePaths = imagePaths;
         }
 
     /** Getter & Setter */
@@ -100,8 +100,8 @@ public class Club {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public List<String> getPicAddresses() { return picAddresses; }
-    public void setPicAddresses(List<String> picAddresses) { this.picAddresses = picAddresses; }
+    public List<String> getPicAddresses() { return imagePaths; }
+    public void setPicAddresses(List<String> imagePaths) { this.imagePaths = imagePaths; }
 
     public Host getHost() { return host; }
     public void setHost(Host host) { this.host = host; }

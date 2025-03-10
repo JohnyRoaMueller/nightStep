@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.softwave.clubstep.domain.repository.ClubRepository;
+import com.softwave.clubstep.domain.repository.VenueRepository;
 
 
 @RestController
 public class ClubController {
     
-    private final ClubRepository clubRepo;
+    private final VenueRepository clubRepo;
     
 
 
-    public ClubController(ClubRepository clubRepo) {
+    public ClubController(VenueRepository clubRepo) {
         this.clubRepo = clubRepo;
     }
 

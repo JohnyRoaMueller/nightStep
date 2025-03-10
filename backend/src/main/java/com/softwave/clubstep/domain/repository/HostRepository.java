@@ -11,9 +11,6 @@ import com.softwave.clubstep.domain.entities.Host;
 @RepositoryRestResource
 public interface HostRepository extends CrudRepository<Host, Long> {
 
-
-
-
     Optional<Host> findByFirstname(String firstname);
 
 }

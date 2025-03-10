@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
-import com.softwave.clubstep.domain.entities.Club;
+import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.domain.entities.UserAuth;
-import com.softwave.clubstep.domain.repository.ClubRepository;
+import com.softwave.clubstep.domain.repository.VenueRepository;
 
 @Service
 public class ClubService {
@@ -20,7 +20,7 @@ public class ClubService {
     Logger logger = LoggerFactory.getLogger(ClubService.class);
 
     @Autowired
-    ClubRepository clubRepository;
+    VenueRepository clubRepository;
     
     public void addClub(RegistrationHostUserDTO registeringHost) {
         String name = registeringHost.getNameOfVenue();
@@ -34,7 +34,7 @@ public class ClubService {
         String description = null;
         List<String> picAddresses = extractImagePaths(registeringHost.getImages(), registeringHost.getUsername());
 
-        clubRepository.save(new Club(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses));
+        clubRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses));
 
         logger.info("club added to db");
     }

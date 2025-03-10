@@ -115,66 +115,74 @@ function RegisterHostForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        const formDataObject = new FormData();
-        formDataObject.append("firstname", formData.firstname)
-        formDataObject.append("lastname", formData.lastname)
-        formDataObject.append("email", formData.email)
-        formDataObject.append("emailConfirm", formData.emailConfirm)
-        formDataObject.append("gender", formData.gender)
-        formDataObject.append("birthday", formData.birthday)
-        formDataObject.append("username", formData.username)
-        formDataObject.append("password", formData.password)
-        formDataObject.append("nameOfVenue", formData.nameOfVenue)
-        formDataObject.append("typeOfVenue", formData.typeOfVenue)
-        formDataObject.append("capacity", formData.capacity)
-        formDataObject.append("cityOfVenue", formData.cityOfVenue)
-        formDataObject.append("streetOfVenue", formData.streetOfVenue)
-        formDataObject.append("housenumberOfVenue", formData.housenumberOfVenue)
-        formDataObject.append("postcodeOfVenue", formData.postcodeOfVenue)
-        formDataObject.append("role", formData.role)
-        formDataObject.append("images[]", formData.imageOne)
-        formDataObject.append("images[]", formData.imageTwo)
-        formDataObject.append("images[]", formData.imageThree)
+        async function fetchingData() {
 
-        const apiUrl =import.meta.env.VITE_APP_API_URL
+            const formDataObject = new FormData();
+            formDataObject.append("firstname", formData.firstname)
+            formDataObject.append("lastname", formData.lastname)
+            formDataObject.append("email", formData.email)
+            formDataObject.append("emailConfirm", formData.emailConfirm)
+            formDataObject.append("gender", formData.gender)
+            formDataObject.append("birthday", formData.birthday)
+            formDataObject.append("username", formData.username)
+            formDataObject.append("password", formData.password)
+            formDataObject.append("nameOfVenue", formData.nameOfVenue)
+            formDataObject.append("typeOfVenue", formData.typeOfVenue)
+            formDataObject.append("capacity", formData.capacity)
+            formDataObject.append("cityOfVenue", formData.cityOfVenue)
+            formDataObject.append("streetOfVenue", formData.streetOfVenue)
+            formDataObject.append("housenumberOfVenue", formData.housenumberOfVenue)
+            formDataObject.append("postcodeOfVenue", formData.postcodeOfVenue)
+            formDataObject.append("role", formData.role)
+            formDataObject.append("images[]", formData.imageOne)
+            formDataObject.append("images[]", formData.imageTwo)
+            formDataObject.append("images[]", formData.imageThree)
 
-        fetch(`${apiUrl}/register/host`,
-            {
-                method: 'POST',
-                body: formDataObject,
-            }
-        )
-        // reseting form
+            const apiUrl =import.meta.env.VITE_APP_API_URL
 
-        /*
-        setFormData({
-            firstname: "",
-            lastname: "",
-            email: "",
-            emailConfirm: "",
-            gender: "",
-            birthday: "",
-            username: "",
-            password: "",
-            nameOfVenue: "",
-            typeOfVenue: "",
-            capacity: "",
-            cityOfVenue: "",
-            streetOfVenue: "",
-            housenumberOfVenue: "",
-            postcodeOfVenue: "",
-            imageOne: null,
-            imageTwo: null,
-            imageThree: null,
-            role: Roles.HOST
-        })
-        */
+            const response = await fetch(`${apiUrl}/register/host`,
+                {
+                    method: 'POST',
+                    body: formDataObject,
+                }
+            )
+            if (!response.ok)
+                {
+                    alert( await response.text())
+                }
+            // reseting form
 
-        /*
-        setImageUrls([])
-        */
+            /*
+            setFormData({
+                firstname: "",
+                lastname: "",
+                email: "",
+                emailConfirm: "",
+                gender: "",
+                birthday: "",
+                username: "",
+                password: "",
+                nameOfVenue: "",
+                typeOfVenue: "",
+                capacity: "",
+                cityOfVenue: "",
+                streetOfVenue: "",
+                housenumberOfVenue: "",
+                postcodeOfVenue: "",
+                imageOne: null,
+                imageTwo: null,
+                imageThree: null,
+                role: Roles.HOST
+            })
+            */
 
-        setTermsAccepted(false)
+            /*
+            setImageUrls([])
+            */
+
+            setTermsAccepted(false)
+        }
+        fetchingData()
     }
 
 

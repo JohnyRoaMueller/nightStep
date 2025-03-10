@@ -18,7 +18,7 @@ public class Host extends BaseUser {
     /** ↓↓↓ cardinalities  ↓↓↓*/
     /** ↓↓↓ cardinalities  ↓↓↓*/
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "host")
-    private List<Club> ownedClubs;
+    private List<Venue> ownedClubs;
 
     
     /** ↑↑↑ cardinalities ↑↑↑ */
@@ -27,11 +27,11 @@ public class Host extends BaseUser {
 
                 {/*getter / setter */}
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
-    public List<Club> getFollowedClub() {
+    public List<Venue> getFollowedClub() {
         return ownedClubs;
     }
 
-    public void setFollowedClub(List<Club> ownedClubs) {
+    public void setFollowedClub(List<Venue> ownedClubs) {
         this.ownedClubs = ownedClubs;
     }
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
