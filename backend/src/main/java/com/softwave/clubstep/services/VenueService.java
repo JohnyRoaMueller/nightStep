@@ -2,6 +2,7 @@ package com.softwave.clubstep.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +16,12 @@ import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 
 @Service
-public class ClubService {
+public class VenueService {
 
-    Logger logger = LoggerFactory.getLogger(ClubService.class);
+    Logger logger = LoggerFactory.getLogger(VenueService.class);
 
     @Autowired
-    VenueRepository clubRepository;
+    VenueRepository venueRepository;
     
     public void addClub(RegistrationHostUserDTO registeringHost) {
         String name = registeringHost.getNameOfVenue();
@@ -34,7 +35,7 @@ public class ClubService {
         String description = null;
         List<String> picAddresses = extractImagePaths(registeringHost.getImages(), registeringHost.getUsername());
 
-        clubRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses));
+        venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses));
 
         logger.info("club added to db");
     }
@@ -62,8 +63,21 @@ public class ClubService {
             String path = String.format("/uploads/host_images/%s/%s", username, image.getOriginalFilename()); 
             imagePaths.add(path);
         }
-
         return imagePaths;
+    }
+
+    public Venue getVenueOrNull(String venuename) {
+        
+        Optional<Venue> venueOption = venueRepository.findByName(venuename);
+
+        if (venueOption.isPresent())
+        {
+            return venueOption.get();
+        }
+        else
+        {
+            return null;
+        }
     }
 
 

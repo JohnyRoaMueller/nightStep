@@ -34,7 +34,7 @@ public class ServerstartService {
     UploadService uploadService;
 
     @Autowired
-    ClubService clubService;
+    VenueService venueService;
 
     @Autowired
     HostRepository hostRepository;
@@ -90,7 +90,7 @@ public class ServerstartService {
     String type = registeringHost.getTypeOfVenue();
     int capacity = Integer.parseInt(registeringHost.getCapacity());
     String city = registeringHost.getCityOfVenue();
-    String disctrict = clubService.defineDistrict(Integer.parseInt(registeringHost.getPostcodeOfVenue()));
+    String disctrict = venueService.defineDistrict(Integer.parseInt(registeringHost.getPostcodeOfVenue()));
     String street = registeringHost.getStreetOfVenue();
     String houseNumber = registeringHost.getHousenumberOfVenue();
     String postalCode = registeringHost.getPostcodeOfVenue();

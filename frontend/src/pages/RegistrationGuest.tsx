@@ -9,8 +9,8 @@ export default function RegistrationGuest() {
                 {/* ↓↓↓ My Content ↓↓↓ */}
                 <RegisterGuestForm/>
                 {/* ↑↑↑ My Content ↑↑↑ */}
-                </>
+        </>
             }>
-            </Base>
+      </Base>
     )
 }

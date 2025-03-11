@@ -30,10 +30,10 @@ import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
-import com.softwave.clubstep.services.ClubService;
 import com.softwave.clubstep.services.RegistrationService;
 import com.softwave.clubstep.services.UploadService;
 import com.softwave.clubstep.services.UserService;
+import com.softwave.clubstep.services.VenueService;
 
 @RestController
 @RequestMapping("/api")
@@ -49,7 +49,7 @@ public class RegistrationController {
     UploadService uploadService;
 
     @Autowired
-    ClubService clubService;
+    VenueService venueService;
 
     @Autowired
     HostRepository hostRepository;
@@ -80,7 +80,7 @@ public class RegistrationController {
 
         uploadService.addImages(registeringHost.getImages(), registeringHost.getUsername());
 
-        clubService.addClub(registeringHost);
+        venueService.addClub(registeringHost);
 
         return ResponseEntity.ok("registration successfully");
 

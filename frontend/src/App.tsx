@@ -7,8 +7,6 @@ import NoMatch from "./pages/NoMatch"
 import Find from "./pages/Find";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
-
-import Club from "./pages/Club";
 import Registration from "./pages/Registration";
 import RegistrationHost from "./pages/RegistrationHost";
 import RegistrationGuest from "./pages/RegistrationGuest";
@@ -17,6 +15,7 @@ import About from "./pages/About";
 import Imprint from "./pages/Imprint";
 import ScrollToTop from "./components/ScrollToTop";
 import User from "./pages/User";
+import Venue from "./pages/Venue";
 
 function App() {
   return (
@@ -50,7 +49,7 @@ function App() {
               
               <Route path="/*" element={<NoMatch />} ></Route>`
 
-              <Route path="/find/:clubName" element={<Club/>} ></Route>
+              <Route path="/venue/:venuename" element={<Venue/>} ></Route>
 
               <Route path="/user/:username" element={<User/>} ></Route>
 

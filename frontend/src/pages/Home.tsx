@@ -1,14 +1,12 @@
 import Base from '../components/base/base';
-import BarCards from '../components/ui/HomeContent/barCards/BarCards';
-import ClubCards from '../components/ui/HomeContent/clubCards/ClubCards';
-import MainContentVerticalUI from '../components/ui/HomeContent/clubCards/ClubCards';
+import VenueCards from '../components/ui/venueCards/VenueCards';
 
 export default function Home() {
   return (
     <Base>
       {/* ↓↓↓ My Content ↓↓↓ */}
-      <ClubCards/>
-      <BarCards/>
+      <VenueCards venueType="Club"/>
+      <VenueCards venueType="Bar"/>
       {/* ↑↑↑ My Content ↑↑↑ */}
     </Base>
   );
