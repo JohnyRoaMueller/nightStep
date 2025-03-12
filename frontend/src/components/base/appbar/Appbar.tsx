@@ -69,7 +69,7 @@ export function Appbar() {
 
   const mobileOptionsVisitor = ["Search"]
   const mobileOptionsGuest = ["Search", "Saved events", "followed", "community" ];
-  const mobileOptionsHost = ["venues", "events", "guest list", "promote"];
+  const mobileOptionsHost = ["my venue", "events", "guest list", "promote"];
 
     useEffect(() => {
       async function fetchData() {

@@ -53,8 +53,9 @@ function VenueCards(props) {
                 });
 
                 const shuffledArray = loadedVenues.sort(() => 0.5 - Math.random());
+                const slicedArray = shuffledArray.slice(0, 6)
 
-                setVenues(shuffledArray.slice(0, 6))
+                setVenues(slicedArray)
                 setLoading(false)
 
 

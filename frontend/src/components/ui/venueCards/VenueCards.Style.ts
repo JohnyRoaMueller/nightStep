@@ -48,6 +48,9 @@ export const GridContainer = styled(Box)`
 
     justify-content: flex-start;
 
+    padding-top: 2%;
+    padding-bottom: 5%;
+
     @media (min-width: 600px) {
         flex-wrap: wrap;
     }
@@ -144,7 +147,8 @@ type ClubCardMediaProp = {
 export const ClubCardMedia = styled(CardMedia)<ClubCardMediaProp>`
 
 
-    min-height: 40vh;
+    min-height: 50vh;
+    max-height: 50vh;
 
     z-index: 0;
 

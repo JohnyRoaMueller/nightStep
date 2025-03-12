@@ -27,11 +27,11 @@ public class Host extends BaseUser {
 
                 {/*getter / setter */}
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
-    public List<Venue> getFollowedClub() {
+    public List<Venue> getOwnedClub() {
         return ownedClubs;
     }
 
-    public void setFollowedClub(List<Venue> ownedClubs) {
+    public void setOwnedClub(List<Venue> ownedClubs) {
         this.ownedClubs = ownedClubs;
     }
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}

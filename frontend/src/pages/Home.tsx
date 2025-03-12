@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <Base>
       {/* ↓↓↓ My Content ↓↓↓ */}
-      <VenueCards venueType="Club"/>
+      <VenueCards venueType="Nightclub"/>
       <VenueCards venueType="Bar"/>
       {/* ↑↑↑ My Content ↑↑↑ */}
     </Base>

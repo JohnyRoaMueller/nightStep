@@ -77,7 +77,7 @@ public class NightstepApplication implements CommandLineRunner {
         host1.setUsername("nachtwerk_max");
         host1.setPassword("password");
         host1.setNameOfVenue("Nachtwerk");
-        host1.setTypeOfVenue("Club");
+        host1.setTypeOfVenue("Nightclub");
         host1.setCapacity("1200");
         host1.setCityOfVenue("Berlin");
         host1.setStreetOfVenue("Hauptstraße");
@@ -85,7 +85,10 @@ public class NightstepApplication implements CommandLineRunner {
         host1.setPostcodeOfVenue("10115");
         host1.setRole(Roles.HOST);
         List<File> imagesHost1 = new ArrayList<>();
-        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\clubbild1.jpg"));
+        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"));
+        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"));
+        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"));
+        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg"));
 
 
 
@@ -100,7 +103,7 @@ public class NightstepApplication implements CommandLineRunner {
         host2.setUsername("eclipse_anna");
         host2.setPassword("password");
         host2.setNameOfVenue("Eclipse");
-        host2.setTypeOfVenue("Club");
+        host2.setTypeOfVenue("Nightclub");
         host2.setCapacity("900");
         host2.setCityOfVenue("Berlin");
         host2.setStreetOfVenue("Unter den Linden");
@@ -109,7 +112,10 @@ public class NightstepApplication implements CommandLineRunner {
         host2.setImages(new ArrayList<>());
         host2.setRole(Roles.HOST);
         List<File> imagesHost2 = new ArrayList<>();
-        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\clubbild2.jpg"));
+        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_5.jpg"));
+        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_6.jpg"));
+        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_7.jpg"));
+        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_8.jpg"));
 
 
         // 3. Urban Pulse
@@ -123,7 +129,7 @@ public class NightstepApplication implements CommandLineRunner {
         host3.setUsername("urbanpulse_lukas");
         host3.setPassword("password");
         host3.setNameOfVenue("Urban Pulse");
-        host3.setTypeOfVenue("Club");
+        host3.setTypeOfVenue("Nightclub");
         host3.setCapacity("700");
         host3.setCityOfVenue("Berlin");
         host3.setStreetOfVenue("Rosenthaler Straße");
@@ -132,7 +138,10 @@ public class NightstepApplication implements CommandLineRunner {
         host3.setImages(new ArrayList<>());
         host3.setRole(Roles.HOST);
         List<File> imagesHost3 = new ArrayList<>();
-        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\clubbild3.jpg"));
+        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_9.jpg"));
+        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_10.jpg"));
+        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_11.jpg"));
+        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_12.jpg"));
 
 
         // 4. Schattentanz
@@ -146,7 +155,7 @@ public class NightstepApplication implements CommandLineRunner {
         host4.setUsername("schattentanz_julia");
         host4.setPassword("password");
         host4.setNameOfVenue("Schattentanz");
-        host4.setTypeOfVenue("Club");
+        host4.setTypeOfVenue("Nightclub");
         host4.setCapacity("800");
         host4.setCityOfVenue("Berlin");
         host4.setStreetOfVenue("Invalidenstraße");
@@ -155,7 +164,10 @@ public class NightstepApplication implements CommandLineRunner {
         host4.setImages(new ArrayList<>());
         host4.setRole(Roles.HOST);
         List<File> imagesHost4 = new ArrayList<>();
-        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\clubbild4.jpg"));
+        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_13.jpg"));
+        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_14.jpg"));
+        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_15.jpg"));
+        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_16.jpg"));
 
 
         // 5. Aurora Club
@@ -169,7 +181,7 @@ public class NightstepApplication implements CommandLineRunner {
         host5.setUsername("aurora_david");
         host5.setPassword("password");
         host5.setNameOfVenue("Aurora Club");
-        host5.setTypeOfVenue("Club");
+        host5.setTypeOfVenue("Nightclub");
         host5.setCapacity("1100");
         host5.setCityOfVenue("Berlin");
         host5.setStreetOfVenue("Potsdamer Straße");
@@ -178,7 +190,10 @@ public class NightstepApplication implements CommandLineRunner {
         host5.setImages(new ArrayList<>());
         host5.setRole(Roles.HOST);
         List<File> imagesHost5 = new ArrayList<>();
-        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\clubbild5.jpg"));
+        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_17.jpg"));
+        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_18.jpg"));
+        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_19.jpg"));
+        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_20.jpg"));
         
 
 
@@ -193,7 +208,7 @@ public class NightstepApplication implements CommandLineRunner {
         host6.setUsername("morgenlicht_sophia");
         host6.setPassword("password");
         host6.setNameOfVenue("Morgenlicht");
-        host6.setTypeOfVenue("Club");
+        host6.setTypeOfVenue("Nightclub");
         host6.setCapacity("600");
         host6.setCityOfVenue("Berlin");
         host6.setStreetOfVenue("Kurfürstendamm");
@@ -202,7 +217,10 @@ public class NightstepApplication implements CommandLineRunner {
         host6.setImages(new ArrayList<>());
         host6.setRole(Roles.HOST);
         List<File> imagesHost6 = new ArrayList<>();
-        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\clubbild6.jpg"));
+        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_21.jpg"));
+        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_22.jpg"));
+        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_23.jpg"));
+        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_24.jpg"));
 
 
         // --- 6 Bars in Berlin ---
@@ -226,7 +244,10 @@ public class NightstepApplication implements CommandLineRunner {
         host7.setImages(new ArrayList<>());
         host7.setRole(Roles.HOST);
         List<File> imagesHost7 = new ArrayList<>();
-        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\barImage1.jpg"));
+        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_1.jpg"));
+        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_2.jpg"));
+        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_3.jpg"));
+        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_4.jpg"));
 
 
         // 8. Goldene Stunde
@@ -249,7 +270,10 @@ public class NightstepApplication implements CommandLineRunner {
         host8.setImages(new ArrayList<>());
         host8.setRole(Roles.HOST);
         List<File> imagesHost8 = new ArrayList<>();
-        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\barImage2.jpg"));
+        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_5.jpg"));
+        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_6.jpg"));
+        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_7.jpg"));
+        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_8.jpg"));
 
 
         // 9. Luna Bar
@@ -272,7 +296,10 @@ public class NightstepApplication implements CommandLineRunner {
         host9.setImages(new ArrayList<>());
         host9.setRole(Roles.HOST);
         List<File> imagesHost9 = new ArrayList<>();
-        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\barImage3.jpg"));
+        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_9.jpg"));
+        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_10.jpg"));
+        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_11.jpg"));
+        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_12.jpg"));
 
 
         // 10. Stadtklang
@@ -295,7 +322,10 @@ public class NightstepApplication implements CommandLineRunner {
         host10.setImages(new ArrayList<>());
         host10.setRole(Roles.HOST);
         List<File> imagesHost10 = new ArrayList<>();
-        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\barImage4.jpg"));
+        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_13.jpg"));
+        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_14.jpg"));
+        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_15.jpg"));
+        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_16.jpg"));
 
         // 11. Eckstein
         RegistrationHostUserDTO host11 = new RegistrationHostUserDTO();
@@ -317,7 +347,10 @@ public class NightstepApplication implements CommandLineRunner {
         host11.setImages(new ArrayList<>());
         host11.setRole(Roles.HOST);
         List<File> imagesHost11 = new ArrayList<>();
-        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\barImage5.jpg"));
+        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_17.jpg"));
+        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_18.jpg"));
+        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_19.jpg"));
+        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_20.jpg"));
 
 
         // 12. Kiezhaus
@@ -340,7 +373,10 @@ public class NightstepApplication implements CommandLineRunner {
         host12.setImages(new ArrayList<>());
         host12.setRole(Roles.HOST);
         List<File> imagesHost12 = new ArrayList<>();
-        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\barImage6.jpg"));
+        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_21.jpg"));
+        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_22.jpg"));
+        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_23.jpg"));
+        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg"));
 
 	
 		serverstartService.createHostUserByServerstart(host1, imagesHost1);

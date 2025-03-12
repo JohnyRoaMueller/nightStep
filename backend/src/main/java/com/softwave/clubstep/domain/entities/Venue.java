@@ -40,6 +40,9 @@ public class Venue {
     )
     private List<Guest> followers;
 
+    @OneToMany(mappedBy = "venue")
+    List<Event> events;
+
     /** Konstruktoren */
     public Venue() {}
 
