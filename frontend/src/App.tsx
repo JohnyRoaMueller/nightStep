@@ -16,6 +16,8 @@ import Imprint from "./pages/Imprint";
 import ScrollToTop from "./components/ScrollToTop";
 import User from "./pages/User";
 import Venue from "./pages/Venue";
+import MyVenueUI from "./components/ui/myVenueUI/MyVenueUI";
+import MyVenue from "./pages/MyVenue";
 
 function App() {
   return (
@@ -48,6 +50,8 @@ function App() {
               <Route path="/test" element={<Test/>} ></Route>
               
               <Route path="/*" element={<NoMatch />} ></Route>`
+
+              <Route path="/myvenue" element={<MyVenue />} ></Route>
 
               <Route path="/venue/:venuename" element={<Venue/>} ></Route>
 

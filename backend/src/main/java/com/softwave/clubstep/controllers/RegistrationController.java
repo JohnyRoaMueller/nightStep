@@ -80,7 +80,7 @@ public class RegistrationController {
 
         uploadService.addImages(registeringHost.getImages(), registeringHost.getUsername());
 
-        venueService.addClub(registeringHost);
+        venueService.addVenue(registeringHost);
 
         return ResponseEntity.ok("registration successfully");
 

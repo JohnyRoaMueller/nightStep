@@ -1,7 +1,6 @@
 package com.softwave.clubstep.domain.entities;
 
-import org.springframework.security.core.GrantedAuthority;
-
+import com.softwave.clubstep.base.BaseUser;
 import com.softwave.clubstep.enums.Roles;
 
 import jakarta.persistence.Column;
@@ -11,6 +10,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class UserAuth {
@@ -33,6 +34,10 @@ public class UserAuth {
     @Column(name = "role", nullable = false)
     private Roles role;
 
+    @OneToOne
+    @JoinColumn(name = "User_ID")
+    private BaseUser baseUser;
+
 
 
     public UserAuth() {};
@@ -43,13 +48,15 @@ public class UserAuth {
     String username,
     String password,
     String email,
-    Roles role
+    Roles role,
+    BaseUser baseUser
     )
     {
     this.username = username;
     this.password = password;
     this.email = email;
     this.role = role;
+    this.baseUser = baseUser;
     };
 
 
@@ -96,6 +103,14 @@ public class UserAuth {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public BaseUser getBaseUser() {
+        return baseUser;
+    }
+
+    public void setBaseUser(BaseUser baseUser) {
+        this.baseUser = baseUser;
     }
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
               {/*getter / setter */}

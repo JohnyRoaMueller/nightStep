@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+// @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Venue {
 
     @Id
@@ -57,7 +57,10 @@ public class Venue {
         String houseNumber,
         String postalCode, 
         String description,
-        List<String> imagePaths
+        List<String> imagePaths,
+        Host host,
+        List<Guest> followers,
+        List<Event> events
         )
         {
         this.name = name;
@@ -70,6 +73,9 @@ public class Venue {
         this.postalCode = postalCode;
         this.description = description;
         this.imagePaths = imagePaths;
+        this.host = host;
+        this.followers = followers;
+        this.events = events;
         }
 
     /** Getter & Setter */
@@ -111,5 +117,8 @@ public class Venue {
 
     public List<Guest> getFollowers() { return followers; }
     public void setFollowers(List<Guest> followers) { this.followers = followers; }
+
+    public List<Event> setEvents() { return events; }
+    public void getEvents(List<Event> events) { this.events = events; }
     /** getter & Setter */
 }

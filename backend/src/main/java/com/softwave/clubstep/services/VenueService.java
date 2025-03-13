@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
 import com.softwave.clubstep.domain.entities.Venue;
+import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
+import com.softwave.clubstep.domain.repository.HostRepository;
+import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 
 @Service
@@ -22,8 +25,18 @@ public class VenueService {
 
     @Autowired
     VenueRepository venueRepository;
+
+    @Autowired
+    HostRepository hostRepository;
+
+    @Autowired
+    UserAuthRepository userAuthRepository;
+
+    @Autowired
+    UserService userService;
+
     
-    public void addClub(RegistrationHostUserDTO registeringHost) {
+    public void addVenue(RegistrationHostUserDTO registeringHost) {
         String name = registeringHost.getNameOfVenue();
         String type = registeringHost.getTypeOfVenue();
         int capacity = Integer.parseInt(registeringHost.getCapacity());
@@ -34,8 +47,11 @@ public class VenueService {
         String postalCode = registeringHost.getPostcodeOfVenue();
         String description = null;
         List<String> picAddresses = extractImagePaths(registeringHost.getImages(), registeringHost.getUsername());
+        Host host = userService.getHostOrNull(registeringHost.getUsername());
 
-        venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses));
+        if (host != null) { logger.info("der host ist da!");} else logger.info("der host ist nicht da!");
+
+        venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null));
 
         logger.info("club added to db");
     }
@@ -78,6 +94,17 @@ public class VenueService {
         {
             return null;
         }
+    }
+
+    public Venue getVenueOfHostOrNull(Host host) {
+
+        Optional<Venue> venue = venueRepository.findByHost(host);
+
+        if (venue.isPresent()) return venue.get();
+        if (!venue.isPresent()) return null;
+
+        return null;
+
     }
 
 

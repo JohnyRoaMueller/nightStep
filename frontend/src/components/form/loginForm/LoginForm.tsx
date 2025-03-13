@@ -62,8 +62,18 @@ function LoginForm() {
         })
         if (response.ok) 
         {
-            navigateTo("/home")
-            window.location.reload();
+            const responseJSON = await response.json();
+            if (responseJSON.role === "GUEST") 
+            {
+                navigateTo("/home")
+                window.location.reload();
+            }
+            if (responseJSON.role === "HOST") 
+            {
+                navigateTo("/myvenue")
+                window.location.reload();
+            }
+
         }
         if (!response.ok) 
         {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.enums.Roles;
 
 public class RegistrationHostUserDTO {
@@ -24,6 +25,7 @@ public class RegistrationHostUserDTO {
     private String postcodeOfVenue;
     private List<MultipartFile> images;
     private Roles role;  
+    private Venue venue;
 
     // Getter und Setter
 
@@ -161,5 +163,13 @@ public class RegistrationHostUserDTO {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
     }
 }

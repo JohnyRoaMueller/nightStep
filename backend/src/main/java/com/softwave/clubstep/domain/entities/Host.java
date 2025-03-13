@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.softwave.clubstep.base.BaseUser;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -17,8 +18,8 @@ public class Host extends BaseUser {
     
     /** ↓↓↓ cardinalities  ↓↓↓*/
     /** ↓↓↓ cardinalities  ↓↓↓*/
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "host")
-    private List<Venue> ownedClubs;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "host", cascade = CascadeType.ALL)
+    private List<Venue> ownedVenues;
 
     
     /** ↑↑↑ cardinalities ↑↑↑ */
@@ -27,12 +28,12 @@ public class Host extends BaseUser {
 
                 {/*getter / setter */}
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
-    public List<Venue> getOwnedClub() {
-        return ownedClubs;
+    public List<Venue> getOwnedVenues() {
+        return ownedVenues;
     }
 
-    public void setOwnedClub(List<Venue> ownedClubs) {
-        this.ownedClubs = ownedClubs;
+    public void setOwnedVenues(List<Venue> ownedVenues) {
+        this.ownedVenues = ownedVenues;
     }
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
                 {/*getter / setter */}

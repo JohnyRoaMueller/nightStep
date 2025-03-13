@@ -7,9 +7,11 @@ export default function Dashboard() {
   const [role, setRole] = useState(null);
   const navigateTo = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_APP_API_URL
+
   useEffect(() => {
     async function fetchData() {
-      const result = await fetch('http://192.168.178.28:8080/api/me', {
+      const result = await fetch(`${apiUrl}/me`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -29,6 +31,8 @@ export default function Dashboard() {
     }
     fetchData()
   })
+
+  console.log(role)
 
 
   if (role === "HOST") {

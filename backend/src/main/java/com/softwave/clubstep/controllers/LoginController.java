@@ -55,7 +55,7 @@ public class LoginController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
         System.out.println("api/login erreicht");
 
-        UserAuth currentUser = userService.getUserOrNull(loginRequest.getUsername());
+        UserAuth currentUser = userService.getUserAuthOrNull(loginRequest.getUsername());
 
         if (currentUser == null) {
             Map<String, Object> errorResponse = new HashMap<>();

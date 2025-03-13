@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
 import com.softwave.clubstep.controllers.RegistrationController;
+import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
@@ -46,7 +47,7 @@ public class ServerstartService {
     VenueRepository venueRepository;
 
 
-    Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+    Logger logger = LoggerFactory.getLogger(ServerstartService.class);
 
     
     public void createHostUserByServerstart(@ModelAttribute RegistrationHostUserDTO registeringHost, List<File> images) {
@@ -102,7 +103,11 @@ public class ServerstartService {
         picAddresses.add(path);
     }
 
-    venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses));
+    Host host = userService.getHostOrNull(registeringHost.getUsername());
+
+    logger.info("hostId: {}", host.getUserAuth().getUserId());
+
+    venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null));
 
     }
 }
