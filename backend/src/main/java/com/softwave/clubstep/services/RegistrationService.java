@@ -20,6 +20,8 @@ import com.softwave.clubstep.domain.repository.GuestRepository;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class RegistrationService {
 
@@ -33,6 +35,8 @@ public class RegistrationService {
     private GuestRepository guestRepo;
     @Autowired
     private HostRepository hostRepo;
+    @Autowired
+    private UserService userService;
 
     public void registerGuestUser(RegisteringGuestUserDTO registeringUser) {
 
@@ -70,9 +74,19 @@ public class RegistrationService {
             newUserAuth.setPassword(passwordEncoder.encode(registeringUser.getPassword()));
             newUserAuth.setEmail(registeringUser.getEmail());
             newUserAuth.setRole(registeringUser.getRole());  
+            newUserAuth.setHost(newHost);
 
-                hostRepo.save(newHost);
-                userAuthRepo.save(newUserAuth);
+            hostRepo.save(newHost);
+            userAuthRepo.save(newUserAuth);
+
                 logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
+
+            UserAuth currentUserAuth = userService.getUserAuthOrNull(registeringUser.getUsername());
+
+            String firstNameHost = currentUserAuth.getHost().getFirstname();
+
+            logger.info("firstNameHost: {}", firstNameHost);
+
+
     }   
 }

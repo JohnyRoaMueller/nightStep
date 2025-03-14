@@ -105,7 +105,9 @@ public class ServerstartService {
 
     Host host = userService.getHostOrNull(registeringHost.getUsername());
 
-    logger.info("hostId: {}", host.getUserAuth().getUserId());
+    System.out.println(registeringHost.getUsername());
+
+    System.out.println(String.format("XXX:%s", host));
 
     venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null));
 

@@ -2,6 +2,7 @@ package com.softwave.clubstep.base;
 
 import com.softwave.clubstep.domain.entities.UserAuth;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +14,6 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BaseUser {
 
     @Id
@@ -36,8 +36,6 @@ public class BaseUser {
 
     private String phonenumber;
 
-    @OneToOne(mappedBy = "baseUser")
-    private UserAuth userAuth;
 
 
     public BaseUser() {};
@@ -51,8 +49,7 @@ public class BaseUser {
     String email,
     String street,
     String housenumber,
-    String phonenumber,
-    UserAuth userAuth
+    String phonenumber
     )
     {
     this.gender = gender;
@@ -63,7 +60,6 @@ public class BaseUser {
     this.street = street;
     this.housenumber = housenumber;
     this.phonenumber = phonenumber;
-    this.userAuth = userAuth;
     };
 
     
@@ -133,14 +129,6 @@ public class BaseUser {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
-    }
-
-    public UserAuth getUserAuth(){
-        return userAuth;
-    }
-
-    public void setUserAuth(UserAuth userAuth) {
-        this.userAuth = userAuth;
     }
  
     

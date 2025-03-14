@@ -1,6 +1,5 @@
 package com.softwave.clubstep.domain.entities;
 
-import com.softwave.clubstep.base.BaseUser;
 import com.softwave.clubstep.enums.Roles;
 
 import jakarta.persistence.Column;
@@ -18,7 +17,7 @@ public class UserAuth {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column
+    @Column(name = "USER_AUTH_ID")
     private Long Id;
 
     @Column
@@ -35,8 +34,12 @@ public class UserAuth {
     private Roles role;
 
     @OneToOne
-    @JoinColumn(name = "User_ID")
-    private BaseUser baseUser;
+    @JoinColumn(name = "GUEST_ID")
+    private Guest guest;
+
+    @OneToOne
+    @JoinColumn(name = "HOST_ID")
+    private Host host;
 
 
 
@@ -49,14 +52,17 @@ public class UserAuth {
     String password,
     String email,
     Roles role,
-    BaseUser baseUser
+    Host host,
+    Guest guest
     )
     {
     this.username = username;
     this.password = password;
     this.email = email;
     this.role = role;
-    this.baseUser = baseUser;
+    this.host = host;
+    this.guest = guest;
+    
     };
 
 
@@ -105,12 +111,20 @@ public class UserAuth {
         this.role = role;
     }
 
-    public BaseUser getBaseUser() {
-        return baseUser;
+    public Guest getGuest() {
+        return guest;
     }
 
-    public void setBaseUser(BaseUser baseUser) {
-        this.baseUser = baseUser;
+    public void setGuest(Guest guest) {
+        this.guest = guest;
+    }
+
+    public Host getHost() {
+        return host;
+    }
+
+    public void setHost(Host host) {
+        this.host = host;
     }
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
               {/*getter / setter */}

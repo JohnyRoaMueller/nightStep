@@ -100,18 +100,11 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         UserAuth currentUserAuth = hostUserAuthOption.get();
 
-        BaseUser currentUser = currentUserAuth.getBaseUser();
-
-        String currentUserFirstname = currentUser.getFirstname();
-
-        Optional<Host> hostOption = hostRepository.findByFirstname(currentUserFirstname);
-
-        Host currentHost = hostOption.get();
+        Host currentHost = currentUserAuth.getHost();
 
         List<Venue> venues = currentHost.getOwnedVenues();
 
         System.out.println(venues.toString());
-
 
 
         return null;

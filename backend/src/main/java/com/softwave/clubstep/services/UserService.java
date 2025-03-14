@@ -2,6 +2,8 @@ package com.softwave.clubstep.services;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import com.softwave.clubstep.domain.repository.UserAuthRepository;
 
 @Service
 public class UserService {
+
+    Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired
     UserAuthRepository userAuthRepository;
@@ -43,7 +47,7 @@ public class UserService {
 
         UserAuth currentUserAuth = userOption.get();
 
-        Guest guest = (Guest) currentUserAuth.getBaseUser();
+        Guest guest = currentUserAuth.getGuest();
 
         return guest;
     }    
@@ -51,13 +55,26 @@ public class UserService {
 
     public Host getHostOrNull(String username) {
 
+        logger.info(username);
+
         Optional<UserAuth> userOption = userAuthRepository.findByUsername(username);
 
-        if (!userOption.isPresent()) return null;
+        if (userOption.isEmpty()) {   
+            logger.info("host not found");
+            return null;
+        }
 
         UserAuth currentUserAuth = userOption.get();
 
-        Host host = (Host) currentUserAuth.getBaseUser();
+        logger.info("currentUserAuth: {}", currentUserAuth);
+        logger.info("currentUserAuth.username: {}", currentUserAuth.getUsername());
+
+
+        Host host = currentUserAuth.getHost();
+
+        if (host == null) {
+            logger.info("Host is null for username: {}", username);
+        }
 
         return host;
     }    

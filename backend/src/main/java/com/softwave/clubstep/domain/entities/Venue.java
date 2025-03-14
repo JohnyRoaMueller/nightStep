@@ -1,8 +1,8 @@
 package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
+
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 // @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -29,7 +29,7 @@ public class Venue {
 
     /** Beziehungen */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "host_id")
+    @JoinColumn(name = "host_id", nullable = false)
     private Host host;
 
     @ManyToMany
