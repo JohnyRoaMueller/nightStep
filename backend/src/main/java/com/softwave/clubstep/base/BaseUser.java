@@ -1,17 +1,9 @@
 package com.softwave.clubstep.base;
 
-import com.softwave.clubstep.domain.entities.UserAuth;
-
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
-
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 
 @MappedSuperclass
 public class BaseUser {

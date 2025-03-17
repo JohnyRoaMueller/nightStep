@@ -3,10 +3,8 @@ import {
   AppbarFrame,
   AppbarContent,
   AppbarLinkBoxLeft,
-  AppbarLinkBoxRight,
   AccountIcon,
   AppbarLink,
-  TypoBody1Link,
   AppbarLogoBox,
   NightStepLogo,
   HiddenOnMobile,
@@ -39,6 +37,8 @@ export function Appbar() {
   const [role, setRole] = useState(null);
 
   const [unfoldFlag, setUnfolgFlag] = useState(false);
+
+  const [loading, setLoading] = useState(true)
   
 
   const handleClick = () => {
@@ -95,10 +95,20 @@ export function Appbar() {
       {
         setIsLoggedIn(false)
       }
+        setLoading(false)
     }
     fetchData();
   }, [])
 
+  if (loading) {
+    return(
+    <>
+    
+    </>
+    )
+  }
+
+  else 
   return (
     <>
       <FadeInLogin fadeFlag={fadeFlag} isLoggedIn={isLoggedIn} handleClearIconClick={handleClearIconClick} />

@@ -55,7 +55,7 @@ function LoginForm() {
             method: "POST",
             body: JSON.stringify(loginData),
             headers: {
-                "Content-type": "application/json",
+                "Content-type": "application/json; charset=UTF-8",
                 "Accept": "*",
                     },
             credentials: "include"
@@ -91,8 +91,6 @@ function LoginForm() {
     }
 
 
-
-
     return (
 
             <form onSubmit={handleSubmit}>
@@ -112,7 +110,7 @@ function LoginForm() {
                     <hr></hr>
                     <SignInBox>
                         <TypoH2>No account yet?</TypoH2>
-                        <CleanLink to={"/register"}>
+                        <CleanLink to={location.pathname === "/register" ? "#" : "/register"} onClick={() => {if (location.pathname === "/register") document.getElementById("login-register-transition-appbar-clear-icon")?.click()}}>
                             <SignInButton>sign in</SignInButton>
                         </CleanLink>
                     </SignInBox>

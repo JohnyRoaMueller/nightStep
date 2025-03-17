@@ -1,7 +1,9 @@
 package com.softwave.clubstep.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.softwave.clubstep.enums.Roles;
 
 import jakarta.persistence.Column;
@@ -15,11 +17,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class UserAuth {
+public class UserAuth  {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "USER_AUTH_ID")
+    @Column
     private Long Id;
 
     @Column
@@ -35,15 +37,13 @@ public class UserAuth {
     @Column(name = "role", nullable = false)
     private Roles role;
 
-    @OneToOne
-    @JoinColumn(name = "GUEST_ID")
-    @JsonBackReference
-    private Guest guest;
-
-    @OneToOne
-    @JoinColumn(name = "HOST_ID")
-    @JsonBackReference
+    @OneToOne(mappedBy = "userAuth")
+    @JsonManagedReference(value = "hostReference")
     private Host host;
+
+    @OneToOne(mappedBy = "userAuth")
+    @JsonManagedReference(value = "guestReference")
+    private Guest guest;
 
 
 
@@ -66,7 +66,6 @@ public class UserAuth {
     this.role = role;
     this.host = host;
     this.guest = guest;
-    
     };
 
 

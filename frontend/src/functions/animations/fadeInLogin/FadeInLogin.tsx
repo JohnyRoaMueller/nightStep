@@ -41,7 +41,7 @@ export const FadeInLogin = ({ fadeFlag, isLoggedIn, handleClearIconClick }: fade
         <Fade in={fadeFlag} timeout={1000}>
                  <LoginLogoutOverlay>
                     <LoginLogoutBox>
-                        <ClearIconStyled key="login-register-transition-appbar-clear-icon" onClick={handleClearIconClick}/>
+                        <ClearIconStyled id="login-register-transition-appbar-clear-icon" onClick={handleClearIconClick}/>
                         {isLoggedIn ? <UserMenu></UserMenu> : <LoginForm></LoginForm>}
                     </LoginLogoutBox>
                 </LoginLogoutOverlay>

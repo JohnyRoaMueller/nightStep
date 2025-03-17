@@ -46,7 +46,8 @@ export default function VenueProfile() {
         const image = <img src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}`}></img>
         imagesArray.push(image)
 
-    } else return imagesArray;
+    } 
+    else return imagesArray;
   }
 
 

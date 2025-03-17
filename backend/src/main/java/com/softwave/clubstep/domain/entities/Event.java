@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Event {
+public class Event  {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +26,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("eventsReference")
     Venue venue;
 
 

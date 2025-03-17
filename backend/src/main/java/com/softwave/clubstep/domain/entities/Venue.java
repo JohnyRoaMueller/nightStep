@@ -12,7 +12,7 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Venue {
+public class Venue  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,10 +34,9 @@ public class Venue {
     private List<String> imagePaths;
 
     /** Beziehungen */
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "host_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "ownedVenuesReference")
     private Host host;
 
 
@@ -47,11 +46,11 @@ public class Venue {
         joinColumns = @JoinColumn(name = "venue_id"),
         inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    @JsonBackReference
     private List<Guest> followers;
 
+
     @OneToMany(mappedBy = "venue")
-    @JsonManagedReference
+    @JsonManagedReference("eventsReference")
     List<Event> events;
 
     /** Konstruktoren */
@@ -126,8 +125,8 @@ public class Venue {
     public Host getHost() { return host; }
     public void setHost(Host host) { this.host = host; }
 
-    public List<Guest> getFollowers() { return followers; }
-    public void setFollowers(List<Guest> followers) { this.followers = followers; }
+    public List<Guest> getFollower() { return followers; }
+    public void setFollower(List<Guest> follower) { this.followers = followers; }
 
     public List<Event> setEvents() { return events; }
     public void getEvents(List<Event> events) { this.events = events; }

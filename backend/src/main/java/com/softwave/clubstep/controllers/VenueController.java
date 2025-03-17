@@ -88,7 +88,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
 
     @GetMapping("/myvenue")
-    public ResponseEntity<Venue> getVenueOfHost(HttpServletRequest request) {
+    public ResponseEntity<List<Venue>> getVenuesOfHost(HttpServletRequest request) {
 
         logger.info("/myvenue reached");
 
@@ -106,8 +106,10 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         System.out.println(venues.toString());
 
+        logger.info(venues.toString());
 
-        return null;
+
+        return ResponseEntity.ok().body(venues);
     }
 
 

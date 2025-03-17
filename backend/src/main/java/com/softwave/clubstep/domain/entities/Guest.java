@@ -8,12 +8,13 @@ import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
 import com.softwave.clubstep.base.BaseUser;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 
 
 @Entity
-public class Guest extends BaseUser {
+public class Guest extends BaseUser  {
     
 
 
@@ -23,11 +24,11 @@ public class Guest extends BaseUser {
     /** ↓↓↓ cardinalities  ↓↓↓*/
     /** ↓↓↓ cardinalities  ↓↓↓*/
     @ManyToMany(mappedBy = "followers")
-    @JsonManagedReference
     private List<Venue> followedClubs;
 
-    @OneToOne(mappedBy = "guest")
-    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(name = "userAuth_ID", nullable = false)
+    @JsonBackReference(value = "guestReference")
     private UserAuth userAuth;
     
     /** ↑↑↑ cardinalities ↑↑↑ */
