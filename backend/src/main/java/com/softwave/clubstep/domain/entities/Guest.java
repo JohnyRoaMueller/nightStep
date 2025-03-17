@@ -2,6 +2,8 @@ package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
 import com.softwave.clubstep.base.BaseUser;
 
@@ -21,9 +23,11 @@ public class Guest extends BaseUser {
     /** ↓↓↓ cardinalities  ↓↓↓*/
     /** ↓↓↓ cardinalities  ↓↓↓*/
     @ManyToMany(mappedBy = "followers")
+    @JsonManagedReference
     private List<Venue> followedClubs;
 
     @OneToOne(mappedBy = "guest")
+    @JsonManagedReference
     private UserAuth userAuth;
     
     /** ↑↑↑ cardinalities ↑↑↑ */

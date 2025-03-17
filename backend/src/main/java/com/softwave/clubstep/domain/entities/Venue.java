@@ -2,10 +2,16 @@ package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
+import org.springframework.http.converter.HttpMessageNotWritableException;
+
 @Entity
-// @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Venue {
 
     @Id
@@ -28,9 +34,12 @@ public class Venue {
     private List<String> imagePaths;
 
     /** Beziehungen */
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "host_id", nullable = false)
+    @JsonBackReference
     private Host host;
+
 
     @ManyToMany
     @JoinTable(
@@ -38,9 +47,11 @@ public class Venue {
         joinColumns = @JoinColumn(name = "venue_id"),
         inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
+    @JsonBackReference
     private List<Guest> followers;
 
     @OneToMany(mappedBy = "venue")
+    @JsonManagedReference
     List<Event> events;
 
     /** Konstruktoren */

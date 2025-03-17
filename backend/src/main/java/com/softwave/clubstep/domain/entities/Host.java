@@ -2,6 +2,7 @@ package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.softwave.clubstep.base.BaseUser;
 
 import jakarta.persistence.CascadeType;
@@ -23,6 +24,7 @@ public class Host extends BaseUser {
     private List<Venue> ownedVenues;
 
     @OneToOne(mappedBy = "host")
+    @JsonManagedReference
     private UserAuth userAuth;
 
     

@@ -36,10 +36,6 @@ function VenueCards(props) {
             try {
                 const response = await fetch(`${apiUrl}/clubs`);
 
-                console.log(`${apiUrl}/clubs`)
-
-                console.log(response)
-
                 if (!response.ok) throw new Error(`fetching ${apiUrl} failed`);
 
                 const data = await response.json();
@@ -82,7 +78,10 @@ function VenueCards(props) {
     } 
     else 
     {   
-
+        console.log(venues.length)
+        console.log(venues[0].name)
+        console.log(venues[0].picAddresses)
+        console.log(`${apiUrl}/images/${venues[0].picAddresses[0].replace(/\//g, "-")}`)
 
     return (
         <>      

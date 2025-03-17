@@ -1,5 +1,7 @@
 package com.softwave.clubstep.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.softwave.clubstep.enums.Roles;
 
 import jakarta.persistence.Column;
@@ -35,10 +37,12 @@ public class UserAuth {
 
     @OneToOne
     @JoinColumn(name = "GUEST_ID")
+    @JsonBackReference
     private Guest guest;
 
     @OneToOne
     @JoinColumn(name = "HOST_ID")
+    @JsonBackReference
     private Host host;
 
 

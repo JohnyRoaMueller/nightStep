@@ -2,6 +2,9 @@ package com.softwave.clubstep.domain.entities;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +26,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "venue_id", nullable = false)
+    @JsonBackReference
     Venue venue;
 
 
