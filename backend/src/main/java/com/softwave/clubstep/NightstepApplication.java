@@ -75,7 +75,7 @@ public class NightstepApplication implements CommandLineRunner {
         host1.setGender("Männlich");
         host1.setBirthday("1985-01-15");
         host1.setUsername("nachtwerk_max");
-        host1.setPassword("password");
+        host1.setPassword("y");
         host1.setNameOfVenue("Nachtwerk");
         host1.setTypeOfVenue("Nightclub");
         host1.setCapacity("1200");

@@ -1,8 +1,13 @@
 import { Box, Button, styled, TextField } from "@mui/material";
 
-export const FormContainer = styled(Box)`
+export const ErrorOverlay = styled(Box)`
+    border: 1px solid green;
 
-    position: relative;
+    width: 100%;
+`;
+
+
+export const FormContainer = styled(Box)`
     align-self: flex-start;
 
     width: 100%;
@@ -38,6 +43,7 @@ export const CategoryHeader = styled(Box)`
 
 export const Line = styled(Box)`
 
+
     display: flex;
     flex-direction: row;
     flex-grow: 1;
@@ -45,6 +51,9 @@ export const Line = styled(Box)`
 `;
 
 export const FixedTextFieldProps = styled(TextField)`
+
+
+
     .MuiFormHelperText-root {
         color: black;
     }
@@ -61,7 +70,6 @@ export const FixedTextFieldProps = styled(TextField)`
     export const TextfieldShort = styled(FixedTextFieldProps)`
 
 
-
         margin: 3%;
 
         width: 15%;
@@ -69,6 +77,7 @@ export const FixedTextFieldProps = styled(TextField)`
     `;
 
     export const TextfieldMedium = styled(FixedTextFieldProps)`
+
   
 
         margin: 3%;
@@ -78,6 +87,7 @@ export const FixedTextFieldProps = styled(TextField)`
     `;
 
     export const TextfieldLong = styled(FixedTextFieldProps)`
+
 
 
         margin: 3%;

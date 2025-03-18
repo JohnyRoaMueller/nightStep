@@ -28,23 +28,29 @@ function MyVenueUI() {
             }
         }
         fetchData()
-    })
+    }, [])
 
 
 
-    function getImages() {
-
+    function getImages() 
+    {
         const imagesArray = []
-    
-        for (let i = 0; i <= 11; i++) 
-          if (venues[i]?.picAddresses[i]) {
-    
-            const image = <img src={`${apiUrl}/images/${venues[i]?.picAddresses[i].replace(/\//g, "-")}`}></img>
-            imagesArray.push(image)
-    
-        } 
-        else return imagesArray;
-      }    
+
+        for (let i = 0; i <= venues.length - 1; i++) 
+        {
+            for (let j = 0; j <= 12; j++)
+            {
+                if (venues[i]?.picAddresses[j]) 
+                {
+                    const image = <img src={`${apiUrl}/images/${venues[i]?.picAddresses[j].replace(/\//g, "-")}`}></img>
+                    imagesArray.push(image)
+
+                } 
+            }
+        }
+        return imagesArray;
+    }    
+
 
     return (
         <>

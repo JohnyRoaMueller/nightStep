@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerHostForm.Styles.ts'
+import { CategoryHeader, ErrorOverlay, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerHostForm.Styles.ts'
 import { Checkbox } from '@mui/material'
 import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
@@ -261,7 +261,7 @@ function RegisterHostForm() {
                         <TextfieldLong name='firstname'helperText='firstname*' required variant='standard' value={formData.firstname} onChange={handleChange} key='textfield-firstname'/>
                     </Line>
                     <Line>
-                        <TextfieldLong name='lastname' helperText='lastname*' required variant='standard' required value={formData.lastname} onChange={handleChange} key='textfield-lastname'/>
+                        <TextfieldLong name='lastname' helperText='lastname*' required variant='standard' value={formData.lastname} onChange={handleChange} key='textfield-lastname'/>
                     </Line>
                     <Line>
                         <TextfieldLong name='email' helperText='email*' required variant='standard' value={formData.email} onChange={handleChange} key='textfield-email'/>
@@ -274,21 +274,22 @@ function RegisterHostForm() {
                                 <option value='' disabled>{"▒"}</option>
                                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
                         </TextfieldMedium>
-
-                        <TextfieldShort name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-day' id='textfield-day'>
+                    </Line>
+                    <Line>
+                        <TextfieldMedium name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-day' id='textfield-day'>
                                 <option value='' disabled>{"▒"}</option>
                                 {dayList.map((day) => <option value={day} key={day}>{day}</option>)}
-                        </TextfieldShort>
+                        </TextfieldMedium>
 
-                        <TextfieldShort name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-month' id='textfield-month'>
+                        <TextfieldMedium name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-month' id='textfield-month'>
                                 <option value='' disabled>{"▒"}</option>
                                 {monthList.map((month) => <option value={month} key={month}>{month}</option>)}
-                        </TextfieldShort>
+                        </TextfieldMedium>
 
-                        <TextfieldShort name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-year' id='textfield-year'>
+                        <TextfieldMedium name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-year' id='textfield-year'>
                                 <option value='' disabled>{"▒"}</option>
                                 {yearList.map((year) => <option value={year} key={year}>{year}</option>)}
-                        </TextfieldShort>
+                        </TextfieldMedium>
                     </Line>
                     <Line>
                         <TextfieldMedium name='username' helperText='username*' required value={formData.username} onChange={handleChange} key='textfield-username'/>

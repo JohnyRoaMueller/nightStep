@@ -1,6 +1,10 @@
 import { Box, Button, styled, TextField } from "@mui/material";
 import { TypoBody1, TypoH2 } from "../../../styled-components/styledTypographie";
 
+export const ErrorOverlay = styled(Box)`
+    border: 1px solid green;
+`;
+
 export const FormContainer = styled(Box)`
 
     position: relative;
@@ -38,12 +42,9 @@ export const CategoryHeader = styled(Box)`
 `;
 
 export const Line = styled(Box)`
-
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-
-
 
 `;
 
