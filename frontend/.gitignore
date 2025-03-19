@@ -27,5 +27,3 @@ dist-ssr
 .env
 
 application.properties
-
-/uploads/

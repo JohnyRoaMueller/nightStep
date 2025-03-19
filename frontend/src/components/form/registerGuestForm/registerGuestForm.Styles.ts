@@ -1,4 +1,5 @@
-import { Box, Button, styled, TextField } from "@mui/material";
+import { Box, Button, keyframes, styled, TextField } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 export const ErrorOverlay = styled(Box)`
     border: 1px solid green;
@@ -8,6 +9,7 @@ export const ErrorOverlay = styled(Box)`
 
 
 export const FormContainer = styled(Box)`
+
     align-self: flex-start;
 
     width: 100%;
@@ -50,9 +52,46 @@ export const Line = styled(Box)`
 
 `;
 
+export const boxShadowAnimation = keyframes`
+  0% {
+    box-shadow: 0px 0px 5px red;
+  }
+  10% {
+    box-shadow: 0px 0px 25px red;
+  }  
+  20% {
+    box-shadow: 0px 0px 50px red;
+  }
+  30% {
+    box-shadow: 0px 0px 0px red;
+  }
+  40% {
+    box-shadow: 0px 0px 5px red;
+  }
+  50% {
+    box-shadow: 0px 0px 25px red;
+  }  
+  60% {
+    box-shadow: 0px 0px 50px red;
+  }
+  70% {
+    box-shadow: 0px 0px 0px red;
+  }   
+  80% {
+    box-shadow: 0px 0px 5px red;
+  }
+  90% {
+    box-shadow: 0px 0px 25px red;
+  }
+  100% {
+    box-shadow: 0px 0px 50px red;
+  }            
+       
+  
+
+
+`;
 export const FixedTextFieldProps = styled(TextField)`
-
-
 
     .MuiFormHelperText-root {
         color: black;
@@ -67,28 +106,7 @@ export const FixedTextFieldProps = styled(TextField)`
 
 `;
 
-    export const TextfieldShort = styled(FixedTextFieldProps)`
-
-
-        margin: 3%;
-
-        width: 15%;
-
-    `;
-
-    export const TextfieldMedium = styled(FixedTextFieldProps)`
-
-  
-
-        margin: 3%;
-
-        width: 33%;
-
-    `;
-
     export const TextfieldLong = styled(FixedTextFieldProps)`
-
-
 
         margin: 3%;
 
@@ -144,6 +162,28 @@ export const RegisterButton = styled(Button)`
         padding-right: 10%;
     }
 
+`;
+
+export const CostumDatePicker = styled(DatePicker)`
+
+  margin: 3%;
+  margin-right: 7%;
+
+
+
+    &:focus-within  {
+        .MuiFormHelperText-root {
+            color: white;
+        }
+    }  
+
+  .MuiFormHelperText-root {
+    color: black;
+  }
+
+
 
 `;
+
+
 

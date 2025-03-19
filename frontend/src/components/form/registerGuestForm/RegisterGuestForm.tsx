@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, EmptyValueOverlay, ErrorOverlay, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
-import { Checkbox, keyframes } from '@mui/material'
+import { CategoryHeader, CostumDatePicker, EmptyValueOverlay, ErrorOverlay, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
+import { Checkbox } from '@mui/material'
 import { TypoBody1, TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
-import { red } from '@mui/material/colors'
-import { Transgender } from '@mui/icons-material'
+import { FormatLineSpacing, Label, Preview } from '@mui/icons-material'
+import { boxShadowAnimation } from './registerGuestForm.Styles'
+import * as React from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import { format } from 'path'
 
 
 
@@ -12,18 +23,8 @@ import { Transgender } from '@mui/icons-material'
 
 function RegisterGuestForm() {
 
-    const [check, setCheck] = useState(false)
-
-    type Date = {
-        day: string,
-        month: string,
-        year: string,
-    }
-    const [date, setDate] = useState<Date>({
-        day: "",
-        month: "",
-        year: "",
-    })
+    type CheckType = boolean
+    const [check, setCheck] = useState<CheckType>(false)
 
     type InputEvent = React.ChangeEvent<HTMLInputElement>
 
@@ -31,45 +32,44 @@ function RegisterGuestForm() {
         firstname: string;
         lastname: string;
         email: string;
-        emailConfirm: string;
         gender: string;
-        birthday: string;
+        birthday: string | null;
         username: string;
         password: string;
+        passwordConfirm: string;
         role: Roles;
     };
     const [formData, setFormData] = useState<FormData>({
         firstname: "",
         lastname: "",
         email: "",
-        emailConfirm: "",
         gender: "",
-        birthday: "",
+        birthday: null,
         username: "",
         password: "",
+        passwordConfirm: "",
         role: Roles.GUEST
     })
 
+    const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement)[]>([])
 
-    const handleDateChange = (event: InputEvent) => {
-        const name = event.target.name
-        const value = event.target.value
-        setDate((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }))
+    type EmptyValueEffectType = {
+        animation: string;
     }
-
-    const SetNewDate = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            birthday: `${date.day}-${date.month}-${date.year}`
-        }))
-        console.log(formData.birthday)
-    }
+    const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>([
+        {animation: ""}, // input 1
+        {animation: ""}, // input 2
+        {animation: ""}, // input 3
+        {animation: ""}, // input 4
+        {animation: ""}, // input 0
+        {animation: ""}, // input 6
+        {animation: ""}  // input 7
+    ])
 
 
     const handleChange = (event: InputEvent) => {
+
+        console.log(event.target)
 
         const name = event.target.name
         const value = event.target.value
@@ -77,7 +77,9 @@ function RegisterGuestForm() {
             ...prevData,
             [name]: value,
         }));
+        console.log(formData)
     }
+
 
     const onCheckboxChange = () => {
         if (!check) {
@@ -87,42 +89,48 @@ function RegisterGuestForm() {
         }
     }
 
+    const [date, setDate] = useState<Dayjs>()
+    const handleDateChange = (newDate: Dayjs) => {
+        setDate(newDate)
+        console.log(newDate.format('YYYY-MM-DD'))
+        setFormData((prevData) => ({
+            ...prevData,
+            birthday: newDate.format('YYYY-MM-DD')
+        }));
+        console.log(formData)
+
+    }
+
 
     type ButtonEvent = React.MouseEvent<HTMLButtonElement>
 
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        const inputNodeList = event.currentTarget.querySelectorAll('input')
-        for (let i = 0; i <= inputNodeList.length - 1; i++) 
+        for (let i = 0; i <= Object.values(formData).length - 1; i++) 
         {
-            if (inputNodeList[i].value == "") 
-            {   
-                inputNodeList[i].focus();
-                inputNodeList[i].style.boxShadow = "0px 0px 5px red"
-                setTimeout(() => {inputNodeList[i].style.boxShadow = "none"}, 100)
-                setTimeout(() => inputNodeList[i].style.boxShadow = "0px 0px 25px red", 200)
-                setTimeout(() => {inputNodeList[i].style.boxShadow = "none"}, 300)
-                setTimeout(() => inputNodeList[i].style.boxShadow = "0px 0px 50px red", 400)
-                setTimeout(() => {inputNodeList[i].style.boxShadow = "none"}, 500)
+            console.log(i)
+            if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "day" && Object.keys(formData)[i] != "month" && Object.keys(formData)[i] != "year") 
+            {
+                setEmptyValueEffect((Prevdata) => {
+                    const updateData = [...Prevdata]
+                    updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                    return updateData;
+                })  
+                setTimeout(() => {
+                    setEmptyValueEffect((Prevdata) => {
+                        const updateData = [...Prevdata]
+                        updateData[i] =  {animation: ""}
+                        return updateData;
+                    })  
+                }, 500)
+                inputRefs.current[i].focus()
                 return;
             }
         }
 
 
-        
 
-
-        const inputNodeValuesArray: string[] = []
-        inputNodeList.forEach(nodeElement => {
-            inputNodeValuesArray.push(nodeElement.value)
-        });
-        console.log("inputNodeList: ", inputNodeValuesArray)
-
-        console.log("inputNodeValuesArray.every((element) => element != \"\"): ", inputNodeValuesArray.every((element) => element != ""))
-
-        if (inputNodeValuesArray.every((element) => element != "")) 
-        {
             const apiUrl =import.meta.env.VITE_APP_API_URL
             fetch(`${apiUrl}/register/guest`,
                 {
@@ -139,15 +147,14 @@ function RegisterGuestForm() {
                 firstname: "",
                 lastname: "",
                 email: "",
-                emailConfirm: "",
                 gender: "",
-                birthday: "",
+                birthday: null,
                 username: "",
                 password: "",
+                passwordConfirm: "",
                 role: Roles.GUEST
             })
             setCheck(false)
-        }
     }
 
 
@@ -156,26 +163,6 @@ function RegisterGuestForm() {
         "female",
         "divers"
     ]
-
-    const dayList: number[] = [];
-    const monthList: number[] = [];
-    const yearList: number[] = [];
-
-    type FillList = {
-        list: number[],
-        from: number,
-        to: number,
-    };
-    function fillList({ list, from, to }: FillList): void {
-        if(from < to) {
-            for(let i = from; i <= to; i++) list.push(i)
-        } else if(from > to) {
-            for(let i = from; i >= to; i--) list.push(i)} 
-    }
-
-    fillList({ list: dayList, from: 1, to: 31});
-    fillList({ list: monthList, from: 1, to: 12});
-    fillList({ list: yearList, from: 2024, to: 1950});
 
 
     return (
@@ -186,54 +173,45 @@ function RegisterGuestForm() {
                         <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
                     </Line>
                     <Line>
-                        <TextfieldLong name='firstname'helperText='firstname*' variant='standard' value={formData.firstname} onChange={handleChange} key='textfield-firstname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' variant='standard' value={formData.firstname} onChange={handleChange} sx={emptyValueEffect[0]} key='textfield-firstname'/> {/** using inputRef instead of ref fixed the problem (wrapped htmlElement inside StyledElement cannot be detected) */}
                     </Line>
                     <Line>
-                        <TextfieldLong name='lastname' helperText='lastname*' variant='standard' value={formData.lastname} onChange={handleChange} key='textfield-lastname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' variant='standard' value={formData.lastname} onChange={handleChange} sx={emptyValueEffect[1]} key='textfield-lastname'/>
                     </Line>
                     <Line>
-                        <TextfieldLong name='email' helperText='email*' variant='standard' value={formData.email} onChange={handleChange} key='textfield-email'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong name='emailConfirm' helperText='confirm email*' variant='standard' value={formData.emailConfirm} onChange={handleChange} key='textfield-confirmEmail' />
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' variant='standard' value={formData.email} onChange={handleChange} sx={emptyValueEffect[2]} key='textfield-email'/>
                     </Line>
                     <Line>
                         <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
                     </Line>
                     <Line>
-                        <TextfieldMedium name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
-                                <option value='' disabled>{"▒"}</option>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} sx={emptyValueEffect[4]} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                                <option value='' disabled></option>
                                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
-                        </TextfieldMedium>
+                        </TextfieldLong>  
                     </Line>
                     <Line>
-                        <TextfieldMedium name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-day' id='textfield-day'>
-                                <option value='' disabled>{"▒"}</option>
-                                {dayList.map((day) => <option value={day} key={day}>{day}</option>)}
-                        </TextfieldMedium>
-
-                        <TextfieldMedium name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-month' id='textfield-month'>
-                                <option value='' disabled>{"▒"}</option>
-                                {monthList.map((month) => <option value={month} key={month}>{month}</option>)}
-                        </TextfieldMedium>
-
-                        <TextfieldMedium name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-year' id='textfield-year'>
-                                <option value='' disabled>{"▒"}</option>
-                                {yearList.map((year) => <option value={year} key={year}>{year}</option>)}
-                        </TextfieldMedium>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                            <CostumDatePicker onChange={(newDate) => handleDateChange(newDate)} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}}/>
+                        </LocalizationProvider> 
                     </Line>
                     <Line>
-                        <TextfieldMedium name='username' helperText='username*' value={formData.username} onChange={handleChange} key='textfield-username'/>
-                        <TermsWrapper>
-                            <Checkbox checked={check} onChange={onCheckboxChange} />
-                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
-                        </TermsWrapper>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' value={formData.username} onChange={handleChange} sx={emptyValueEffect[8]} key='textfield-username'/>
                     </Line>
                     <Line>
-                        <TextfieldMedium name= 'password' helperText ='password*' value={formData.password} onChange={handleChange} key='textfield-password'/>
+                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' helperText ='password*' value={formData.password} onChange={handleChange} sx={emptyValueEffect[10]} key='textfield-password'/>
+                    </Line>
+                    <Line>
+                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='passwordConfirm' helperText='confirm password*' value={formData.username} onChange={handleChange} sx={emptyValueEffect[8]} key='textfield-username'/>
+                    </Line>
+                    <Line>
                         <RegisterButton type='submit' key='Button-register'>
                             Create Account
                         </RegisterButton>
+                        <TermsWrapper>
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={onCheckboxChange} sx={emptyValueEffect[9]} />
+                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
+                        </TermsWrapper>
                     </Line>
                 </form>
             </FormContainer>
