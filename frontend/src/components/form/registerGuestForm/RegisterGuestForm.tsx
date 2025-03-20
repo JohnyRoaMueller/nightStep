@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles'
 import { CategoryHeader, CostumDatePicker, EmptyValueOverlay, ErrorOverlay, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
-import { Checkbox } from '@mui/material'
+import { Checkbox, inputAdornmentClasses, TextField } from '@mui/material'
 import { TypoBody1, TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 import { FormatLineSpacing, Label, Preview } from '@mui/icons-material'
 import { boxShadowAnimation } from './registerGuestForm.Styles'
@@ -51,7 +51,7 @@ function RegisterGuestForm() {
         role: Roles.GUEST
     })
 
-    const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement)[]>([])
+    const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
 
     type EmptyValueEffectType = {
         animation: string;
@@ -61,9 +61,10 @@ function RegisterGuestForm() {
         {animation: ""}, // input 2
         {animation: ""}, // input 3
         {animation: ""}, // input 4
-        {animation: ""}, // input 0
+        {animation: ""}, // input 5
         {animation: ""}, // input 6
-        {animation: ""}  // input 7
+        {animation: ""}, // input 7
+        {animation: ""}  // input 8
     ])
 
 
@@ -109,12 +110,14 @@ function RegisterGuestForm() {
 
         for (let i = 0; i <= Object.values(formData).length - 1; i++) 
         {
-            console.log(i)
-            if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "day" && Object.keys(formData)[i] != "month" && Object.keys(formData)[i] != "year") 
+            console.log("iteration: ", i)
+            if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "birthday") 
             {
+                console.log("Object.keys(formData)[i]: ", Object.keys(formData)[i])
                 setEmptyValueEffect((Prevdata) => {
                     const updateData = [...Prevdata]
                     updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                    console.log("updateData: ", updateData)
                     return updateData;
                 })  
                 setTimeout(() => {
@@ -125,8 +128,27 @@ function RegisterGuestForm() {
                     })  
                 }, 500)
                 inputRefs.current[i].focus()
+                console.log("inputRefs.current[i]: ", inputRefs.current[i])
                 return;
             }
+        }
+        if (check == false)
+        {
+            setEmptyValueEffect((Prevdata) => {
+                const updateData = [...Prevdata]
+                updateData[8] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                console.log("updateData: ", updateData)
+                return updateData;
+            })
+            setTimeout(() => {
+                setEmptyValueEffect((Prevdata) => {
+                    const updateData = [...Prevdata]
+                    updateData[8] =  {animation: ""}
+                    return updateData;
+                })  
+            }, 500)
+            inputRefs.current[8].focus()
+            return;
         }
 
 
@@ -165,6 +187,7 @@ function RegisterGuestForm() {
     ]
 
 
+
     return (
         <>
             <FormContainer>
@@ -173,43 +196,43 @@ function RegisterGuestForm() {
                         <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
                     </Line>
                     <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' variant='standard' value={formData.firstname} onChange={handleChange} sx={emptyValueEffect[0]} key='textfield-firstname'/> {/** using inputRef instead of ref fixed the problem (wrapped htmlElement inside StyledElement cannot be detected) */}
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' variant='standard' value={formData.firstname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}} key='textfield-firstname'/> {/** using inputRef instead of ref fixed the problem (wrapped htmlElement inside StyledElement cannot be detected) */}
                     </Line>
                     <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' variant='standard' value={formData.lastname} onChange={handleChange} sx={emptyValueEffect[1]} key='textfield-lastname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' variant='standard' value={formData.lastname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} key='textfield-lastname'/>
                     </Line>
                     <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' variant='standard' value={formData.email} onChange={handleChange} sx={emptyValueEffect[2]} key='textfield-email'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' variant='standard' value={formData.email} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}} key='textfield-email'/>
                     </Line>
                     <Line>
                         <CategoryHeader><TypoH2>EVENT RELATED</TypoH2></CategoryHeader>
                     </Line>
                     <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} sx={emptyValueEffect[4]} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLOptionElement)} name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
                                 <option value='' disabled></option>
                                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
                         </TextfieldLong>  
                     </Line>
                     <Line>
                         <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <CostumDatePicker onChange={(newDate) => handleDateChange(newDate)} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}}/>
+                            <CostumDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} onChange={(newDate) => handleDateChange(newDate)} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"}/>
                         </LocalizationProvider> 
                     </Line>
                     <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' value={formData.username} onChange={handleChange} sx={emptyValueEffect[8]} key='textfield-username'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' value={formData.username} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
                     </Line>
                     <Line>
-                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' helperText ='password*' value={formData.password} onChange={handleChange} sx={emptyValueEffect[10]} key='textfield-password'/>
+                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' helperText ='password*' value={formData.password} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'/>
                     </Line>
                     <Line>
-                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='passwordConfirm' helperText='confirm password*' value={formData.username} onChange={handleChange} sx={emptyValueEffect[8]} key='textfield-username'/>
+                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='passwordConfirm' helperText='confirm password*' value={formData.passwordConfirm} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-username'/>
                     </Line>
                     <Line>
                         <RegisterButton type='submit' key='Button-register'>
                             Create Account
                         </RegisterButton>
                         <TermsWrapper>
-                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={onCheckboxChange} sx={emptyValueEffect[9]} />
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={onCheckboxChange} sx={emptyValueEffect[8]} />
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>

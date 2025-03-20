@@ -54,37 +54,37 @@ export const Line = styled(Box)`
 
 export const boxShadowAnimation = keyframes`
   0% {
-    box-shadow: 0px 0px 5px red;
+    box-shadow: inset 0px 0px 0px red;
   }
   10% {
-    box-shadow: 0px 0px 25px red;
+    box-shadow: inset 0px 0px 5px red;
   }  
   20% {
-    box-shadow: 0px 0px 50px red;
+    box-shadow: inset 0px 0px 15px red;
   }
   30% {
-    box-shadow: 0px 0px 0px red;
+    box-shadow: inset 0px 0px 0px red;
   }
   40% {
-    box-shadow: 0px 0px 5px red;
+    box-shadow: inset 0px 0px 5px red;
   }
   50% {
-    box-shadow: 0px 0px 25px red;
+    box-shadow: inset 0px 0px 15px red;
   }  
   60% {
-    box-shadow: 0px 0px 50px red;
+    box-shadow: inset 0px 0px 0px red;
   }
   70% {
-    box-shadow: 0px 0px 0px red;
+    box-shadow: inset 0px 0px 5px red;
   }   
   80% {
-    box-shadow: 0px 0px 5px red;
+    box-shadow: inset 0px 0px 15px red;
   }
   90% {
-    box-shadow: 0px 0px 25px red;
+    box-shadow: inset 0px 0px 25px red;
   }
   100% {
-    box-shadow: 0px 0px 50px red;
+    box-shadow: inset 0px 0px 0px red;
   }            
        
   
