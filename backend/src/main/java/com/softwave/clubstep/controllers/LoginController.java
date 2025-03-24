@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import com.softwave.clubstep.DTO.UserAuthDTO;
 import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.CookieService;
@@ -55,37 +57,41 @@ public class LoginController {
 
 
     @PostMapping(value = "/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
+    public ResponseEntity<UserAuthDTO> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
         System.out.println("api/login erreicht");
 
         UserAuth currentUser = userService.getUserAuthOrNull(loginRequest.getUsername());
 
+        /** checking if user exist, if not returning a error message */
         if (currentUser == null) {
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("status", "error");
-            errorResponse.put("message", "User not found");
-            logger.info("user login not successfull: " + errorResponse);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            UserAuthDTO userAuth = new UserAuthDTO();
+            userAuth.setErrorMessage("user not found");
+            logger.info("user login not successfull: " + "user not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userAuth);
         }
 
+        /** comparing the password of existing user with the password
+         *  offered in the http request
+         */
         if (!passwordService.comparePasswort(currentUser, loginRequest)) {
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("status", "error");
-            errorResponse.put("message", "Password is wrong");
-            logger.info("user login not successfull: " + errorResponse);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+            UserAuthDTO userAuth = new UserAuthDTO();
+            userAuth.setErrorMessage("password not correct");
+            logger.info("user login not successfull: " + "password not correct");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(userAuth);
         }
 
+
+        /** Here we put the jwt in the cookie-header of the http response */
         response.addCookie(
             cookieService.createJwtAuthCookie(
                 jwtProvider.getToken(currentUser)));
         
-        Map<String, Object> hashResponse = new HashMap<>();
-        hashResponse.put("username", currentUser.getUsername());
-        hashResponse.put("role", currentUser.getRole());
+        UserAuthDTO userAuth = new UserAuthDTO();
+        userAuth.setUsername(currentUser.getUsername());
+        userAuth.setRole(currentUser.getRole());
 
-        logger.info("user login successfull: " + hashResponse);
+        logger.info("user login successfull: " + currentUser.getUsername() + " " + currentUser.getRole());
 
-        return ResponseEntity.ok(hashResponse);
+        return ResponseEntity.ok(userAuth);
         }
 }

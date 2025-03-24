@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.softwave.clubstep.DTO.UserAuthDTO;
 import com.softwave.clubstep.domain.entities.UserAuth;
+import com.softwave.clubstep.enums.Roles;
 import com.softwave.clubstep.security.authentication.AuthenticationFilter;
 
 import io.jsonwebtoken.*;
@@ -92,7 +94,7 @@ public class JwtService {
     // eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImV4cCI6MTczNzgwMjQ0NX0.AT0xA48RmXSdTLFMx0wa4bJLU038R9-Xcbv16N6E2eE
 
 
-    public Map<String, String> getAuthUser(HttpServletRequest request) {
+    public UserAuthDTO getAuthUser(HttpServletRequest request) {
 
         String cookieHeader = request.getHeader(HttpHeaders.COOKIE);
         if (cookieHeader == null) return null;
@@ -109,15 +111,15 @@ public class JwtService {
                 .getBody();
 
             String username = claims.getSubject();
-            String role = claims.get("role", String.class);
+            Roles role = Roles.valueOf(claims.get("role", String.class));
 
             if (claims != null) {
-                Map<String, String> userinfo = new HashMap<>();
-                userinfo.put("username", username);
-                userinfo.put("role", role);
+                UserAuthDTO userAuth = new UserAuthDTO();
+                userAuth.setUsername(username);
+                userAuth.setRole(role);
                 
-                logger.info("userinfo created: " + userinfo);
-                return userinfo;
+                logger.info("userinfo created: " + userAuth.getUsername() + " " + userAuth.getRole());
+                return userAuth;
             }
         }
         return null;

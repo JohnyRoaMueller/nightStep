@@ -1,4 +1,5 @@
 import { Box, styled } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 
 export const ImagesWrapper = styled(Box)`
     position: relative;
@@ -7,31 +8,27 @@ export const ImagesWrapper = styled(Box)`
     display: flex;
     flex-direction: row;
 
+    gap: 0.1%;
+
     max-width: 100%;
     max-height: 60vh;
 
     overflow-x: auto;
+    overflow-y: hidden;
+
 
 
     @media(min-width: 600px) {
         max-height: 50vh;
     }
 
-
 `;
 
 export const ImageBox = styled(Box)`
-    display: flex;
-    flex-direction: row;
-
-
-
-    gap: 0.1%;
-
-    overflow-x: auto;
-
+    position: relative;
+    
     img {
-        width: 95%;  // Bilder füllen die ImageBox auf kleinen Screens
+        width: 95vw;  // Bilder füllen die ImageBox auf kleinen Screens
         height: 60vh; // Fixe Höhe für Handy
         object-fit: cover; // Sorgt für saubere Darstellung ohne Verzerrung
 
@@ -43,6 +40,19 @@ export const ImageBox = styled(Box)`
     }
 
 `;
+
+export const EditImageIcon = styled(EditIcon)`
+    position: absolute;
+    right: 2%;
+    top: 2%;
+
+
+    &:hover {
+        color: #ff8000;
+    }
+
+`;
+
 
 export const ProfileWrapper = styled(Box)`
 

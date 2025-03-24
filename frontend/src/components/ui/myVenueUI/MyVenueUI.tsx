@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import { useEffect, useState } from "react"
-import { ImageBox, ImagesWrapper } from "./MyVenue.Styles"
-import { constants } from "buffer"
+import { EditImageIcon, ImageBox, ImagesWrapper } from "./MyVenue.Styles"
+import ClearIcon from '@mui/icons-material/Clear';
 
 function MyVenueUI() {
 
@@ -55,9 +55,12 @@ function MyVenueUI() {
     return (
         <>
         <ImagesWrapper>
-            <ImageBox>
-                {getImages()}
-            </ImageBox>
+            {getImages().map((image) => (
+                <ImageBox>
+                    <EditImageIcon/>
+                    {image}
+                </ImageBox>
+            ))}
         </ImagesWrapper>
         </>
     )

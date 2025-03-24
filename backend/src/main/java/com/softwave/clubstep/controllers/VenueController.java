@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softwave.clubstep.DTO.UserAuthDTO;
 import com.softwave.clubstep.base.BaseUser;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
@@ -92,9 +93,9 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         logger.info("/myvenue reached");
 
-        Map<String, String> userdata = jwtService.getAuthUser(request);
+        UserAuthDTO userAuth = jwtService.getAuthUser(request);
 
-        String hostUsername = userdata.get("username");
+        String hostUsername = userAuth.getUsername();
 
         Optional<UserAuth> hostUserAuthOption = userAuthRepository.findByUsername(hostUsername);
 
