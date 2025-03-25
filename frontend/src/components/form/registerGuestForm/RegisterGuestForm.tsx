@@ -73,12 +73,21 @@ function RegisterGuestForm() {
         console.log(event.target)
 
         const name = event.target.name
-        const value = event.target.value
+        let value = event.target.value
+
+        if (name === 'firstname' || name === 'lastname') 
+        {
+            /** replacing everything that is not alphabetic
+             * the ^ (caret) works here as a negation of the listing
+             * -> everything that is not a-z or A-Z
+             */
+            value = value.replace(/[^a-zA-Z]/g, "")
+        }
+
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-        console.log(formData)
     }
 
 
@@ -98,8 +107,6 @@ function RegisterGuestForm() {
             ...prevData,
             birthday: newDate.format('YYYY-MM-DD')
         }));
-        console.log(formData)
-
     }
 
 
@@ -108,9 +115,10 @@ function RegisterGuestForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
+        /** checking if required fields got a value */
         for (let i = 0; i <= Object.values(formData).length - 1; i++) 
         {
-            console.log("iteration: ", i)
+            /** checking if required fields value is empty */
             if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "birthday") 
             {
                 console.log("Object.keys(formData)[i]: ", Object.keys(formData)[i])
@@ -132,6 +140,7 @@ function RegisterGuestForm() {
                 return;
             }
         }
+        /** checking if checkbox is checked */        
         if (check == false)
         {
             setEmptyValueEffect((Prevdata) => {
@@ -150,6 +159,7 @@ function RegisterGuestForm() {
             inputRefs.current[8].focus()
             return;
         }
+
 
 
 
@@ -186,6 +196,9 @@ function RegisterGuestForm() {
         "divers"
     ]
 
+    console.log(Date.now())
+    console.log(Date.now() - 31556926)
+
 
 
     return (
@@ -214,8 +227,10 @@ function RegisterGuestForm() {
                         </TextfieldLong>  
                     </Line>
                     <Line>
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
-                            <CostumDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} onChange={(newDate) => handleDateChange(newDate)} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"}/>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <CostumDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} onChange={(newDate) => handleDateChange(newDate)} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }
+                            // maxDate={dayjs.unix(Date.now() - 31556926)}
+                            />
                         </LocalizationProvider> 
                     </Line>
                     <Line>
