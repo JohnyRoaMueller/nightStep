@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softwave.clubstep.DTO.UserAuthDTO;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.CookieService;
 import com.softwave.clubstep.services.JwtService;
@@ -37,11 +38,11 @@ public class UserController {
     
     
     @GetMapping("/me")
-    public ResponseEntity<Map<String, String>> getUser(HttpServletRequest request) {
+    public ResponseEntity<UserAuthDTO> getUser(HttpServletRequest request) {
 
       logger.info("/api/me reached");
 
-      Map<String, String> userinfo = jwtService.getAuthUser(request);
+      UserAuthDTO userinfo = jwtService.getAuthUser(request);
       
       if (userinfo == null) {
           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

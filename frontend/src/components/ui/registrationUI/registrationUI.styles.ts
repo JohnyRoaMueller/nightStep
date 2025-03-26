@@ -83,7 +83,7 @@ export const ImageBackdrop = styled(Box)({
   bottom: 0,
   backgroundColor: "black",
   opacity: 0.4,
-  transition: "opacity 0.9s ease",
+  transition: "opacity 0.6s ease",
 });
 
 export const ImageHeader = styled(Box)({

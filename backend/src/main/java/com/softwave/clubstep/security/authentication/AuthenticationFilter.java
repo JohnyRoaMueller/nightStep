@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.softwave.clubstep.DTO.UserAuthDTO;
 import com.softwave.clubstep.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,11 +34,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, java.io.IOException {
-		// Get token from the Authorization header
+		// Get token from the Cookie header
 		String jws = request.getHeader(HttpHeaders.COOKIE);
 		if (jws != null) {
 			// Verify token and get user
-			Map<String, String> user = jwtService.getAuthUser(request);
+			UserAuthDTO user = jwtService.getAuthUser(request);
 			// Authenticate
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
 					java.util.Collections.emptyList());

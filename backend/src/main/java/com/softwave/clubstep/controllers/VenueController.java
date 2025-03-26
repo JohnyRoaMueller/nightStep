@@ -87,7 +87,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
         }
     }
 
-
+    // Mock Controller
     @GetMapping("/myvenue")
     public ResponseEntity<List<Venue>> getVenuesOfHost(HttpServletRequest request) {
 
@@ -105,13 +105,33 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         List<Venue> venues = currentHost.getOwnedVenues();
 
-        System.out.println(venues.toString());
-
         logger.info(venues.toString());
 
 
         return ResponseEntity.ok().body(venues);
     }
 
+    // Mock Controller
+    @GetMapping("/myvenue/{venueName}")
+    public ResponseEntity<Venue> getSingleVenueOfHost(@PathVariable("venueName") String venueName, HttpServletRequest request) {
 
+        logger.info("/myvenue/{venueName} reached");
+
+        UserAuthDTO userAuth = jwtService.getAuthUser(request);
+
+        String hostUsername = userAuth.getUsername();
+
+        Optional<UserAuth> hostUserAuthOption = userAuthRepository.findByUsername(hostUsername);
+
+        UserAuth currentUserAuth = hostUserAuthOption.get();
+
+        Host currentHost = currentUserAuth.getHost();
+
+        Venue venue = venueService.getVenueOfHostOrNull(currentHost);
+
+        logger.info(venue.toString());
+
+
+        return ResponseEntity.ok().body(venue);
+    }
 }
