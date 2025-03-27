@@ -1,9 +1,11 @@
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import { useEffect, useState } from "react"
-import { EditImageIcon, ImageBox, ImageBox2, ImagesWrapper, ImageWrapper, ImageWrapper2, MyVenueHeader, MyVenueHeaderTypo, Overlay } from "./myVenueProfileUI.Styles"
+import { EditImageIcon, ImageBox, ImageBox2, ImagesWrapper, ImageWrapper, ImageWrapper2, MyVenueHeader, MyVenueHeaderTypo, Overlay, Settings, SettingsHeader, SettingsMenu, SettingsOption, SettingWrapper, TextFieldOption, TextFieldOptionOption } from "./myVenueProfileUI.Styles"
 import ClearIcon from '@mui/icons-material/Clear';
-import { TypoH1 } from "../../../styled-components/styledTypographie";
+import { TypoBody1, TypoBody2, TypoH1 } from "../../../styled-components/styledTypographie";
 import { useParams } from "react-router-dom";
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 
 function MyVenueProfileUI() {
 
@@ -12,7 +14,12 @@ function MyVenueProfileUI() {
     const [venue, setVenues] = useState()
     const param = useParams()
 
-    param.venuename
+    const [openMenu, setOpenMenu] = useState(false)
+    function handleSettingsClick() {
+        if (openMenu == false) {setOpenMenu(true)}
+        else                   {setOpenMenu(false)}
+        console.log(openMenu)
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -75,7 +82,19 @@ function MyVenueProfileUI() {
                 </ImageBox>
             ))}
         </ImageWrapper>
-        
+        <SettingWrapper>
+            <SettingsHeader onClick={handleSettingsClick}>
+                <TypoBody1 sx={{color: "black"}}>Settings</TypoBody1>
+                {openMenu ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
+            </SettingsHeader>
+            <Settings sx={{display: openMenu ? "block" : "none"}}>
+                <TextFieldOption fullWidth helperText="name" value={venue?.name} sx={{paddingBottom: "20px"}}></TextFieldOption>
+                <TextFieldOption fullWidth helperText="type" value={venue?.type} sx={{paddingBottom: "20px"}}></TextFieldOption>
+                <TextFieldOption fullWidth helperText="capacity" value={venue?.capacity} sx={{paddingBottom: "20px"}}></TextFieldOption>
+                <TextFieldOption fullWidth helperText="city" value={venue?.city} sx={{paddingBottom: "20px"}}></TextFieldOption>
+            </Settings>
+
+        </SettingWrapper>
         </>
     )
 }

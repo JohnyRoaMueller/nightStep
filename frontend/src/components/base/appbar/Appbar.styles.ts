@@ -109,7 +109,8 @@ export const AppbarIconBoxRight = styled(Box)`
 export const AccountBox = styled(Box)`
   display: flex;
   flex-direction: row;
-  padding-left: 1.8em;
+  margin-left: 1.8em;
+
 
   &:hover > * {
     color: #ff8000;
@@ -144,7 +145,7 @@ export const AppbarLink = styled(Link)`
 `;
 
 export const TypoBody1Link = styled(TypoBody1)`
-    font-weight: 600;
+  font-weight: 600;
     
   &:hover {
     color: #ff8000; /* Beim Hover wird der Filter entfernt */
@@ -234,10 +235,15 @@ export const MobileMenuOption = styled(Box)`
 
 export const MobileMenuOptionLink = styled(Link)`
   text-decoration: none;
+
+  color: white;
 `;
 
 export const TypoBody1MobileMenuOptionLink = styled(TypoBody1)`
   font-weight: 600;
+
+  color: white;
+
     
   &:hover {
     color: #ff8000; /* Beim Hover wird der Filter entfernt */

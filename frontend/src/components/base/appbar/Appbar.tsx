@@ -18,8 +18,8 @@ import {
   AppbarIconBoxRight,
 } from "./Appbar.styles";
 import { FadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
-import { TypoBody1 } from "../../../styled-components/styledTypographie";
-import { Box } from "@mui/material";
+import { TypoBody1, TypoBody2 } from "../../../styled-components/styledTypographie";
+import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 
@@ -121,9 +121,9 @@ export function Appbar() {
           <AppbarSearchIcon onClick={() => navigateTo("/find")}/>
           <AppbarUnfoldMoreIcon onClick={handleClickUnfold} onMouseEnter={handleUnfold} sx={{color: unfoldFlag ? "#ff8000" : "white", display: isLoggedIn ? "block" : "none"}}/>
           <AccountBox onClick={handleClick}>
-          <AccountIcon />
+            <AccountIcon />
             <HiddenOnMobile>
-              {isLoggedIn ? username : "Mein Konto"}
+                {isLoggedIn ? username : "Mein Konto"}
             </HiddenOnMobile> {/* HOM -> HiddenOnMobile */}
           </AccountBox>
           </AppbarIconBoxRight>

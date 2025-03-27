@@ -1,6 +1,8 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, TextField } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { TypoH1 } from "../../../styled-components/styledTypographie";
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 
 export const MyVenueHeader = styled(Box)`
     text-align: center;
@@ -24,7 +26,7 @@ export const ImageWrapper = styled(Box)`
 
 
     height: 100vh;
-    width: 100%;
+    width: 95%;
 
     gap: 1%;
 
@@ -38,7 +40,7 @@ export const ImageWrapper = styled(Box)`
 
 
 export const ImageBox = styled(Box)`
-    border: thick double grey;
+    border: thick double black;
     border-radius: 10%;
 
     contain: strict;
@@ -105,3 +107,65 @@ export const ProfileWrapper = styled(Box)`
     }
 
 `;
+
+export const SettingWrapper = styled(Box)`
+    margin: 3%;
+
+    display: flex;
+    flex-direction: column;
+
+    border: thick double black;
+    border-radius: 25px;
+
+    height: auto;
+    width: 95%;
+
+
+    @media(min-width: 600px) {
+        width: 37%;
+    }
+
+`;
+
+
+export const SettingsHeader = styled(Box)`
+    border-radius: 25px;
+
+    padding: 3%;
+
+    display: flex;
+    flex-direction: row;
+
+    align-content: center;
+
+    justify-content: space-between;
+`;
+
+
+export const Settings = styled(Box)`
+    display: flex;
+    flex-direction: column;
+
+    height: auto;
+
+`;
+
+export const TextFieldOption = styled(TextField)`
+    .MuiFormHelperText-root {
+        color: black;
+    }
+
+    .MuiOutlinedInput-root {
+        border-radius: 100px;
+    }
+
+    &:focus-within  {
+        .MuiFormHelperText-root {
+            color: white;
+        }
+    }
+`;
+
+
+
+
