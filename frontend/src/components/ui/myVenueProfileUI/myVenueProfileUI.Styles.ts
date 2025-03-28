@@ -27,7 +27,7 @@ export const ImageWrapper = styled(Box)`
 
     height: 100vh;
     width: 95%;
-
+    margin-top: 3%;
     gap: 1%;
 
 
@@ -108,8 +108,8 @@ export const ProfileWrapper = styled(Box)`
 
 `;
 
-export const SettingWrapper = styled(Box)`
-    margin: 3%;
+export const DropdownWrapper = styled(Box)`
+    margin-top: 3%;
 
     display: flex;
     flex-direction: column;
@@ -128,7 +128,7 @@ export const SettingWrapper = styled(Box)`
 `;
 
 
-export const SettingsHeader = styled(Box)`
+export const DropdownHeader = styled(Box)`
     border-radius: 25px;
 
     padding: 3%;
@@ -151,12 +151,32 @@ export const Settings = styled(Box)`
 `;
 
 export const TextFieldOption = styled(TextField)`
+    padding-bottom: 2%;
+
     .MuiFormHelperText-root {
         color: black;
     }
 
     .MuiOutlinedInput-root {
         border-radius: 100px;
+    }
+
+    &:focus-within  {
+        .MuiFormHelperText-root {
+            color: white;
+        }
+    }
+`;
+
+export const TextFieldBio = styled(TextField)`
+    padding-bottom: 2%;
+
+    .MuiFormHelperText-root {
+        color: black;
+    }
+
+    .MuiOutlinedInput-root {
+        border-radius: 50px;
     }
 
     &:focus-within  {

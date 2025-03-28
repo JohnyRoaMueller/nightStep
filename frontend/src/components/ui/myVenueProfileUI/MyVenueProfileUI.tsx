@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material"
 import { useEffect, useState } from "react"
-import { EditImageIcon, ImageBox, ImageBox2, ImagesWrapper, ImageWrapper, ImageWrapper2, MyVenueHeader, MyVenueHeaderTypo, Overlay, Settings, SettingsHeader, SettingsMenu, SettingsOption, SettingWrapper, TextFieldOption, TextFieldOptionOption } from "./myVenueProfileUI.Styles"
+import { EditImageIcon, ImageBox, ImageBox2, ImagesWrapper, ImageWrapper, ImageWrapper2, MyVenueHeader, MyVenueHeaderTypo, Overlay, Settings, DropdownHeader, SettingsMenu, SettingsOption, DropdownWrapper, TextFieldOption, TextFieldOptionOption, TextFieldBio } from "./myVenueProfileUI.Styles"
 import ClearIcon from '@mui/icons-material/Clear';
 import { TypoBody1, TypoBody2, TypoH1 } from "../../../styled-components/styledTypographie";
 import { useParams } from "react-router-dom";
@@ -11,15 +11,55 @@ function MyVenueProfileUI() {
 
     const apiUrl =  import.meta.env.VITE_APP_API_URL
 
-    const [venue, setVenues] = useState()
+    const [venue, setVenue] = useState()
     const param = useParams()
 
-    const [openMenu, setOpenMenu] = useState(false)
+    const [openSettings, setOpenSettings] = useState(false)
     function handleSettingsClick() {
-        if (openMenu == false) {setOpenMenu(true)}
-        else                   {setOpenMenu(false)}
-        console.log(openMenu)
+        if (openSettings == false) {setOpenSettings(true)}
+        else                   {setOpenSettings(false)}
+        console.log(openSettings)
     }
+
+    const [openBio, setOpenBio] = useState(false)
+    function handleBioClick() {
+        if (openBio == false) {setOpenBio(true)}
+        else                   {setOpenBio(false)}
+        console.log(openBio)
+    }
+
+    type VenueData = {
+        name: string,
+        type: string,
+        capacity: string,
+        city: string,
+        street: string,
+        houseNumber: string,
+        postalCode: number | null
+        description: string,
+    };
+
+    const [venueData, setVenueData] = useState<VenueData>({
+        name: "",
+        type: "",
+        capacity: "",
+        city: "",
+        street: "",
+        houseNumber: "",
+        postalCode: null,
+        description: "",
+    })
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        console.log(event)
+        const name = event.target.name
+        const value = event.target.value
+        setVenueData((prevdata) => ({
+            ...prevdata,
+            [name]: value
+        }))
+    }
+
 
     useEffect(() => {
         async function fetchData() {
@@ -32,8 +72,18 @@ function MyVenueProfileUI() {
             {   
                 console.log("good fetch")
                 const responseJSON = await response.json()
-                setVenues(responseJSON)
-
+                console.log(responseJSON)
+                setVenue(responseJSON)
+                setVenueData({
+                    name: responseJSON.name,
+                    type: responseJSON.type,
+                    capacity: responseJSON.capacity,
+                    city: responseJSON.city,
+                    street: responseJSON.street,
+                    houseNumber: responseJSON.houseNumber,
+                    postalCode: responseJSON.postalCode,
+                    description: responseJSON.description
+                })
             }
             else 
             {
@@ -43,10 +93,6 @@ function MyVenueProfileUI() {
         }
         fetchData()
     }, [])
-
-    console.log(`${apiUrl}/myvenue/${param.venuename}`)
-
-    console.log(venue)
 
     function getImages() 
     {
@@ -69,11 +115,23 @@ function MyVenueProfileUI() {
     }    
 
 
+
     return (
         <>
         <MyVenueHeader>
-            <MyVenueHeaderTypo>{venue?.name}</MyVenueHeaderTypo>
+            <MyVenueHeaderTypo>{venueData?.name}</MyVenueHeaderTypo>
         </MyVenueHeader>
+
+        <DropdownWrapper>
+            <DropdownHeader onClick={handleBioClick}>
+                <TypoBody1 sx={{color: "black"}}>Bio</TypoBody1>
+                {openBio ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
+            </DropdownHeader>
+            <Settings sx={{display: openBio ? "block" : "none"}}>
+                <TextFieldBio fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
+            </Settings>
+        </DropdownWrapper>
+
         <ImageWrapper>
             {getImages().map((image) => ( 
                 <ImageBox>
@@ -82,19 +140,22 @@ function MyVenueProfileUI() {
                 </ImageBox>
             ))}
         </ImageWrapper>
-        <SettingWrapper>
-            <SettingsHeader onClick={handleSettingsClick}>
-                <TypoBody1 sx={{color: "black"}}>Settings</TypoBody1>
-                {openMenu ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
-            </SettingsHeader>
-            <Settings sx={{display: openMenu ? "block" : "none"}}>
-                <TextFieldOption fullWidth helperText="name" value={venue?.name} sx={{paddingBottom: "20px"}}></TextFieldOption>
-                <TextFieldOption fullWidth helperText="type" value={venue?.type} sx={{paddingBottom: "20px"}}></TextFieldOption>
-                <TextFieldOption fullWidth helperText="capacity" value={venue?.capacity} sx={{paddingBottom: "20px"}}></TextFieldOption>
-                <TextFieldOption fullWidth helperText="city" value={venue?.city} sx={{paddingBottom: "20px"}}></TextFieldOption>
-            </Settings>
 
-        </SettingWrapper>
+        <DropdownWrapper>
+            <DropdownHeader onClick={handleSettingsClick}>
+                <TypoBody1 sx={{color: "black"}}>Settings</TypoBody1>
+                {openSettings ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
+            </DropdownHeader>
+            <Settings sx={{display: openSettings ? "block" : "none"}}>
+                <TextFieldOption name="name" fullWidth helperText="name" value={venueData?.name} onChange={handleChange}></TextFieldOption>
+                <TextFieldOption name="type" fullWidth helperText="type" value={venueData?.type} onChange={handleChange}></TextFieldOption>
+                <TextFieldOption name="capacity" fullWidth helperText="capacity"  value={venueData?.capacity} onChange={handleChange}></TextFieldOption>
+                <TextFieldOption name="city" fullWidth helperText="city" value={venueData?.city} onChange={handleChange}></TextFieldOption>
+                <TextFieldOption name="street" fullWidth helperText="street" value={venueData?.street} onChange={handleChange}></TextFieldOption>
+                <TextFieldOption name="houseNumber" fullWidth helperText="house number" value={venueData?.houseNumber} onChange={handleChange}></TextFieldOption>
+                <TextFieldOption name="postalCode" fullWidth helperText="postal code" value={venueData?.postalCode} onChange={handleChange}></TextFieldOption>
+            </Settings>
+        </DropdownWrapper>
         </>
     )
 }

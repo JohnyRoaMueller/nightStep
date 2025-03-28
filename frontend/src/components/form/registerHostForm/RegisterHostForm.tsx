@@ -152,34 +152,6 @@ function RegisterHostForm() {
                 }
             // reseting form
 
-            /*
-            setFormData({
-                firstname: "",
-                lastname: "",
-                email: "",
-                emailConfirm: "",
-                gender: "",
-                birthday: "",
-                username: "",
-                password: "",
-                nameOfVenue: "",
-                typeOfVenue: "",
-                capacity: "",
-                cityOfVenue: "",
-                streetOfVenue: "",
-                housenumberOfVenue: "",
-                postcodeOfVenue: "",
-                imageOne: null,
-                imageTwo: null,
-                imageThree: null,
-                role: Roles.HOST
-            })
-            */
-
-            /*
-            setImageUrls([])
-            */
-
             setTermsAccepted(false)
         }
         fetchingData()
