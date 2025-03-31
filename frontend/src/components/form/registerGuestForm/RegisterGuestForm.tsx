@@ -1,24 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, CostumDatePicker, EmptyValueOverlay, ErrorOverlay, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerGuestForm.Styles'
-import { Checkbox, inputAdornmentClasses, TextField } from '@mui/material'
-import { TypoBody1, TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
-import { FormatLineSpacing, Label, Preview } from '@mui/icons-material'
+import { CategoryHeader, CostumDatePicker, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong } from './registerGuestForm.Styles'
+import { Checkbox } from '@mui/material'
+import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 import { boxShadowAnimation } from './registerGuestForm.Styles'
 import * as React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { format } from 'path'
-
-
-
+import { preventNonAlphabeticInput, validateGuestForm } from '../../../functions/validation/guestFormValidation'
 
 
 function RegisterGuestForm() {
@@ -26,7 +16,7 @@ function RegisterGuestForm() {
     type CheckType = boolean
     const [check, setCheck] = useState<CheckType>(false)
 
-    type InputEvent = React.ChangeEvent<HTMLInputElement>
+
 
     type FormData = {
         firstname: string;
@@ -56,53 +46,27 @@ function RegisterGuestForm() {
     type EmptyValueEffectType = {
         animation: string;
     }
-    const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>([
-        {animation: ""}, // input 1
-        {animation: ""}, // input 2
-        {animation: ""}, // input 3
-        {animation: ""}, // input 4
-        {animation: ""}, // input 5
-        {animation: ""}, // input 6
-        {animation: ""}, // input 7
-        {animation: ""}  // input 8
-    ])
+    const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
+        Array(8).fill({ animation: "" }) // 8 positions to set the effect independent from each other
+    )
 
-
+    type InputEvent = React.ChangeEvent<HTMLInputElement>
     const handleChange = (event: InputEvent) => {
 
-        console.log(event.target)
-
         const name = event.target.name
-        let value = event.target.value
-
-        if (name === 'firstname' || name === 'lastname') 
-        {
-            /** replacing everything that is not alphabetic
-             * the ^ (caret) works here as a negation of the listing
-             * -> everything that is not a-z or A-Z
-             */
-            value = value.replace(/[^a-zA-Z]/g, "")
-        }
+        const value = event.target.value
 
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: preventNonAlphabeticInput(name, value),
         }));
     }
 
+    const handleCheckboxChange = () => setCheck(prevCheck => !prevCheck)
 
-    const onCheckboxChange = () => {
-        if (!check) {
-            setCheck(true)
-        } else {
-            setCheck(false)
-        }
-    }
 
     const [date, setDate] = useState<Dayjs>()
     const handleDateChange = (newDate: Dayjs) => {
-        setDate(newDate)
-        console.log(newDate.format('YYYY-MM-DD'))
         setFormData((prevData) => ({
             ...prevData,
             birthday: newDate.format('YYYY-MM-DD')
@@ -115,53 +79,7 @@ function RegisterGuestForm() {
     const handleSubmit = (event: ButtonEvent) => {
         event.preventDefault();
 
-        /** checking if required fields got a value */
-        for (let i = 0; i <= Object.values(formData).length - 1; i++) 
-        {
-            /** checking if required fields value is empty */
-            if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "birthday") 
-            {
-                console.log("Object.keys(formData)[i]: ", Object.keys(formData)[i])
-                setEmptyValueEffect((Prevdata) => {
-                    const updateData = [...Prevdata]
-                    updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
-                    console.log("updateData: ", updateData)
-                    return updateData;
-                })  
-                setTimeout(() => {
-                    setEmptyValueEffect((Prevdata) => {
-                        const updateData = [...Prevdata]
-                        updateData[i] =  {animation: ""}
-                        return updateData;
-                    })  
-                }, 500)
-                inputRefs.current[i].focus()
-                console.log("inputRefs.current[i]: ", inputRefs.current[i])
-                return;
-            }
-        }
-        /** checking if checkbox is checked */        
-        if (check == false)
-        {
-            setEmptyValueEffect((Prevdata) => {
-                const updateData = [...Prevdata]
-                updateData[8] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
-                console.log("updateData: ", updateData)
-                return updateData;
-            })
-            setTimeout(() => {
-                setEmptyValueEffect((Prevdata) => {
-                    const updateData = [...Prevdata]
-                    updateData[8] =  {animation: ""}
-                    return updateData;
-                })  
-            }, 500)
-            inputRefs.current[8].focus()
-            return;
-        }
-
-
-
+        if (!validateGuestForm(formData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check)) return
 
             const apiUrl =import.meta.env.VITE_APP_API_URL
             fetch(`${apiUrl}/register/guest`,
@@ -247,7 +165,7 @@ function RegisterGuestForm() {
                             Create Account
                         </RegisterButton>
                         <TermsWrapper>
-                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={onCheckboxChange} sx={emptyValueEffect[8]} />
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckboxChange} sx={emptyValueEffect[8]} />
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>

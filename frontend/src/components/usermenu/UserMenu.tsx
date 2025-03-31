@@ -23,7 +23,7 @@ function UserMenu() {
 
             const apiUrl = import.meta.env.VITE_APP_API_URL
 
-            const response = await fetch(`${apiUrl}/logout`, {
+            const response = await fetch(`${apiUrl}/me`, {
                 credentials: "include",
             })
             if (response.ok) 
@@ -46,7 +46,7 @@ function UserMenu() {
         <> 
             <MenuWrapper>
                 <NameBox>
-                    <TypoH2><u>{username}</u></TypoH2>
+                    <TypoH2>{username}</TypoH2>
                 </NameBox>
                 <ContentBox>
                     <MenuOption>

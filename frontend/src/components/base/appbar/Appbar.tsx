@@ -95,7 +95,7 @@ export function Appbar() {
       {
         setIsLoggedIn(false)
       }
-        setLoading(false)
+      setLoading(false)
     }
     fetchData();
   }, [])
