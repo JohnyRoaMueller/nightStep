@@ -1,9 +1,8 @@
-import { data, useParams } from "react-router";
-import { Box } from "@mui/material";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { VenueType } from "../ui/venueCards/VenueCards";
 import { ImageBox, ImagesWrapper, ProfileWrapper } from "./VenueProfile.Styles";
-import { TypoBody1, TypoCaption, TypoH1, TypoH2 } from "../../styled-components/styledTypographie";
+import { TypoBody1, TypoH1 } from "../../styled-components/styledTypographie";
 
 
 
@@ -33,7 +32,17 @@ export default function VenueProfile() {
 
     }
     fetchData()
+
   }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      for (let i = 0; i <= Object.keys(venue).length; i++) {
+        console.log(Object.values(venue)[i])
+      }
+    }, 1500)
+
+  })
  
   // user can upload 12 images
   function getImages() {
@@ -49,6 +58,8 @@ export default function VenueProfile() {
     } 
     else return imagesArray;
   }
+
+
 
 
   return (

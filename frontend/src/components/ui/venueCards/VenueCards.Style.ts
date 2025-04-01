@@ -82,7 +82,7 @@ export const GridItem = styled(Box)`
 
 
     &:active {
-        .club-card-overlay {
+        .Venue-card-overlay {
             background-color: #808080;
             opacity: 0.4;
             transition: 1s ease-in-out;
@@ -97,14 +97,14 @@ export const GridItem = styled(Box)`
         padding-bottom: 0.3%;
 
         &:hover {
-            .club-card-overlay {
+            .Venue-card-overlay {
                 background-color: #808080;
                 opacity: 0.1
             }
         }  
 
         &:active {
-            .club-card-overlay {
+            .Venue-card-overlay {
                 background-color: #808080;
                 opacity: 0.4;
                 transition: 3s ease-in-out;
@@ -116,7 +116,7 @@ export const GridItem = styled(Box)`
 
 `;
 
-export const ClubCardOverlay = styled(Box)`
+export const VenueCardOverlay = styled(Box)`
     position: absolute;
 
 
@@ -130,7 +130,7 @@ export const ClubCardOverlay = styled(Box)`
 
 `;
 
-export const ClubCard = styled(Card)`
+export const VenueCard = styled(Card)`
     position: relative;
 
     box-sizing: content-box;
@@ -141,10 +141,10 @@ export const ClubCard = styled(Card)`
 
 `;
 
-type ClubCardMediaProp = {
+type VenueCardMediaProp = {
     component: string
 }
-export const ClubCardMedia = styled(CardMedia)<ClubCardMediaProp>`
+export const VenueCardMedia = styled(CardMedia)<VenueCardMediaProp>`
 
 
     min-height: 50vh;
@@ -155,19 +155,19 @@ export const ClubCardMedia = styled(CardMedia)<ClubCardMediaProp>`
 `;
 
 
-export const ClubCardContent = styled(CardContent)`
+export const VenueCardContent = styled(CardContent)`
 
 `;
 
 
-export const ClubNameTypo = styled(TypoH2)`
+export const VenueNameTypo = styled(TypoH2)`
     color: black;
     font-size: 1.5em;
 
 `;
 
 
-export const ClubDescTypo = styled(TypoBody1)`
+export const VenueDescTypo = styled(TypoBody1)`
     font-size: 4vw;
 
     padding: 0.2em;

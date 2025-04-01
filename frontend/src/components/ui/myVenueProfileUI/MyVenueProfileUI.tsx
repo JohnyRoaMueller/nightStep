@@ -1,17 +1,16 @@
-import { Box, Button } from "@mui/material"
-import { useEffect, useState } from "react"
-import { EditImageIcon, ImageBox, ImageBox2, ImagesWrapper, ImageWrapper, ImageWrapper2, MyVenueHeader, MyVenueHeaderTypo, Overlay, Settings, DropdownHeader, SettingsMenu, SettingsOption, DropdownWrapper, TextFieldOption, TextFieldOptionOption, TextFieldBio } from "./myVenueProfileUI.Styles"
-import ClearIcon from '@mui/icons-material/Clear';
-import { TypoBody1, TypoBody2, TypoH1 } from "../../../styled-components/styledTypographie";
+import { ChangeEvent, useEffect, useState } from "react"
+import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, Overlay, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper } from "./myVenueProfileUI.Styles"
+import { TypoBody1 } from "../../../styled-components/styledTypographie";
 import { useParams } from "react-router-dom";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import { VenueType } from "../venueCards/VenueCards";
 
 function MyVenueProfileUI() {
 
     const apiUrl =  import.meta.env.VITE_APP_API_URL
 
-    const [venue, setVenue] = useState()
+    const [venue, setVenue] = useState<VenueType>()
     const param = useParams()
 
     const [openSettings, setOpenSettings] = useState(false)
@@ -50,10 +49,10 @@ function MyVenueProfileUI() {
         description: "",
     })
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         console.log(event)
-        const name = event.target.name
-        const value = event.target.value
+        const name = event?.target.name
+        const value = event?.target.value
         setVenueData((prevdata) => ({
             ...prevdata,
             [name]: value
@@ -82,7 +81,7 @@ function MyVenueProfileUI() {
                     street: responseJSON.street,
                     houseNumber: responseJSON.houseNumber,
                     postalCode: responseJSON.postalCode,
-                    description: responseJSON.description
+                    description: responseJSON.description,
                 })
             }
             else 

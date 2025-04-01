@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, ErrorOverlay, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium, TextfieldShort } from './registerHostForm.Styles.ts'
+import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium } from './registerHostForm.Styles.ts'
 import { Checkbox } from '@mui/material'
 import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
@@ -12,8 +12,7 @@ import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
 
 function RegisterHostForm() {
 
-    type TermsAccepted = boolean;
-    const [termsAccepted, setTermsAccepted] = useState<TermsAccepted>(false)
+    const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
 
     type Date = {
         day: string,
@@ -26,9 +25,9 @@ function RegisterHostForm() {
         year: "",
     })
 
-    type InputEvent = React.ChangeEvent<HTMLInputElement>
+    
 
-    const handleDateChange = (event: InputEvent) => {
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const name = event.target.name
         const value = event.target.value
@@ -61,10 +60,10 @@ function RegisterHostForm() {
         cityOfVenue: string,
         streetOfVenue: string,
         housenumberOfVenue: string,
-        postcodeOfVenue: number | null,
-        imageOne: File | null
-        imageTwo: File | null
-        imageThree: File | null
+        postcodeOfVenue: string,
+        imageOne: Blob
+        imageTwo: Blob
+        imageThree: Blob
         role: Roles;
     };
 
@@ -83,15 +82,15 @@ function RegisterHostForm() {
         cityOfVenue: "",
         streetOfVenue: "",
         housenumberOfVenue: "",
-        postcodeOfVenue: null,
-        imageOne: null,
-        imageTwo: null,
-        imageThree: null,
+        postcodeOfVenue: "",
+        imageOne: new Blob,
+        imageTwo: new Blob,
+        imageThree: new Blob,
         role: Roles.HOST
     })
 
 
-    const handleChange = (event: InputEvent) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const name = event.target.name
         const value = event.target.value
@@ -110,9 +109,7 @@ function RegisterHostForm() {
     }
 
 
-    type ButtonEvent = React.MouseEvent<HTMLButtonElement>
-
-    const handleSubmit = (event: ButtonEvent) => {
+    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         async function fetchingData() {
@@ -185,21 +182,6 @@ function RegisterHostForm() {
     const typeOfVenueList = ["Nightclub", "Bar", "Restaurant", "Gallery", "Theater", "Hostel"]
 
     const cityList = ["berlin"]
-    
-    const disctrictList = [
-        "Mitte",
-        "Friedrichshain-Kreuzberg",
-        "Pankow",
-        "Charlottenburg-Wilmersdorf",
-        "Spandau",
-        "Steglitz-Zehlendorf",
-        "Tempelhof-Schöneberg",
-        "Neukölln",
-        "Treptow-Köpenick",
-        "Marzahn-Hellersdorf",
-        "Lichtenberg",
-        "Reinickendorf"
-      ]; 
 
     const dayList: number[] = [];
     const monthList: number[] = [];

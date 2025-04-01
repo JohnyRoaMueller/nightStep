@@ -1,8 +1,6 @@
 import { Box, styled, TextField } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { TypoH1 } from "../../../styled-components/styledTypographie";
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 
 export const MyVenueHeader = styled(Box)`
     text-align: center;

@@ -3,6 +3,8 @@ import { ContentBox, MenuOption, MenuWrapper, NameBox } from "./userMenu.Styles"
 import {  useLocation, useNavigate } from "react-router-dom";
 import { TypoH2 } from "../../styled-components/styledTypographie";
 
+const apiUrl = import.meta.env.VITE_APP_API_URL
+
 function UserMenu() {
     const navigateTo = useNavigate();
     const location = useLocation();
@@ -10,8 +12,7 @@ function UserMenu() {
     const [username, setUsername] = useState(null);
 
     const handleLogout = () => {
-        fetch("http://10.0.2.24:8080/api/logout", {
-            // "http://192.168.178.28:8080/api/logout", {
+        fetch(`${apiUrl}`, {
             credentials: "include",
         })
         navigateTo("/home");
@@ -20,8 +21,6 @@ function UserMenu() {
 
     useEffect(() => {
         async function fetchData() {
-
-            const apiUrl = import.meta.env.VITE_APP_API_URL
 
             const response = await fetch(`${apiUrl}/me`, {
                 credentials: "include",

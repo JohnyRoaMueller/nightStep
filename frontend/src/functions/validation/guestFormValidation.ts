@@ -1,25 +1,39 @@
-import { useState } from "react"
-import EmptyValueEffectType from "./HostFormValidation"
 import { Keyframes } from "@emotion/react"
-import FormData from "../../components/form/registerGuestForm/RegisterGuestForm"
+import EmptyValueEffectType from "../../components/form/registerGuestForm/RegisterGuestForm"
+import Roles from "../../../enums/Roles";
 
+export type GuestFormData = {
+    firstname: string;
+    lastname: string;
+    email: string;
+    gender: string;
+    birthday: string | null;
+    username: string;
+    password: string;
+    passwordConfirm: string;
+    role: Roles;
+};
+
+export type EmptyValueEffectType = {
+    animation: string;
+    }
 
 type ValidateGuestFormType = {
-    formData: FormData
+    guestFormData: GuestFormData,
     setEmptyValueEffect: React.Dispatch<React.SetStateAction<EmptyValueEffectType[]>>,
     boxShadowAnimation: Keyframes,
-    inputRefs: React.Ref<HTMLInputElement>,
-    check: React.JSX.Element
+    inputRefs:React.MutableRefObject<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>,
+    check: boolean
 }
-export function validateGuestForm({formData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check}: ValidateGuestFormType) {  
+export function validateGuestForm({guestFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check}: ValidateGuestFormType) {  
 
     /** checking if required fields got a value */
-    for (let i = 0; i <= Object.values(formData).length - 1; i++) 
+    for (let i = 0; i <= Object.values(guestFormData).length - 1; i++) 
         {
             /** checking if required fields value is empty */
-            if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "birthday") 
+            if (Object.values(guestFormData)[i] == "" && Object.keys(guestFormData)[i] != "gender" && Object.keys(guestFormData)[i] != "birthday") 
             {
-                console.log("Object.keys(formData)[i]: ", Object.keys(formData)[i])
+                console.log("Object.keys(formData)[i]: ", Object.keys(guestFormData)[i])
                 setEmptyValueEffect((Prevdata) => {
                     const updateData = [...Prevdata]
                     updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
@@ -54,14 +68,14 @@ export function validateGuestForm({formData, setEmptyValueEffect, boxShadowAnima
                     return updateData;
                 })  
             }, 500)
-            inputRefs.current[8].focus()
+            inputRefs?.current[8].focus()
             return;
         }
         return true
     }
 
 
-export function preventNonAlphabeticInput(name, value) {
+export function preventNonAlphabeticInput(name: string, value: string) {
     if (name === 'firstname' || name === 'lastname') 
         {
             /** replacing everything that is not alphabetic

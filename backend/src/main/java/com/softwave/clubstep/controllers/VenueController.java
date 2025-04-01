@@ -68,7 +68,14 @@ Spring endpoints are based on Java Servlets.
 Servlets handle HTTP requests and return responses, usually in the form of HTML or JSON.
 Spring abstracts this technology, allowing developers to work with annotations like
 @RestController and @GetMapping, while the requests are processed in the background by a Servlet container (e.g., Tomcat).
-*/}
+*/}    
+
+    @GetMapping("/venues")
+    public Iterable<Venue> getClubs() {
+        logger.info("/api/clubs reached");
+        return venueRepository.findAll();
+    }
+
   
     @GetMapping("/venue/{venueName}")
     public ResponseEntity<Venue> getSingleVenue(@PathVariable("venueName") String venueName) {

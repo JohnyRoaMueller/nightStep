@@ -1,15 +1,12 @@
-import { Box } from "@mui/material"
 import { useEffect, useState } from "react"
-import { EditImageIcon, ImageBox, ImageBox2, ImagesWrapper, ImageWrapper, ImageWrapper2, MyVenueHeader, MyVenueHeaderTypo, Overlay } from "./myVenueProfileUI.Styles"
-import ClearIcon from '@mui/icons-material/Clear';
-import { TypoH1 } from "../../../styled-components/styledTypographie";
 import { useNavigate } from "react-router-dom";
+import { VenueType } from "../venueCards/VenueCards";
 
 function MyVenueUI() {
 
     const apiUrl =  import.meta.env.VITE_APP_API_URL
 
-    const [venues, setVenues] = useState([])
+    const [venues, setVenues] = useState<VenueType[]>([])
     const navigateTo = useNavigate();
 
     useEffect(() => {
