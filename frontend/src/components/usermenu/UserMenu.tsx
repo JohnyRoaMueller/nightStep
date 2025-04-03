@@ -12,7 +12,7 @@ function UserMenu() {
     const [username, setUsername] = useState(null);
 
     const handleLogout = () => {
-        fetch(`${apiUrl}`, {
+        fetch(`${apiUrl}/logout`, {
             credentials: "include",
         })
         navigateTo("/home");

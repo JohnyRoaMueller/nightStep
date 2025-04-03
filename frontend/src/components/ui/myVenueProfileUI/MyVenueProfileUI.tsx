@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react"
-import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, Overlay, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper } from "./myVenueProfileUI.Styles"
-import { TypoBody1 } from "../../../styled-components/styledTypographie";
+import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, Overlay, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper, TypoBody1HeaderDropdown } from "./myVenueProfileUI.Styles"
 import { useParams } from "react-router-dom";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
@@ -9,22 +8,20 @@ import { VenueType } from "../venueCards/VenueCards";
 function MyVenueProfileUI() {
 
     const apiUrl =  import.meta.env.VITE_APP_API_URL
+    const param = useParams()
 
     const [venue, setVenue] = useState<VenueType>()
-    const param = useParams()
+    const [imageUrls, setImageUrls] = useState<string[]>([])
+
 
     const [openSettings, setOpenSettings] = useState(false)
     function handleSettingsClick() {
-        if (openSettings == false) {setOpenSettings(true)}
-        else                   {setOpenSettings(false)}
-        console.log(openSettings)
+        setOpenSettings(prevBoolean => !prevBoolean)
     }
 
     const [openBio, setOpenBio] = useState(false)
     function handleBioClick() {
-        if (openBio == false) {setOpenBio(true)}
-        else                   {setOpenBio(false)}
-        console.log(openBio)
+        setOpenBio(prevBoolean => !prevBoolean)
     }
 
     type VenueData = {
@@ -50,7 +47,6 @@ function MyVenueProfileUI() {
     })
 
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        console.log(event)
         const name = event?.target.name
         const value = event?.target.value
         setVenueData((prevdata) => ({
@@ -58,6 +54,19 @@ function MyVenueProfileUI() {
             [name]: value
         }))
     }
+
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
+        const file = event.target.files[0]
+
+        setImageUrls((prevdata) => {
+            const url = URL.createObjectURL(file)
+            const newArray = [...prevdata];
+            newArray[index] = url
+            return newArray
+        })
+        console.log(imageUrls)
+    }
+
 
 
     useEffect(() => {
@@ -69,10 +78,10 @@ function MyVenueProfileUI() {
             })
             if(response.ok) 
             {   
-                console.log("good fetch")
                 const responseJSON = await response.json()
                 console.log(responseJSON)
                 setVenue(responseJSON)
+                setImageUrls(responseJSON.picAddresses)
                 setVenueData({
                     name: responseJSON.name,
                     type: responseJSON.type,
@@ -93,27 +102,66 @@ function MyVenueProfileUI() {
         fetchData()
     }, [])
 
+
     function getImages() 
     {
-        const imagesArray = []
+        const inputImageArray = []
 
 
-        for (let j = 0; j <= 11; j++)
+        for (let counter = 0; counter <= 11; counter++)
         {
-            if (venue?.picAddresses[j]) 
+            if (imageUrls[counter]) 
             {
-                const image = <img src={`${apiUrl}/images/${venue?.picAddresses[j].replace(/\//g, "-")}`}></img>
-                imagesArray.push(image)
+                const input = <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
+                const image = <img src={`${apiUrl}/images/${imageUrls[counter].replace(/\//g, "-")}`}></img>
+                const inputImage = [input, image]
+                inputImageArray.push(inputImage)
             } 
             else 
             {
-                imagesArray.push(null)
+                const input = <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
+                const image = <img></img>
+                const inputImage = [input, image]
+                inputImageArray.push(inputImage)
             }
         }
-        return imagesArray;
+        return inputImageArray;
     }    
 
 
+    function getImages2() 
+    {
+        const inputImageArray = []
+
+
+        for (let counter = 0; counter <= 11; counter++)
+        {
+            if (imageUrls[counter])
+            {
+            const inputImage = 
+            <>
+            <ImageBox key={`Image-box-${counter}`}>
+                <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
+                <img src={`${apiUrl}/images/${imageUrls[counter].replace(/\//g, "-")}`}></img>
+            </ImageBox>
+            </>
+                inputImageArray.push(inputImage)
+            }
+            else
+            {
+                const inputImage = 
+                <>
+                <ImageBox key={`Image-box-${counter}`}>
+                    <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
+                    {imageUrls[counter] && <img src={`${imageUrls[counter]}`}></img>}
+                </ImageBox>
+                </>
+                inputImageArray.push(inputImage)
+            }
+        }
+        console.log(inputImageArray)
+        return inputImageArray;
+    }        
 
     return (
         <>
@@ -123,7 +171,7 @@ function MyVenueProfileUI() {
 
         <DropdownWrapper>
             <DropdownHeader onClick={handleBioClick}>
-                <TypoBody1 sx={{color: "black"}}>Bio</TypoBody1>
+                <TypoBody1HeaderDropdown>Bio</TypoBody1HeaderDropdown>
                 {openBio ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
             </DropdownHeader>
             <Settings sx={{display: openBio ? "block" : "none"}}>
@@ -132,17 +180,24 @@ function MyVenueProfileUI() {
         </DropdownWrapper>
 
         <ImageWrapper>
-            {getImages().map((image) => ( 
-                <ImageBox>
-                {image}
-                <Overlay/>
+            {getImages().map((inputImage, index) => (
+                <ImageBox key={`Image-box-${index}`}>
+                {inputImage}
                 </ImageBox>
             ))}
         </ImageWrapper>
 
+        <ImageWrapper>
+            {getImages2().map((image) => (
+                <>
+                {image}
+                </>
+            ))}
+        </ImageWrapper>        
+
         <DropdownWrapper>
             <DropdownHeader onClick={handleSettingsClick}>
-                <TypoBody1 sx={{color: "black"}}>Settings</TypoBody1>
+                <TypoBody1HeaderDropdown>Settings</TypoBody1HeaderDropdown>
                 {openSettings ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
             </DropdownHeader>
             <Settings sx={{display: openSettings ? "block" : "none"}}>

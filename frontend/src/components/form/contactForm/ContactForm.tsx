@@ -1,16 +1,20 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material'
-import zIndex from '@mui/material/styles/zIndex'
-import { ContactFormButton, ContactFormButtonTypography, ContactFormContainer, ContactFormHeader, ContactFormHeaderBox, ContactFormHeaderTypo, FormGridContainer } from './ContactFormStyles'
 import { useState } from 'react'
-import { CallToMessage, DividingLine, FormContainer, Line, SubmitButton, TextfieldLong, TextfieldMedium, TextfieldShort } from './ContactForm.Styled'
-import { TypoBody2, TypoH1, TypoH2 } from '../../../styled-components/styledTypographie'
+import { CallToMessage, FormContainer, Line, SubmitButton, TextfieldLong } from './ContactForm.Styled'
+import { TypoH1 } from '../../../styled-components/styledTypographie'
 
 
 
 
 function ContactForm() {
 
-    const [formData, setFormData] = useState({
+    type FormDataType = {
+        company: string,
+        name: string,
+        email: string,
+        subject: string,
+        message: string
+    }
+    const [formData, setFormData] = useState<FormDataType>({
         company: "",
         name: "",
         email: "",
@@ -18,7 +22,7 @@ function ContactForm() {
         message: "",
     })
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target
         setFormData((prevData) => ({
             ...prevData,
@@ -32,7 +36,7 @@ function ContactForm() {
 
         const resetData = { ...formData }
         Object.keys(resetData).forEach(key => {
-            resetData[key] = ""
+            resetData[key as keyof FormDataType] = ""
         })
 
         setFormData(resetData)

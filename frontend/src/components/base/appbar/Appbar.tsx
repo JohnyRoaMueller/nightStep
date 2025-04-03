@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import {
   AppbarFrame,
   AppbarContent,
-  AppbarLinkBoxLeft,
   AccountIcon,
-  AppbarLink,
   AppbarLogoBox,
   NightStepLogo,
   HiddenOnMobile,
@@ -18,8 +16,6 @@ import {
   AppbarIconBoxRight,
 } from "./Appbar.styles";
 import { FadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
-import { TypoBody1, TypoBody2 } from "../../../styled-components/styledTypographie";
-import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 

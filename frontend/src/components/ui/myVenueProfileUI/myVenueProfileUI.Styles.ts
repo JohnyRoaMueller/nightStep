@@ -1,6 +1,6 @@
 import { Box, styled, TextField } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
-import { TypoH1 } from "../../../styled-components/styledTypographie";
+import { TypoBody1, TypoH1 } from "../../../styled-components/styledTypographie";
 
 export const MyVenueHeader = styled(Box)`
     text-align: center;
@@ -43,6 +43,10 @@ export const ImageBox = styled(Box)`
 
     contain: strict;
 
+    &:hover {
+        border: thick double #ff8000;
+    }
+
     img {
         width: 100%;
         height: 100%;
@@ -51,27 +55,7 @@ export const ImageBox = styled(Box)`
 
 `;
 
-export const Overlay = styled(Box)`
-    position: absolute;
-    top: 0;
-    left: 0;
 
-    width: 95%;
-    height: 95%;
-
-
-
-    @media(min-width: 600px) {
-        border: none;
-        border-radius: none;
-
-        :hover {
-            border: 0.3em solid #ff8000;
-            border-radius: 8%;
-        }
-    }
-
-`;
 
 
 export const EditImageIcon = styled(EditIcon)`
@@ -121,7 +105,7 @@ export const DropdownWrapper = styled(Box)`
 
     @media(min-width: 600px) {
         width: 37%;
-    }
+    }  
 
 `;
 
@@ -137,6 +121,11 @@ export const DropdownHeader = styled(Box)`
     align-content: center;
 
     justify-content: space-between;
+`;
+
+export const TypoBody1HeaderDropdown = styled(TypoBody1)`
+    color: black;   
+
 `;
 
 

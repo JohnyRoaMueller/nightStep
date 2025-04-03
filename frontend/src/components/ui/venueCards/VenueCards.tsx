@@ -76,11 +76,6 @@ function VenueCards(props: { venueType: string; }) {
     } 
     else 
     {   
-        console.log(venues.length)
-        console.log(venues[0].name)
-        console.log(venues[0].picAddresses)
-        console.log(`${apiUrl}/images/${venues[0].picAddresses[0].replace(/\//g, "-")}`)
-
     return (
         <>      
                 <HeaderWrapper>

@@ -1,7 +1,7 @@
 import { Box, Button, Fade, TextField, Typography } from "@mui/material";
 import { FormWrapper, LoginBox, LoginButton, LoginButtonWrapper, LoginFailedPopUp, LoginTextField, SignInBox, SignInButton } from "./LoginForm.Styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { createContext, useContext, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, createContext, FormEvent, useContext, useState } from "react";
 import { Token } from "@mui/icons-material";
 import { TypoBody1, TypoBody2, TypoError, TypoH1, TypoH2, TypoWarning } from "../../../styled-components/styledTypographie";
 import { CleanLink } from "../../../styled-components/styledLink";
@@ -16,8 +16,8 @@ function LoginForm() {
     const location = useLocation()
     const navigateTo = useNavigate();
 
-
-    const [loginData, setLoginData] = useState({
+    type LoginDataType = {username: string, password: string}
+    const [loginData, setLoginData] = useState<LoginDataType>({
         username: "",
         password: "",
     })
@@ -33,7 +33,7 @@ function LoginForm() {
         }, 1500)
     }
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target
         setLoginData((prevData) => ({
             ...prevData,
@@ -43,7 +43,7 @@ function LoginForm() {
     }
 
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         console.log("loginData JSON: ", loginData)
@@ -82,9 +82,9 @@ function LoginForm() {
                 setPopUpFlag(false)
             }, 1000);
 
-            const resetData = { ...loginData }
+            const resetData= { ...loginData }
             Object.keys(loginData).forEach(key => {
-                resetData[key] = "";
+                resetData[key as keyof LoginDataType] = "";
             });
             setLoginData(resetData)
         }

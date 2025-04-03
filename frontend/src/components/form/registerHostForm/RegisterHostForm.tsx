@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Roles from '../../../../enums/Roles'
 import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium } from './registerHostForm.Styles.ts'
 import { Checkbox } from '@mui/material'
@@ -207,7 +207,7 @@ function RegisterHostForm() {
     return (
         <>
             <FormContainer>
-                <form typeof='submit' onSubmit={handleSubmit}>
+                <form typeof='submit'>
                     <Line>
                         <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
                     </Line>
