@@ -1,9 +1,8 @@
-import { Box, Button, Fade, TextField, Typography } from "@mui/material";
+import { Fade } from "@mui/material";
 import { FormWrapper, LoginBox, LoginButton, LoginButtonWrapper, LoginFailedPopUp, LoginTextField, SignInBox, SignInButton } from "./LoginForm.Styles";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ChangeEvent, ChangeEventHandler, createContext, FormEvent, useContext, useState } from "react";
-import { Token } from "@mui/icons-material";
-import { TypoBody1, TypoBody2, TypoError, TypoH1, TypoH2, TypoWarning } from "../../../styled-components/styledTypographie";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react";
+import { TypoBody1, TypoError, TypoH2 } from "../../../styled-components/styledTypographie";
 import { CleanLink } from "../../../styled-components/styledLink";
 
 interface loginDataType {
@@ -33,7 +32,7 @@ function LoginForm() {
         }, 1500)
     }
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = event.target
         setLoginData((prevData) => ({
             ...prevData,
@@ -43,7 +42,7 @@ function LoginForm() {
     }
 
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
 
         console.log("loginData JSON: ", loginData)

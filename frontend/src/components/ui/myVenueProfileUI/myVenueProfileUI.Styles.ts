@@ -1,4 +1,4 @@
-import { Box, styled, TextField } from "@mui/material";
+import { Box, Button, styled, TextField } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import { TypoBody1, TypoH1 } from "../../../styled-components/styledTypographie";
 
@@ -107,6 +107,8 @@ export const DropdownWrapper = styled(Box)`
         width: 37%;
     }  
 
+    
+
 `;
 
 
@@ -136,6 +138,17 @@ export const Settings = styled(Box)`
     height: auto;
 
 `;
+
+export const SubmitSettingsButton = styled(Button)`
+    border: 1px solid #ff8000;
+    justify-self: end;
+    border-radius: 25px;
+
+    margin: 3%;
+
+    width: 30%;
+`;
+
 
 export const TextFieldOption = styled(TextField)`
     padding-bottom: 2%;

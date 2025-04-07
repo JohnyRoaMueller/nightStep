@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
@@ -82,6 +84,23 @@ public class VenueService {
         return imagePaths;
     }
 
+
+    public void updateVenue(Venue venue, Venue newVenueData) {
+        venue.setName(newVenueData.getName());
+        venue.setType(newVenueData.getType());
+        venue.setCapacity(newVenueData.getCapacity());
+        venue.setCity(newVenueData.getCity());
+        venue.setDistrict(defineDistrict(Integer.parseInt(newVenueData.getPostalCode())));
+        venue.setHouseNumber(newVenueData.getHouseNumber()); 
+        venue.setPostalCode(newVenueData.getPostalCode());
+        venue.setDescription(newVenueData.getDescription());
+        // extract images method
+
+    }
+
+
+    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //
+    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //    
     public Venue getVenueOrNull(String venuename) {
         
         Optional<Venue> venueOption = venueRepository.findByName(venuename);
@@ -106,8 +125,8 @@ public class VenueService {
         return null;
 
     }
-
-
+    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //
+    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //   
 }
 
 /*

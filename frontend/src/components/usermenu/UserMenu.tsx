@@ -7,7 +7,6 @@ const apiUrl = import.meta.env.VITE_APP_API_URL
 
 function UserMenu() {
     const navigateTo = useNavigate();
-    const location = useLocation();
 
     const [username, setUsername] = useState(null);
 

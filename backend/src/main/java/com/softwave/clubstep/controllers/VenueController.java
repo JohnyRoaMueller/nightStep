@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softwave.clubstep.DTO.UserAuthDTO;
@@ -140,5 +144,31 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
 
         return ResponseEntity.ok().body(venue);
+    }
+
+    @PatchMapping("myvenue/update/{venueName}")
+    public ResponseEntity<Void> updateVenueProfile(@PathVariable("venueName") String venueName, @RequestBody Venue venueData, HttpServletRequest request) {
+
+        logger.info("/myvenue/update/{venueName} reached");
+
+        UserAuthDTO userAuth = jwtService.getAuthUser(request);
+
+        String hostUsername = userAuth.getUsername();
+
+        Optional<UserAuth> hostUserAuthOption = userAuthRepository.findByUsername(hostUsername);
+
+        UserAuth currentUserAuth = hostUserAuthOption.get();
+
+        Host host = currentUserAuth.getHost();
+
+        Venue venue = venueService.getVenueOfHostOrNull(host);
+
+        logger.info(venue.toString());
+
+        venueService.updateVenue(venue, venueData);
+
+
+
+        return new ResponseEntity<Void>(null);
     }
 }

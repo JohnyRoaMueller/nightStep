@@ -1,9 +1,10 @@
-import { ChangeEvent, useEffect, useState } from "react"
-import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, Overlay, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper, TypoBody1HeaderDropdown } from "./myVenueProfileUI.Styles"
+import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react"
+import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper, TypoBody1HeaderDropdown, SubmitSettingsButton } from "./myVenueProfileUI.Styles"
 import { useParams } from "react-router-dom";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { VenueType } from "../venueCards/VenueCards";
+import { Button } from "@mui/material";
 
 function MyVenueProfileUI() {
 
@@ -12,6 +13,7 @@ function MyVenueProfileUI() {
 
     const [venue, setVenue] = useState<VenueType>()
     const [imageUrls, setImageUrls] = useState<string[]>([])
+    const [imageBlobs, setImageBlobs] = useState<Blob[]>([])
 
 
     const [openSettings, setOpenSettings] = useState(false)
@@ -31,7 +33,7 @@ function MyVenueProfileUI() {
         city: string,
         street: string,
         houseNumber: string,
-        postalCode: number | null
+        postalCode: string
         description: string,
     };
 
@@ -42,7 +44,7 @@ function MyVenueProfileUI() {
         city: "",
         street: "",
         houseNumber: "",
-        postalCode: null,
+        postalCode: "",
         description: "",
     })
 
@@ -53,18 +55,53 @@ function MyVenueProfileUI() {
             ...prevdata,
             [name]: value
         }))
+        console.log(venueData)
     }
 
+    {/** create new blob string and empty the relevant index of the imageUrl array to set condition to render blob in <img>   */}
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
+        if (event.target.files && event.target.files[0])
+        {
         const file = event.target.files[0]
 
-        setImageUrls((prevdata) => {
-            const url = URL.createObjectURL(file)
+        setImageBlobs((prevdata) =>
+        {
             const newArray = [...prevdata];
-            newArray[index] = url
+            newArray[index] = file
             return newArray
         })
+        setImageUrls((prevdata) =>
+        {
+            const newArray = [...prevdata];
+            newArray[index] = ""
+            return newArray
+        })
+        }
         console.log(imageUrls)
+    }
+
+    
+    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) =>
+    {
+        event.preventDefault();
+
+        async function fetchingData()
+        {
+
+            const formDataObject = new FormData()
+            formDataObject.append("name", venueData.name)
+            formDataObject.append("type", venueData.type)
+            formDataObject.append("capacity", venueData.capacity)
+            formDataObject.append("city", venueData.city)
+            formDataObject.append("street", venueData.street)
+            formDataObject.append("housenumber", venueData.houseNumber)
+            formDataObject.append("postalCode", venueData.postalCode)
+            formDataObject.append("description", venueData.description)
+            imageBlobs.forEach((blob) =>
+            {
+                formDataObject.append("imageBlobs[]", blob);
+            });
+        }
     }
 
 
@@ -102,6 +139,7 @@ function MyVenueProfileUI() {
         fetchData()
     }, [])
 
+    console.log(imageUrls)
 
     function getImages() 
     {
@@ -110,56 +148,17 @@ function MyVenueProfileUI() {
 
         for (let counter = 0; counter <= 11; counter++)
         {
-            if (imageUrls[counter]) 
-            {
-                const input = <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
-                const image = <img src={`${apiUrl}/images/${imageUrls[counter].replace(/\//g, "-")}`}></img>
-                const inputImage = [input, image]
-                inputImageArray.push(inputImage)
-            } 
-            else 
-            {
-                const input = <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
-                const image = <img></img>
-                const inputImage = [input, image]
-                inputImageArray.push(inputImage)
-            }
-        }
-        return inputImageArray;
-    }    
-
-
-    function getImages2() 
-    {
-        const inputImageArray = []
-
-
-        for (let counter = 0; counter <= 11; counter++)
-        {
-            if (imageUrls[counter])
-            {
-            const inputImage = 
-            <>
-            <ImageBox key={`Image-box-${counter}`}>
-                <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
-                <img src={`${apiUrl}/images/${imageUrls[counter].replace(/\//g, "-")}`}></img>
-            </ImageBox>
-            </>
-                inputImageArray.push(inputImage)
-            }
-            else
-            {
                 const inputImage = 
                 <>
                 <ImageBox key={`Image-box-${counter}`}>
                     <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
-                    {imageUrls[counter] && <img src={`${imageUrls[counter]}`}></img>}
+                    {imageUrls[counter] && <img src={`${apiUrl}/images/${imageUrls[counter].replace(/\//g, "-")}`}></img>}
+                    {imageBlobs[counter] && <img src={URL.createObjectURL(imageBlobs[counter])}></img>}
                 </ImageBox>
                 </>
                 inputImageArray.push(inputImage)
-            }
         }
-        console.log(inputImageArray)
+
         return inputImageArray;
     }        
 
@@ -175,20 +174,13 @@ function MyVenueProfileUI() {
                 {openBio ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
             </DropdownHeader>
             <Settings sx={{display: openBio ? "block" : "none"}}>
-                <TextFieldBio fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
+                <TextFieldBio name="description" fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
+                <SubmitSettingsButton onClick={handleSubmit}>submit</SubmitSettingsButton>
             </Settings>
         </DropdownWrapper>
 
         <ImageWrapper>
-            {getImages().map((inputImage, index) => (
-                <ImageBox key={`Image-box-${index}`}>
-                {inputImage}
-                </ImageBox>
-            ))}
-        </ImageWrapper>
-
-        <ImageWrapper>
-            {getImages2().map((image) => (
+            {getImages().map((image) => (
                 <>
                 {image}
                 </>
@@ -208,6 +200,7 @@ function MyVenueProfileUI() {
                 <TextFieldOption name="street" fullWidth helperText="street" value={venueData?.street} onChange={handleChange}></TextFieldOption>
                 <TextFieldOption name="houseNumber" fullWidth helperText="house number" value={venueData?.houseNumber} onChange={handleChange}></TextFieldOption>
                 <TextFieldOption name="postalCode" fullWidth helperText="postal code" value={venueData?.postalCode} onChange={handleChange}></TextFieldOption>
+                <SubmitSettingsButton onClick={handleSubmit}>submit</SubmitSettingsButton>
             </Settings>
         </DropdownWrapper>
         </>

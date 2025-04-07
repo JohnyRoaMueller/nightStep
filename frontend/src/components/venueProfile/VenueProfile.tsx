@@ -35,15 +35,6 @@ export default function VenueProfile() {
 
   }, [])
 
-  useEffect(() => {
-    setTimeout(() => {
-      for (let i = 0; i <= Object.keys(venue).length; i++) {
-        console.log(Object.values(venue)[i])
-      }
-    }, 1500)
-
-  })
- 
   // user can upload 12 images
   function getImages() {
 

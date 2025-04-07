@@ -5,10 +5,7 @@ import { Checkbox } from '@mui/material'
 import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
 
-
-
-
-
+const apiUrl =import.meta.env.VITE_APP_API_URL
 
 function RegisterHostForm() {
 
@@ -134,8 +131,6 @@ function RegisterHostForm() {
             formDataObject.append("images[]", formData.imageOne)
             formDataObject.append("images[]", formData.imageTwo)
             formDataObject.append("images[]", formData.imageThree)
-
-            const apiUrl =import.meta.env.VITE_APP_API_URL
 
             const response = await fetch(`${apiUrl}/register/host`,
                 {
