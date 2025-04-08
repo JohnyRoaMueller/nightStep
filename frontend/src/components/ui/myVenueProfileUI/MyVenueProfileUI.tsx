@@ -101,10 +101,16 @@ function MyVenueProfileUI() {
             {
                 formDataObject.append("imageBlobs[]", blob);
             });
+
+            const result = await fetch(`${apiUrl}/myvenue/update/${param.venuename}`, {
+                method: 'PATCH',
+                body: formDataObject,
+                credentials: 'include'
+            })
+            console.log(await result.text())
         }
+        fetchingData()
     }
-
-
 
     useEffect(() => {
         async function fetchData() {
@@ -175,7 +181,6 @@ function MyVenueProfileUI() {
             </DropdownHeader>
             <Settings sx={{display: openBio ? "block" : "none"}}>
                 <TextFieldBio name="description" fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
-                <SubmitSettingsButton onClick={handleSubmit}>submit</SubmitSettingsButton>
             </Settings>
         </DropdownWrapper>
 
@@ -200,9 +205,9 @@ function MyVenueProfileUI() {
                 <TextFieldOption name="street" fullWidth helperText="street" value={venueData?.street} onChange={handleChange}></TextFieldOption>
                 <TextFieldOption name="houseNumber" fullWidth helperText="house number" value={venueData?.houseNumber} onChange={handleChange}></TextFieldOption>
                 <TextFieldOption name="postalCode" fullWidth helperText="postal code" value={venueData?.postalCode} onChange={handleChange}></TextFieldOption>
-                <SubmitSettingsButton onClick={handleSubmit}>submit</SubmitSettingsButton>
             </Settings>
         </DropdownWrapper>
+        <SubmitSettingsButton onClick={handleSubmit}>change settings</SubmitSettingsButton>
         </>
     )
 }

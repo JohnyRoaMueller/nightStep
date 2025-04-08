@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
+import com.softwave.clubstep.DTO.VenuedataUpdateDTO;
 import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
@@ -36,6 +37,9 @@ public class VenueService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UploadService uploadService;
 
     
     public void addVenue(RegistrationHostUserDTO registeringHost) {
@@ -85,7 +89,7 @@ public class VenueService {
     }
 
 
-    public void updateVenue(Venue venue, Venue newVenueData) {
+    public void updateVenue(Venue venue, VenuedataUpdateDTO newVenueData) {
         venue.setName(newVenueData.getName());
         venue.setType(newVenueData.getType());
         venue.setCapacity(newVenueData.getCapacity());
@@ -94,8 +98,12 @@ public class VenueService {
         venue.setHouseNumber(newVenueData.getHouseNumber()); 
         venue.setPostalCode(newVenueData.getPostalCode());
         venue.setDescription(newVenueData.getDescription());
-        // extract images method
 
+        if (newVenueData.getImageBlobs() != null) {
+            venue.setPicAddresses(extractImagePaths(newVenueData.getImageBlobs(), venue.getName()));
+        }
+        venueRepository.save(venue);
+        logger.info("update setted");
     }
 
 

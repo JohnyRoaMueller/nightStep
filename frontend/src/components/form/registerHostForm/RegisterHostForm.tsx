@@ -134,7 +134,7 @@ function RegisterHostForm() {
 
             const response = await fetch(`${apiUrl}/register/host`,
                 {
-                    method: 'POST',
+                    method: "POST",
                     body: formDataObject,
                 }
             )

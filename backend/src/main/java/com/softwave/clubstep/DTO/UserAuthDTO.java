@@ -12,7 +12,6 @@ public class UserAuthDTO {
 
     
     public UserAuthDTO() {}
-
     public UserAuthDTO
     (
         String username,

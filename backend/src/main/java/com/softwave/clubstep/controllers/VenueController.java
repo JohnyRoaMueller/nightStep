@@ -1,8 +1,7 @@
 package com.softwave.clubstep.controllers;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
@@ -10,16 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.softwave.clubstep.DTO.UserAuthDTO;
-import com.softwave.clubstep.base.BaseUser;
+import com.softwave.clubstep.DTO.VenuedataUpdateDTO;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.entities.Venue;
@@ -27,6 +23,7 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.services.JwtService;
+import com.softwave.clubstep.services.UploadService;
 import com.softwave.clubstep.services.UserService;
 import com.softwave.clubstep.services.VenueService;
 
@@ -47,6 +44,7 @@ public class VenueController {
     private final VenueService venueService;
     private final JwtService jwtService;
     private final UserService userService;
+    private final UploadService uploadService;
 
     
     public VenueController
@@ -56,7 +54,8 @@ public class VenueController {
         JwtService jwtService,
         UserService userService,
         HostRepository hostRepository,
-        UserAuthRepository userAuthRepository
+        UserAuthRepository userAuthRepository,
+        UploadService uploadService
         )
         {
         this.venueRepository = venueRepository;
@@ -65,6 +64,7 @@ public class VenueController {
         this.userService = userService;
         this.hostRepository = hostRepository;
         this.userAuthRepository = userAuthRepository;
+        this.uploadService = uploadService;
         }
 
 {/*
@@ -146,8 +146,8 @@ Spring abstracts this technology, allowing developers to work with annotations l
         return ResponseEntity.ok().body(venue);
     }
 
-    @PatchMapping("myvenue/update/{venueName}")
-    public ResponseEntity<Void> updateVenueProfile(@PathVariable("venueName") String venueName, @RequestBody Venue venueData, HttpServletRequest request) {
+    @PatchMapping("/myvenue/update/{venueName}")
+    public ResponseEntity<String> updateVenueProfile(@PathVariable("venueName") String venueName, @ModelAttribute VenuedataUpdateDTO venueData, HttpServletRequest request) throws IOException {
 
         logger.info("/myvenue/update/{venueName} reached");
 
@@ -163,12 +163,20 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         Venue venue = venueService.getVenueOfHostOrNull(host);
 
+        if (venue.getClass() == Venue.class) {
+            logger.info("venue ist da");
+        } else {
+            logger.info("venue ist nicht da ");
+        }
+
+
         logger.info(venue.toString());
+
+        uploadService.addImages(venueData.getImageBlobs(), hostUsername);
 
         venueService.updateVenue(venue, venueData);
 
 
-
-        return new ResponseEntity<Void>(null);
+        return ResponseEntity.ok("host updated");
     }
 }

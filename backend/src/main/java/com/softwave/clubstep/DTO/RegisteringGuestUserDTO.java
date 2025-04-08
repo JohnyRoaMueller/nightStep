@@ -32,7 +32,6 @@ public class RegisteringGuestUserDTO {
 
 
     public RegisteringGuestUserDTO() {};
-    
     public RegisteringGuestUserDTO(
     // userId will be generated automatically
     String username,
