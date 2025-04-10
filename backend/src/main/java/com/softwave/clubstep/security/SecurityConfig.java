@@ -49,8 +49,10 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/**").permitAll() // access without auth 
-            )
+                .requestMatchers("/api/login", "/api/venues", "/api/images/*", "/api/venue/**", "/api/images/**", "/api/logout").permitAll()
+                .requestMatchers("/api/me", "/api/myvenue/**", "/api/user/**").authenticated()
+
+            )  
 
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 

@@ -39,8 +39,9 @@ public class UploadService {
 
         File targetFile = new File(newImagePath);
 
-        OutputStream outStream = new FileOutputStream(targetFile);
-        outStream.write(buffer);
+        try (OutputStream outStream = new FileOutputStream(targetFile)) {
+            outStream.write(buffer);
+        }
         }
     }
 }

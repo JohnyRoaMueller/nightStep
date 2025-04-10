@@ -8,6 +8,7 @@ import { TypoBody1, TypoH1 } from "../../styled-components/styledTypographie";
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
+// "/venue/:venuename"
 export default function VenueProfile() {
 
   const param = useParams();

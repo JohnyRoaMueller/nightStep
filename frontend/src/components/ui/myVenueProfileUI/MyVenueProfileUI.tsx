@@ -6,6 +6,7 @@ import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { VenueType } from "../venueCards/VenueCards";
 import { Button } from "@mui/material";
 
+// "/myvenue/:venuename"
 function MyVenueProfileUI() {
 
     const apiUrl =  import.meta.env.VITE_APP_API_URL
@@ -97,10 +98,28 @@ function MyVenueProfileUI() {
             formDataObject.append("housenumber", venueData.houseNumber)
             formDataObject.append("postalCode", venueData.postalCode)
             formDataObject.append("description", venueData.description)
+
+            for (const url of imageUrls) {
+                const result = await fetch(`${apiUrl}/images${url}`.replace(/\//g, "-"), {
+                    credentials: 'include'
+                })
+                console.log("url:", url)
+                console.log(result)
+                const blob = await result.blob()
+                const file = new File([blob], url)
+                console.log(typeof blob)
+                console.log(blob instanceof Blob)
+                formDataObject.append("imageBlobs[]", file);
+            }
+
             imageBlobs.forEach((blob) =>
             {
                 formDataObject.append("imageBlobs[]", blob);
             });
+
+
+
+
 
             const result = await fetch(`${apiUrl}/myvenue/update/${param.venuename}`, {
                 method: 'PATCH',
@@ -125,6 +144,7 @@ function MyVenueProfileUI() {
                 console.log(responseJSON)
                 setVenue(responseJSON)
                 setImageUrls(responseJSON.picAddresses)
+
                 setVenueData({
                     name: responseJSON.name,
                     type: responseJSON.type,
