@@ -23,25 +23,34 @@ public class UploadService {
     public void addImages(List<MultipartFile> images, String username) throws IOException {
         for (MultipartFile image : images) {
 
-        logger.info("addImages begins");
+            logger.info("addImages begins");
 
-        String newDirPath = String.format("./uploads/host_images/%s", username);
-        if (!new File(newDirPath).exists() && !new File(newDirPath).isDirectory()) {
-            new File(newDirPath).mkdirs();
-        }
+            String currentFileName = image.getOriginalFilename();
+            if (currentFileName.startsWith("/uploads/host_images")) {
+                logger.info("file '{}' already exists", currentFileName);
+                continue;
+            }
+            logger.info("new file: {}", currentFileName);
+            String newImagePath = String.format("./uploads/host_images/%s/%s", username, currentFileName);
+            logger.info("newImagePath: ./uploads/host_images/{}/{}", username, currentFileName);
 
-        InputStream initialStream  = image.getInputStream();
-        byte[] buffer = new byte[initialStream.available()];
-        initialStream.read(buffer);
 
-        String currentFileName = image.getOriginalFilename();
-        String newImagePath = String.format("./uploads/host_images/%s/%s", username, currentFileName);
+            String newDirPath = String.format("./uploads/host_images/%s", username);
+            if (!new File(newDirPath).exists() && !new File(newDirPath).isDirectory()) {
+                new File(newDirPath).mkdirs();
+            }
 
-        File targetFile = new File(newImagePath);
+            InputStream initialStream  = image.getInputStream();
+            byte[] buffer = new byte[initialStream.available()];
+            initialStream.read(buffer);
 
-        try (OutputStream outStream = new FileOutputStream(targetFile)) {
-            outStream.write(buffer);
-        }
+
+
+            File targetFile = new File(newImagePath);
+
+            try (OutputStream outStream = new FileOutputStream(targetFile)) {
+                outStream.write(buffer);
+            }
         }
     }
 }

@@ -141,12 +141,14 @@ export const Settings = styled(Box)`
 
 export const SubmitSettingsButton = styled(Button)`
     border: 1px solid #ff8000;
-    justify-self: end;
     border-radius: 25px;
-
     margin: 3%;
 
-    width: 30%;
+    width: 90%;
+
+    @media(min-width: 600px) {
+        width: 30%;
+    }
 `;
 
 
@@ -176,7 +178,7 @@ export const TextFieldBio = styled(TextField)`
     }
 
     .MuiOutlinedInput-root {
-        border-radius: 50px;
+        border-radius: 25px;
     }
 
     &:focus-within  {

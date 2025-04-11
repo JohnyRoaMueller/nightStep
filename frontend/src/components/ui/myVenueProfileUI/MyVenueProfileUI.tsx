@@ -56,7 +56,7 @@ function MyVenueProfileUI() {
             ...prevdata,
             [name]: value
         }))
-        console.log(venueData)
+        console.log("venueData:", venueData)
     }
 
     {/** create new blob string and empty the relevant index of the imageUrl array to set condition to render blob in <img>   */}
@@ -100,6 +100,11 @@ function MyVenueProfileUI() {
             formDataObject.append("description", venueData.description)
 
             for (const url of imageUrls) {
+                if (url == null || url == undefined) {
+                    console.log("we skip this url: ", url)
+                    break
+                }
+                console.log(url, "is not undefined")
                 const result = await fetch(`${apiUrl}/images${url}`.replace(/\//g, "-"), {
                     credentials: 'include'
                 })
@@ -107,14 +112,14 @@ function MyVenueProfileUI() {
                 console.log(result)
                 const blob = await result.blob()
                 const file = new File([blob], url)
-                console.log(typeof blob)
-                console.log(blob instanceof Blob)
                 formDataObject.append("imageBlobs[]", file);
             }
 
-            imageBlobs.forEach((blob) =>
+            imageBlobs.forEach((blob, index) =>
             {
-                formDataObject.append("imageBlobs[]", blob);
+                if (blob != undefined) {
+                    formDataObject.append("imageBlobs[]", blob);
+                }
             });
 
 
@@ -186,7 +191,9 @@ function MyVenueProfileUI() {
         }
 
         return inputImageArray;
-    }        
+    }     
+
+    console.log(venueData?.houseNumber)
 
     return (
         <>
@@ -200,7 +207,7 @@ function MyVenueProfileUI() {
                 {openBio ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
             </DropdownHeader>
             <Settings sx={{display: openBio ? "block" : "none"}}>
-                <TextFieldBio name="description" fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
+                <TextFieldBio name="description" value={venueData.description} fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
             </Settings>
         </DropdownWrapper>
 

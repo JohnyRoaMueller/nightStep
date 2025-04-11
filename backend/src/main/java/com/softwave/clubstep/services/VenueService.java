@@ -82,6 +82,13 @@ public class VenueService {
         List<String> imagePaths = new ArrayList<String>();
 
         for (MultipartFile image : images) {
+            if (image.getOriginalFilename().startsWith("/uploads/host_images/")) {
+                String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
+                String path = String.format("/uploads/host_images/%s/%s", username, filename); 
+                imagePaths.add(path);
+                continue;
+            }
+
             String path = String.format("/uploads/host_images/%s/%s", username, image.getOriginalFilename()); 
             imagePaths.add(path);
         }
@@ -100,7 +107,7 @@ public class VenueService {
         venue.setDescription(newVenueData.getDescription());
 
         if (newVenueData.getImageBlobs() != null) {
-            venue.setPicAddresses(extractImagePaths(newVenueData.getImageBlobs(), venue.getName()));
+            venue.setPicAddresses(extractImagePaths(newVenueData.getImageBlobs(), venue.getHost().getUserAuth().getUsername()));
         }
         venueRepository.save(venue);
         logger.info("update setted");
