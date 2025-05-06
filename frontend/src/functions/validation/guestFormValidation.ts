@@ -75,43 +75,47 @@ export function validateGuestForm({formData, setEmptyValueEffect, boxShadowAnima
             }
         }
         /** checking if checkbox is checked */        
-        if (check == false)
-        {
-            setEmptyValueEffect((Prevdata: EmptyValueEffectType[]) => {
-                const updateData = [...Prevdata]
-                updateData[8] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
-                console.log("updateData: ", updateData)
-                return updateData;
-            })
-            setTimeout(() => {
-                setEmptyValueEffect((Prevdata) => {
-                    const updateData = [...Prevdata]
-                    updateData[8] =  {animation: ""}
-                    return updateData;
-                })  
-            }, 500)
-            inputRefs?.current[8].focus()
-            return;
-        }
-        /** checking if checkbox is checked */        
         if (formData.password != formData.confirmPassword)
             {
                 setEmptyValueEffect((Prevdata: EmptyValueEffectType[]) => {
                     const updateData = [...Prevdata]
-                    updateData[8] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                    updateData[6] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                    updateData[7] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
                     console.log("updateData: ", updateData)
                     return updateData;
                 })
                 setTimeout(() => {
                     setEmptyValueEffect((Prevdata) => {
                         const updateData = [...Prevdata]
-                        updateData[8] =  {animation: ""}
+                        updateData[6] =  {animation: ""}
+                        updateData[7] =  {animation: ""}
                         return updateData;
                     })  
                 }, 500)
-                inputRefs?.current[8].focus()
+            //    inputRefs?.current[6].scrollIntoView({block: "center"})
                 return;
-            }        
+            }           
+        /** checking if checkbox is checked */        
+        if (check == false)
+        {
+            console.log("is false")
+            setEmptyValueEffect((Prevdata: EmptyValueEffectType[]) => {
+                const updateData = [...Prevdata]
+                updateData[15] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                console.log("updateData: ", updateData)
+                console.log("fx setted")
+                return updateData;
+            })
+            setTimeout(() => {
+                setEmptyValueEffect((Prevdata) => {
+                    const updateData = [...Prevdata]
+                    updateData[15] =  {animation: ""}
+                    return updateData;
+                })  
+            }, 500)
+            inputRefs?.current[15].focus()
+            return;
+        }     
         return true
     }
 

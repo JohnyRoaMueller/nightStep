@@ -16,8 +16,6 @@ function RegisterHostForm() {
 
     const [check, setCheck] = useState<boolean>(false)
 
-    const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
-
     type Date = {
         day: string,
         month: string,
@@ -85,7 +83,7 @@ function RegisterHostForm() {
     const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
 
     const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
-        Array(14).fill({ animation: "" }) // 14 positions to set the effect independent from each other
+        Array(16).fill({ animation: "" }) // 14 positions to set the effect independent from each other
     )    
 
 
@@ -99,14 +97,9 @@ function RegisterHostForm() {
         }));
     }
 
-    const handleCheckbox = () => {
-        if (!termsAccepted) {
-        setTermsAccepted(true)
-        } else {
-            setTermsAccepted(false)
-        }
-    }
+    const handleCheckbox = () => setCheck(prevdata => !prevdata)
 
+    console.log(emptyValueEffect)
 
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -151,7 +144,7 @@ function RegisterHostForm() {
                 }
             // reseting form
 
-            setTermsAccepted(false)
+            setCheck(false)
         }
         fetchingData()
     }
@@ -299,7 +292,7 @@ function RegisterHostForm() {
                     <Line>
                         <SubmitButton onClick={handleSubmit}>register</SubmitButton>
                         <TermsWrapper>
-                            <Checkbox required checked={termsAccepted} onChange={handleCheckbox}/>
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckbox} sx={emptyValueEffect[15]} key={'checkbox'}/>
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>

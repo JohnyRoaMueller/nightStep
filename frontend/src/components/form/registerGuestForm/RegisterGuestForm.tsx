@@ -28,8 +28,9 @@ function RegisterGuestForm() {
     const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
 
     const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
-        Array(8).fill({ animation: "" }) // 8 positions to set the effect independent from each other
+        Array(16).fill({ animation: "" }) // 8 positions to set the effect independent from each other
     )
+
  
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -52,6 +53,7 @@ function RegisterGuestForm() {
         }));
     }
 
+    console.log(emptyValueEffect)
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -69,6 +71,8 @@ function RegisterGuestForm() {
                     body: JSON.stringify(guestFormData)
                 }
             )
+
+
 
             setFormData({
                 firstname: "",
@@ -142,7 +146,7 @@ function RegisterGuestForm() {
                             Create Account
                         </RegisterButton>
                         <TermsWrapper>
-                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckboxChange} sx={emptyValueEffect[8]} />
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckboxChange} sx={emptyValueEffect[15]} /> {/** should be index 8,  */}
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>
