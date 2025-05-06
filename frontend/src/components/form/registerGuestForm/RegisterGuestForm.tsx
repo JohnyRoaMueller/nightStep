@@ -21,7 +21,7 @@ function RegisterGuestForm() {
         birthday: null,
         username: "",
         password: "",
-        passwordConfirm: "",
+        confirmPassword: "",
         role: Roles.GUEST
     })
 
@@ -42,6 +42,7 @@ function RegisterGuestForm() {
         }));
     }
 
+
     const handleCheckboxChange = () => setCheck(prevCheck => !prevCheck)
 
     const handleDateChange = (date: Dayjs | null) => {
@@ -51,10 +52,11 @@ function RegisterGuestForm() {
         }));
     }
 
+    
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!validateGuestForm({guestFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check})) return
+        if (!validateGuestForm({formData: guestFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check})) return
 
             const apiUrl =import.meta.env.VITE_APP_API_URL
             fetch(`${apiUrl}/register/guest`,
@@ -76,7 +78,7 @@ function RegisterGuestForm() {
                 birthday: null,
                 username: "",
                 password: "",
-                passwordConfirm: "",
+                confirmPassword: "",
                 role: Roles.GUEST
             })
             setCheck(false)
@@ -133,7 +135,7 @@ function RegisterGuestForm() {
                     <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' helperText ='password*' value={guestFormData.password} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'/>
                     </Line>
                     <Line>
-                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='passwordConfirm' helperText='confirm password*' value={guestFormData.passwordConfirm} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-username'/>
+                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='confirmPassword' helperText='confirm password*' value={guestFormData.confirmPassword} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-username'/>
                     </Line>
                     <Line>
                         <RegisterButton type='submit' key='Button-register'>

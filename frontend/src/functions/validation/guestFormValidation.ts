@@ -10,7 +10,29 @@ export type GuestFormData = {
     birthday: string | null;
     username: string;
     password: string;
-    passwordConfirm: string;
+    confirmPassword: string;
+    role: Roles;
+};
+
+type HostFormData = {
+    firstname: string;
+    lastname: string;
+    email: string;
+    gender: string;
+    birthday: string | null;
+    username: string;
+    password: string;
+    confirmPassword: string;
+    nameOfVenue: string,
+    typeOfVenue: string,
+    capacity: string,
+    cityOfVenue: string,
+    streetOfVenue: string,
+    housenumberOfVenue: string,
+    postcodeOfVenue: string,
+    imageOne: Blob
+    imageTwo: Blob
+    imageThree: Blob
     role: Roles;
 };
 
@@ -18,22 +40,22 @@ export type EmptyValueEffectType = {
     animation: string;
     }
 
-type ValidateGuestFormType = {
-    guestFormData: GuestFormData,
+type ValidateFormType = {
+    formData: GuestFormData | HostFormData,
     setEmptyValueEffect: React.Dispatch<React.SetStateAction<EmptyValueEffectType[]>>,
     boxShadowAnimation: Keyframes,
     inputRefs:React.MutableRefObject<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>,
     check: boolean
 }
-export function validateGuestForm({guestFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check}: ValidateGuestFormType) {  
+export function validateGuestForm({formData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check}: ValidateFormType) {  
 
     /** checking if required fields got a value */
-    for (let i = 0; i <= Object.values(guestFormData).length - 1; i++) 
+    for (let i = 0; i <= Object.values(formData).length - 1; i++) 
         {
             /** checking if required fields value is empty */
-            if (Object.values(guestFormData)[i] == "" && Object.keys(guestFormData)[i] != "gender" && Object.keys(guestFormData)[i] != "birthday") 
+            if (Object.values(formData)[i] == "" && Object.keys(formData)[i] != "gender" && Object.keys(formData)[i] != "birthday") 
             {
-                console.log("Object.keys(formData)[i]: ", Object.keys(guestFormData)[i])
+                console.log("Object.keys(formData)[i]: ", Object.keys(formData)[i])
                 setEmptyValueEffect((Prevdata) => {
                     const updateData = [...Prevdata]
                     updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
@@ -71,6 +93,25 @@ export function validateGuestForm({guestFormData, setEmptyValueEffect, boxShadow
             inputRefs?.current[8].focus()
             return;
         }
+        /** checking if checkbox is checked */        
+        if (formData.password != formData.confirmPassword)
+            {
+                setEmptyValueEffect((Prevdata: EmptyValueEffectType[]) => {
+                    const updateData = [...Prevdata]
+                    updateData[8] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                    console.log("updateData: ", updateData)
+                    return updateData;
+                })
+                setTimeout(() => {
+                    setEmptyValueEffect((Prevdata) => {
+                        const updateData = [...Prevdata]
+                        updateData[8] =  {animation: ""}
+                        return updateData;
+                    })  
+                }, 500)
+                inputRefs?.current[8].focus()
+                return;
+            }        
         return true
     }
 

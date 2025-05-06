@@ -1,13 +1,20 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles'
 import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium } from './registerHostForm.Styles.ts'
 import { Checkbox } from '@mui/material'
 import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
 import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
+import { EmptyValueEffectType, preventNonAlphabeticInput, validateGuestForm } from '../../../functions/validation/guestFormValidation.ts'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs'
+import { boxShadowAnimation, CostumDatePicker } from '../registerGuestForm/registerGuestForm.Styles.ts'
+import dayjs, { Dayjs } from 'dayjs'
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
 function RegisterHostForm() {
+
+    const [check, setCheck] = useState<boolean>(false)
 
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
 
@@ -23,34 +30,23 @@ function RegisterHostForm() {
     })
 
     
-
-    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        const name = event.target.name
-        const value = event.target.value
-        setDate((prevData) => ({
+    const handleDateChange = (date: Dayjs | null) => {
+        setHostFormData((prevData) => ({
             ...prevData,
-            [name]: value,
-        }))
+            birthday: date?.format('YYYY-MM-DD') || null
+        }));
     }
 
-    const SetNewDate = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            birthday: `${date.day}-${date.month}-${date.year}`
-        }))
-        console.log(formData.birthday)
-    }
 
-    type FormData = {
+    type HostFormData = {
         firstname: string;
         lastname: string;
         email: string;
-        emailConfirm: string;
         gender: string;
-        birthday: string;
+        birthday: string | null;
         username: string;
         password: string;
+        confirmPassword: string;
         nameOfVenue: string,
         typeOfVenue: string,
         capacity: string,
@@ -64,15 +60,15 @@ function RegisterHostForm() {
         role: Roles;
     };
 
-    const [formData, setFormData] = useState<FormData>({
+    const [hostFormData, setHostFormData] = useState<HostFormData>({
         firstname: "",
         lastname: "",
         email: "",
-        emailConfirm: "",
         gender: "",
         birthday: "",
         username: "",
         password: "",
+        confirmPassword: "",
         nameOfVenue: "",
         typeOfVenue: "",
         capacity: "",
@@ -86,14 +82,20 @@ function RegisterHostForm() {
         role: Roles.HOST
     })
 
+    const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
+
+    const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
+        Array(14).fill({ animation: "" }) // 14 positions to set the effect independent from each other
+    )    
+
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const name = event.target.name
         const value = event.target.value
-        setFormData((prevData) => ({
+        setHostFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: preventNonAlphabeticInput(name, value),
         }));
     }
 
@@ -109,33 +111,38 @@ function RegisterHostForm() {
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
+        if (!validateGuestForm({formData: hostFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check})) {
+            console.log("Input not valid")
+            return
+        }
+
         async function fetchingData() {
 
-            const formDataObject = new FormData();
-            formDataObject.append("firstname", formData.firstname)
-            formDataObject.append("lastname", formData.lastname)
-            formDataObject.append("email", formData.email)
-            formDataObject.append("emailConfirm", formData.emailConfirm)
-            formDataObject.append("gender", formData.gender)
-            formDataObject.append("birthday", formData.birthday)
-            formDataObject.append("username", formData.username)
-            formDataObject.append("password", formData.password)
-            formDataObject.append("nameOfVenue", formData.nameOfVenue)
-            formDataObject.append("typeOfVenue", formData.typeOfVenue)
-            formDataObject.append("capacity", formData.capacity)
-            formDataObject.append("cityOfVenue", formData.cityOfVenue)
-            formDataObject.append("streetOfVenue", formData.streetOfVenue)
-            formDataObject.append("housenumberOfVenue", formData.housenumberOfVenue)
-            formDataObject.append("postcodeOfVenue", formData.postcodeOfVenue)
-            formDataObject.append("role", formData.role)
-            formDataObject.append("images[]", formData.imageOne)
-            formDataObject.append("images[]", formData.imageTwo)
-            formDataObject.append("images[]", formData.imageThree)
+            const hostFormDataObject = new FormData();
+            hostFormDataObject.append("firstname", hostFormData.firstname)
+            hostFormDataObject.append("lastname", hostFormData.lastname)
+            hostFormDataObject.append("email", hostFormData.email)
+            hostFormDataObject.append("gender", hostFormData.gender)
+            hostFormDataObject.append("birthday", hostFormData.birthday)
+            hostFormDataObject.append("username", hostFormData.username)
+            hostFormDataObject.append("password", hostFormData.password)
+            hostFormDataObject.append("confirmPassword", hostFormData.confirmPassword)
+            hostFormDataObject.append("nameOfVenue", hostFormData.nameOfVenue)
+            hostFormDataObject.append("typeOfVenue", hostFormData.typeOfVenue)
+            hostFormDataObject.append("capacity", hostFormData.capacity)
+            hostFormDataObject.append("cityOfVenue", hostFormData.cityOfVenue)
+            hostFormDataObject.append("streetOfVenue", hostFormData.streetOfVenue)
+            hostFormDataObject.append("housenumberOfVenue", hostFormData.housenumberOfVenue)
+            hostFormDataObject.append("postcodeOfVenue", hostFormData.postcodeOfVenue)
+            hostFormDataObject.append("role", hostFormData.role)
+            hostFormDataObject.append("images[]", hostFormData.imageOne)
+            hostFormDataObject.append("images[]", hostFormData.imageTwo)
+            hostFormDataObject.append("images[]", hostFormData.imageThree)
 
             const response = await fetch(`${apiUrl}/register/host`,
                 {
                     method: "POST",
-                    body: formDataObject,
+                    body: hostFormDataObject,
                 }
             )
             if (!response.ok)
@@ -157,7 +164,7 @@ function RegisterHostForm() {
       if (event.target.files && event.target.files[0]) {
         const file = event.target.files[0];
         console.log(file)
-        setFormData((prevData) => ({
+        setHostFormData((prevData) => ({
             ...prevData,
             [event.target.name] : file
         }))
@@ -207,77 +214,66 @@ function RegisterHostForm() {
                         <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
                     </Line>
                     <Line>
-                        <TextfieldLong name='firstname'helperText='firstname*' required variant='standard' value={formData.firstname} onChange={handleChange} key='textfield-firstname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' required variant='standard' value={hostFormData.firstname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}} key='textfield-firstname'/>
                     </Line>
                     <Line>
-                        <TextfieldLong name='lastname' helperText='lastname*' required variant='standard' value={formData.lastname} onChange={handleChange} key='textfield-lastname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' required variant='standard' value={hostFormData.lastname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} key='textfield-lastname'/>
                     </Line>
                     <Line>
-                        <TextfieldLong name='email' helperText='email*' required variant='standard' value={formData.email} onChange={handleChange} key='textfield-email'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' required variant='standard' value={hostFormData.email} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}} key='textfield-email'/>
                     </Line>
                     <Line>
-                        <TextfieldLong name='emailConfirm' helperText='confirm email*' required variant='standard' value={formData.emailConfirm} onChange={handleChange} key='textfield-confirmEmail' />
-                    </Line>
-                    <Line>
-                        <TextfieldMedium name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={formData.gender} onChange={handleChange} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLOptionElement)} name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={hostFormData.gender} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
                                 <option value='' disabled>{"▒"}</option>
                                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
-                        </TextfieldMedium>
+                        </TextfieldLong>
                     </Line>
                     <Line>
-                        <TextfieldMedium name='day' helperText='day' select slotProps={{select: {native: true}}} value={date.day} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-day' id='textfield-day'>
-                                <option value='' disabled>{"▒"}</option>
-                                {dayList.map((day) => <option value={day} key={day}>{day}</option>)}
-                        </TextfieldMedium>
-
-                        <TextfieldMedium name='month' helperText='month' select slotProps={{select: {native: true}}} value={date.month} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-month' id='textfield-month'>
-                                <option value='' disabled>{"▒"}</option>
-                                {monthList.map((month) => <option value={month} key={month}>{month}</option>)}
-                        </TextfieldMedium>
-
-                        <TextfieldMedium name='year' helperText='year' select slotProps={{select: {native: true}}} value={date.year} onChange={handleDateChange} onBlur={SetNewDate} key='textfield-year' id='textfield-year'>
-                                <option value='' disabled>{"▒"}</option>
-                                {yearList.map((year) => <option value={year} key={year}>{year}</option>)}
-                        </TextfieldMedium>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <CostumDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} onChange={handleDateChange} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }
+                            // maxDate={dayjs.unix(Date.now() - 31556926)}
+                            />
+                        </LocalizationProvider> 
                     </Line>
                     <Line>
-                        <TextfieldMedium name='username' helperText='username*' required value={formData.username} onChange={handleChange} key='textfield-username'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' required value={hostFormData.username} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
                     </Line>
                     <Line>
-                        <TextfieldMedium name= 'password' helperText ='password*' required value={formData.password} onChange={handleChange} key='textfield-password'></TextfieldMedium>
-                        <TermsWrapper>
-                            <Checkbox required checked={termsAccepted} onChange={handleCheckbox}/>
-                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
-                        </TermsWrapper>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' helperText ='password*' required value={hostFormData.password} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'></TextfieldLong>
+                    </Line>
+                    <Line>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'confirmPassword' helperText ='confirm password*' required value={hostFormData.confirmPassword} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-confirmPassword'></TextfieldLong>
                     </Line>
                     <Line>
                         <CategoryHeader><TypoH2>VENUE RELATED</TypoH2></CategoryHeader>
                     </Line>
                     <Line>
-                        <TextfieldLong name='nameOfVenue'helperText='name of venue*' required variant='standard' value={formData.nameOfVenue} onChange={handleChange} key='textfield-nameOfVenue'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='nameOfVenue'helperText='name of venue*' required variant='standard' value={hostFormData.nameOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-nameOfVenue'/>
                     </Line>
                     <Line>
-                        <TextfieldLong name='typeOfVenue'helperText='type of venue*' required variant='standard' select slotProps={{select: {native: true}}} value={formData.typeOfVenue} onChange={handleChange} key='textfield-typeOfVenue'>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='typeOfVenue'helperText='type of venue*' required variant='standard' select slotProps={{select: {native: true}}} value={hostFormData.typeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-typeOfVenue'>
                             <option value='' disabled>{"▒"}</option>
                             {typeOfVenueList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
                         </TextfieldLong>
                     </Line>
                     <Line>
-                    <TextfieldMedium name='capacity' helperText='capacity' variant='standard' value={formData.capacity} onChange={handleChange} key='textfield-capacity'></TextfieldMedium>
+                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity' variant='standard' value={hostFormData.capacity} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'></TextfieldLong>
                     </Line>
                     <CategoryHeader><TypoBody2>ADDRESS OF VENUE</TypoBody2></CategoryHeader>
                     <Line>
-                        <TextfieldLong name='cityOfVenue'helperText='city*' select slotProps={{select: {native: true}}} required variant='standard' value={formData.cityOfVenue} onChange={handleChange} key='textfield-cityOfVenue'>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='cityOfVenue'helperText='city*' select slotProps={{select: {native: true}}} required variant='standard' value={hostFormData.cityOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-cityOfVenue'>
                             <option value='' disabled>{"▒"}</option>
                             {cityList.map((city) => <option value={city} key={city}>{city}</option>)}
                         </TextfieldLong>
                     </Line>
                     <Line>
-                        <TextfieldLong name='streetOfVenue'helperText='street*' required variant='standard' value={formData.streetOfVenue} onChange={handleChange} key='textfield-firstname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='streetOfVenue'helperText='street*' required variant='standard' value={hostFormData.streetOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/>
                     </Line>
                     <Line>
-                        <TextfieldMedium name='housenumberOfVenue'helperText='housenumber*' required variant='standard' value={formData.housenumberOfVenue} onChange={handleChange} key='textfield-firstname'/>
-                        <TextfieldMedium name='postcodeOfVenue'helperText='postcode*' required variant='standard' value={formData.postcodeOfVenue} onChange={handleChange} key='textfield-firstname'/>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumberOfVenue'helperText='housenumber*' required variant='standard' value={hostFormData.housenumberOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/>
+                    </Line>
+                    <Line>
+                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcodeOfVenue'helperText='postcode*' required variant='standard' value={hostFormData.postcodeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
                     </Line>
                     <Line>
                         <PictureHolder>
@@ -300,7 +296,13 @@ function RegisterHostForm() {
                             <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
                         </PictureHolder>
                     </Line>
-                    <SubmitButton onClick={handleSubmit}>register</SubmitButton>
+                    <Line>
+                        <SubmitButton onClick={handleSubmit}>register</SubmitButton>
+                        <TermsWrapper>
+                            <Checkbox required checked={termsAccepted} onChange={handleCheckbox}/>
+                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
+                        </TermsWrapper>
+                    </Line>
                 </form>
             </FormContainer>
 
