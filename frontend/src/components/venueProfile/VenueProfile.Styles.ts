@@ -24,8 +24,6 @@ export const ImageBox = styled(Box)`
     display: flex;
     flex-direction: row;
 
-    border: thick double grey;
-
     gap: 0.1%;
 
     overflow-x: auto;

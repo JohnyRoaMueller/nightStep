@@ -38,6 +38,8 @@ function App() {
 
               <Route path="/register/host" element={<RegistrationHost/>} ></Route>
 
+              <Route path="/register/host/success" element={<RegistrationHost/>} ></Route>
+
               <Route path="/register/guest" element={<RegistrationGuest/>} ></Route>
 
               <Route path="/find" element={<Find/>} ></Route>

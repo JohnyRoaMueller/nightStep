@@ -1,20 +1,27 @@
 import { FormEvent, useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles'
 import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium } from './registerHostForm.Styles.ts'
-import { Checkbox } from '@mui/material'
-import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
+import { Checkbox, Fade } from '@mui/material'
+import { TypoBody2, TypoH2, TypoWarning } from '../../../styled-components/styledTypographie'
 import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
-import { EmptyValueEffectType, preventNonAlphabeticInput, validateGuestForm } from '../../../functions/validation/guestFormValidation.ts'
+import { EmptyValueEffectType, preventWrongInputType, validateGuestForm } from '../../../functions/validation/guestFormValidation.ts'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs'
-import { boxShadowAnimation, CostumDatePicker } from '../registerGuestForm/registerGuestForm.Styles.ts'
+import { boxShadowAnimation, CostumDatePicker, WarningBox } from '../registerGuestForm/registerGuestForm.Styles.ts'
 import dayjs, { Dayjs } from 'dayjs'
+import { useNavigate } from 'react-router-dom'
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
 function RegisterHostForm() {
 
+    const navigateTo = useNavigate()
+
     const [check, setCheck] = useState<boolean>(false)
+
+        const [popUpFlag, setPopUpFlag] = useState<boolean>(false)
+    
+        const [warningMessage, setWarningMessage] = useState<string>("")
 
     type Date = {
         day: string,
@@ -83,7 +90,7 @@ function RegisterHostForm() {
     const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
 
     const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
-        Array(16).fill({ animation: "" }) // 14 positions to set the effect independent from each other
+        Array(25).fill({ animation: "" }) // 14 positions to set the effect independent from each other
     )    
 
 
@@ -93,7 +100,7 @@ function RegisterHostForm() {
         const value = event.target.value
         setHostFormData((prevData) => ({
             ...prevData,
-            [name]: preventNonAlphabeticInput(name, value),
+            [name]: preventWrongInputType(name, value),
         }));
     }
 
@@ -101,10 +108,16 @@ function RegisterHostForm() {
 
     console.log(emptyValueEffect)
 
-    const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        if (!validateGuestForm({formData: hostFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check})) {
+        console.log(hostFormData.imageTwo)
+
+        console.log(inputRefs)
+
+        const isValid = await validateGuestForm({formData: hostFormData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
+
+        if (!isValid) {
             console.log("Input not valid")
             return
         }
@@ -138,13 +151,10 @@ function RegisterHostForm() {
                     body: hostFormDataObject,
                 }
             )
-            if (!response.ok)
-                {
-                    alert( await response.text())
-                }
             // reseting form
 
             setCheck(false)
+            navigateTo("/login")
         }
         fetchingData()
     }
@@ -269,30 +279,37 @@ function RegisterHostForm() {
                         <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcodeOfVenue'helperText='postcode*' required variant='standard' value={hostFormData.postcodeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
                     </Line>
                     <Line>
-                        <PictureHolder>
+                        <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={emptyValueEffect[15]}>
                             {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                             <input name='imageOne' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 0)}></input>
                             <img src={imageUrls[0]} style={{height: "100%", width: "100%"}} ></img>
                         </PictureHolder>
                     </Line>
                     <Line>
-                    <PictureHolder>
+                    <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={emptyValueEffect[16]}>
                         {!imageUrls[1] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                             <input name='imageTwo' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 1)}></input>
                             <img src={imageUrls[1]} style={{height: "100%", width: "100%"}} ></img>
                         </PictureHolder>
                     </Line>
                     <Line>
-                        <PictureHolder>
+                    <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={emptyValueEffect[17]}>
                             {!imageUrls[2] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                             <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 2)}></input>
                             <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
                         </PictureHolder>
                     </Line>
                     <Line>
-                        <SubmitButton onClick={handleSubmit}>register</SubmitButton>
+                        <SubmitButton onClick={handleSubmit}>
+                            create account
+                            <Fade in={popUpFlag} timeout={{enter: 300, exit: 300}}>
+                            <WarningBox>
+                                <TypoWarning>{warningMessage}</TypoWarning>
+                            </WarningBox>
+                            </Fade>                            
+                            </SubmitButton>
                         <TermsWrapper>
-                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckbox} sx={emptyValueEffect[15]} key={'checkbox'}/>
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckbox} sx={emptyValueEffect[20]} key={'checkbox'}/>
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>

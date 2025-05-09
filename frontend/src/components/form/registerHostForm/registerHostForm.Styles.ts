@@ -94,7 +94,7 @@ export const FixedTextFieldProps = styled(TextField)`
 
     `;
 
-export const TermsWrapper = styled(Box)`
+    export const TermsWrapper = styled(Box)`
 
     text-align: center;
     align-self: center;
@@ -129,8 +129,11 @@ export const RegisterButton = styled(Button)`
     background-color: black;
 
 
+    border: 3px solid black;
+
+    
     &:hover {
-        border: 3px solid PapayaWhip
+      border: 3px solid PapayaWhip;
     }
 
     @media(min-width: 600px) {
@@ -177,3 +180,22 @@ export const ImageTypoH2 = styled(TypoH2)`
 `;
 
 
+export const WarningBox = styled(Box)`
+
+  position: absolute;
+
+
+  width: 100%;
+  height: 100%;
+
+  background-color: black;
+
+  white-space: nowrap;
+  transform: scale(0.8);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+`;

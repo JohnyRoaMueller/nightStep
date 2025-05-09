@@ -1,17 +1,24 @@
 import { useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles'
-import { CategoryHeader, CostumDatePicker, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong } from './registerGuestForm.Styles'
-import { Checkbox } from '@mui/material'
-import { TypoBody2, TypoH2 } from '../../../styled-components/styledTypographie'
+import { CategoryHeader, CostumDatePicker, FormContainer, Line, RegisterButton, TermsWrapper, TextfieldLong, WarningBox } from './registerGuestForm.Styles'
+import { Checkbox, Fade } from '@mui/material'
+import { TypoBody2, TypoH2, TypoWarning } from '../../../styled-components/styledTypographie'
 import { boxShadowAnimation } from './registerGuestForm.Styles'
 import * as React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { EmptyValueEffectType, GuestFormData, preventNonAlphabeticInput, validateGuestForm } from '../../../functions/validation/guestFormValidation'
+import { EmptyValueEffectType, GuestFormData, preventNonAlphabeticInput, preventWrongInputType, validateGuestForm } from '../../../functions/validation/guestFormValidation'
+import { useNavigate } from 'react-router-dom'
 function RegisterGuestForm() {
 
+    const navigateTo = useNavigate()
+
     const [check, setCheck] = useState<boolean>(false)
+
+    const [popUpFlag, setPopUpFlag] = useState<boolean>(false)
+
+    const [warningMessage, setWarningMessage] = useState<string>("")
 
     const [guestFormData, setFormData] = useState<GuestFormData>({
         firstname: "",
@@ -28,7 +35,7 @@ function RegisterGuestForm() {
     const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
 
     const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
-        Array(16).fill({ animation: "" }) // 8 positions to set the effect independent from each other
+        Array(25).fill({ animation: "" }) // 8 positions to set the effect independent from each other
     )
 
  
@@ -39,7 +46,7 @@ function RegisterGuestForm() {
 
         setFormData((prevData) => ({
             ...prevData,
-            [name]: preventNonAlphabeticInput(name, value),
+            [name]: preventWrongInputType(name, value),
         }));
     }
 
@@ -55,10 +62,11 @@ function RegisterGuestForm() {
 
     console.log(emptyValueEffect)
     
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!validateGuestForm({formData: guestFormData, setEmptyValueEffect, boxShadowAnimation, inputRefs, check})) return
+        const isValid = await validateGuestForm({formData: guestFormData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
+        if (!isValid) return
 
             const apiUrl =import.meta.env.VITE_APP_API_URL
             fetch(`${apiUrl}/register/guest`,
@@ -86,6 +94,9 @@ function RegisterGuestForm() {
                 role: Roles.GUEST
             })
             setCheck(false)
+
+            navigateTo("/login")
+
     }
 
 
@@ -144,9 +155,14 @@ function RegisterGuestForm() {
                     <Line>
                         <RegisterButton type='submit' key='Button-register'>
                             Create Account
+                            <Fade in={popUpFlag} timeout={{enter: 300, exit: 300}}>
+                            <WarningBox>
+                                <TypoWarning>{warningMessage}</TypoWarning>
+                            </WarningBox>
+                            </Fade>
                         </RegisterButton>
                         <TermsWrapper>
-                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckboxChange} sx={emptyValueEffect[15]} /> {/** should be index 8,  */}
+                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckboxChange} sx={emptyValueEffect[20]} /> {/** should be index 8,  */}
                             <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
                         </TermsWrapper>
                     </Line>

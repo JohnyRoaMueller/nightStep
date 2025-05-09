@@ -50,6 +50,7 @@ export const Line = styled(Box)`
     flex-direction: row;
     flex-grow: 1;
 
+
 `;
 
 export const boxShadowAnimation = keyframes`
@@ -128,8 +129,6 @@ export const TermsWrapper = styled(Box)`
     margin-left: 3%;
     margin-bottom: 3%;
 
-
-
     display: flex;
     flex-direction: column;
 
@@ -153,14 +152,18 @@ export const RegisterButton = styled(Button)`
     background-color: black;
 
 
+    border: 3px solid black;
+
+    
     &:hover {
-        border: 3px solid PapayaWhip
+      border: 3px solid PapayaWhip;
     }
 
     @media(min-width: 600px) {
         padding-left: 10%;
         padding-right: 10%;
     }
+
 
 `;
 
@@ -181,9 +184,25 @@ export const CostumDatePicker = styled(DatePicker)`
     color: black;
   }
 
-
-
 `;
 
 
+export const WarningBox = styled(Box)`
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: black;
+
+  white-space: nowrap;
+  transform: scale(0.8);
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+`;
 

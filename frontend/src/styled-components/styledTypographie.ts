@@ -41,7 +41,7 @@ export const TypoWarning = styled(Typography)(({ theme }) => ({
     lineHeight: theme.typography.body1.lineHeight,
     color: theme.palette.warning.main,
     fontWeight: 600,
-    backgroundColor: theme.palette.warning.contrastText,
+    // backgroundColor: theme.palette.warning.contrastText,
     padding: '8px 12px',
     borderRadius: '4px',
   }));

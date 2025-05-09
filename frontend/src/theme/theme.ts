@@ -23,7 +23,7 @@ const theme: ThemeOptions = createTheme({
       contrastText: '#ffffff',
     },
     warning: {
-      main: '#ffeb3b', // Yellow for warnings
+      main: '#ff0000', // Yellow for warnings
       contrastText: '#000000', // Darker text for contrast
     },
     info: {

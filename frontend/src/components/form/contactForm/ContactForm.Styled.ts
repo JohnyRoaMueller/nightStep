@@ -127,9 +127,11 @@ export const SubmitButton = styled(Button)`
 
     background-color: black;
 
+    border: 3px solid black;
+
 
     &:hover {
-        border: 3px solid PapayaWhip
+        border: 3px solid PapayaWhip;
     }
 
     @media(min-width: 600px) {
