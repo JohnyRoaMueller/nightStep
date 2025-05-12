@@ -5,6 +5,7 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { VenueType } from "../venueCards/VenueCards";
 import { Button } from "@mui/material";
+import { type } from "node:os";
 
 // "/myvenue/:venuename"
 function MyVenueProfileUI() {
@@ -15,6 +16,23 @@ function MyVenueProfileUI() {
     const [venue, setVenue] = useState<VenueType>()
     const [imageUrls, setImageUrls] = useState<string[]>([])
     const [imageBlobs, setImageBlobs] = useState<Blob[]>([])
+
+    useEffect(() => {
+        for (let i = 0; i < imageUrls.length; i++) {
+            if (imageUrls[i]) {
+                console.log("image on index " + i + ": " + imageUrls[i])
+            }
+            else console.log("no image on index " + i)
+        } 
+        console.log("<><><><></></></></>")
+        console.log("<><><><></></></></>")
+        for (let i = 0; i < imageBlobs.length; i++) {
+            if (imageBlobs[i]) {
+                console.log("blob on index " + i)
+            }
+            else console.log("no blob on index " + i)
+        } 
+    }, [imageUrls, imageBlobs])
 
 
     const [openSettings, setOpenSettings] = useState(false)
@@ -65,30 +83,29 @@ function MyVenueProfileUI() {
         {
         const file = event.target.files[0]
 
-        setImageBlobs((prevdata) =>
-        {
-            const newArray = [...prevdata];
-            newArray[index] = file
-            return newArray
-        })
         setImageUrls((prevdata) =>
         {
             const newArray = [...prevdata];
             newArray[index] = ""
             return newArray
         })
+        setImageBlobs((prevdata) =>
+        {
+            const newArray = [...prevdata];
+            newArray[index] = file
+            return newArray
+        })
         }
-        console.log(imageUrls)
     }
 
-    
+
     const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) =>
     {
         event.preventDefault();
 
-        async function fetchingData()
+        async function submitData()
         {
-
+            
             const formDataObject = new FormData()
             formDataObject.append("name", venueData.name)
             formDataObject.append("type", venueData.type)
@@ -99,12 +116,27 @@ function MyVenueProfileUI() {
             formDataObject.append("postalCode", venueData.postalCode)
             formDataObject.append("description", venueData.description)
 
+            const indexToIgnore : number[] = [] 
+
+            let index = 0
+
+            // ensure that current images get saved first
             for (const url of imageUrls) {
-                if (url == null || url == undefined) {
+
+                console.log("current index: " + index)
+                if (url == null || url == undefined || url == "") {
                     console.log("we skip this url: ", url)
-                    break
+                    indexToIgnore.push(index)
+                    console.log("indexToIgnore: " + indexToIgnore)
+                    if (imageBlobs[index]) {
+                        formDataObject.append("imageBlobs[]", imageBlobs[index]);
+                        console.log("appending in imageUrls: " + typeof imageBlobs[index])
+                    }
+                    index++
+                    continue
                 }
                 console.log(url, "is not undefined")
+                // returns the generated image from the backend
                 const result = await fetch(`${apiUrl}/images${url}`.replace(/\//g, "-"), {
                     credentials: 'include'
                 })
@@ -113,19 +145,22 @@ function MyVenueProfileUI() {
                 const blob = await result.blob()
                 const file = new File([blob], url)
                 formDataObject.append("imageBlobs[]", file);
+                console.log("blob appended")
+                index++
             }
 
+            // checking blob array to append to the formdata object
             imageBlobs.forEach((blob, index) =>
             {
-                if (blob != undefined) {
+                if (blob != undefined && !indexToIgnore.includes(index)) {
+                    console.log("blob from index " + index + " will be appended to blob array -> ")
                     formDataObject.append("imageBlobs[]", blob);
+                    console.log("blob appended")
                 }
             });
 
-
-
-
-
+            // updating current venue profile
+            console.log("do the update now")
             const result = await fetch(`${apiUrl}/myvenue/update/${param.venuename}`, {
                 method: 'PATCH',
                 body: formDataObject,
@@ -133,7 +168,7 @@ function MyVenueProfileUI() {
             })
             console.log(await result.text())
         }
-        fetchingData()
+        submitData()
     }
 
     useEffect(() => {
@@ -183,6 +218,7 @@ function MyVenueProfileUI() {
                 <>
                 <ImageBox key={`Image-box-${counter}`}>
                     <input name={`image-${counter}`} type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, counter)}></input>
+                    {/** checking index to do api call or show blob */}
                     {imageUrls[counter] && <img src={`${apiUrl}/images/${imageUrls[counter].replace(/\//g, "-")}`}></img>}
                     {imageBlobs[counter] && <img src={URL.createObjectURL(imageBlobs[counter])}></img>}
                 </ImageBox>
