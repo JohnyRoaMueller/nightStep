@@ -7,6 +7,10 @@ export const ErrorOverlay = styled(Box)`
 
 export const FormContainer = styled(Box)`
 
+    background-color:#696969;
+
+    border-radius: 1rem;
+
     position: relative;
     align-self: flex-start;
 
@@ -26,7 +30,9 @@ export const FormContainer = styled(Box)`
 `;
 
 export const CategoryHeader = styled(Box)`
-    background-color: black;
+    background-color: lightGrey;
+
+    border-radius: 1rem;
 
     margin: 3%;
 

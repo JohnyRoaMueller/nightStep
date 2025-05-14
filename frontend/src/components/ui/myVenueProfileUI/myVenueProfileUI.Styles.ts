@@ -14,13 +14,14 @@ export const MyVenueHeader = styled(Box)`
 `;
 
 export const MyVenueHeaderTypo = styled(TypoH1)`
-    color: black;
+    color: white;
 `;
 
 export const ImageWrapper = styled(Box)`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, 1fr);
+
 
 
     height: 100vh;
@@ -38,10 +39,12 @@ export const ImageWrapper = styled(Box)`
 
 
 export const ImageBox = styled(Box)`
-    border: thick double black;
+    border: 0.1rem solid white;
     border-radius: 10%;
 
     contain: strict;
+
+    background-color:#696969;
 
     &:hover {
         border: thick double #ff8000;
@@ -96,6 +99,8 @@ export const DropdownWrapper = styled(Box)`
     display: flex;
     flex-direction: column;
 
+    background-color:#696969;
+
     border: thick double black;
     border-radius: 25px;
 
@@ -140,7 +145,7 @@ export const Settings = styled(Box)`
 `;
 
 export const SubmitSettingsButton = styled(Button)`
-    border: 1px solid #ff8000;
+    border: 3px solid #ff8000;
     border-radius: 25px;
     margin: 3%;
 
@@ -149,6 +154,31 @@ export const SubmitSettingsButton = styled(Button)`
     @media(min-width: 600px) {
         width: 30%;
     }
+
+    &:hover {
+      border: 3px solid PapayaWhip;
+    }
+
+`;
+
+export const SubmitSettingsButtonOverlay = styled(Box)`
+    display: flex;
+
+    position: absolute;
+    right: 20%;
+
+    justify-content: center;
+    align-items: center;
+
+    border: 3px solid PapayaWhip;
+    border-radius: 50%;
+
+
+    @media(min-width: 600px) {
+        right: 27%;
+    }    
+
+
 `;
 
 

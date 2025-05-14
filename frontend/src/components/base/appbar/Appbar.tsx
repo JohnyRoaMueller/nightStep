@@ -17,6 +17,7 @@ import {
 } from "./Appbar.styles";
 import { FadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
 import { useNavigate } from "react-router-dom";
+import { Opacity } from "@mui/icons-material";
 
 
 
@@ -33,6 +34,7 @@ export function Appbar() {
   const [role, setRole] = useState(null);
 
   const [unfoldFlag, setUnfolgFlag] = useState(false);
+  const unfoldStyle = { height: unfoldFlag ? "5vh" : "0vh", opacity: unfoldFlag ? 1 : 0, transition: "height 0.7s ease, opacity 0.7s ease"}
 
   const [loading, setLoading] = useState(true)
   
@@ -136,7 +138,7 @@ export function Appbar() {
         ))}
         {role === "HOST" && 
         mobileOptionsHost.map((option) => (
-          <MobileMenuOption sx={{display: unfoldFlag ? "block" : "none"}}>
+          <MobileMenuOption sx={unfoldStyle}>
             <MobileMenuOptionLink to={`/${option}`.replace(" ", "")}>
               <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
             </MobileMenuOptionLink>

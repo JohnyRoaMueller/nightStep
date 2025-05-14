@@ -17,13 +17,13 @@ function Base({children}: BaseProps) {
     return (
         <>
         <ThemeProvider theme={theme}>
-            <Box id="FullscreenFlexBox" sx={FullscreenFlexBox}>
+            <FullscreenFlexBox id="FullscreenFlexBox">
                 <Appbar/>
-                <Box id="VerticalCentered" sx={VerticalCentered}>
+                <VerticalCentered id="VerticalCentered">
                     {children}
-                </Box>
+                </VerticalCentered>
                 <Footer/>
-            </Box>
+            </FullscreenFlexBox>
         </ThemeProvider>
         </>
     )

@@ -2,17 +2,21 @@ import { Box, Button, styled, TextField } from "@mui/material";
 
 export const FormContainer = styled(Box)`
 
+    background-color:#696969;
+
     width: 100%;
 
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 
+    border-radius: 25px;
+
     box-sizing: border-box;
 
     @media (min-width: 600px) {
         width: 50%;
-        border: 0.3em solid black;
+        
     } 
 
 `;

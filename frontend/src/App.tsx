@@ -19,6 +19,7 @@ import Venue from "./pages/Venue";
 import MyVenueUI from "./components/ui/myVenueProfileUI/MyVenueProfileUI";
 import MyVenue from "./pages/MyVenue";
 import MyVenueProfile from "./pages/MyVenueProfile";
+import MyEvents from "./pages/MyEvents";
 
 function App() {
   return (
@@ -58,11 +59,13 @@ function App() {
 
               <Route path="/myvenue/:venuename" element={<MyVenueProfile />} ></Route>
 
-              <Route path="/venue/:venuename" element={<Venue/>} ></Route>
+              <Route path="/myevents" element={<MyEvents />} ></Route>
+
+              <Route path="/venue/:venuename" element={<Venue />} ></Route>
               
-              <Route path="/dashboard" element={<Dashboard/>} ></Route>
+              <Route path="/dashboard" element={<Dashboard />} ></Route>
               {/** guest */}
-              <Route path="/user/:username" element={<User/>} ></Route>
+              <Route path="/user/:username" element={<User />} ></Route>
 
           </Routes>
 

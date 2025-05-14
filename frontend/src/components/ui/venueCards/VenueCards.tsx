@@ -24,6 +24,8 @@ export interface VenueType {
 function VenueCards(props: { venueType: string; }) {
 
     const [venues, setVenues] = useState<VenueType[]>([])
+    const [mockVenue, setMockVenue] = useState<number[]>([1, 2, 3, 4, 5, 6])
+
     const [loading, setLoading] = useState(true)
 
     const navigateTo = useNavigate();
@@ -50,7 +52,11 @@ function VenueCards(props: { venueType: string; }) {
                 const slicedArray = shuffledArray.slice(0, 6)
 
                 setVenues(slicedArray)
+
+
                 setLoading(false)
+
+                
 
 
             } 
@@ -70,7 +76,7 @@ function VenueCards(props: { venueType: string; }) {
     {
     return (
         <>
-            <LoadingSpace></LoadingSpace>
+
         </>
         )
     } 

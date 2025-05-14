@@ -222,7 +222,6 @@ export const MobileMenuOption = styled(Box)`
   background-color: black;
 
   width: 100vw;
-  height: 5vh;
 
   display: flex;
   flex-direction: column;

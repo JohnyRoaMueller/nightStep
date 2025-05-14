@@ -1,11 +1,13 @@
 import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react"
-import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper, TypoBody1HeaderDropdown, SubmitSettingsButton } from "./myVenueProfileUI.Styles"
+import { ImageBox, MyVenueHeader, MyVenueHeaderTypo, DropdownHeader, Settings, DropdownWrapper, TextFieldOption, TextFieldBio, ImageWrapper, TypoBody1HeaderDropdown, SubmitSettingsButton, SubmitSettingsButtonOverlay } from "./myVenueProfileUI.Styles"
 import { useParams } from "react-router-dom";
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import { VenueType } from "../venueCards/VenueCards";
-import { Button } from "@mui/material";
+import { Button, Fade } from "@mui/material";
 import { type } from "node:os";
+import { TypoBody1 } from "../../../styled-components/styledTypographie";
+import CheckIcon from '@mui/icons-material/Check';
 
 // "/myvenue/:venuename"
 function MyVenueProfileUI() {
@@ -16,6 +18,8 @@ function MyVenueProfileUI() {
     const [venue, setVenue] = useState<VenueType>()
     const [imageUrls, setImageUrls] = useState<string[]>([])
     const [imageBlobs, setImageBlobs] = useState<Blob[]>([])
+
+    const [overlayFadeflag, setOverlayFadeflag] = useState(false)
 
     useEffect(() => {
         for (let i = 0; i < imageUrls.length; i++) {
@@ -35,15 +39,19 @@ function MyVenueProfileUI() {
     }, [imageUrls, imageBlobs])
 
 
-    const [openSettings, setOpenSettings] = useState(false)
-    function handleSettingsClick() {
-        setOpenSettings(prevBoolean => !prevBoolean)
-    }
-
     const [openBio, setOpenBio] = useState(false)
     function handleBioClick() {
         setOpenBio(prevBoolean => !prevBoolean)
     }
+    const unfoldBioStyle = { maxHeight: openBio ? "1000px" : 0, opacity: openBio ? 1 : 0, overflow: "hidden", transition: "max-height 1.2s ease, opacity 1.2s ease" }    
+
+
+    const [openSettings, setOpenSettings] = useState(false)
+    function handleSettingsClick() {
+        setOpenSettings(prevBoolean => !prevBoolean)
+    }
+    const unfoldSettingsStyle = { maxHeight: openSettings ? "1000px" : 0, opacity: openSettings ? 1 : 0, overflow: "hidden", transition: "max-height 1.2s ease, opacity 1.2s ease" }
+
 
     type VenueData = {
         name: string,
@@ -167,6 +175,10 @@ function MyVenueProfileUI() {
                 credentials: 'include'
             })
             console.log(await result.text())
+            setOverlayFadeflag(true)
+            setTimeout(() => {
+                setOverlayFadeflag(false)
+            }, 1000);
         }
         submitData()
     }
@@ -242,7 +254,7 @@ function MyVenueProfileUI() {
                 <TypoBody1HeaderDropdown>Bio</TypoBody1HeaderDropdown>
                 {openBio ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
             </DropdownHeader>
-            <Settings sx={{display: openBio ? "block" : "none"}}>
+            <Settings sx={unfoldBioStyle}>
                 <TextFieldBio name="description" value={venueData.description} fullWidth multiline rows={4} onChange={handleChange}></TextFieldBio>
             </Settings>
         </DropdownWrapper>
@@ -260,7 +272,7 @@ function MyVenueProfileUI() {
                 <TypoBody1HeaderDropdown>Settings</TypoBody1HeaderDropdown>
                 {openSettings ? <ExpandLessRoundedIcon/> : <ExpandMoreRoundedIcon/>}
             </DropdownHeader>
-            <Settings sx={{display: openSettings ? "block" : "none"}}>
+            <Settings sx={unfoldSettingsStyle}>
                 <TextFieldOption name="name" fullWidth helperText="name" value={venueData?.name} onChange={handleChange}></TextFieldOption>
                 <TextFieldOption name="type" fullWidth helperText="type" value={venueData?.type} onChange={handleChange}></TextFieldOption>
                 <TextFieldOption name="capacity" fullWidth helperText="capacity"  value={venueData?.capacity} onChange={handleChange}></TextFieldOption>
@@ -270,7 +282,13 @@ function MyVenueProfileUI() {
                 <TextFieldOption name="postalCode" fullWidth helperText="postal code" value={venueData?.postalCode} onChange={handleChange}></TextFieldOption>
             </Settings>
         </DropdownWrapper>
-        <SubmitSettingsButton onClick={handleSubmit}>change settings</SubmitSettingsButton>
+        <SubmitSettingsButton onClick={handleSubmit}>
+            change settings
+            <Fade in={overlayFadeflag} timeout={{ enter: 500, exit: 500, }}>
+                <SubmitSettingsButtonOverlay><CheckIcon sx={{color: "green"}}/></SubmitSettingsButtonOverlay>
+            </Fade>
+
+        </SubmitSettingsButton>
         </>
     )
 }

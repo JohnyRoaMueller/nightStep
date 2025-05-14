@@ -1,48 +1,32 @@
-export const FullscreenFlexBox = {
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
-    height: '100%',
-    width: '100%',
+export const FullscreenFlexBox = styled(Box)(({ theme }) => ({
+  height: '100%',
+  width: '100%',
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  boxSizing: 'border-box',
+  alignItems: 'center',
+  flexGrow: 1,
+  backgroundColor: theme.palette.background.default,
+}));
 
-    minHeight: '100vh',
+export const VerticalCentered = styled(Box)(({ theme }) => ({
+  width: '100%',
+  backgroundColor: theme.palette.grey[100],
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  height: 'auto',
+  position: 'relative',
+  paddingBottom: '2em',
+  paddingTop: '2em',
+  background: theme.palette.background.default,
 
-    display: 'flex',             
-
-    flexDirection: 'column',
-
-    boxSizing: 'border-box',
-
-    alignItems: 'center',
-
-    flexGrow: 1,
-
-
-    // theme styling 
-    backgroundColor: (theme) => theme.palette.background.default,
-}
-
-export const VerticalCentered = {
-
-    width: '100%',       
-
-    bgcolor: 'grey.300',
-    
-    display: 'flex',      
-    flexDirection: 'column',
-    alignItems: 'center', 
-
-    boxSizing: 'border-box',
-    
-    height: 'auto',
-
-    position: 'relative',
-
-    paddingBottom: '2em',
-    paddingTop: '2em',
-
-    // theme styling
-    background: (theme) => theme.palette.background.default,
-
-    '@media (min-width: 600px)': {
-        width: '75%'
-    },
-}
+  [theme.breakpoints.up('sm')]: {
+    width: '75%',
+  },
+}));
