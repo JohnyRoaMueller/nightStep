@@ -1,5 +1,7 @@
-import { Box, Button, inputClasses } from "@mui/material";
+import { Box, Button, inputClasses, TextField } from "@mui/material";
 import Base from "../components/base/base";
+import BaseForm from "../common/form/baseForm/BaseForm";
+import FormTextField from "../common/form/formTextField/FormTextField";
 
 const doClear = () => {
     localStorage.clear();
@@ -45,6 +47,10 @@ export default function Test() {
                         delete Cookie
                     </Button>
                 </Box>
+                <BaseForm>
+                    <FormTextField/>
+                    <FormTextField/>
+                </BaseForm>
                 {/* ↑↑↑ My Content ↑↑↑ */}
                 </>
         }>

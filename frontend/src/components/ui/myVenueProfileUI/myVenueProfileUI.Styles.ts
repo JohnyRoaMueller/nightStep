@@ -165,7 +165,8 @@ export const SubmitSettingsButtonOverlay = styled(Box)`
     display: flex;
 
     position: absolute;
-    right: 20%;
+    right: 20;
+
 
     justify-content: center;
     align-items: center;
@@ -175,7 +176,7 @@ export const SubmitSettingsButtonOverlay = styled(Box)`
 
 
     @media(min-width: 600px) {
-        right: 27%;
+        right: 10%;
     }    
 
 
