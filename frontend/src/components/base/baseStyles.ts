@@ -22,8 +22,6 @@ export const VerticalCentered = styled(Box)(({ theme }) => ({
   boxSizing: 'border-box',
   height: 'auto',
   position: 'relative',
-  paddingBottom: '2em',
-  paddingTop: '2em',
   background: theme.palette.background.default,
 
   [theme.breakpoints.up('sm')]: {

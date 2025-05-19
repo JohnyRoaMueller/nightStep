@@ -2,10 +2,10 @@ import { TextFieldProps } from "@mui/material";
 import { StyledFormTextField } from "./FormTextField.Styles";
 import FormTextFieldProps from "./FormTextField.Types";
 
-function FormTextField( props: FormTextFieldProps) {
+function FormTextField( {...textFieldProps}: FormTextFieldProps) {
     return(
         <>
-        <StyledFormTextField fullWidth {...props}/>
+        <StyledFormTextField fullWidth {...textFieldProps}/>
         </>
     )
 }

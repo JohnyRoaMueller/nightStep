@@ -13,6 +13,9 @@ export const footerLinkColor = {
 }
 
 export const FooterFrame = styled(Box)`
+
+    border-top: 5vh solid #1a1a1a;
+
     display: flex;
     width: 100%;
     height: 25vh;

@@ -11,10 +11,10 @@ export const HeaderWrapper = styled(Box)`
     width: 100%;
     max-width: 100%;
     height: 5vh;
+
+    padding: 2%;
     
     align-items: center;
-
-    gap: 1%;
 
 `;
 
@@ -48,8 +48,6 @@ export const GridContainer = styled(Box)`
 
     justify-content: flex-start;
 
-    padding-top: 2%;
-    padding-bottom: 5%;
 
     @media (min-width: 600px) {
         flex-wrap: wrap;
@@ -175,5 +173,24 @@ export const VenueDescTypo = styled(TypoBody1)`
     @media(min-width: 600px) {
         font-size: initial;
     }
+
+`;
+
+export const RandomWrapper = styled(Box)`
+
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    height: 5vh;
+
+    padding: 2%;
+
+    text-align: center;
+
+    justify-items: center;
+    
+    align-items: center;
+
+    gap: 1%;
 
 `;

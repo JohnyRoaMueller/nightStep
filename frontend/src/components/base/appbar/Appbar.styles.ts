@@ -43,7 +43,6 @@ export const AppbarFrame = styled(Box)`
   justify-content: flex-end;
   align-items: center;
   z-index: 100;
-  border-bottom: 0.2em solid;
   overflow: hidden;
   background-color: black;
 

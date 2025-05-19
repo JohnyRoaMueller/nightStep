@@ -1,15 +1,19 @@
-import { FormEvent, useRef, useState } from 'react'
-import Roles from '../../../../enums/Roles'
-import { CategoryHeader, FormContainer, ImageTypoH2, Line, PictureHolder, TermsWrapper, TextfieldLong, TextfieldMedium } from './registerHostForm.Styles.ts'
+import { useRef, useState } from 'react'
+import Roles from '../../../../enums/Roles.ts'
+import { HeaderWrapper, ImageTypoH2, PictureHolder, TermsWrapper } from './registerHostForm.Styles.ts'
 import { Checkbox, Fade } from '@mui/material'
-import { TypoBody2, TypoH2, TypoWarning } from '../../../styled-components/styledTypographie'
-import { SubmitButton } from '../contactForm/ContactForm.Styled.ts'
+import { TypoBody1, TypoBody2, TypoH1, TypoWarning } from '../../../styled-components/styledTypographie.ts'
 import { EmptyValueEffectType, preventWrongInputType, validateGuestForm } from '../../../functions/validation/guestFormValidation.ts'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs'
-import { boxShadowAnimation, CostumDatePicker, WarningBox } from '../registerGuestForm/registerGuestForm.Styles.ts'
+import { boxShadowAnimation, WarningBox } from '../registerGuestForm/registerGuestForm.Styles.ts'
 import dayjs, { Dayjs } from 'dayjs'
 import { useNavigate } from 'react-router-dom'
+import BaseForm from '../../../common/form/baseForm/BaseForm.tsx'
+import FormHeader from '../../../common/form/formHeader/FormHeader.tsx'
+import FormTextField from '../../../common/form/formTextField/FormTextField.tsx'
+import LocalizedDatePicker from '../../../common/form/datePicker/DatePicker.tsx'
+import PrimaryButton from '../../../common/button/primaryButton/PrimaryButton.tsx'
+import { Height } from '@mui/icons-material'
+import { WhiteLine } from '../../ui/venueCards/VenueCards.Style.ts'
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
@@ -59,9 +63,9 @@ function RegisterHostForm() {
         streetOfVenue: string,
         housenumberOfVenue: string,
         postcodeOfVenue: string,
-        imageOne: Blob
-        imageTwo: Blob
-        imageThree: Blob
+        imageOne: Blob | null
+        imageTwo: Blob | null
+        imageThree: Blob | null
         role: Roles;
     };
 
@@ -81,9 +85,9 @@ function RegisterHostForm() {
         streetOfVenue: "",
         housenumberOfVenue: "",
         postcodeOfVenue: "",
-        imageOne: new Blob,
-        imageTwo: new Blob,
-        imageThree: new Blob,
+        imageOne: null,
+        imageTwo: null,
+        imageThree: null,
         role: Roles.HOST
     })
 
@@ -211,111 +215,90 @@ function RegisterHostForm() {
 
     return (
         <>
-            <FormContainer>
-                <form typeof='submit'>
-                    <Line>
-                        <CategoryHeader><TypoH2>BASE</TypoH2></CategoryHeader>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' required variant='standard' value={hostFormData.firstname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}} key='textfield-firstname'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' required variant='standard' value={hostFormData.lastname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} key='textfield-lastname'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' required variant='standard' value={hostFormData.email} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}} key='textfield-email'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLOptionElement)} name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={hostFormData.gender} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
-                                <option value='' disabled>{"▒"}</option>
-                                {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
-                        </TextfieldLong>
-                    </Line>
-                    <Line>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <CostumDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} onChange={handleDateChange} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }
-                            // maxDate={dayjs.unix(Date.now() - 31556926)}
-                            />
-                        </LocalizationProvider> 
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' required value={hostFormData.username} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' type='password' helperText ='password*' required value={hostFormData.password} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'></TextfieldLong>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'confirmPassword' type='password' helperText ='confirm password*' required value={hostFormData.confirmPassword} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-confirmPassword'></TextfieldLong>
-                    </Line>
-                    <Line>
-                        <CategoryHeader><TypoH2>VENUE RELATED</TypoH2></CategoryHeader>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='nameOfVenue'helperText='name of venue*' required variant='standard' value={hostFormData.nameOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-nameOfVenue'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='typeOfVenue'helperText='type of venue*' required variant='standard' select slotProps={{select: {native: true}}} value={hostFormData.typeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-typeOfVenue'>
-                            <option value='' disabled>{"▒"}</option>
-                            {typeOfVenueList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
-                        </TextfieldLong>
-                    </Line>
-                    <Line>
-                    <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity' variant='standard' value={hostFormData.capacity} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'></TextfieldLong>
-                    </Line>
-                    <CategoryHeader><TypoBody2>ADDRESS OF VENUE</TypoBody2></CategoryHeader>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='cityOfVenue'helperText='city*' select slotProps={{select: {native: true}}} required variant='standard' value={hostFormData.cityOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-cityOfVenue'>
-                            <option value='' disabled>{"▒"}</option>
-                            {cityList.map((city) => <option value={city} key={city}>{city}</option>)}
-                        </TextfieldLong>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='streetOfVenue'helperText='street*' required variant='standard' value={hostFormData.streetOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumberOfVenue'helperText='housenumber*' required variant='standard' value={hostFormData.housenumberOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/>
-                    </Line>
-                    <Line>
-                        <TextfieldLong inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcodeOfVenue'helperText='postcode*' required variant='standard' value={hostFormData.postcodeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
-                    </Line>
-                    <Line>
-                        <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={emptyValueEffect[15]}>
-                            {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
-                            <input name='imageOne' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 0)}></input>
-                            <img src={imageUrls[0]} style={{height: "100%", width: "100%"}} ></img>
-                        </PictureHolder>
-                    </Line>
-                    <Line>
-                    <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={emptyValueEffect[16]}>
-                        {!imageUrls[1] && <ImageTypoH2>Upload an image</ImageTypoH2>}
-                            <input name='imageTwo' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 1)}></input>
-                            <img src={imageUrls[1]} style={{height: "100%", width: "100%"}} ></img>
-                        </PictureHolder>
-                    </Line>
-                    <Line>
-                    <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={emptyValueEffect[17]}>
-                            {!imageUrls[2] && <ImageTypoH2>Upload an image</ImageTypoH2>}
-                            <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 2)}></input>
-                            <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
-                        </PictureHolder>
-                    </Line>
-                    <Line>
-                        <SubmitButton onClick={handleSubmit}>
-                            create account
-                            <Fade in={popUpFlag} timeout={{enter: 300, exit: 300}}>
-                            <WarningBox>
-                                <TypoWarning>{warningMessage}</TypoWarning>
-                            </WarningBox>
-                            </Fade>                            
-                            </SubmitButton>
-                        <TermsWrapper>
-                            <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckbox} sx={emptyValueEffect[20]} key={'checkbox'}/>
-                            <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
-                        </TermsWrapper>
-                    </Line>
-                </form>
-            </FormContainer>
+        <HeaderWrapper>
+            <TypoH1>REGISTRATION</TypoH1>
+        </HeaderWrapper>
+            
+        <BaseForm onSubmit={handleSubmit}>
+                    
+            <FormHeader>BASE</FormHeader>
+                           
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' required variant='standard' value={hostFormData.firstname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}} key='textfield-firstname'/>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' required variant='standard' value={hostFormData.lastname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} key='textfield-lastname'/>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' required variant='standard' value={hostFormData.email} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}} key='textfield-email'/>
+                        
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLOptionElement)} name='gender' helperText='gender' variant='standard' select slotProps={{select: {native: true}}} value={hostFormData.gender} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                <option value='' disabled>{"▒"}</option>
+                {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
+            </FormTextField>
+                              
+            <LocalizedDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} onChange={handleDateChange} name='birthday' slotProps={{textField: {helperText: "birthday", variant: "standard", fullWidth: true}}} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }></LocalizedDatePicker> {/** maxDate={dayjs.unix(Date.now() - 31556926)} */}
+                            
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' required value={hostFormData.username} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
+                           
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' type='password' helperText ='password*' required value={hostFormData.password} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'/>
+                            
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'confirmPassword' type='password' helperText ='confirm password*' required value={hostFormData.confirmPassword} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-confirmPassword'/>
+                              
+            <FormHeader>VENUE RELATED</FormHeader>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='nameOfVenue'helperText='name of venue*' required variant='standard' value={hostFormData.nameOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-nameOfVenue'/>
+                    
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='typeOfVenue'helperText='type of venue*' required variant='standard' select slotProps={{select: {native: true}}} value={hostFormData.typeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-typeOfVenue'>
+                <option value='' disabled>{"▒"}</option>
+                {typeOfVenueList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
+            </FormTextField>
+                     
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity' variant='standard' value={hostFormData.capacity} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'/>
+                    
+            <FormHeader>ADDRESS OF VENUE</FormHeader>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='cityOfVenue'helperText='city*' select slotProps={{select: {native: true}}} required variant='standard' value={hostFormData.cityOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-cityOfVenue'>
+                <option value='' disabled>{"▒"}</option>
+                {cityList.map((city) => <option value={city} key={city}>{city}</option>)}
+            </FormTextField>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='streetOfVenue'helperText='street*' required variant='standard' value={hostFormData.streetOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumberOfVenue'helperText='housenumber*' required variant='standard' value={hostFormData.housenumberOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/>
+                    
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcodeOfVenue'helperText='postcode*' required variant='standard' value={hostFormData.postcodeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
+                    
+            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[15], height: `${hostFormData.imageOne ? '100%' : '20vh'}`}} >
+                {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
+                <input name='imageOne' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 0)}></input>
+                <img src={imageUrls[0]} style={{height: "100%", width: "100%"}} ></img>
+            </PictureHolder>
+                        
+            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[16], height: `${hostFormData.imageTwo ? '100%' : '20vh'}`}}>
+                {!imageUrls[1] && <ImageTypoH2>Upload an image</ImageTypoH2>}
+                <input name='imageTwo' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 1)}></input>
+                <img src={imageUrls[1]} style={{height: "100%", width: "100%"}} ></img>
+            </PictureHolder>
+                    
+            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[17], height: `${hostFormData.imageThree ? '100%' : '20vh'}`}}>
+                {!imageUrls[2] && <ImageTypoH2>Upload an image</ImageTypoH2>}
+                <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 2)}></input>
+                <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
+            </PictureHolder>
 
+            <TermsWrapper>
+                <Checkbox inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} checked={check} onChange={handleCheckbox} sx={emptyValueEffect[20]} key={'checkbox'}/>
+                <TypoBody2>I have read and agree to the Terms of Use</TypoBody2>
+            </TermsWrapper>
+                          
+            <PrimaryButton onClick={handleSubmit}>
+                create account
+                <Fade in={popUpFlag} timeout={{enter: 300, exit: 300}}>
+                    <WarningBox>
+                        <TypoWarning>{warningMessage}</TypoWarning>
+                    </WarningBox>
+                </Fade>                            
+            </PrimaryButton>
+        </BaseForm>  
         </>
     )
 }

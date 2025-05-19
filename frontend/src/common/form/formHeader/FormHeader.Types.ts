@@ -1,4 +1,6 @@
-interface FormHeaderProps {
+import { BoxProps } from "@mui/material"
+
+type FormHeaderProps = BoxProps & {
     children: string
 }
 

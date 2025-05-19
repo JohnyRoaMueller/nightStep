@@ -1,62 +1,24 @@
 import { Box, Button, keyframes, styled, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-export const ErrorOverlay = styled(Box)`
-    border: 1px solid green;
 
-    width: 100%;
-`;
-
-
-export const FormContainer = styled(Box)`
-
-    background-color:#696969;
-
-    border-radius: 1rem;
-
-    align-self: flex-start;
-
-    width: 100%;
-
+export const HeaderWrapper = styled(Box)`
     display: flex;
-    flex-direction: column;
-    flex-grow: 1;
 
-    box-sizing: border-box;
+    width: 100%;
 
-    @media (min-width: 600px) {
+    align-self: start;
+
+    margin: 2%;
+
+
+    // justify-content: center;
+
+    @media(min-width: 600px) {
         width: 50%;
-    } 
-
-`;
-
-export const CategoryHeader = styled(Box)`
-    background-color: black;
-
-    border-radius: 1rem;
-
-    margin: 3%;
-
-    height: 30%;
-    width: 80%;
-
-    text-align: center;
-
-    @media (min-width: 600px) {
-        width: 50%
     }
-
 `;
 
-export const Line = styled(Box)`
-
-
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-
-
-`;
 
 export const boxShadowAnimation = keyframes`
   0% {
@@ -97,97 +59,20 @@ export const boxShadowAnimation = keyframes`
 
 
 `;
-export const FixedTextFieldProps = styled(TextField)`
 
-    .MuiFormHelperText-root {
-        color: black;
-    }
-
-    &:focus-within  {
-        .MuiFormHelperText-root {
-            color: white;
-        }
-    }
-
-
-`;
-
-    export const TextfieldLong = styled(FixedTextFieldProps)`
-
-        margin: 3%;
-
-        width: 90%;
-
-        .MuiFormHelperText-root {
-            color: black;
-        }
-
-    `;
 
 export const TermsWrapper = styled(Box)`
 
     text-align: center;
-    align-self: center;
 
-    width: 50%;
-
-    margin-left: 3%;
-    margin-bottom: 3%;
 
     display: flex;
     flex-direction: column;
 
-    @media(min-width: 600px) {
-        margin-left: 1%;
-        margin-bottom: 3%;
-    }
-
-
-`;
-
-export const RegisterButton = styled(Button)`
-
-    margin-left: 6%;
-    margin-bottom: 5%;
-
-    padding-left: 5%;
-    padding-right: 5%;
-
-
-    background-color: black;
-
-
-    border: 3px solid black;
-
-    
-    &:hover {
-      border: 3px solid PapayaWhip;
-    }
+    justify-self: center;
 
     @media(min-width: 600px) {
-        padding-left: 10%;
-        padding-right: 10%;
     }
-
-
-`;
-
-export const CostumDatePicker = styled(DatePicker)`
-
-  margin: 3%;
-  margin-right: 7%;
-
-
-
-    &:focus-within  {
-        .MuiFormHelperText-root {
-            color: white;
-        }
-    }  
-
-  .MuiFormHelperText-root {
-    color: black;
-  }
 
 `;
 

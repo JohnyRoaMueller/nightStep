@@ -1,8 +1,6 @@
 import { DatePickerProps } from "@mui/x-date-pickers/DatePicker"
 import { Dayjs } from "dayjs"
 
-interface LocalizedDatePickerProps {
-    basicProps: DatePickerProps<Dayjs>
-}
+type LocalizedDatePickerProps = DatePickerProps<Dayjs, false>;
 
 export default LocalizedDatePickerProps

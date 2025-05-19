@@ -1,5 +1,4 @@
 import Base from "../components/base/base";
-import RegisterGuestFormCopy from "../components/form/registerGuestForm copy/RegisterGuestFormCopy";
 import RegisterGuestForm from "../components/form/registerGuestForm/RegisterGuestForm";
 
 export default function RegistrationGuest() {
@@ -8,7 +7,7 @@ export default function RegistrationGuest() {
       <Base children={
         <>
                 {/* ↓↓↓ My Content ↓↓↓ */}
-                <RegisterGuestFormCopy/>
+                <RegisterGuestForm/>
                 {/* ↑↑↑ My Content ↑↑↑ */}
         </>
             }>

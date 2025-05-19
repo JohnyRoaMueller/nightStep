@@ -1,8 +1,8 @@
 import { ButtonProps } from "@mui/material"
+import { ReactNode } from "react"
 
-interface PrimaryButtonProps {
-    defaultProps: ButtonProps,
-    children: string
+type PrimaryButtonProps = ButtonProps & {
+    children: ReactNode
 }
 
 export default PrimaryButtonProps

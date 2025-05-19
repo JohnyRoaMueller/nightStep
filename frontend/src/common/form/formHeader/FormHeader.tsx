@@ -1,11 +1,12 @@
+import { BoxProps } from "@mui/material";
 import { TypoH2 } from "../../../styled-components/styledTypographie";
 import { StyledHeader } from "./FormHeader.Styles";
 import FormHeaderProps from "./FormHeader.Types";
 
-function FormHeader( { children }: FormHeaderProps) {
+function FormHeader( {children, ...boxProps}: FormHeaderProps ) {
     return( 
         <>
-        <StyledHeader><TypoH2>{children}</TypoH2></StyledHeader>
+        <StyledHeader {...boxProps}><TypoH2>{children}</TypoH2></StyledHeader>
         </>
     )
 }

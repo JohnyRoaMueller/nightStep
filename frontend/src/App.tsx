@@ -31,7 +31,7 @@ function App() {
 
               <Route index element={<Home />} />
               {/** public */}
-              <Route path="/home" element={<Home></Home>} />
+              <Route path="/home" element={<Home/>} />
 
               <Route path="/login" element={<Login/>} ></Route>
 

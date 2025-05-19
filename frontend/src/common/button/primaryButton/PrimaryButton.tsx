@@ -1,10 +1,10 @@
 import { StyledButton } from "./PrimaryButton.Styles";
 import PrimaryButtonProps from "./PrimaryButton.Types";
 
-function PrimaryButton( { children }: PrimaryButtonProps) {
+function PrimaryButton( { children, ...buttonProps }: PrimaryButtonProps) {
     return(
         <>
-        <StyledButton >{children}</StyledButton>
+        <StyledButton {...buttonProps}>{children}</StyledButton>
         </>
     )
 }

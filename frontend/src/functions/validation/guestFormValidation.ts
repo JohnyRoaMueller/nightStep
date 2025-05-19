@@ -77,7 +77,7 @@ export async function validateGuestForm({formData, setEmptyValueEffect, setPopUp
                 console.log("inputRefs.current[i]: ", inputRefs?.current[i])
                 return;
             }
-            if (Object.values(formData)[i] instanceof Blob && Object.values(formData)[i].size === 0) 
+            if (Object.values(formData)[i] instanceof Blob && Object.values(formData)[i].size === 0 || Object.values(formData)[i] == null) 
                 {
                     console.log("im here!!" + i)
                     console.log("Object.keys(formData)[i]: ", Object.keys(formData)[i])
