@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { VenueCard, VenueCardContent, VenueCardMedia, VenueCardOverlay, VenueDescTypo, VenueNameTypo, GridContainer, GridItem, HeaderWrapper, LoadingSpace, VenueTypeHeader, WhiteLine, RandomWrapper, } from "./VenueCards.Style";
-import { TypoBody1, TypoH1, TypoH2 } from "../../../styled-components/styledTypographie";
+import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../../styled-components/styledTypographie";
 import { Dot, LoadingAnimation } from "../../../functions/animations/LoadingAnimation";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../../common/button/primaryButton/PrimaryButton";
@@ -100,7 +100,7 @@ function VenueCards(props: { venueType: string; }) {
                             <VenueCardContent>
                                 <VenueCardOverlay className="Venue-card-overlay"/>
                                 <VenueNameTypo>{venue.name}</VenueNameTypo>
-                                <VenueDescTypo>{venue.district}</VenueDescTypo>
+                                <TypoBody2>{venue.district}</TypoBody2>
                             </VenueCardContent>
                         </VenueCard>
 

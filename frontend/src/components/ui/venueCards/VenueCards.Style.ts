@@ -73,6 +73,7 @@ export const GridItem = styled(Box)`
     display: flex;
     flex-direction: column;
 
+
     width: 80%;
     flex-shrink: 0;
 
@@ -136,6 +137,10 @@ export const VenueCard = styled(Card)`
     border-radius: 5%;
     max-height: 65vh;
     min-height: 65vh;
+
+    background-color: #1a1a1a1a;
+
+    border: 1px solid black;
 
 `;
 

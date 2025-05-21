@@ -1,8 +1,13 @@
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { VenueType } from "../ui/venueCards/VenueCards";
-import { ImageBox, ImagesWrapper, ProfileWrapper } from "./VenueProfile.Styles";
-import { TypoBody1, TypoH1 } from "../../styled-components/styledTypographie";
+import { AdressWrapper, DragOverlay, ImageBox, ImagesWrapper, NameWrapper, ProfileWrapper } from "./VenueProfile.Styles";
+import { TypoBody1, TypoBody2, TypoH1 } from "../../styled-components/styledTypographie";
+import { useDraggable } from "react-use-draggable-scroll";
+import React from "react";
+import { useDragScroll } from "../../hooks/useScrollDrag";
+import { Height, WidthFull } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 
 
@@ -12,8 +17,9 @@ const apiUrl =import.meta.env.VITE_APP_API_URL
 export default function VenueProfile() {
 
   const param = useParams();
-
   const [venue, setVenue] = useState<VenueType>();
+
+
 
 
   useEffect(() => {
@@ -44,30 +50,43 @@ export default function VenueProfile() {
     for (let i = 0; i <= 11; i++) 
       if (venue?.picAddresses[i]) {
 
-        const image = <img src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}`}></img>
+        const image = <img src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}` }></img>
         imagesArray.push(image)
 
     } 
     else return imagesArray;
   }
 
+  const ref =
+    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const { events } = useDraggable(ref); // Now we pass the reference to the useDraggable hook:
 
-
+  useEffect(() => {
+    console.log('ref.current:', ref.current);
+  }, []);
 
   return (
     <>
-        <ProfileWrapper>
-          <TypoH1>{venue?.name}</TypoH1>
-          <TypoBody1>{venue?.city}</TypoBody1>
-          <TypoBody1>{venue?.street} {venue?.houseNumber}</TypoBody1>
-          <TypoBody1>{venue?.district}</TypoBody1>
+        <ProfileWrapper sx={{justifyContent: "space-between"}}>
+          <NameWrapper>
+            <TypoH1>{venue?.name}</TypoH1>
+          </NameWrapper>
         </ProfileWrapper>
         <ImagesWrapper>
-          <ImageBox>
+          <ImageBox ref={ref} {...events}> 
+            {/* Drag and scroll only works with this overlay! Otherwise, grabbing the <img> interferes with the behavior. */}
+            <DragOverlay/>
             {getImages()}
+            <DragOverlay/>
           </ImageBox>
         </ImagesWrapper>
-
+        <AdressWrapper>
+          <TypoBody2>{"•"}{venue?.city}{"•"}</TypoBody2>
+          <TypoBody2>{"•"}{venue?.street}</TypoBody2>
+          <TypoBody2>{venue?.houseNumber}{"•"}</TypoBody2>
+          <TypoBody2>{"•"}{venue?.postalCode}{"•"}</TypoBody2>
+          <TypoBody2>{"•"}{venue?.district}{"•"}</TypoBody2>
+        </AdressWrapper>
     </>
   )
 

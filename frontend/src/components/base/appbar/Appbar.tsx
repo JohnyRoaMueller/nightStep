@@ -66,8 +66,8 @@ export function Appbar() {
   }
 
   const mobileOptionsVisitor = ["Search"]
-  const mobileOptionsGuest = ["Search", "Saved events", "followed", "community" ];
-  const mobileOptionsHost = ["my venue", "my events", "guest list", "promote"];
+  const mobileOptionsGuest = ["SEARCH", "SAVED EVENTS", "FOLLOWED", "COMMUNITY" ];
+  const mobileOptionsHost = ["MY VENUE", "MY EVENTS", "GUESTLIST", "PROMOTE"];
 
     useEffect(() => {
       async function fetchData() {
@@ -131,7 +131,7 @@ export function Appbar() {
         {role === "GUEST" && 
         mobileOptionsGuest.map((option) => (
           <MobileMenuOption sx={{display: unfoldFlag ? "block" : "none"}}>
-            <MobileMenuOptionLink to={`/${option}`}>
+            <MobileMenuOptionLink to={`/${option.toLowerCase()}`}>
               <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
             </MobileMenuOptionLink>
           </MobileMenuOption>
@@ -140,7 +140,7 @@ export function Appbar() {
         mobileOptionsHost.map((option) => (
           <MobileMenuOption sx={unfoldStyle}>
             <MobileMenuOptionLink to={`/${option}`.replace(" ", "")}>
-              <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
+              <TypoBody1MobileMenuOptionLink>{option.toLowerCase()}</TypoBody1MobileMenuOptionLink>
             </MobileMenuOptionLink>
           </MobileMenuOption>
         ))}

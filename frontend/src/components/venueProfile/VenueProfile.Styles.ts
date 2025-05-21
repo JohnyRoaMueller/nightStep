@@ -1,57 +1,75 @@
 import { Box, styled } from "@mui/material";
 
 export const ImagesWrapper = styled(Box)`
-    position: relative;
-    left: 0;
 
-    display: flex;
-    flex-direction: row;
+    box-sizing: border-box;
 
-    max-width: 100%;
-    max-height: 60vh;
+    height: 60vh;
+    overflow: hidden;
 
-    overflow-x: auto;
-
+    
+    border-radius: 10px 10px;
+    
 
     @media(min-width: 600px) {
-        max-height: 50vh;
+        height: 50vh;
+        width: 75vw;
+        border: 5px solid black;
+        border-radius: 25px 25px;
     }
-
-
 `;
 
 export const ImageBox = styled(Box)`
     display: flex;
-    flex-direction: row;
-
-    gap: 0.1%;
+    white-space: nowrap;
 
     overflow-x: auto;
 
     img {
-        width: 95%;  // Bilder füllen die ImageBox auf kleinen Screens
-        height: 60vh; // Fixe Höhe für Handy
-        object-fit: cover; // Sorgt für saubere Darstellung ohne Verzerrung
-
-        @media (min-width: 600px) {
-            width: auto;   // Behält Originalgröße bei, wenn genug Platz ist
-            height: auto;
-            max-height: 50vh; // Falls nötig, Begrenzung für große Bildschirme
-        }
+        display: inline-block;
+        width: 95%;
+        height: 60vh;
+        object-fit: cover;
     }
 
+    @media(min-width: 600px) {
+        img {
+        width: auto;
+        height: 100%;
+        max-height: 50vh;
+        }
+    }
 `;
+
+
+export const DragOverlay = styled(Box)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  background-color: rgba(0,0,0,0);
+  z-index: 2;
+  pointer-events: none;
+
+  @media(min-width: 600px) {
+    pointer-events: auto;
+  }
+`;
+
 
 export const ProfileWrapper = styled(Box)`
 
+    display: flex;
+    flex-direction: row;
+
     left: 0;
 
-    height: 20vh;
     width: 100%; 
 
 
     text-align: center;
-
 
     margin-right: auto;
 
@@ -60,6 +78,35 @@ export const ProfileWrapper = styled(Box)`
     }
 
 `;
+
+export const NameWrapper = styled(Box)`
+    display: flex;
+
+    width: 50;
+
+`;
+
+
+export const AdressWrapper = styled(Box)`
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+
+    width: 100%;
+
+    gap: 2%;
+
+
+    @media(min-width: 600px) {
+        justify-content: inherit;
+
+        align-self: start;
+
+    }
+
+`;
+
 
 export const ProfileHeader = styled(Box)`
 

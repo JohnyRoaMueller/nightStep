@@ -1,6 +1,7 @@
 import { Box, Button } from "@mui/material"
-import { ActionButton, ActionsWrapper } from "./myEventsUI.Styles"
+import { ActionButton, ActionsWrapper, EventsWrapper } from "./myEventsUI.Styles"
 import SwitchAccessShortcutAddIcon from '@mui/icons-material/SwitchAccessShortcutAdd';
+import Event from "../../common/event/Event";
 
 function MyEventsUI() {
     return(
@@ -10,6 +11,11 @@ function MyEventsUI() {
                 add event
             </ActionButton>
         </ActionsWrapper>
+        <EventsWrapper>
+            <Event/>
+            <Event/>
+            <Event/>
+        </EventsWrapper>
     </>
     )
 }
