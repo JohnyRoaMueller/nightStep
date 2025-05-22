@@ -1,13 +1,14 @@
 import { useParams } from "react-router";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { VenueType } from "../ui/venueCards/VenueCards";
-import { AdressWrapper, DragOverlay, ImageBox, ImagesWrapper, NameWrapper, ProfileWrapper } from "./VenueProfile.Styles";
+import { AdressWrapper, DragOverlay, EventCardWrapper, ImageBox, ImagesWrapper, NameWrapper, ProfileWrapper } from "./VenueProfile.Styles";
 import { TypoBody1, TypoBody2, TypoH1 } from "../../styled-components/styledTypographie";
 import { useDraggable } from "react-use-draggable-scroll";
 import React from "react";
 import { useDragScroll } from "../../hooks/useScrollDrag";
 import { Height, WidthFull } from "@mui/icons-material";
 import { Box } from "@mui/material";
+import EventCard from "../../common/event/EventCard";
 
 
 
@@ -57,17 +58,37 @@ export default function VenueProfile() {
     else return imagesArray;
   }
 
-  const ref =
-    useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(ref); // Now we pass the reference to the useDraggable hook:
 
   useEffect(() => {
     console.log('ref.current:', ref.current);
   }, []);
 
+
+  const [overlayOffset, setOverlayOffset] = useState(0);
+
+  const handleScroll = () => {
+    if (ref.current) {
+      setOverlayOffset(ref.current.scrollLeft);
+      console.log(ref.current.scrollLeft)
+    }
+  };
+
+  useEffect(() => {
+    const current = ref.current;
+    if (current) {
+      current.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      current?.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
   return (
     <>
-        <ProfileWrapper sx={{justifyContent: "space-between"}}>
+        <ProfileWrapper>
           <NameWrapper>
             <TypoH1>{venue?.name}</TypoH1>
           </NameWrapper>
@@ -75,18 +96,24 @@ export default function VenueProfile() {
         <ImagesWrapper>
           <ImageBox ref={ref} {...events}> 
             {/* Drag and scroll only works with this overlay! Otherwise, grabbing the <img> interferes with the behavior. */}
-            <DragOverlay/>
+            <DragOverlay style={{ transform: `translateX(${overlayOffset}px)` }}/>
             {getImages()}
-            <DragOverlay/>
           </ImageBox>
         </ImagesWrapper>
         <AdressWrapper>
           <TypoBody2>{"•"}{venue?.city}{"•"}</TypoBody2>
-          <TypoBody2>{"•"}{venue?.street}</TypoBody2>
-          <TypoBody2>{venue?.houseNumber}{"•"}</TypoBody2>
+          <TypoBody2>{"•"}{venue?.street}{" "}{venue?.houseNumber}{"•"}</TypoBody2>
           <TypoBody2>{"•"}{venue?.postalCode}{"•"}</TypoBody2>
           <TypoBody2>{"•"}{venue?.district}{"•"}</TypoBody2>
         </AdressWrapper>
+        <EventCardWrapper>
+            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>  
+            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>           
+        </EventCardWrapper>
     </>
   )
 

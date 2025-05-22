@@ -19,11 +19,17 @@ export const ImagesWrapper = styled(Box)`
     }
 `;
 
+
 export const ImageBox = styled(Box)`
+    position: relative;
+
     display: flex;
     white-space: nowrap;
 
     overflow-x: auto;
+
+    scrollbar-width: none;
+
 
     img {
         display: inline-block;
@@ -43,20 +49,30 @@ export const ImageBox = styled(Box)`
 
 
 export const DragOverlay = styled(Box)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: grab;
-  background-color: rgba(0,0,0,0);
-  z-index: 2;
-  pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: grab;
+    // background-color: green;
+    z-index: 2;
+    pointer-events: none;
 
-  @media(min-width: 600px) {
-    pointer-events: auto;
-  }
+    overflow: hidden;
+
+    @media(min-width: 600px) {
+        pointer-events: auto;
+    }
+
 `;
+
+
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
+  // height: 100%;
 
 
 export const ProfileWrapper = styled(Box)`
@@ -109,5 +125,31 @@ export const AdressWrapper = styled(Box)`
 
 
 export const ProfileHeader = styled(Box)`
+
+
+`;
+
+
+export const EventCardWrapper = styled(Box)`
+    border: 1px solid red;
+
+    overflow: auto;
+
+    height: 80vh;
+
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+
+
+
+    align-self: start;
+
+
+    @media(min-width: 600px) {
+        border: 5px solid black;
+        border-radius: 25px 25px;
+        width: 100%;
+    }    
 
 `;

@@ -1,7 +1,10 @@
 import { Box, Button } from "@mui/material"
 import { ActionButton, ActionsWrapper, EventsWrapper } from "./myEventsUI.Styles"
 import SwitchAccessShortcutAddIcon from '@mui/icons-material/SwitchAccessShortcutAdd';
-import Event from "../../common/event/Event";
+import Event from "../../common/event/EventCard";
+import EventCard from "../../common/event/EventCard";
+
+console.log(Math.floor(Math.random() * 4))
 
 function MyEventsUI() {
     return(
@@ -12,9 +15,12 @@ function MyEventsUI() {
             </ActionButton>
         </ActionsWrapper>
         <EventsWrapper>
-            <Event/>
-            <Event/>
-            <Event/>
+            <EventCard isHost={true} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={true} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={true} exampleFromArray={Math.floor(Math.random() * 4)}/>  
+            <EventCard isHost={true} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={true} exampleFromArray={Math.floor(Math.random() * 4)}/>
+            <EventCard isHost={true} exampleFromArray={Math.floor(Math.random() * 4)}/>                                
         </EventsWrapper>
     </>
     )

@@ -21,10 +21,13 @@ export const EventsWrapper = styled(Box)`
     display: flex;
     flex-direction: column;
 
-    overflow: auto;
+    overflow: hidden;
 
     width: 100%;
 
-    border: 1px solid purple;
+    @media(min-width: 600px) {
+        border: 5px solid black;
+        border-radius: 25px;
+    }    
 
 `;
