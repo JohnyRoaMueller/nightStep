@@ -5,10 +5,10 @@ import { Button } from "@mui/material"
 
 
 
-function BaseForm( { children, onSubmit } : BaseFormProps) {
+function BaseForm( { children, onSubmit, ...boxProps } : BaseFormProps) {
     return(
         <>
-        <FormContainer>
+        <FormContainer {...boxProps}>
             <form typeof="submit" onSubmit={onSubmit}>
                 {children}
             </form>

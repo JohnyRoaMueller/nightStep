@@ -5,7 +5,7 @@ import FormTextFieldProps from "./FormTextField.Types";
 function FormTextField( {...textFieldProps}: FormTextFieldProps) {
     return(
         <>
-        <StyledFormTextField fullWidth {...textFieldProps}/>
+        <StyledFormTextField fullWidth variant="standard" {...textFieldProps}/>
         </>
     )
 }

@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { VenueType } from "../ui/venueCards/VenueCards";
-import { AdressWrapper, DragOverlay, EventCardWrapper, ImageBox, ImagesWrapper, NameWrapper, ProfileWrapper } from "./VenueProfile.Styles";
-import { TypoBody1, TypoBody2, TypoH1 } from "../../styled-components/styledTypographie";
+import { AdressWrapper, DragOverlay, EventCardWrapper, HeaderWrapper, ImageBox, ImagesWrapper, NameWrapper, ProfileWrapper } from "./VenueProfile.Styles";
+import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../styled-components/styledTypographie";
 import { useDraggable } from "react-use-draggable-scroll";
 import React from "react";
 import { useDragScroll } from "../../hooks/useScrollDrag";
@@ -89,9 +89,9 @@ export default function VenueProfile() {
   return (
     <>
         <ProfileWrapper>
-          <NameWrapper>
+          <HeaderWrapper>
             <TypoH1>{venue?.name}</TypoH1>
-          </NameWrapper>
+          </HeaderWrapper>
         </ProfileWrapper>
         <ImagesWrapper>
           <ImageBox ref={ref} {...events}> 
@@ -106,6 +106,9 @@ export default function VenueProfile() {
           <TypoBody2>{"•"}{venue?.postalCode}{"•"}</TypoBody2>
           <TypoBody2>{"•"}{venue?.district}{"•"}</TypoBody2>
         </AdressWrapper>
+        <HeaderWrapper>
+          <TypoH2>Events</TypoH2>
+        </HeaderWrapper>
         <EventCardWrapper>
             <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
             <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>

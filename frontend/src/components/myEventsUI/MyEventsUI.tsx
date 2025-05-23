@@ -3,14 +3,21 @@ import { ActionButton, ActionsWrapper, EventsWrapper } from "./myEventsUI.Styles
 import SwitchAccessShortcutAddIcon from '@mui/icons-material/SwitchAccessShortcutAdd';
 import Event from "../../common/event/EventCard";
 import EventCard from "../../common/event/EventCard";
+import { useNavigate } from "react-router-dom";
 
 console.log(Math.floor(Math.random() * 4))
 
+
+
 function MyEventsUI() {
+
+    const navigateTo = useNavigate();
+
+
     return(
     <>
         <ActionsWrapper>
-            <ActionButton>
+            <ActionButton onClick={() => navigateTo("/myEvents/addEvent")}>
                 add event
             </ActionButton>
         </ActionsWrapper>

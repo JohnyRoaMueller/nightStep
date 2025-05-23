@@ -20,6 +20,8 @@ import MyVenueUI from "./components/ui/myVenueProfileUI/MyVenueProfileUI";
 import MyVenue from "./pages/MyVenue";
 import MyVenueProfile from "./pages/MyVenueProfile";
 import MyEvents from "./pages/MyEvents";
+import AddEventForm from "./components/form/addEventForm/AddEventForm";
+import AddEvent from "./pages/AddEvent";
 
 function App() {
   return (
@@ -59,7 +61,9 @@ function App() {
 
               <Route path="/myvenue/:venuename" element={<MyVenueProfile />} ></Route>
 
-              <Route path="/myevents" element={<MyEvents />} ></Route>
+              <Route path="/myEvents" element={<MyEvents />} ></Route>
+
+              <Route path="/myEvents/addEvent" element={<AddEvent />} ></Route>
 
               <Route path="/venue/:venuename" element={<Venue />} ></Route>
               

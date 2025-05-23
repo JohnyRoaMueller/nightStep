@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-export const StyledDatePicker = styled(DatePicker)`
+export const StyledDateTimePicker = styled(DateTimePicker)`
 
   width: 100%;
 

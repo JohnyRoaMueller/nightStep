@@ -68,12 +68,6 @@ export const DragOverlay = styled(Box)`
 `;
 
 
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // width: 100%;
-  // height: 100%;
-
 
 export const ProfileWrapper = styled(Box)`
 
@@ -95,10 +89,22 @@ export const ProfileWrapper = styled(Box)`
 
 `;
 
-export const NameWrapper = styled(Box)`
+export const HeaderWrapper = styled(Box)`
     display: flex;
+    flex-direction: row;
 
-    width: 50;
+    left: 0;
+
+    width: 100%; 
+
+
+    text-align: center;
+
+    margin-right: auto;
+
+    @media(min-width: 600px) {
+
+    }
 
 `;
 
@@ -149,7 +155,7 @@ export const EventCardWrapper = styled(Box)`
     @media(min-width: 600px) {
         border: 5px solid black;
         border-radius: 25px 25px;
-        width: 100%;
+        width: 50%;
     }    
 
 `;

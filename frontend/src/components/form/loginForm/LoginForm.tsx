@@ -95,8 +95,8 @@ function LoginForm() {
             <form onSubmit={handleSubmit}>
                 <FormWrapper>
                     <LoginBox>
-                        <LoginTextField label="Username" variant="standard" name="username" value={loginData.username} onChange={handleChange}></LoginTextField>
-                        <LoginTextField label="Password" type='password' variant="standard" name="password" value={loginData.password} onChange={handleChange}></LoginTextField>
+                        <LoginTextField label="Username" name="username" value={loginData.username} onChange={handleChange}></LoginTextField>
+                        <LoginTextField label="Password" type='password' name="password" value={loginData.password} onChange={handleChange}></LoginTextField>
                         <LoginButtonWrapper>
                             <LoginButton type="submit"><TypoBody1>Login</TypoBody1></LoginButton>
                             <Fade in={popUpFlag} timeout={{enter: 300, exit: 300}}>
