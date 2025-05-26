@@ -29,7 +29,7 @@ public class Venue  {
     private String description;
 
     @ElementCollection
-    @CollectionTable(name = "venue_image_Pathes", joinColumns = @JoinColumn(name = "venue_id"))
+    @CollectionTable(name = "venue_image_Paths", joinColumns = @JoinColumn(name = "venue_id"))
     @Column(name = "image_address", columnDefinition = "TEXT")
     private List<String> imagePaths;
 

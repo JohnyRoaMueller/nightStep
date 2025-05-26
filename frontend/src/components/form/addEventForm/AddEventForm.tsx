@@ -1,5 +1,5 @@
 import BaseForm from "../../../common/form/baseForm/BaseForm"
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import PrimaryButton from "../../../common/button/primaryButton/PrimaryButton"
 import FormTextField from "../../../common/form/formTextField/FormTextField"
 
@@ -7,12 +7,14 @@ import LocalizedDateTimePicker from "../../../common/form/timePicker/DateTimePic
 import { TypoH1 } from "../../../styled-components/styledTypographie"
 import { ImageTypoH2, PictureHolder } from "../registerHostForm/registerHostForm.Styles"
 
+const apiUrl =import.meta.env.VITE_APP_API_URL
 
 interface AddEventFormType {
+    venueName: string,
     name: string,
-    start: Date
-    end: Date
-    price: number,
+    startTimeDate: string
+    endTimeDate: string
+    price: string,
     description: string,
     imageOne: Blob | null,
     imageTwo: Blob | null,
@@ -24,15 +26,36 @@ interface AddEventFormType {
 function AddEventForm() {
 
     const [addEventFormData, setAddEventFormData] = useState<AddEventFormType>({
+        venueName: "",
         name: "",
-        start: new Date(),
-        end: new Date(),
-        price: 0,
+        startTimeDate: "",
+        endTimeDate: "",
+        price: "",
         description: "",
         imageOne: null,
         imageTwo: null,
         imageThree: null,
     })
+
+
+
+    const [venues, setVenues] = useState<string[]>([])
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(`${apiUrl}/myvenue`, {
+                method: "GET",
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                credentials: "include",
+            })
+            if (response.ok) {
+                const responseJSON = await response.json()
+                setVenues(responseJSON)
+                console.log(responseJSON)
+            }
+        }
+        fetchData()
+    }, [])
+
 
     const [imageUrls, setImageUrls] = useState<string[]>([])
 
@@ -55,12 +78,43 @@ function AddEventForm() {
     };    
 
     
-    function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault()
+
+        console.log(addEventFormData)
+
+        const formData = new FormData()
+        formData.append("venueName", addEventFormData.venueName)
+        formData.append("name", addEventFormData.name)
+        formData.append("startTimeDate", addEventFormData.startTimeDate)
+        formData.append("endTimeDate", addEventFormData.endTimeDate)
+        formData.append("price", addEventFormData.price)
+        formData.append("description", addEventFormData.description)
+        formData.append("images[]", addEventFormData.imageOne)
+        formData.append("images[]", addEventFormData.imageTwo)
+        formData.append("images[]", addEventFormData.imageThree)
+        formData.append("name", addEventFormData.name)
+        formData.append("name", addEventFormData.name)
+
+        const response = await fetch(`${apiUrl}/events/create`, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        })
+        if (response.ok) {
+            const responseTEXT = await response.text()   
+            console.log(responseTEXT)     
+        }
     }
 
-    function handleChange() {
-        console.log("Hello!")
+    function handleChange(event) {
+        const { name, value } = event.target
+        console.log(addEventFormData)
+        console.log(name, value)
+        setAddEventFormData((prevdata) => ({
+            ...prevdata,
+            [name]: value
+        }))
     }
 
     return(
@@ -69,15 +123,20 @@ function AddEventForm() {
         <TypoH1>NEW EVENT</TypoH1>
         <BaseForm sx={{alignSelf: "center"}} onSubmit={handleSubmit}>
 
+            <FormTextField name='venueName' helperText='venue' select slotProps={{select: {native: true}}} value={addEventFormData.venueName} onChange={handleChange} key='textfield-venues'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+                <option >select</option>
+                {venues.map((venue) => <option value={venue.name} key={venue.name}>{venue.name}</option>)}
+            </FormTextField>     
+
             <FormTextField name='name' helperText='name' onChange={handleChange} />
 
-            <LocalizedDateTimePicker name='start' helperText='start'></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker name='startTimeDate' helperText='start'></LocalizedDateTimePicker>
 
-            <LocalizedDateTimePicker name='end' helperText='end'></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker name='endTimeDate' helperText='end'></LocalizedDateTimePicker>
 
             <FormTextField name='price' helperText='price' onChange={handleChange}/>
 
-            <FormTextField name='description' helperText='description' onChange={handleChange} multiline/>
+            <FormTextField name='description' helperText='description' onChange={handleChange} variant="filled" multiline rows={4}/>
 
             <PictureHolder sx={{height: `${addEventFormData.imageOne ? '100%' : '20vh'}`}} >
                 {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
@@ -97,7 +156,7 @@ function AddEventForm() {
                 <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
             </PictureHolder>                               
 
-            <PrimaryButton>ADD EVENT</PrimaryButton>
+            <PrimaryButton type="submit">ADD EVENT</PrimaryButton>
         </BaseForm>
         </>
     )

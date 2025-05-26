@@ -1,47 +1,30 @@
-package com.softwave.clubstep.domain.entities;
+package com.softwave.clubstep.DTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import org.springframework.web.multipart.MultipartFile;
 
-@Entity
-public class Event  {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+import com.softwave.clubstep.domain.entities.Venue;
+
+public class EventDTO {
+
     private int id;
-
     private String name;
     private LocalDateTime startTimeDate;
     private LocalDateTime endTimeDate;
     private BigDecimal price;
     private int likes;
     private String description;
-
-    @ElementCollection
-    @CollectionTable( name = "event_image_paths", joinColumns = @JoinColumn( name = "event_id" ))
-    @Column(name = "image_address", columnDefinition = "TEXT")
     private List<String> imagePaths;
-
-    @ManyToOne
-    @JoinColumn(name = "venue_id", nullable = false)
-    @JsonBackReference("eventsReference")
-    Venue venue;
+    private Venue venue;
+    private String venueName;
+    private List<MultipartFile> images;
 
 
-    public Event() {};
-    public Event
+    public EventDTO() {};
+    public EventDTO
     (
         String name,
         LocalDateTime startTimeDate,
@@ -49,7 +32,9 @@ public class Event  {
         BigDecimal price,
         int likes,
         String description,
-        Venue venue
+        Venue venue,
+        String venueName,
+        List<MultipartFile> images
     )
     {
         this.name = name;
@@ -59,6 +44,8 @@ public class Event  {
         this.likes = likes;
         this.description = description;
         this.venue = venue;
+        this.venueName = venueName;
+        this.images = images;
     } 
 
     public String getName() { return name; } 
@@ -82,4 +69,11 @@ public class Event  {
     public Venue getVenue() { return venue; }
     public void setVenue(Venue venue) { this.venue = venue; }
 
+    public String getVenueName() { return venueName; }
+    public void setVenueName(String venueName) { this.venueName = venueName; }
+
+    public List<MultipartFile> getImages() { return images; }
+    public void setImages(List<MultipartFile> images) { this.images = images; }    
+
 }
+

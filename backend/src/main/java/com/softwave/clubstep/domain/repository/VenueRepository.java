@@ -14,4 +14,5 @@ public interface VenueRepository extends CrudRepository<Venue, Long> {
 
     Optional<Venue> findByName(String name);
     Optional<Venue> findByHost(Host host);
+    
 }
