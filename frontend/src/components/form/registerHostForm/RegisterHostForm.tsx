@@ -234,7 +234,7 @@ function RegisterHostForm() {
                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
             </FormTextField>
                               
-            <LocalizedDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} helperText='birthday' onChange={handleDateChange} name='birthday' sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }></LocalizedDatePicker> {/** maxDate={dayjs.unix(Date.now() - 31556926)} */}
+            <LocalizedDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} helperText='birthday' onChange={handleDateChange} name='birthday' format='YYYY-MM-DD' sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }></LocalizedDatePicker> {/** maxDate={dayjs.unix(Date.now() - 31556926)} */}
                             
             <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' required value={hostFormData.username} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
                            

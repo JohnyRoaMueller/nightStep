@@ -76,7 +76,7 @@ public class RegistrationController {
 
         registrationService.registerHostUser(registeringHost);
 
-        uploadService.addImages(registeringHost.getImages(), registeringHost.getUsername());
+        uploadService.addVenueImages(registeringHost.getImages(), registeringHost.getUsername(), registeringHost.getNameOfVenue());
 
         venueService.addVenue(registeringHost);
 

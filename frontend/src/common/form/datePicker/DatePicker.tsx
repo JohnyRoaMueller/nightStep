@@ -10,7 +10,7 @@ function LocalizedDatePicker( {helperText, ...datePickerProps} : LocalizedDatePi
     return(
         <>
         <LocalizationProvider dateAdapter={AdapterDayjs} >
-            <StyledDatePicker slotProps={{textField: {helperText: `${helperText}`, variant: "standard", fullWidth: true}}}  {...datePickerProps} />
+            <StyledDatePicker slotProps={{textField: {helperText: `${helperText}`, variant: "standard", fullWidth: true, placeholder: ''}}}  {...datePickerProps} />
         </LocalizationProvider> 
         </>
     )

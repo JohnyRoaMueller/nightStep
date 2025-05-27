@@ -52,7 +52,7 @@ public class VenueService {
         String houseNumber = registeringHost.getHousenumberOfVenue();
         String postalCode = registeringHost.getPostcodeOfVenue();
         String description = null;
-        List<String> picAddresses = extractImagePaths(registeringHost.getImages(), registeringHost.getUsername());
+        List<String> picAddresses = extractImagePaths(registeringHost.getImages(), registeringHost.getUsername(), registeringHost.getNameOfVenue());
         Host host = userService.getHostOrNull(registeringHost.getUsername());
 
         if (host != null) { logger.info("der host ist da!");} else logger.info("der host ist nicht da!");
@@ -78,18 +78,18 @@ public class VenueService {
         else return "Unbekannter Bezirk";
     }
 
-    public List<String> extractImagePaths(List<MultipartFile> images, String username) {
+    public List<String> extractImagePaths(List<MultipartFile> images, String username, String nameOfVenue) {
         List<String> imagePaths = new ArrayList<String>();
 
         for (MultipartFile image : images) {
             if (image.getOriginalFilename().startsWith("/uploads/host_images/")) {
                 String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
-                String path = String.format("/uploads/host_images/%s/%s", username, filename); 
+                String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename); 
                 imagePaths.add(path);
                 continue;
             }
 
-            String path = String.format("/uploads/host_images/%s/%s", username, image.getOriginalFilename()); 
+            String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, image.getOriginalFilename()); 
             imagePaths.add(path);
         }
         return imagePaths;
@@ -107,7 +107,7 @@ public class VenueService {
         venue.setDescription(newVenueData.getDescription());
 
         if (newVenueData.getImageBlobs() != null) {
-            venue.setPicAddresses(extractImagePaths(newVenueData.getImageBlobs(), venue.getHost().getUserAuth().getUsername()));
+            venue.setPicAddresses(extractImagePaths(newVenueData.getImageBlobs(), venue.getHost().getUserAuth().getUsername(), newVenueData.getName()));
         }
         venueRepository.save(venue);
         logger.info("update setted");

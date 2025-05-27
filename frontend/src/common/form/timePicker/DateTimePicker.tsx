@@ -7,7 +7,7 @@ function LocalizedDateTimePicker( {helperText, ...timeickerProps} : LocalizedTim
     return(
         <>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StyledDateTimePicker slotProps={{textField: {helperText: `${helperText}`, variant: "standard", fullWidth: true}}} {...timeickerProps}></StyledDateTimePicker>
+            <StyledDateTimePicker slotProps={{textField: {helperText: `${helperText}`, variant: "standard", fullWidth: true, placeholder: ''}}} {...timeickerProps}></StyledDateTimePicker>
         </LocalizationProvider>
         </>
     )

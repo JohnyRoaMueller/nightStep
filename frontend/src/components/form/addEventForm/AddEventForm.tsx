@@ -6,6 +6,7 @@ import FormTextField from "../../../common/form/formTextField/FormTextField"
 import LocalizedDateTimePicker from "../../../common/form/timePicker/DateTimePicker"
 import { TypoH1 } from "../../../styled-components/styledTypographie"
 import { ImageTypoH2, PictureHolder } from "../registerHostForm/registerHostForm.Styles"
+import dayjs from "dayjs"
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
@@ -93,8 +94,6 @@ function AddEventForm() {
         formData.append("images[]", addEventFormData.imageOne)
         formData.append("images[]", addEventFormData.imageTwo)
         formData.append("images[]", addEventFormData.imageThree)
-        formData.append("name", addEventFormData.name)
-        formData.append("name", addEventFormData.name)
 
         const response = await fetch(`${apiUrl}/events/create`, {
             method: 'POST',
@@ -117,6 +116,9 @@ function AddEventForm() {
         }))
     }
 
+    function handleStartTimeDate(date: string) {setAddEventFormData((prevdata) => ({...prevdata, startTimeDate: date}))}
+    function handleEndStartTime(date: string) {setAddEventFormData((prevdata) => ({...prevdata, endTimeDate: date}))}
+
     return(
         <>
 
@@ -124,15 +126,15 @@ function AddEventForm() {
         <BaseForm sx={{alignSelf: "center"}} onSubmit={handleSubmit}>
 
             <FormTextField name='venueName' helperText='venue' select slotProps={{select: {native: true}}} value={addEventFormData.venueName} onChange={handleChange} key='textfield-venues'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
-                <option >select</option>
+                <option disabled >{""}</option>
                 {venues.map((venue) => <option value={venue.name} key={venue.name}>{venue.name}</option>)}
             </FormTextField>     
 
             <FormTextField name='name' helperText='name' onChange={handleChange} />
 
-            <LocalizedDateTimePicker name='startTimeDate' helperText='start'></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker name='startTimeDate' helperText='start' format='YYYY-MM-DD HH:mm' onChange={(date) => handleStartTimeDate(date.toISOString())} minDate={dayjs(Date.now())} maxDate={dayjs(Date.now()).add(3, 'year')} minTime={dayjs(Date.now())}></LocalizedDateTimePicker>
 
-            <LocalizedDateTimePicker name='endTimeDate' helperText='end'></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker name='endTimeDate' helperText='end' format='YYYY-MM-DD HH:mm' onChange={(date) => handleEndStartTime(date.toISOString())} minDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm")} maxDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm").add(2, 'weeks')}  minTime={dayjs(Date.now()).add(2, "hours")} disabled={!addEventFormData.startTimeDate}></LocalizedDateTimePicker>
 
             <FormTextField name='price' helperText='price' onChange={handleChange}/>
 

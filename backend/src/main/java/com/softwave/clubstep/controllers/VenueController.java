@@ -172,7 +172,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         logger.info(venue.toString());
 
-        uploadService.addImages(venueData.getImageBlobs(), hostUsername);
+        uploadService.addVenueImages(venueData.getImageBlobs(), hostUsername, venueName);
 
         venueService.updateVenue(venue, venueData);
 

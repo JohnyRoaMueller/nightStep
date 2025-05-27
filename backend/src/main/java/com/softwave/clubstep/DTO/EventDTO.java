@@ -1,7 +1,8 @@
 package com.softwave.clubstep.DTO;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime ;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -12,8 +13,8 @@ public class EventDTO {
 
     private int id;
     private String name;
-    private LocalDateTime startTimeDate;
-    private LocalDateTime endTimeDate;
+    private OffsetDateTime startTimeDate;
+    private OffsetDateTime endTimeDate;
     private BigDecimal price;
     private int likes;
     private String description;
@@ -27,8 +28,8 @@ public class EventDTO {
     public EventDTO
     (
         String name,
-        LocalDateTime startTimeDate,
-        LocalDateTime endTimeDate,
+        OffsetDateTime startTimeDate,
+        OffsetDateTime endTimeDate,
         BigDecimal price,
         int likes,
         String description,
@@ -51,11 +52,11 @@ public class EventDTO {
     public String getName() { return name; } 
     public void setName(String name) { this.name = name; }
 
-    public LocalDateTime getStartTimeDate() { return startTimeDate; }
-    public void setStartTimeDate(LocalDateTime startTimeDate) {this.startTimeDate = startTimeDate; }
+    public OffsetDateTime  getStartTimeDate() { return startTimeDate; }
+    public void setStartTimeDate(OffsetDateTime  startTimeDate) {this.startTimeDate = startTimeDate; }
 
-    public LocalDateTime getEndTimeDate() { return endTimeDate; }
-    public void setEndTimeDate(LocalDateTime endTimeDate) {this.endTimeDate = endTimeDate; }
+    public OffsetDateTime  getEndTimeDate() { return endTimeDate; }
+    public void setEndTimeDate(OffsetDateTime  endTimeDate) {this.endTimeDate = endTimeDate; }
 
     public BigDecimal getPrice() { return price; }
     public void setPrice(BigDecimal price) { this.price = price; }

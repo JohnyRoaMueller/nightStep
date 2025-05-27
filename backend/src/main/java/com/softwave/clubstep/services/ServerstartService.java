@@ -62,7 +62,7 @@ public class ServerstartService {
         logger.info("addImages begins");
 
         // Erstelle das Zielverzeichnis, falls es nicht existiert
-        String newDirPath = String.format("./uploads/host_images/%s", registeringHost.getUsername());
+        String newDirPath = String.format("./uploads/host_images/%s/venues/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue());
         File dir = new File(newDirPath);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -72,8 +72,7 @@ public class ServerstartService {
             byte[] buffer = new byte[(int) image.length()];
             fileInputStream.read(buffer);
 
-            String currentFileName = image.getName();  // Hier wird der Dateiname aus dem File-Objekt abgerufen
-            String newImagePath = String.format("./uploads/host_images/%s/%s", registeringHost.getUsername(), currentFileName);
+            String newImagePath = String.format("./uploads/host_images/%s/venues/%s/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue(), image.getName());
 
             File targetFile = new File(newImagePath);
 
@@ -99,7 +98,7 @@ public class ServerstartService {
     List<String> picAddresses = new ArrayList<>();
 
     for (File image : images) {
-        String path = String.format("/uploads/host_images/%s/%s", registeringHost.getUsername(), image.getName()); 
+        String path = String.format("./uploads/host_images/%s/venues/%s/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue(), image.getName()); 
         picAddresses.add(path);
     }
 
