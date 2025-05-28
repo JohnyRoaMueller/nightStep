@@ -43,6 +43,9 @@ export default function VenueProfile() {
 
   }, [])
 
+  console.log("here!")
+  console.log(venue)
+
   // user can upload 12 images
   function getImages() {
 

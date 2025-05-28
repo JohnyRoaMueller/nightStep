@@ -49,15 +49,15 @@ public class LoginController {
 
 
     @PostMapping(value = "/login")
-    public ResponseEntity<UserAuthDTO> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
+    public ResponseEntity<UserAuth> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
         System.out.println("api/login erreicht");
 
         UserAuth currentUser = userService.getUserAuthOrNull(loginRequest.getUsername());
 
         /** checking if user exist, if not returning a error message */
         if (currentUser == null) {
-            UserAuthDTO userAuth = new UserAuthDTO();
-            userAuth.setErrorMessage("user not found");
+            UserAuth userAuth = new UserAuth();
+            // userAuth.setErrorMessage("user not found");
             logger.info("user login not successfull: " + "user not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userAuth);
         }
@@ -66,8 +66,8 @@ public class LoginController {
          *  offered in the http request
          */
         if (!passwordService.comparePasswort(currentUser, loginRequest)) {
-            UserAuthDTO userAuth = new UserAuthDTO();
-            userAuth.setErrorMessage("password not correct");
+            UserAuth userAuth = new UserAuth();
+            //  userAuth.setErrorMessage("password not correct");
             logger.info("user login not successfull: " + "password not correct");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(userAuth);
         }
@@ -78,7 +78,7 @@ public class LoginController {
             cookieService.createJwtAuthCookie(
                 jwtProvider.getToken(currentUser)));
         
-        UserAuthDTO userAuth = new UserAuthDTO();
+        UserAuth userAuth = new UserAuth();
         userAuth.setUsername(currentUser.getUsername());
         userAuth.setRole(currentUser.getRole());
 

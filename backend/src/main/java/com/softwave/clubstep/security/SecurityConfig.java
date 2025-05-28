@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/login", "/api/venues", "/api/images/*", "/api/venue/**", "/api/images/**", "/api/logout", "api/register/**").permitAll()
                 .requestMatchers("/api/me", "/api/myvenue/**", "/api/myvenue/update/**", "/api/user/**", "/api/events/**").authenticated()
 
-            )  
+            )
 
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 

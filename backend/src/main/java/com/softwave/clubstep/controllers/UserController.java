@@ -16,6 +16,8 @@ import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.CookieService;
 import com.softwave.clubstep.services.JwtService;
 
+import com.softwave.clubstep.domain.entities.UserAuth;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -38,11 +40,11 @@ public class UserController {
     
     
     @GetMapping("/me")
-    public ResponseEntity<UserAuthDTO> getUser(HttpServletRequest request) {
+    public ResponseEntity<UserAuth> getUser(HttpServletRequest request) {
 
       logger.info("/api/me reached");
 
-      UserAuthDTO userinfo = jwtService.getAuthUser(request);
+      UserAuth userinfo = jwtService.getAuthUser(request);
       
       if (userinfo == null) {
           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

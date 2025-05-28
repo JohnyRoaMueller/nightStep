@@ -104,7 +104,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         logger.info("/myvenue reached");
 
-        UserAuthDTO userAuth = jwtService.getAuthUser(request);
+        UserAuth userAuth = jwtService.getAuthUser(request);
 
         String hostUsername = userAuth.getUsername();
 
@@ -128,7 +128,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         logger.info("/myvenue/{venueName} reached");
 
-        UserAuthDTO userAuth = jwtService.getAuthUser(request);
+        UserAuth userAuth = jwtService.getAuthUser(request);
 
         String hostUsername = userAuth.getUsername();
 
@@ -151,7 +151,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         logger.info("/myvenue/update/{venueName} reached");
 
-        UserAuthDTO userAuth = jwtService.getAuthUser(request);
+        UserAuth userAuth = jwtService.getAuthUser(request);
 
         String hostUsername = userAuth.getUsername();
 

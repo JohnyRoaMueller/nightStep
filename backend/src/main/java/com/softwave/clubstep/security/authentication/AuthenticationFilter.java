@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.softwave.clubstep.DTO.UserAuthDTO;
+import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -38,7 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		String jws = request.getHeader(HttpHeaders.COOKIE);
 		if (jws != null) {
 			// Verify token and get user
-			UserAuthDTO user = jwtService.getAuthUser(request);
+			UserAuth user = jwtService.getAuthUser(request);
 			// Authenticate
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
 					java.util.Collections.emptyList());

@@ -128,7 +128,7 @@ public class Venue  {
     public List<Guest> getFollower() { return followers; }
     public void setFollower(List<Guest> follower) { this.followers = followers; }
 
-    public List<Event> setEvents() { return events; }
-    public void getEvents(List<Event> events) { this.events = events; }
+    public List<Event> getEvents() { return events; }
+    public void setEvents(List<Event> events) { this.events = events; }
     /** getter & Setter */
 }

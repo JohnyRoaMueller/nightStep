@@ -85,7 +85,7 @@ public class JwtService {
     // eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImV4cCI6MTczNzgwMjQ0NX0.AT0xA48RmXSdTLFMx0wa4bJLU038R9-Xcbv16N6E2eE
 
 
-    public UserAuthDTO getAuthUser(HttpServletRequest request) {
+    public UserAuth getAuthUser(HttpServletRequest request) {
 
         String cookieHeader = request.getHeader(HttpHeaders.COOKIE);
         if (cookieHeader == null) return null;
@@ -105,7 +105,7 @@ public class JwtService {
             Roles role = Roles.valueOf(claims.get("role", String.class));
 
             if (claims != null) {
-                UserAuthDTO userAuth = new UserAuthDTO();
+                UserAuth userAuth = new UserAuth();
                 userAuth.setUsername(username);
                 userAuth.setRole(role);
                 

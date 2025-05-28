@@ -29,6 +29,7 @@ public class Event  {
     private BigDecimal price;
     private int likes;
     private String description;
+    private String soldTickets;
 
     @ElementCollection
     @CollectionTable( name = "event_image_paths", joinColumns = @JoinColumn( name = "event_id" ))
@@ -50,6 +51,8 @@ public class Event  {
         BigDecimal price,
         int likes,
         String description,
+        String soldTickets,
+        List<String> imagePaths,
         Venue venue
     )
     {
@@ -59,7 +62,10 @@ public class Event  {
         this.price = price;
         this.likes = likes;
         this.description = description;
+        this.soldTickets = soldTickets;
+        this.imagePaths = imagePaths;
         this.venue = venue;
+        
     } 
 
     public String getName() { return name; } 
@@ -80,7 +86,14 @@ public class Event  {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+    public String getSoldTickets() { return soldTickets; }
+    public void setSoldTicket(String soldTickets) { this.soldTickets = soldTickets; }    
+
+    public List<String> getImagePaths() { return imagePaths; }
+    public void setImagePaths(List<String> imagePaths) { this.imagePaths = imagePaths; }
+
     public Venue getVenue() { return venue; }
     public void setVenue(Venue venue) { this.venue = venue; }
+
 
 }

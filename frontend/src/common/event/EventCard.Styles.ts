@@ -84,7 +84,15 @@ export const IconHolder = styled(Box)`
     height: auto;
     width: auto;
 
-    
+    align-self: center;
+
+`;
+
+export const TimeHolder = styled(Box)`
+    // border: 1px solid red;
+
+    display: flex;
+    flex-direction: column;
 
 `;
 
