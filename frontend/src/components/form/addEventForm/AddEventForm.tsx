@@ -1,5 +1,5 @@
 import BaseForm from "../../../common/form/baseForm/BaseForm"
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useEffect, useRef, useState } from "react"
 import PrimaryButton from "../../../common/button/primaryButton/PrimaryButton"
 import FormTextField from "../../../common/form/formTextField/FormTextField"
 
@@ -7,14 +7,16 @@ import LocalizedDateTimePicker from "../../../common/form/timePicker/DateTimePic
 import { TypoH1 } from "../../../styled-components/styledTypographie"
 import { ImageTypoH2, PictureHolder } from "../registerHostForm/registerHostForm.Styles"
 import dayjs from "dayjs"
+import { EmptyValueEffectType, validateGuestForm } from "../../../functions/validation/guestFormValidation"
+import { boxShadowAnimation } from "../registerGuestForm/registerGuestForm.Styles"
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
 interface AddEventFormType {
     venueName: string,
     name: string,
-    startTimeDate: string
-    endTimeDate: string
+    startTimeDate: string,
+    endTimeDate: string,
     price: string,
     description: string,
     imageOne: Blob | null,
@@ -23,8 +25,13 @@ interface AddEventFormType {
 }
 
 
-
 function AddEventForm() {
+
+    const [check, setCheck] = useState<boolean>(false)
+
+    const [popUpFlag, setPopUpFlag] = useState<boolean>(false)
+
+    const [warningMessage, setWarningMessage] = useState<string>("")
 
     const [addEventFormData, setAddEventFormData] = useState<AddEventFormType>({
         venueName: "",
@@ -38,6 +45,12 @@ function AddEventForm() {
         imageThree: null,
     })
 
+
+    const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
+
+    const [emptyValueEffect, setEmptyValueEffect] = useState<EmptyValueEffectType[]>(
+            Array(25).fill({ animation: "" }) // 8 positions to set the effect independent from each other
+        )
 
 
     const [venues, setVenues] = useState<string[]>([])
@@ -82,6 +95,16 @@ function AddEventForm() {
     async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault()
 
+        console.log("submit gedrückt")
+
+        const isValid = await validateGuestForm({formData: addEventFormData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
+
+        console.log("nach submit gedrückt")
+
+        if (!isValid) return
+
+        console.log("is valid")
+
         console.log(addEventFormData)
 
         const formData = new FormData()
@@ -103,6 +126,8 @@ function AddEventForm() {
         if (response.ok) {
             const responseTEXT = await response.text()   
             console.log(responseTEXT)     
+        } else {
+            console.log("kein event erstellt")
         }
     }
 
@@ -125,34 +150,34 @@ function AddEventForm() {
         <TypoH1>NEW EVENT</TypoH1>
         <BaseForm sx={{alignSelf: "center"}} onSubmit={handleSubmit}>
 
-            <FormTextField name='venueName' helperText='venue' select slotProps={{select: {native: true}}} value={addEventFormData.venueName} onChange={handleChange} key='textfield-venues'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+            <FormTextField name='venueName' helperText='venue' select slotProps={{select: {native: true}}} value={addEventFormData.venueName} onChange={handleChange} key='textfield-venues' inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}}> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
                 <option disabled >{""}</option>
                 {venues.map((venue) => <option value={venue.name} key={venue.name}>{venue.name}</option>)}
             </FormTextField>     
 
-            <FormTextField name='name' helperText='name' onChange={handleChange} />
+            <FormTextField name='name' helperText='name' onChange={handleChange} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} />
 
-            <LocalizedDateTimePicker name='startTimeDate' helperText='start' format='YYYY-MM-DD HH:mm' onChange={(date) => handleStartTimeDate(date.toISOString())} minDate={dayjs(Date.now())} maxDate={dayjs(Date.now()).add(3, 'year')} minTime={dayjs(Date.now())}></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker name='startTimeDate' helperText='start' format='YYYY-MM-DD HH:mm' onChange={(date) => handleStartTimeDate(date.toISOString())} minDate={dayjs(Date.now())} maxDate={dayjs(Date.now()).add(3, 'year')} minTime={dayjs(Date.now())} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}}></LocalizedDateTimePicker>
 
-            <LocalizedDateTimePicker name='endTimeDate' helperText='end' format='YYYY-MM-DD HH:mm' onChange={(date) => handleEndStartTime(date.toISOString())} minDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm")} maxDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm").add(2, 'weeks')}  minTime={dayjs(Date.now()).add(2, "hours")} disabled={!addEventFormData.startTimeDate}></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker name='endTimeDate' helperText='end' format='YYYY-MM-DD HH:mm' onChange={(date) => handleEndStartTime(date.toISOString())} minDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm")} maxDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm").add(2, 'weeks')}  minTime={dayjs(Date.now()).add(2, "hours")} disabled={!addEventFormData.startTimeDate} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}}></LocalizedDateTimePicker>
 
-            <FormTextField name='price' helperText='price' onChange={handleChange}/>
+            <FormTextField name='price' helperText='price' onChange={handleChange} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}}/>
 
-            <FormTextField name='description' helperText='description' onChange={handleChange} variant="filled" multiline rows={4}/>
+            <FormTextField name='description' helperText='description' onChange={handleChange} variant="filled" multiline rows={4} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}}/>
 
-            <PictureHolder sx={{height: `${addEventFormData.imageOne ? '100%' : '20vh'}`}} >
+            <PictureHolder sx={{...emptyValueEffect[6], height: `${addEventFormData.imageOne ? '100%' : '20vh'}`}} ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} >
                 {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                 <input name='imageOne' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 0)}></input>
                 <img src={imageUrls[0]} style={{height: "100%", width: "100%"}} ></img>
             </PictureHolder>        
 
-            <PictureHolder sx={{height: `${addEventFormData.imageTwo ? '100%' : '20vh'}`}} >
+            <PictureHolder sx={{...emptyValueEffect[7], height: `${addEventFormData.imageTwo ? '100%' : '20vh'}`}} ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} >
                 {!imageUrls[1] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                 <input name='imageTwo' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 1)}></input>
                 <img src={imageUrls[1]} style={{height: "100%", width: "100%"}} ></img>
             </PictureHolder>   
 
-            <PictureHolder sx={{height: `${addEventFormData.imageThree ? '100%' : '20vh'}`}} >
+            <PictureHolder sx={{...emptyValueEffect[8], height: `${addEventFormData.imageThree ? '100%' : '20vh'}`}} ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} >
                 {!imageUrls[2] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                 <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 2)}></input>
                 <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>

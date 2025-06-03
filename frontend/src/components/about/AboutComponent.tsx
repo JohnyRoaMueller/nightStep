@@ -97,7 +97,7 @@ export function AboutComponent() {
                 <ContentBox>
                     <TypoH1>Join Us</TypoH1>
                     <hr></hr>
-                    <TypoBody1>Whether you’re a small local club or a large event space, nightStep is designed to help you elevate your operations and connect more effectively with your audience.<br/> Join us in redefining the nightlife experience—let’s take your club to new heights together!</TypoBody1>
+                    <TypoBody1>Whether you’re a small local club or a large event space, nightStep is designed to help you elevate your operations and connect more effectively with your audience.<br/> Join us in redefining the nightlife experience - let’s take your club to new heights together!</TypoBody1>
                 </ContentBox>
 
             </ContentWrapper>

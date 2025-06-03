@@ -146,12 +146,15 @@ export const VenueCard = styled(Card)`
 
 type VenueCardMediaProp = {
     component: string
+    loading: string
 }
 export const VenueCardMedia = styled(CardMedia)<VenueCardMediaProp>`
 
-
     min-height: 50vh;
     max-height: 50vh;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 
     z-index: 0;
 

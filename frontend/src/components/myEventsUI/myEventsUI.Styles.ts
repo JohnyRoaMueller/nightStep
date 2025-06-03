@@ -31,3 +31,14 @@ export const EventsWrapper = styled(Box)`
     }    
 
 `;
+
+
+export const NoEventsNotice = styled(Box)`
+
+    background-color: black;
+
+    justify-items: center;
+    text-align: center;
+    width: 100%;
+
+`;

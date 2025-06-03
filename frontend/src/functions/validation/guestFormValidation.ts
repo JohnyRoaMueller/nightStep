@@ -37,12 +37,24 @@ type HostFormData = {
     role: Roles;
 };
 
+type AddEventForm = {
+    venueName: string,
+    name: string,
+    startTimeDate: string
+    endTimeDate: string
+    price: string,
+    description: string,
+    imageOne: Blob | null,
+    imageTwo: Blob | null,
+    imageThree: Blob | null,
+}
+
 export type EmptyValueEffectType = {
     animation: string;
     }
 
 type ValidateFormType = {
-    formData: GuestFormData | HostFormData,
+    formData: GuestFormData | HostFormData | AddEventForm,
     setEmptyValueEffect: React.Dispatch<React.SetStateAction<EmptyValueEffectType[]>>,
     setPopUpFlag: React.Dispatch<SetStateAction<boolean>>
     setWarningMessage: React.Dispatch<SetStateAction<string>>
@@ -99,6 +111,10 @@ export async function validateGuestForm({formData, setEmptyValueEffect, setPopUp
                     return;
                 }
         }
+
+        // return true for formData of Type AddEventForm - the other types get checked further
+        if ( Object.keys(formData).includes("price") ) return true
+        
         const apiUrl =import.meta.env.VITE_APP_API_URL
         const result = await fetch(`${apiUrl}/register/checkIfUserExists`,
             {

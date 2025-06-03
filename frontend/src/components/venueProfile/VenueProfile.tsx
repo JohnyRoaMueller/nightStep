@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { VenueType } from "../ui/venueCards/VenueCards";
-import { AdressWrapper, DragOverlay, EventCardWrapper, HeaderWrapper, ImageBox, ImagesWrapper, NameWrapper, ProfileWrapper } from "./VenueProfile.Styles";
+import { AdressWrapper, DragOverlay, EventCardWrapper, HeaderWrapper, ImageBox, ImagesWrapper, NameWrapper, NoEventsNotice, ProfileWrapper } from "./VenueProfile.Styles";
 import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../styled-components/styledTypographie";
 import { useDraggable } from "react-use-draggable-scroll";
 import React from "react";
@@ -26,13 +26,10 @@ export default function VenueProfile() {
   useEffect(() => {
 
     console.log("fetching to: ", `${apiUrl}/venue/${param.venuename}`)
-
       
     async function fetchData() {
 
       const response = await fetch(`${apiUrl}/venue/${param.venuename}`)
-
-      console.log(response)
 
       const dataJson = await response.json()
 
@@ -42,9 +39,6 @@ export default function VenueProfile() {
     fetchData()
 
   }, [])
-
-  console.log("here!")
-  console.log(venue)
 
   // user can upload 12 images
   function getImages() {
@@ -89,6 +83,21 @@ export default function VenueProfile() {
   }, []);
 
 
+function formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleDateString('de-DE')
+}
+
+function formatDateTime(dateString: string): string {
+    return new Date(dateString).toLocaleString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    })
+}      
+
+
   return (
     <>
         <ProfileWrapper>
@@ -113,12 +122,15 @@ export default function VenueProfile() {
           <TypoH2>Events</TypoH2>
         </HeaderWrapper>
         <EventCardWrapper>
-            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
-            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
-            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>  
-            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
-            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>
-            <EventCard isHost={false} exampleFromArray={Math.floor(Math.random() * 4)}/>           
+
+        {venue?.events.length < 1 ?
+        (
+          <NoEventsNotice><TypoH2>no current events</TypoH2></NoEventsNotice>
+        ) : (
+          venue?.events.map((event) => <EventCard isHost={false} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={event.price} likes={event.likes} soldTickets={""}></EventCard>)
+        )  
+        }
+
         </EventCardWrapper>
     </>
   )

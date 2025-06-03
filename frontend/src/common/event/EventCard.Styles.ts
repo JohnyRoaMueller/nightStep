@@ -5,6 +5,7 @@ export const EvenCardtContainer = styled(Box)`
 
     border: 1px solid black;
 
+
     display: flex;
     flex-direction: row;
 
@@ -77,6 +78,8 @@ export const FurtherInformationHolder = styled(Box)`
 
 export const IconHolder = styled(Box)`
     // border: 1px solid brown;
+
+    gap: 3px;
 
     display: flex;
     flex-direction: row;

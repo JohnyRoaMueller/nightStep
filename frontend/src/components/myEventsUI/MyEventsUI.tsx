@@ -1,8 +1,9 @@
 import { Box, Button } from "@mui/material"
-import { ActionButton, ActionsWrapper, EventsWrapper } from "./myEventsUI.Styles"
+import { ActionButton, ActionsWrapper, EventsWrapper, NoEventsNotice } from "./myEventsUI.Styles"
 import EventCard from "../../common/event/EventCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { TypoH2 } from "../../styled-components/styledTypographie";
 
 console.log(Math.floor(Math.random() * 4))
 
@@ -23,7 +24,7 @@ function MyEventsUI() {
         imagePaths: string[]
     }
 
-    const [events, setEvents] = useState<eventsType>()
+    const [events, setEvents] = useState<eventsType[]>()
 
     useEffect(() => {
         async function fetchData() {
@@ -37,10 +38,6 @@ function MyEventsUI() {
         }
         fetchData()
     }, [])
-
-    console.log("this!!")
-    console.log(events)
-    console.log(events?.imagePaths)
 
 
 
@@ -68,9 +65,15 @@ function formatDateTime(dateString: string): string {
             </ActionButton>
         </ActionsWrapper>
         <EventsWrapper>
-            {events?.map((event) => (
+            {events?.length < 1 ?
+            (
+                <NoEventsNotice><TypoH2>no current events</TypoH2></NoEventsNotice>
+            ) : (
+                events?.map((event) => (
                 <EventCard isHost={false} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={`${event.price}€`} likes={event.likes} soldTickets={""} />
-            ))}                       
+            ))
+            )
+            }                      
         </EventsWrapper>
     </>
     )

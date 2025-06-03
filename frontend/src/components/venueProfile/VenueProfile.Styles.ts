@@ -141,7 +141,7 @@ export const EventCardWrapper = styled(Box)`
 
     overflow: auto;
 
-    height: 80vh;
+    max-height: 80vh;
 
     overflow-x: hidden;
 
@@ -157,5 +157,15 @@ export const EventCardWrapper = styled(Box)`
         border-radius: 25px 25px;
         width: 50%;
     }    
+
+`;
+
+export const NoEventsNotice = styled(Box)`
+
+    background-color: black;
+
+    justify-items: center;
+    text-align: center;
+    width: 100%;
 
 `;

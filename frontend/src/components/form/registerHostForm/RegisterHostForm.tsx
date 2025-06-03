@@ -63,9 +63,9 @@ function RegisterHostForm() {
         streetOfVenue: string,
         housenumberOfVenue: string,
         postcodeOfVenue: string,
-        imageOne: Blob | null
-        imageTwo: Blob | null
-        imageThree: Blob | null
+        imageOne: Blob | null,
+        imageTwo: Blob | null,
+        imageThree: Blob | null,
         role: Roles;
     };
 

@@ -20,6 +20,7 @@ export interface VenueType {
     description: string;
     picAddresses: string[];
     picBlobs: Blob[];
+    events: Event[]
 }
 
 function VenueCards(props: { venueType: string; }) {
@@ -96,7 +97,7 @@ function VenueCards(props: { venueType: string; }) {
                     <GridItem>         
                                    {/**↓ PathVariable doesn't work with /image/path ↓*/}
                         <VenueCard onClick={() => navigateTo(`/venue/${venue.name}`)}>{/**↓ so converting / to - and converting back in backend ↓*/}
-                            <VenueCardMedia component="img" image={`${apiUrl}/images/${venue.picAddresses[0].replace(/\//g, "-")}`}/>
+                            <VenueCardMedia component="img" loading="eager" image={`${apiUrl}/images/${venue.picAddresses[0].replace(/\//g, "-")}`}/>
                             <VenueCardContent>
                                 <VenueCardOverlay className="Venue-card-overlay"/>
                                 <VenueNameTypo>{venue.name}</VenueNameTypo>
