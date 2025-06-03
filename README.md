@@ -34,4 +34,3 @@ nightStep is a single-page application that allows venue operators, such as club
 - **Lost and Found Section:** for hosts
 - **Follow Feature:** guests can follow venues or events
 - **Group Finding:** for guests who have indicated interest in an event
-- 
