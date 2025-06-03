@@ -27,13 +27,13 @@
 - Role-based user registration
 - Role-based display of functionalities
 - Ability for users to edit their own data
+- Event Posting functionality for hosts
 
 ---
 
 ## Planned Extensions
 
 - **Lost and Found Section:** for hosts
-- **Event Posting:** functionality for hosts
 - **Follow Feature:** guests can follow venues or events
 - **Group Finding:** for guests who have indicated interest in an event
 
