@@ -70,7 +70,9 @@ function formatDateTime(dateString: string): string {
                 <NoEventsNotice><TypoH2>no current events</TypoH2></NoEventsNotice>
             ) : (
                 events?.map((event) => (
+                <>
                 <EventCard isHost={false} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={`${event.price}€`} likes={event.likes} soldTickets={""} />
+                </>
             ))
             )
             }                      

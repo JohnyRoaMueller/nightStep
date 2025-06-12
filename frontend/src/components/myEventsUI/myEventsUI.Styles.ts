@@ -25,9 +25,11 @@ export const EventsWrapper = styled(Box)`
 
     width: 100%;
 
+    border-radius: 25px;    
+
     @media(min-width: 600px) {
         border: 5px solid black;
-        border-radius: 25px;
+
     }    
 
 `;

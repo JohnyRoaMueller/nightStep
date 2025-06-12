@@ -33,6 +33,11 @@ public class UploadService {
 
         File targetFile = new File(path);
 
+        String contentType = image.getContentType();
+        if (!List.of("image/jpeg", "image/png").contains(contentType)) {
+            logger.warn("Unsupported file type: {}", contentType);
+        }        
+
         try (OutputStream outStream = new FileOutputStream(targetFile)) {
             outStream.write(buffer);
         }

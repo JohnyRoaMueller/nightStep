@@ -137,24 +137,23 @@ export const ProfileHeader = styled(Box)`
 
 
 export const EventCardWrapper = styled(Box)`
-    border: 1px solid red;
 
     overflow: auto;
 
+    width: 100%;
     max-height: 80vh;
 
     overflow-x: hidden;
 
     scrollbar-width: none;
 
-
+    border-radius: 25px 25px;
 
     align-self: start;
 
 
     @media(min-width: 600px) {
-        border: 5px solid black;
-        border-radius: 25px 25px;
+
         width: 50%;
     }    
 
