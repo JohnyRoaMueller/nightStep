@@ -121,7 +121,7 @@ export function Appbar() {
           <AccountBox onClick={handleClick}>
             <AccountIcon />
             <HiddenOnMobile>
-                {isLoggedIn ? username : "Mein Konto"}
+                {isLoggedIn ? username : "my account"}
             </HiddenOnMobile> {/* HOM -> HiddenOnMobile */}
           </AccountBox>
           </AppbarIconBoxRight>
@@ -130,7 +130,7 @@ export function Appbar() {
       <MobileMenuOptionsWrapper onMouseLeave={handleUnfold}>
         {role === "GUEST" && 
         mobileOptionsGuest.map((option) => (
-          <MobileMenuOption sx={{display: unfoldFlag ? "block" : "none"}}>
+          <MobileMenuOption sx={unfoldStyle}>
             <MobileMenuOptionLink to={`/${option.toLowerCase()}`}>
               <TypoBody1MobileMenuOptionLink>{option}</TypoBody1MobileMenuOptionLink>
             </MobileMenuOptionLink>

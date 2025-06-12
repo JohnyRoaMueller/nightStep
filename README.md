@@ -45,5 +45,5 @@ nightStep is a single-page application that allows venue operators, such as club
 ### Creating Guest Account
 ![Creating Guest Account](demo_gifs/creating_guest_account.gif)
 
-### Host Login
-![Host Login](demo_gifs/host_login.gif)
+### Creating Event
+![Creating Event](demo_gifs/creating_event.gif)

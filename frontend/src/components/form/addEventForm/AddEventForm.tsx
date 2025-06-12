@@ -9,6 +9,7 @@ import { ImageTypoH2, PictureHolder } from "../registerHostForm/registerHostForm
 import dayjs from "dayjs"
 import { EmptyValueEffectType, validateGuestForm } from "../../../functions/validation/guestFormValidation"
 import { boxShadowAnimation } from "../registerGuestForm/registerGuestForm.Styles"
+import { useNavigate } from "react-router-dom"
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
@@ -26,6 +27,8 @@ interface AddEventFormType {
 
 
 function AddEventForm() {
+
+    const navigateTo = useNavigate()
 
     const [check, setCheck] = useState<boolean>(false)
 
@@ -126,6 +129,7 @@ function AddEventForm() {
         if (response.ok) {
             const responseTEXT = await response.text()   
             console.log(responseTEXT)     
+            navigateTo("/MYEVENTS")
         } else {
             console.log("kein event erstellt")
         }
@@ -159,7 +163,7 @@ function AddEventForm() {
 
             <LocalizedDateTimePicker name='startTimeDate' helperText='start' format='YYYY-MM-DD HH:mm' onChange={(date) => handleStartTimeDate(date.toISOString())} minDate={dayjs(Date.now())} maxDate={dayjs(Date.now()).add(3, 'year')} minTime={dayjs(Date.now())} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}}></LocalizedDateTimePicker>
 
-            <LocalizedDateTimePicker name='endTimeDate' helperText='end' format='YYYY-MM-DD HH:mm' onChange={(date) => handleEndStartTime(date.toISOString())} minDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm")} maxDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm").add(2, 'weeks')}  minTime={dayjs(Date.now()).add(2, "hours")} disabled={!addEventFormData.startTimeDate} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}}></LocalizedDateTimePicker>
+            <LocalizedDateTimePicker disabled={addEventFormData.startTimeDate} name='endTimeDate' helperText='end' format='YYYY-MM-DD HH:mm' onChange={(date) => handleEndStartTime(date.toISOString())} minDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm")} maxDate={dayjs(addEventFormData.startTimeDate, "YYYY-MM-DD HH:mm").add(2, 'weeks')}  minTime={dayjs(Date.now()).add(2, "hours")} disabled={!addEventFormData.startTimeDate} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}}></LocalizedDateTimePicker>
 
             <FormTextField name='price' helperText='price' onChange={handleChange} inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} sx={{'& .MuiInputBase-input': emptyValueEffect[4]}}/>
 
