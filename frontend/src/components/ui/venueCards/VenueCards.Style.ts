@@ -134,13 +134,15 @@ export const VenueCard = styled(Card)`
 
     box-sizing: content-box;
     overflow: hidden;
-    border-radius: 5%;
     max-height: 65vh;
     min-height: 65vh;
 
     background-color: #1a1a1a1a;
 
+    
+
     border: 1px solid black;
+
 
 `;
 
@@ -167,7 +169,7 @@ export const VenueCardContent = styled(CardContent)`
 
 
 export const VenueNameTypo = styled(TypoH2)`
-    color: black;
+    color: white;
     font-size: 1.5em;
 
 `;

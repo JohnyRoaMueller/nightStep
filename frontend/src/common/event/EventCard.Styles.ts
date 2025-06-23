@@ -5,12 +5,25 @@ export const EvenCardtContainer = styled(Box)`
 
     border: 1px solid black;
 
-
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
-    height: 30vh;
     width: 100%;
+    height: 100%;
+
+
+
+    box-sizing: content-box;
+
+    align-items: center;
+    
+
+
+    @media(min-width: 600px) {
+        flex-direction: row;
+        height: 100%;
+        max-height: 40vh;        
+    }
 
 
 `;
@@ -20,20 +33,27 @@ export const ImageHolder = styled(Box)`
     // border: 1px solid green;
 
     height: 100%;
-    width: 25%;
+    width: 100%;
 
     img {
         height: 100%;
         width: 100%;
         object-fit: cover; /* oder contain, je nach gewünschtem Verhalten */
         display: block;
-  }
+    }
+
+    @media(min-width: 600px) {
+        height: 100%;
+        width: 75%;
+    }
 
 `;
 
 
-export const InfoHolder = styled(Box)`
+export const InfoBoxContainer = styled(Box)`
     // border: 1px solid yellow;
+
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -41,7 +61,16 @@ export const InfoHolder = styled(Box)`
     height: 100%;
     width: 100%;
 
-    justify-content: space-between;
+`;
+
+
+export const InfoBox = styled(Box)`
+    // border: 1px solid red;
+
+    justify-items: center;
+
+    padding: 1%;
+    
 
 `;
 
@@ -49,16 +78,17 @@ export const InfoHolder = styled(Box)`
 export const BaseInfoHolder = styled(Box)`
     // border: 1px solid blue;
 
+    position: relative;
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+   
 
     text-align: center;
-
-    height: 50%;
     width: 100%;
 
     justify-content: center;
-
+    
 `;
 
 
@@ -66,12 +96,31 @@ export const FurtherInformationHolder = styled(Box)`
     // border: 1px solid white;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     height: auto;
     width: 100%;
 
-    justify-content: space-around;
+    align-items: start;
+
+    @media(min-width: 600px) {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+`;
+
+export const LikeHolder = styled(Box)`
+    // border: 1px solid green;
+
+    position: absolute;
+
+    top: 30%;
+    right: 5%;
+
+    @media(min-width: 600px) {
+        right: 10%;
+    }
 
 `;
 
@@ -95,7 +144,13 @@ export const TimeHolder = styled(Box)`
     // border: 1px solid red;
 
     display: flex;
-    flex-direction: column;
+    
+    flex-direction: row;
+
+
+    @media(min-width: 600px) {
+        flex-direction: column;
+    }    
 
 `;
 

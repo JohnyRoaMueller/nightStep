@@ -73,7 +73,7 @@ public class EventController {
 
         String nameOfVenue = venue.getName();
 
-        Event newEvent = new Event(event.getName(), event.getStartTimeDate(), event.getEndTimeDate(), event.getPrice(), event.getLikes(), event.getDescription(), nameOfVenue, extractImagePaths(event.getImages(), usernameOfHost, nameOfVenue, event.getName()), venue);
+        Event newEvent = new Event(event.getName(), event.getStartTimeDate(), event.getEndTimeDate(), event.getPrice(), event.getLikes(), event.getDescription(), "0", extractImagePaths(event.getImages(), usernameOfHost, nameOfVenue, event.getName()), venue);
         eventRepository.save(newEvent);
 
 
