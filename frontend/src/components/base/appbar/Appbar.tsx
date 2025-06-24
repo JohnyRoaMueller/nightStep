@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AppbarFrame,
   AppbarContent,
@@ -14,6 +14,7 @@ import {
   AccountBox,
   AppbarSearchIcon,
   AppbarIconBoxRight,
+  AppbarTextfield,
 } from "./Appbar.styles";
 import { FadeInLogin }  from "../../../functions/animations/fadeInLogin/FadeInLogin";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,10 @@ import { Opacity } from "@mui/icons-material";
 
 export function Appbar() {
   const navigateTo = useNavigate();
+
+  const clickRef = useRef<HTMLInputElement>(null);
+
+  const [textFieldFlag, setTextFieldFlag] = useState(false)
 
   const [fadeFlag, setFadeFlag] = useState(false);
 
@@ -38,6 +43,14 @@ export function Appbar() {
 
   const [loading, setLoading] = useState(true)
   
+  
+  const handleTextFieldFlag = () => {
+    setTextFieldFlag((prevFlag) => !prevFlag)
+    console.log(textFieldFlag)    
+  }
+  useEffect(() => {
+    clickRef.current?.focus()
+  })
 
   const handleClick = () => {
     setFadeFlag(true);
@@ -116,7 +129,8 @@ export function Appbar() {
                 <NightStepLogo onClick={() => navigateTo("/")}/>
             </AppbarLogoBox>
           <AppbarIconBoxRight>
-          <AppbarSearchIcon onClick={() => navigateTo("/find")}/>
+          <AppbarTextfield inputRef={clickRef} sx={{display: textFieldFlag ? "block" : "none", input: { color: 'white' }}} />
+          <AppbarSearchIcon onClick={handleTextFieldFlag}/>
           <AppbarUnfoldMoreIcon onClick={handleClickUnfold} onMouseEnter={handleUnfold} sx={{color: unfoldFlag ? "#ff8000" : "white", display: isLoggedIn ? "block" : "none"}}/>
           <AccountBox onClick={handleClick}>
             <AccountIcon />

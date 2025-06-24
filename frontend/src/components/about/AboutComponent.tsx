@@ -40,7 +40,7 @@ export function AboutComponent() {
           });
         }, {
           root: null, 
-          rootMargin: "-33% 0px -33% 0px",
+          rootMargin: "-35% 0px -35% 0px",
           threshold: 1, // how many pixel are inside till visible
         });
     

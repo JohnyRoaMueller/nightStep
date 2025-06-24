@@ -1,5 +1,5 @@
 // import NightStepLogo from '../../../assets/images/nightStepLogo-WhiteOnBlack.svg?react'; // ?react suffix very relevant! tried import SVG for 4 hours
-import { Box, styled, Typography } from "@mui/material";
+import { Box, styled, TextField, Typography } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import SearchIcon from '@mui/icons-material/Search';
@@ -67,6 +67,7 @@ export const AppbarContent = styled(Box)`
 
 // Appbar Link Box Left
 export const AppbarLinkBoxLeft = styled(Box)`
+
   position: relative;
   left: 0%;
   height: 100%;
@@ -81,18 +82,19 @@ export const AppbarLinkBoxLeft = styled(Box)`
 `;
 
 export const AppbarLogoBox = styled(Box)`
+      
       display: 'flex';
       justifyContent: 'center'; 
       alignItems: 'center'; 
       width: '1vw'; 
       height: '1vh'; 
-      overflow: 'hidden';
       align-self: center;
 `;
 
 // Appbar Link Box Right
 export const AppbarIconBoxRight = styled(Box)`
-
+  max-width: 80%;
+  
   position: absolute;
   right: 0%;
   height: 100%;
@@ -198,6 +200,11 @@ export const AppbarSearchIcon = styled(SearchIcon)`
   &: hover {
     color: #ff8000;
   }
+
+`;
+
+export const AppbarTextfield = styled(TextField)`
+
 
 `;
 

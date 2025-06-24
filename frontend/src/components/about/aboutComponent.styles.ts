@@ -29,6 +29,8 @@ export const ContentBox = styled(Box)`
 `;
 
 export const AnimationWrapper = styled(Box)`
+    // border: 10px solid green;
+
     position: absolute;
 
     right: 0;
@@ -45,11 +47,11 @@ export const AnimationWrapper = styled(Box)`
     flex-direction: row;
     flex-wrap: wrap;
 
-    justify-content: space-between;
-
     @media (min-width: 600px) {
         width: 10%;
     }
+
+
 
 `;
 
@@ -63,14 +65,12 @@ export const FootWrapperLeft = styled(Box)`
     align-items: center;
     justify-content: center;
 
-    width: 45%;
+    width: 50%;
 
-
+    margin-top: 5vh;
 `;
 
 export const FootWrapperRight = styled(Box)`
-
-
 
 
     display: flex;
@@ -80,49 +80,54 @@ export const FootWrapperRight = styled(Box)`
     align-items: center;
     justify-content: center;
 
-    width: 45%;
+    width: 50%;
 
-    height: 10%;
+
+
+
 
 `;
 
 
 export const LeftStep = styled(Box)`
-
-    width: 100%;
-    height: 100%;
-    background-image: url('/uploads/clubstep/shoeprint_noBackground_left.png');
-    background-size: cover;
-    background-position: center;
-
-
-    transition: opacity 0.5s ease-in-out;
-
-    margin-bottom: 10vh;
-
+    // border: 1px solid red;
+    
     width: 100%;
     height: 10vh;
 
-    overflowX: hidden;
+    background-image: url('/uploads/clubstep/pretty_shoeprint_noBackground_right.png');
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0;
+
+
+    transition: opacity 0.7s ease-in-out;
+
+  
+    transform: rotate(180deg);
+
+
 
 `;
 
 export const RightStep = styled(Box)`
-
-    width: 100%;
-    height: 100%;
-    background-image: url('/uploads/clubstep/shoeprint_noBackground_right.png');
-    background-size: cover;
-    background-position: center;
-
-
-    transition: opacity 0.3s ease-in-out;
-
-    margin-top: 10vh;
+    // border: 1px solid green;
 
     width: 100%;
     height: 10vh;
 
-    overflowX: hidden;
+    background-image: url('/uploads/clubstep/pretty_shoeprint_noBackground_left.png');
+    background-size: cover;
+    background-position: center;
+
+
+    opacity: 0;
+
+    transition: opacity 0.7s ease-in-out;
+
+    transform: rotate(180deg);
+
+    margin-bottom: 15vh;
 
 `;
