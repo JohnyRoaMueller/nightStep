@@ -82,10 +82,10 @@ public class VenueService {
         List<String> imagePaths = new ArrayList<String>();
 
         for (MultipartFile image : images) {
-            if (image.getOriginalFilename().startsWith("/uploads/host_images/")) {
-                String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
-                String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename); 
-                imagePaths.add(path);
+            if (image.getOriginalFilename().startsWith("./uploads/host_images/")) {
+            String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
+            String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename); 
+            imagePaths.add(path);
                 continue;
             }
 

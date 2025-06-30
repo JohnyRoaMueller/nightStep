@@ -4,6 +4,7 @@ import EventCard from "../../common/event/EventCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { TypoH2 } from "../../styled-components/styledTypographie";
+import HoverOverlay from "../ui/hoverOverlay/HoverOverlay";
 
 console.log(Math.floor(Math.random() * 4))
 
@@ -73,7 +74,7 @@ console.log(events)
             ) : (
                 events?.map((event) => (
                 <>
-                <EventCard isHost={true} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={`${event.price}`} likes={event.likes} soldTickets={event.soldTickets} />
+                <EventCard isHost={true} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={`${event.price}`} likes={event.likes} soldTickets={event.soldTickets}></EventCard>
                 </>
             ))
             )

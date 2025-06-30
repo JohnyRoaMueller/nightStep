@@ -95,37 +95,7 @@ export const GridItem = styled(Box)`
         padding: 0.1%;
         padding-bottom: 0.3%;
 
-        &:hover {
-            .Venue-card-overlay {
-                background-color: #808080;
-                opacity: 0.1
-            }
-        }  
-
-        &:active {
-            .Venue-card-overlay {
-                background-color: #808080;
-                opacity: 0.4;
-                transition: 3s ease-in-out;
-            }
-        }
-
-
     }
-
-`;
-
-export const VenueCardOverlay = styled(Box)`
-    position: absolute;
-
-
-    bottom: 0;
-    right: 0;
-
-    height: 100%;
-    width: 100%;
-
-
 
 `;
 

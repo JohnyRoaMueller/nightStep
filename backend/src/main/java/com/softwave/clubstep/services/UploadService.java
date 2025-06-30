@@ -51,7 +51,13 @@ public class UploadService {
 
             String currentFileName = image.getOriginalFilename();
 
-            if (currentFileName.startsWith("/uploads/host_images")) {continue;}
+            logger.info("currentFileName:" + currentFileName);
+
+            if (currentFileName.startsWith("./uploads/host_images")) {
+                logger.info("skip this: " + currentFileName);
+                continue;
+            }
+            logger.info("After checking if img already exists");
 
             String newDirPath = String.format("./uploads/host_images/%s/venues/%s", username, nameOfVenue);            
 

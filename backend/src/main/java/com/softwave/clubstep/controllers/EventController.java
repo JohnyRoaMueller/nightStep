@@ -2,6 +2,7 @@ package com.softwave.clubstep.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.catalina.connector.Response;
@@ -102,6 +103,10 @@ public class EventController {
 
     public List<String> extractImagePaths(List<MultipartFile> images, String username, String nameOfVenue, String nameOfEvent) {
         List<String> imagePaths = new ArrayList<String>();
+
+        if (images == null) {
+        return Collections.emptyList();
+    }    
 
         for (MultipartFile image : images) {
             if (image.getOriginalFilename().startsWith("/uploads/host_images/")) {

@@ -3,6 +3,8 @@ import { Box, styled } from "@mui/material";
 export const EvenCardtContainer = styled(Box)`
     // border: 1px solid red;
 
+    position: relative;
+
     border: 1px solid black;
 
     display: flex;

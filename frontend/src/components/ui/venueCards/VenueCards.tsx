@@ -4,6 +4,7 @@ import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../../styled-components
 import { Dot, LoadingAnimation } from "../../../functions/animations/LoadingAnimation";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../../common/button/primaryButton/PrimaryButton";
+import HoverOverlay from "../hoverOverlay/HoverOverlay";
 
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
@@ -99,12 +100,12 @@ function VenueCards(props: { venueType: string; }) {
                         <VenueCard onClick={() => navigateTo(`/venue/${venue.name}`)}>{/**↓ so converting / to - and converting back in backend ↓*/}
                             <VenueCardMedia component="img" loading="eager" image={`${apiUrl}/images/${venue.picAddresses[0].replace(/\//g, "-")}`}/>
                             <VenueCardContent>
-                                <VenueCardOverlay className="Venue-card-overlay"/>
+                                <HoverOverlay/>
                                 <VenueNameTypo>{venue.name}</VenueNameTypo>
                                 <TypoBody2>{venue.district}</TypoBody2>
                             </VenueCardContent>
                         </VenueCard>
-
+            
                     </GridItem >
                 ))}
                 </GridContainer>

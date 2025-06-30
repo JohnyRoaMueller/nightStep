@@ -2,9 +2,17 @@ package com.softwave.clubstep;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +22,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softwave.clubstep.DTO.EventDTO;
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
+import com.softwave.clubstep.controllers.EventController;
 import com.softwave.clubstep.controllers.RegistrationController;
 import com.softwave.clubstep.domain.repository.GuestRepository;
 import com.softwave.clubstep.domain.repository.HostRepository;
@@ -22,8 +32,15 @@ import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.enums.Roles;
 import com.softwave.clubstep.services.ServerstartService;
 
+import io.jsonwebtoken.io.IOException;
+
+import com.softwave.clubstep.domain.entities.Event;
+
 import jakarta.persistence.EntityManager;
 import jakarta.security.auth.message.config.AuthConfigFactory.RegistrationContext;
+
+// import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
@@ -42,12 +59,14 @@ public class NightstepApplication implements CommandLineRunner {
 
 	//*			CONTROLLER					 */
 	private final RegistrationController registrationController;
+    private final EventController eventController;
 
-	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, ServerstartService serverstartService) {
+	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, ServerstartService serverstartService) {
 		this.venueRepository = venueRepository;
 		this.guestRepository = guestRepository;
 		this.hostRepository = hostRepository;
 		this.registrationController = registrationController;
+        this.eventController = eventController;
 		this.serverstartService = serverstartService;
 	}
 
@@ -56,10 +75,70 @@ public class NightstepApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		
-
 		SpringApplication.run(NightstepApplication.class, args);
 		System.out.println("Application started");
+
 	}
+
+class FileMultipartFile implements MultipartFile {
+
+    private final File file;
+    private final String name;
+    private final String originalFilename;
+    private final String contentType;
+
+    public FileMultipartFile(File file, String name, String originalFilename, String contentType) {
+        this.file = file;
+        this.name = name;
+        this.originalFilename = originalFilename;
+        this.contentType = contentType;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getOriginalFilename() {
+        return originalFilename;
+    }
+
+    @Override
+    public String getContentType() {
+        return contentType;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return file == null || file.length() == 0;
+    }
+
+    @Override
+    public long getSize() {
+        return file.length();
+    }
+
+    @Override
+    public byte[] getBytes() throws IOException, FileNotFoundException, java.io.IOException {
+        try (InputStream in = new FileInputStream(file)) {
+            return in.readAllBytes();
+        }
+    }
+
+    @Override
+    public InputStream getInputStream() throws IOException, FileNotFoundException {
+        return new FileInputStream(file);
+    }
+
+    @Override
+    public void transferTo(File dest) throws IOException, IllegalStateException, FileNotFoundException, java.io.IOException {
+        try (InputStream in = new FileInputStream(file);
+             OutputStream out = new FileOutputStream(dest)) {
+            in.transferTo(out);
+        }
+    }
+}    
 
 	
 	@Override
@@ -84,11 +163,37 @@ public class NightstepApplication implements CommandLineRunner {
         host1.setHousenumberOfVenue("5A");
         host1.setPostcodeOfVenue("10115");
         host1.setRole(Roles.HOST);
+
+        List<MultipartFile> imagesHost1Event1 = new ArrayList<>();
+        File image1Host1Event1 = new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_blue.png");
+        MultipartFile multipartFile1 = new FileMultipartFile(image1Host1Event1, "file", image1Host1Event1.getName(), "text/plain");
+        imagesHost1Event1.add(multipartFile1);
+        File image2Host1Event1 = new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_green.png");
+        MultipartFile multipartFile2 = new FileMultipartFile(image2Host1Event1, "file", image2Host1Event1.getName(), "text/plain");
+        imagesHost1Event1.add(multipartFile2);
+        File image3Host1Event1 = new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_red.png");
+        MultipartFile multipartFile3 = new FileMultipartFile(image3Host1Event1, "file", image3Host1Event1.getName(), "text/plain");        
+        imagesHost1Event1.add(multipartFile3);
+        Event host1Event1 = new Event(
+            "90' Night vol. 3",
+            OffsetDateTime.parse("2025-07-04T22:00:00+02:00"),
+            OffsetDateTime.parse("2025-07-06T20:00:00+02:00"),
+            new BigDecimal("22.00"),
+            0,
+            "Get ready to dance all night to the best hits from the 90s! Join us for a nostalgic party filled with classic tunes, retro vibes, and unforgettable fun.",
+            "0",
+            eventController.extractImagePaths(imagesHost1Event1, "nachtwerk_max", "Nachtwerk", "90' Night vol. 3"),
+            null
+            );
+
+
         List<File> imagesHost1 = new ArrayList<>();
         imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"));
         imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"));
         imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"));
         imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg"));
+        
+        
 
 
 
@@ -379,21 +484,18 @@ public class NightstepApplication implements CommandLineRunner {
         imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg"));
 
 	
-		serverstartService.createHostUserByServerstart(host1, imagesHost1);
-        serverstartService.createHostUserByServerstart(host2, imagesHost2);
-        serverstartService.createHostUserByServerstart(host3, imagesHost3);
-        serverstartService.createHostUserByServerstart(host4, imagesHost4);
-        serverstartService.createHostUserByServerstart(host5, imagesHost5);
-        serverstartService.createHostUserByServerstart(host6, imagesHost6);
-        serverstartService.createHostUserByServerstart(host7, imagesHost7);
-        serverstartService.createHostUserByServerstart(host8, imagesHost8);
-        serverstartService.createHostUserByServerstart(host9, imagesHost9);
-        serverstartService.createHostUserByServerstart(host10, imagesHost10);
-        serverstartService.createHostUserByServerstart(host11, imagesHost11);
-        serverstartService.createHostUserByServerstart(host12, imagesHost12);
-
-
+		serverstartService.createHostUserByServerstart(host1, imagesHost1, new ArrayList<>(List.of(host1Event1)));
+        serverstartService.createHostUserByServerstart(host2, imagesHost2, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host3, imagesHost3, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host4, imagesHost4, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host5, imagesHost5, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host6, imagesHost6, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host7, imagesHost7, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host8, imagesHost8, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host9, imagesHost9, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host10, imagesHost10, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host11, imagesHost11, new ArrayList<>(List.of(new Event())));
+        serverstartService.createHostUserByServerstart(host12, imagesHost12, new ArrayList<>(List.of(new Event())));
 
 	}
 }
-

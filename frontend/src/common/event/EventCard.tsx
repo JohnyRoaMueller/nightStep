@@ -13,9 +13,14 @@ import { EventCardProps } from "./EventCard.Types";
 import Space from "../../components/ui/spaceUI/Space";
 import { Box } from "@mui/material";
 import GroupsIcon from '@mui/icons-material/Groups';
+import HoverOverlay from "../../components/ui/hoverOverlay/HoverOverlay";
+import { useNavigate } from "react-router-dom";
 
 
 function EventCard({isHost, imgSrc, eventName, venueName, date, startTime, endTime, price, likes, soldTickets}: EventCardProps) {
+
+    const navigateTo = useNavigate();
+
     return(
         <>
         <EvenCardtContainer>
@@ -47,6 +52,7 @@ function EventCard({isHost, imgSrc, eventName, venueName, date, startTime, endTi
                     </InfoBox>       
                 }    
             </InfoBoxContainer>
+            <HoverOverlay onClick={() => navigateTo(`./${eventName}`)}/>
         </EvenCardtContainer>
         </>
     )

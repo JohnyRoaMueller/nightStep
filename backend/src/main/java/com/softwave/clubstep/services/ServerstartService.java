@@ -7,14 +7,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
+import com.softwave.clubstep.controllers.EventController;
 import com.softwave.clubstep.controllers.RegistrationController;
+import com.softwave.clubstep.domain.entities.Event;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.Venue;
+import com.softwave.clubstep.domain.repository.EventRepository;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
@@ -46,11 +50,17 @@ public class ServerstartService {
     @Autowired
     VenueRepository venueRepository;
 
+    @Autowired
+    EventRepository eventRepository;
+
+    @Autowired
+    EventController eventController;
+
 
     Logger logger = LoggerFactory.getLogger(ServerstartService.class);
 
-    
-    public void createHostUserByServerstart(@ModelAttribute RegistrationHostUserDTO registeringHost, List<File> images) {
+
+    public void createHostUserByServerstart(@ModelAttribute RegistrationHostUserDTO registeringHost, List<File> images, List<Event> events) {
 
         if (userAuthRepository.findByUsername(registeringHost.getUsername()).isPresent()) return;
 
@@ -59,31 +69,31 @@ public class ServerstartService {
         registrationService.registerHostUser(registeringHost);
 
         for (File image : images) {
-        logger.info("addImages begins");
+            logger.info("addImages begins");
 
-        // Erstelle das Zielverzeichnis, falls es nicht existiert
-        String newDirPath = String.format("./uploads/host_images/%s/venues/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue());
-        File dir = new File(newDirPath);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        try (FileInputStream fileInputStream = new FileInputStream(image)) {
-            byte[] buffer = new byte[(int) image.length()];
-            fileInputStream.read(buffer);
-
-            String newImagePath = String.format("./uploads/host_images/%s/venues/%s/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue(), image.getName());
-
-            File targetFile = new File(newImagePath);
-
-            // Schreiben des Dateiinhalts in die Ziel-Datei
-            try (OutputStream outStream = new FileOutputStream(targetFile)) {
-                outStream.write(buffer);
+            // Erstelle das Zielverzeichnis, falls es nicht existiert
+            String newDirPath = String.format("./uploads/host_images/%s/venues/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue());
+            File dir = new File(newDirPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
             }
 
-        } catch (IOException e) {
-            logger.error("Error while processing the image: " + image.getName(), e);
-        }
+            try (FileInputStream fileInputStream = new FileInputStream(image)) {
+                byte[] buffer = new byte[(int) image.length()];
+                fileInputStream.read(buffer);
+
+                String newImagePath = String.format("./uploads/host_images/%s/venues/%s/%s", registeringHost.getUsername(), registeringHost.getNameOfVenue(), image.getName());
+
+                File targetFile = new File(newImagePath);
+
+                // Schreiben des Dateiinhalts in die Ziel-Datei
+                try (OutputStream outStream = new FileOutputStream(targetFile)) {
+                    outStream.write(buffer);
+                }
+
+            } catch (IOException e) {
+                logger.error("Error while processing the image: " + image.getName(), e);
+            }
     }
 
     String name = registeringHost.getNameOfVenue();
@@ -102,13 +112,23 @@ public class ServerstartService {
         picAddresses.add(path);
     }
 
+
     Host host = userService.getHostOrNull(registeringHost.getUsername());
 
     System.out.println(registeringHost.getUsername());
 
     System.out.println(String.format("XXX:%s", host));
 
-    venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null));
+    Venue firstVenue = new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, events);
+
+    venueRepository.save(firstVenue);
+
+    if (events.get(0) != null) {
+        Event event = events.get(0);
+        event.setVenue(firstVenue);
+        eventRepository.save(event);
+        
+    }
 
     }
 }

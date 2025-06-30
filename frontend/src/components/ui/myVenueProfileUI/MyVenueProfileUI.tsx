@@ -243,6 +243,13 @@ function MyVenueProfileUI() {
 
     console.log(venueData?.houseNumber)
 
+    
+    useEffect(() => {
+        console.log(imageUrls)
+        console.log(imageBlobs)
+    }, [imageUrls, imageBlobs])
+
+
     return (
         <>
         <MyVenueHeader>
