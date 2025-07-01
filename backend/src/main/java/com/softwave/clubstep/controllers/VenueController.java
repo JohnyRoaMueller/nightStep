@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.softwave.clubstep.DTO.UserAuthDTO;
-import com.softwave.clubstep.DTO.VenuedataUpdateDTO;
+import com.softwave.clubstep.DTO.VenueDTO;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
 import com.softwave.clubstep.domain.entities.Venue;
@@ -147,7 +147,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
     }
 
     @PatchMapping("/myvenue/update/{venueName}")
-    public ResponseEntity<String> updateVenueProfile(@PathVariable("venueName") String venueName, @ModelAttribute VenuedataUpdateDTO venueData, HttpServletRequest request) throws IOException {
+    public ResponseEntity<String> updateVenueProfile(@PathVariable("venueName") String venueName, @ModelAttribute VenueDTO venueData, HttpServletRequest request) throws IOException {
 
         logger.info("/myvenue/update/{venueName} reached");
 

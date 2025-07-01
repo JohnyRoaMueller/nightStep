@@ -47,6 +47,8 @@ public class UploadService {
     public void addVenueImages(List<MultipartFile> images, String username, String nameOfVenue) throws IOException {
         for (MultipartFile image : images) {
 
+            if (image == null) {continue;}
+
             logger.info("addVenueImages begins");
 
             String currentFileName = image.getOriginalFilename();
@@ -71,6 +73,8 @@ public class UploadService {
     
     public void addEventImages(List<MultipartFile> images, String username, String nameOfVenue, String nameOfEvent) throws IOException {
         for (MultipartFile image : images) {
+
+            if (image == null) {continue;}
 
             logger.info("addVenueImages begins");
 

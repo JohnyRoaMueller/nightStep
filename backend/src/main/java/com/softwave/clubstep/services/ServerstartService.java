@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
+import com.softwave.clubstep.DTO.RegistrationHostDTO;
 import com.softwave.clubstep.controllers.EventController;
 import com.softwave.clubstep.controllers.RegistrationController;
 import com.softwave.clubstep.domain.entities.Event;
@@ -60,7 +60,7 @@ public class ServerstartService {
     Logger logger = LoggerFactory.getLogger(ServerstartService.class);
 
 
-    public void createHostUserByServerstart(@ModelAttribute RegistrationHostUserDTO registeringHost, List<File> images, List<Event> events) {
+    public void createHostUserByServerstart(@ModelAttribute RegistrationHostDTO registeringHost, List<File> images, List<Event> events) {
 
         if (userAuthRepository.findByUsername(registeringHost.getUsername()).isPresent()) return;
 

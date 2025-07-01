@@ -1,5 +1,6 @@
 package com.softwave.clubstep.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
-import com.softwave.clubstep.DTO.VenuedataUpdateDTO;
+import com.softwave.clubstep.DTO.RegistrationHostDTO;
+import com.softwave.clubstep.DTO.VenueDTO;
 import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
@@ -42,20 +43,19 @@ public class VenueService {
     UploadService uploadService;
 
     
-    public void addVenue(RegistrationHostUserDTO registeringHost) {
-        String name = registeringHost.getNameOfVenue();
-        String type = registeringHost.getTypeOfVenue();
-        int capacity = Integer.parseInt(registeringHost.getCapacity());
-        String city = registeringHost.getCityOfVenue();
-        String disctrict = defineDistrict(Integer.parseInt(registeringHost.getPostcodeOfVenue()));
-        String street = registeringHost.getStreetOfVenue();
-        String houseNumber = registeringHost.getHousenumberOfVenue();
-        String postalCode = registeringHost.getPostcodeOfVenue();
-        String description = null;
-        List<String> picAddresses = extractImagePaths(registeringHost.getImages(), registeringHost.getUsername(), registeringHost.getNameOfVenue());
-        Host host = userService.getHostOrNull(registeringHost.getUsername());
+    public void addVenue(VenueDTO venueData) throws IOException {
 
-        if (host != null) { logger.info("der host ist da!");} else logger.info("der host ist nicht da!");
+        String name = venueData.getName();
+        String type = venueData.getType();
+        int capacity = venueData.getCapacity();
+        String city = venueData.getCity();
+        String disctrict = defineDistrict(venueData.getPostalCode());
+        String street = venueData.getStreet();
+        String houseNumber = venueData.getHouseNumber();
+        int postalCode = venueData.getPostalCode();
+        String description = null;
+        List<String> picAddresses = extractImagePaths(venueData.getImageBlobs(), venueData.getUsername(), venueData.getName());
+        Host host = userService.getHostOrNull(registeringHost.getUsername());
 
         venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null));
 
@@ -96,7 +96,7 @@ public class VenueService {
     }
 
 
-    public void updateVenue(Venue venue, VenuedataUpdateDTO newVenueData) {
+    public void updateVenue(Venue venue, VenueDTO newVenueData) {
         venue.setName(newVenueData.getName());
         venue.setType(newVenueData.getType());
         venue.setCapacity(newVenueData.getCapacity());

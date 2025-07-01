@@ -3,7 +3,7 @@ package com.softwave.clubstep.DTO;
 import com.softwave.clubstep.enums.Roles;
 
 
-public class RegisteringGuestUserDTO {
+public class RegistrationGuestDTO {
 
 
     // UserAuth    
@@ -31,8 +31,8 @@ public class RegisteringGuestUserDTO {
     private String phonenumber;
 
 
-    public RegisteringGuestUserDTO() {};
-    public RegisteringGuestUserDTO(
+    public RegistrationGuestDTO() {};
+    public RegistrationGuestDTO(
     // userId will be generated automatically
     String username,
     String password,

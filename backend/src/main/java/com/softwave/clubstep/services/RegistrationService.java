@@ -10,8 +10,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
-import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
+import com.softwave.clubstep.DTO.RegistrationGuestDTO;
+import com.softwave.clubstep.DTO.RegistrationHostDTO;
 import com.softwave.clubstep.domain.entities.Guest;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.UserAuth;
@@ -38,7 +38,7 @@ public class RegistrationService {
     @Autowired
     private UserService userService;
 
-    public void registerGuestUser(RegisteringGuestUserDTO registeringUser) {
+    public void registerGuestUser(RegistrationGuestDTO registeringUser) {
 
         UserAuth newUserAuth = new UserAuth();
         Guest newGuest = new Guest();
@@ -61,7 +61,7 @@ public class RegistrationService {
                 logger.info("new Guest created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
     }   
 
-    public void registerHostUser(RegistrationHostUserDTO registeringUser) {
+    public void registerHostUser(RegistrationHostDTO registeringUser) {
 
         UserAuth newUserAuth = new UserAuth();
         Host newHost = new Host();

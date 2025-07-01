@@ -20,7 +20,7 @@ public class Venue  {
 
     private String name;
     private String type;
-    private int capacity;
+    private String capacity;
     private String city;
     private String district;
     private String street;
@@ -60,7 +60,7 @@ public class Venue  {
         (
         String name,
         String type,
-        int capacity,
+        String capacity,
         String city,
         String district, 
         String street,
@@ -98,8 +98,8 @@ public class Venue  {
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 
-    public int getCapacity() { return capacity; }
-    public void setCapacity(int capacity) { this.capacity = capacity; }
+    public String getCapacity() { return capacity; }
+    public void setCapacity(String capacity) { this.capacity = capacity; }
 
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }

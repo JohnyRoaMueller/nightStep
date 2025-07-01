@@ -23,13 +23,14 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.EventDTO;
-import com.softwave.clubstep.DTO.RegistrationHostUserDTO;
+import com.softwave.clubstep.DTO.RegistrationHostDTO;
 import com.softwave.clubstep.controllers.EventController;
 import com.softwave.clubstep.controllers.RegistrationController;
 import com.softwave.clubstep.domain.repository.GuestRepository;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.enums.Roles;
+import com.softwave.clubstep.services.MockDataService;
 import com.softwave.clubstep.services.ServerstartService;
 
 import io.jsonwebtoken.io.IOException;
@@ -39,7 +40,6 @@ import com.softwave.clubstep.domain.entities.Event;
 import jakarta.persistence.EntityManager;
 import jakarta.security.auth.message.config.AuthConfigFactory.RegistrationContext;
 
-// import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -50,24 +50,28 @@ public class NightstepApplication implements CommandLineRunner {
     private EntityManager entityManager;
 
 	
-	//*			REPOSITORYS				 */
+	//*			        REPOSITORYS				 */
 	private final VenueRepository venueRepository;
 	private final GuestRepository guestRepository;
 	private final HostRepository hostRepository;
 	private final ServerstartService serverstartService;
-	//*									 */
 
-	//*			CONTROLLER					 */
+	//*		        	CONTROLLER	    				 */
 	private final RegistrationController registrationController;
     private final EventController eventController;
 
-	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, ServerstartService serverstartService) {
+    //*                  SERVICES                   */
+    private final MockDataService mockDataService;
+
+
+	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, ServerstartService serverstartService, MockDataService mockDataService) {
 		this.venueRepository = venueRepository;
 		this.guestRepository = guestRepository;
 		this.hostRepository = hostRepository;
 		this.registrationController = registrationController;
         this.eventController = eventController;
 		this.serverstartService = serverstartService;
+        this.mockDataService = mockDataService;
 	}
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -81,6 +85,8 @@ public class NightstepApplication implements CommandLineRunner {
 	}
 
 class FileMultipartFile implements MultipartFile {
+
+    // had to rewrite the class, because MockMultipartFile is only aviabable in test
 
     private final File file;
     private final String name;
@@ -140,13 +146,23 @@ class FileMultipartFile implements MultipartFile {
     }
 }    
 
+
+    public List<MultipartFile> filesToMultipart(List<File> files) {
+        List<MultipartFile> multipartFiles = new ArrayList<>();
+        for (File file : files) {
+            multipartFiles.add(new FileMultipartFile(file, "file", file.getName(), "image/*"));
+        }
+        return multipartFiles;
+    }
 	
+
 	@Override
 	public void run(String... args) {
 
+
         // --- 6 Clubs in Berlin ---
         // 1. Nachtwerk
-        RegistrationHostUserDTO host1 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host1 = new RegistrationHostDTO();
         host1.setFirstname("Max");
         host1.setLastname("Mustermann");
         host1.setEmail("max.nachtwerk@example.com");
@@ -164,16 +180,12 @@ class FileMultipartFile implements MultipartFile {
         host1.setPostcodeOfVenue("10115");
         host1.setRole(Roles.HOST);
 
-        List<MultipartFile> imagesHost1Event1 = new ArrayList<>();
-        File image1Host1Event1 = new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_blue.png");
-        MultipartFile multipartFile1 = new FileMultipartFile(image1Host1Event1, "file", image1Host1Event1.getName(), "text/plain");
-        imagesHost1Event1.add(multipartFile1);
-        File image2Host1Event1 = new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_green.png");
-        MultipartFile multipartFile2 = new FileMultipartFile(image2Host1Event1, "file", image2Host1Event1.getName(), "text/plain");
-        imagesHost1Event1.add(multipartFile2);
-        File image3Host1Event1 = new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_red.png");
-        MultipartFile multipartFile3 = new FileMultipartFile(image3Host1Event1, "file", image3Host1Event1.getName(), "text/plain");        
-        imagesHost1Event1.add(multipartFile3);
+        List<File> eventImageFilesHost1Event1 = new ArrayList<>();
+        eventImageFilesHost1Event1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_blue.png"));
+        eventImageFilesHost1Event1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_green.png"));
+        eventImageFilesHost1Event1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_red.png"));
+        List<MultipartFile> eventImageMultipartsHost1Event1 = filesToMultipart(eventImageFilesHost1Event1);
+
         Event host1Event1 = new Event(
             "90' Night vol. 3",
             OffsetDateTime.parse("2025-07-04T22:00:00+02:00"),
@@ -182,23 +194,24 @@ class FileMultipartFile implements MultipartFile {
             0,
             "Get ready to dance all night to the best hits from the 90s! Join us for a nostalgic party filled with classic tunes, retro vibes, and unforgettable fun.",
             "0",
-            eventController.extractImagePaths(imagesHost1Event1, "nachtwerk_max", "Nachtwerk", "90' Night vol. 3"),
+            eventController.extractImagePaths(eventImageMultipartsHost1Event1, "nachtwerk_max", "Nachtwerk", "90' Night vol. 3"),
             null
             );
 
 
-        List<File> imagesHost1 = new ArrayList<>();
-        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"));
-        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"));
-        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"));
-        imagesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg"));
+        List<File> venueImageFilesHost1 = new ArrayList<>();
+        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"));
+        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"));
+        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"));
+        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg"));
+        List<MultipartFile> venueImageMultipartsHost1 = filesToMultipart(venueImageFilesHost1);
         
         
 
 
 
         // 2. Eclipse
-        RegistrationHostUserDTO host2 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host2 = new RegistrationHostDTO();
         host2.setFirstname("Anna");
         host2.setLastname("Schmidt");
         host2.setEmail("anna.eclipse@example.com");
@@ -216,15 +229,17 @@ class FileMultipartFile implements MultipartFile {
         host2.setPostcodeOfVenue("10117");
         host2.setImages(new ArrayList<>());
         host2.setRole(Roles.HOST);
-        List<File> imagesHost2 = new ArrayList<>();
-        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_5.jpg"));
-        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_6.jpg"));
-        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_7.jpg"));
-        imagesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_8.jpg"));
+
+        List<File> venueImageFilesHost2 = new ArrayList<>();
+        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_5.jpg"));
+        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_6.jpg"));
+        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_7.jpg"));
+        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_8.jpg"));
+        List<MultipartFile> venueImageMultipartsHost2 = filesToMultipart(venueImageFilesHost2);
 
 
         // 3. Urban Pulse
-        RegistrationHostUserDTO host3 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host3 = new RegistrationHostDTO();
         host3.setFirstname("Lukas");
         host3.setLastname("Müller");
         host3.setEmail("lukas.urbanpulse@example.com");
@@ -242,15 +257,17 @@ class FileMultipartFile implements MultipartFile {
         host3.setPostcodeOfVenue("10178");
         host3.setImages(new ArrayList<>());
         host3.setRole(Roles.HOST);
-        List<File> imagesHost3 = new ArrayList<>();
-        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_9.jpg"));
-        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_10.jpg"));
-        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_11.jpg"));
-        imagesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_12.jpg"));
+
+        List<File> venueImageFilesHost3 = new ArrayList<>();
+        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_9.jpg"));
+        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_10.jpg"));
+        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_11.jpg"));
+        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_12.jpg"));
+        List<MultipartFile> venueImageMultipartsHost3 = filesToMultipart(venueImageFilesHost3);
 
 
         // 4. Schattentanz
-        RegistrationHostUserDTO host4 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host4 = new RegistrationHostDTO();
         host4.setFirstname("Julia");
         host4.setLastname("Fischer");
         host4.setEmail("julia.schattentanz@example.com");
@@ -268,15 +285,17 @@ class FileMultipartFile implements MultipartFile {
         host4.setPostcodeOfVenue("10115");
         host4.setImages(new ArrayList<>());
         host4.setRole(Roles.HOST);
-        List<File> imagesHost4 = new ArrayList<>();
-        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_13.jpg"));
-        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_14.jpg"));
-        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_15.jpg"));
-        imagesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_16.jpg"));
+
+        List<File> venueImageFilesHost4 = new ArrayList<>();
+        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_13.jpg"));
+        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_14.jpg"));
+        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_15.jpg"));
+        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_16.jpg"));
+        List<MultipartFile> venueImageMultipartsHost4 = filesToMultipart(venueImageFilesHost4);
 
 
         // 5. Aurora Club
-        RegistrationHostUserDTO host5 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host5 = new RegistrationHostDTO();
         host5.setFirstname("David");
         host5.setLastname("Klein");
         host5.setEmail("david.auroraclub@example.com");
@@ -294,16 +313,17 @@ class FileMultipartFile implements MultipartFile {
         host5.setPostcodeOfVenue("10785");
         host5.setImages(new ArrayList<>());
         host5.setRole(Roles.HOST);
-        List<File> imagesHost5 = new ArrayList<>();
-        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_17.jpg"));
-        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_18.jpg"));
-        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_19.jpg"));
-        imagesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_20.jpg"));
-        
+
+        List<File> venueImageFilesHost5 = new ArrayList<>();
+        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_17.jpg"));
+        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_18.jpg"));
+        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_19.jpg"));
+        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_20.jpg"));
+        List<MultipartFile> venueImageMultipartsHost5 = filesToMultipart(venueImageFilesHost5);
 
 
         // 6. Morgenlicht
-        RegistrationHostUserDTO host6 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host6 = new RegistrationHostDTO();
         host6.setFirstname("Sophia");
         host6.setLastname("Meier");
         host6.setEmail("sophia.morgenlicht@example.com");
@@ -321,16 +341,18 @@ class FileMultipartFile implements MultipartFile {
         host6.setPostcodeOfVenue("10707");
         host6.setImages(new ArrayList<>());
         host6.setRole(Roles.HOST);
-        List<File> imagesHost6 = new ArrayList<>();
-        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_21.jpg"));
-        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_22.jpg"));
-        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_23.jpg"));
-        imagesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_24.jpg"));
+
+        List<File> venueImageFilesHost6 = new ArrayList<>();
+        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_21.jpg"));
+        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_22.jpg"));
+        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_23.jpg"));
+        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_24.jpg"));
+        List<MultipartFile> venueImageMultipartsHost6 = filesToMultipart(venueImageFilesHost6);
 
 
         // --- 6 Bars in Berlin ---
         // 7. Velvet Lounge
-        RegistrationHostUserDTO host7 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host7 = new RegistrationHostDTO();
         host7.setFirstname("Jan");
         host7.setLastname("Schneider");
         host7.setEmail("jan.velvetlounge@example.com");
@@ -348,15 +370,17 @@ class FileMultipartFile implements MultipartFile {
         host7.setPostcodeOfVenue("10437");
         host7.setImages(new ArrayList<>());
         host7.setRole(Roles.HOST);
-        List<File> imagesHost7 = new ArrayList<>();
-        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_1.jpg"));
-        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_2.jpg"));
-        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_3.jpg"));
-        imagesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_4.jpg"));
+
+        List<File> venueImageFilesHost7 = new ArrayList<>();
+        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_1.jpg"));
+        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_2.jpg"));
+        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_3.jpg"));
+        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_4.jpg"));
+        List<MultipartFile> venueImageMultipartsHost7 = filesToMultipart(venueImageFilesHost7);
 
 
         // 8. Goldene Stunde
-        RegistrationHostUserDTO host8 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host8 = new RegistrationHostDTO();
         host8.setFirstname("Laura");
         host8.setLastname("Becker");
         host8.setEmail("laura.goldenestunde@example.com");
@@ -374,15 +398,17 @@ class FileMultipartFile implements MultipartFile {
         host8.setPostcodeOfVenue("10405");
         host8.setImages(new ArrayList<>());
         host8.setRole(Roles.HOST);
-        List<File> imagesHost8 = new ArrayList<>();
-        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_5.jpg"));
-        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_6.jpg"));
-        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_7.jpg"));
-        imagesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_8.jpg"));
+
+        List<File> venueImageFilesHost8 = new ArrayList<>();
+        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_5.jpg"));
+        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_6.jpg"));
+        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_7.jpg"));
+        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_8.jpg"));
+        List<MultipartFile> venueImageMultipartsHost8 = filesToMultipart(venueImageFilesHost8);
 
 
         // 9. Luna Bar
-        RegistrationHostUserDTO host9 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host9 = new RegistrationHostDTO();
         host9.setFirstname("Felix");
         host9.setLastname("Richter");
         host9.setEmail("felix.lunabar@example.com");
@@ -400,15 +426,17 @@ class FileMultipartFile implements MultipartFile {
         host9.setPostcodeOfVenue("10247");
         host9.setImages(new ArrayList<>());
         host9.setRole(Roles.HOST);
-        List<File> imagesHost9 = new ArrayList<>();
-        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_9.jpg"));
-        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_10.jpg"));
-        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_11.jpg"));
-        imagesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_12.jpg"));
+
+        List<File> venueImageFilesHost9 = new ArrayList<>();
+        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_9.jpg"));
+        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_10.jpg"));
+        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_11.jpg"));
+        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_12.jpg"));
+        List<MultipartFile> venueImageMultipartsHost9 = filesToMultipart(venueImageFilesHost9);
 
 
         // 10. Stadtklang
-        RegistrationHostUserDTO host10 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host10 = new RegistrationHostDTO();
         host10.setFirstname("Emma");
         host10.setLastname("Schulz");
         host10.setEmail("emma.stadtklang@example.com");
@@ -426,14 +454,17 @@ class FileMultipartFile implements MultipartFile {
         host10.setPostcodeOfVenue("10707");
         host10.setImages(new ArrayList<>());
         host10.setRole(Roles.HOST);
-        List<File> imagesHost10 = new ArrayList<>();
-        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_13.jpg"));
-        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_14.jpg"));
-        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_15.jpg"));
-        imagesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_16.jpg"));
+
+        List<File> venueImageFilesHost10 = new ArrayList<>();
+        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_13.jpg"));
+        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_14.jpg"));
+        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_15.jpg"));
+        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_16.jpg"));
+        List<MultipartFile> venueImageMultipartsHost10 = filesToMultipart(venueImageFilesHost10);
+
 
         // 11. Eckstein
-        RegistrationHostUserDTO host11 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host11 = new RegistrationHostDTO();
         host11.setFirstname("Paul");
         host11.setLastname("Hoffmann");
         host11.setEmail("paul.eckstein@example.com");
@@ -451,15 +482,17 @@ class FileMultipartFile implements MultipartFile {
         host11.setPostcodeOfVenue("13353");
         host11.setImages(new ArrayList<>());
         host11.setRole(Roles.HOST);
-        List<File> imagesHost11 = new ArrayList<>();
-        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_17.jpg"));
-        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_18.jpg"));
-        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_19.jpg"));
-        imagesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_20.jpg"));
+
+        List<File> venueImageFilesHost11 = new ArrayList<>();
+        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_17.jpg"));
+        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_18.jpg"));
+        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_19.jpg"));
+        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_20.jpg"));
+        List<MultipartFile> venueImageMultipartsHost11 = filesToMultipart(venueImageFilesHost11);
 
 
         // 12. Kiezhaus
-        RegistrationHostUserDTO host12 = new RegistrationHostUserDTO();
+        RegistrationHostDTO host12 = new RegistrationHostDTO();
         host12.setFirstname("Mia");
         host12.setLastname("Wagner");
         host12.setEmail("mia.kiezhaus@example.com");
@@ -477,25 +510,24 @@ class FileMultipartFile implements MultipartFile {
         host12.setPostcodeOfVenue("10243");
         host12.setImages(new ArrayList<>());
         host12.setRole(Roles.HOST);
-        List<File> imagesHost12 = new ArrayList<>();
-        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_21.jpg"));
-        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_22.jpg"));
-        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_23.jpg"));
-        imagesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg"));
 
-	
-		serverstartService.createHostUserByServerstart(host1, imagesHost1, new ArrayList<>(List.of(host1Event1)));
-        serverstartService.createHostUserByServerstart(host2, imagesHost2, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host3, imagesHost3, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host4, imagesHost4, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host5, imagesHost5, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host6, imagesHost6, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host7, imagesHost7, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host8, imagesHost8, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host9, imagesHost9, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host10, imagesHost10, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host11, imagesHost11, new ArrayList<>(List.of(new Event())));
-        serverstartService.createHostUserByServerstart(host12, imagesHost12, new ArrayList<>(List.of(new Event())));
+        List<File> venueImageFilesHost12 = new ArrayList<>();
+        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_21.jpg"));
+        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_22.jpg"));
+        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_23.jpg"));
+        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg"));
+        List<MultipartFile> venueImageMultipartsHost12 = filesToMultipart(venueImageFilesHost12);
+
+
+        List<RegistrationHostDTO> hostDTOs = new ArrayList<>(List.of(host1, host2, host3, host4, host5, host6, host7, host8, host9, host10, host11, host12));
+        List<List<MultipartFile>> venueImagesMultiparts = new ArrayList<>(List.of(venueImageMultipartsHost1, venueImageMultipartsHost2, venueImageMultipartsHost3, venueImageMultipartsHost4, venueImageMultipartsHost5, venueImageMultipartsHost6, venueImageMultipartsHost7, venueImageMultipartsHost8, venueImageMultipartsHost9, venueImageMultipartsHost10, venueImageMultipartsHost11, venueImageMultipartsHost12));
+        List<List<MultipartFile>> eventImagesMultiparts = new ArrayList<>(List.of(venueImageMultipartsHost1));
+        
+        mockDataService.mockDataInitializer(hostDTOs, venueImagesMultiparts, eventImagesMultiparts);
+
+		// serverstartService.createHostUserByServerstart(host1, imagesHost1, new ArrayList<>(List.of(host1Event1)));
+
+        
 
 	}
 }

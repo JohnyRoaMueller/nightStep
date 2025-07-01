@@ -15,7 +15,7 @@ export type GuestFormData = {
     role: Roles;
 };
 
-type HostFormData = {
+type HostRegistrationData = {
     firstname: string;
     lastname: string;
     email: string;
@@ -24,16 +24,6 @@ type HostFormData = {
     username: string;
     password: string;
     confirmPassword: string;
-    nameOfVenue: string,
-    typeOfVenue: string,
-    capacity: string,
-    cityOfVenue: string,
-    streetOfVenue: string,
-    housenumberOfVenue: string,
-    postcodeOfVenue: string,
-    imageOne: Blob
-    imageTwo: Blob
-    imageThree: Blob
     role: Roles;
 };
 
@@ -49,12 +39,28 @@ type AddEventForm = {
     imageThree: Blob | null,
 }
 
+type VenueRegistrationData = {
+    name: string,
+    type: string,
+    capacity: string,
+    city: string,
+    street: string,
+    housenumber: string,
+    postcode: string,
+};
+
+type VenueBlobs = {
+    imageOne: Blob | null,
+    imageTwo: Blob | null,
+    imageThree: Blob | null,
+}
+
 export type EmptyValueEffectType = {
     animation: string;
     }
 
 type ValidateFormType = {
-    formData: GuestFormData | HostFormData | AddEventForm,
+    formData: GuestFormData | HostRegistrationData | AddEventForm | VenueRegistrationData | VenueBlobs
     setEmptyValueEffect: React.Dispatch<React.SetStateAction<EmptyValueEffectType[]>>,
     setPopUpFlag: React.Dispatch<SetStateAction<boolean>>
     setWarningMessage: React.Dispatch<SetStateAction<string>>
@@ -186,23 +192,39 @@ export async function validateGuestForm({formData, setEmptyValueEffect, setPopUp
     }
 
 
-export function preventWrongInputType(name: string, value: string) {
-    // preventNonAlphabeticInput //
-    if (name === 'firstname' || name === 'lastname') 
-        {
-            /** replacing everything that is not alphabetic
-             * the ^ (caret) works here as a negation of the listing
-             * -> everything that is not a-z or A-Z
-             */
-            value = value.replace(/[^a-zA-Z]/g, "")
-        }
-    // preventNonNumericalInput //
-    if (name === 'postcodeOfVenue' || name === 'capacity') 
-        {
-            value = value.replace(/[^0-9]/g, "")
-        }
-    return value
+/* 
+* replacing everything that is not alphabetic
+* the ^ (caret) works here as a negation of the listing
+* -> everything that is not a-z or A-Z 
+*/
+export function removeNonAlphabetic(value: string): string {
+  return value.replace(/[^a-zA-Z]/g, "");
+}
 
+
+export function removeNonNumeric(value: string): string {
+  return value.replace(/[^0-9]/g, "");
+}
+
+function removeSpaces(value: string) {
+  return value.replace(/\s/g, "");
 }
     
+export function preventWrongInputType(name: string, value: string) {
+
+    // guestForm
+    if (name == "firstname") {return removeNonAlphabetic(value)}
+    if (name == "lastname") {return removeNonAlphabetic(value)}
+    if (name == "email") {return removeNonAlphabetic(value)}
+    if (name == "username") {return removeSpaces(value)}
+    if (name == "password") {return removeSpaces(value)}
+    if (name == "confirmPassword") {return removeSpaces(value)}
+
+    // extra fields of hostForm
+    if (name == "capacity") {return removeNonNumeric(value)}
+    if (name == "street") {return removeNonAlphabetic(value)}
+    if (name == "housenumber") {return removeNonNumeric(value)}
+    if (name == "postcode") {return removeNonNumeric(value)}
+
+} 
 

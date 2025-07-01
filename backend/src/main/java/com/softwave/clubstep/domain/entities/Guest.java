@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.softwave.clubstep.DTO.RegisteringGuestUserDTO;
+import com.softwave.clubstep.DTO.RegistrationGuestDTO;
 import com.softwave.clubstep.base.BaseUser;
 
 import jakarta.persistence.Entity;

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.enums.Roles;
 
-public class RegistrationHostUserDTO {
+public class RegistrationHostDTO {
     private String firstname;
     private String lastname;
     private String email;
@@ -27,8 +27,8 @@ public class RegistrationHostUserDTO {
     private Roles role;  
     private Venue venue;
 
-    public RegistrationHostUserDTO() {}
-    public RegistrationHostUserDTO(
+    public RegistrationHostDTO() {}
+    public RegistrationHostDTO(
         String firstname,
         String lastname,
         String email,

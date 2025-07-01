@@ -40,14 +40,14 @@ function RegisterHostForm() {
 
     
     const handleDateChange = (date: Dayjs | null) => {
-        setHostFormData((prevData) => ({
+        setHostRegistrationData((prevData) => ({
             ...prevData,
             birthday: date?.format('YYYY-MM-DD') || null
         }));
     }
 
 
-    type HostFormData = {
+    type HostRegistrationData = {
         firstname: string;
         lastname: string;
         email: string;
@@ -56,20 +56,10 @@ function RegisterHostForm() {
         username: string;
         password: string;
         confirmPassword: string;
-        nameOfVenue: string,
-        typeOfVenue: string,
-        capacity: string,
-        cityOfVenue: string,
-        streetOfVenue: string,
-        housenumberOfVenue: string,
-        postcodeOfVenue: string,
-        imageOne: Blob | null,
-        imageTwo: Blob | null,
-        imageThree: Blob | null,
         role: Roles;
     };
 
-    const [hostFormData, setHostFormData] = useState<HostFormData>({
+    const [hostRegistrationData, setHostRegistrationData] = useState<HostRegistrationData>({
         firstname: "",
         lastname: "",
         email: "",
@@ -78,17 +68,41 @@ function RegisterHostForm() {
         username: "",
         password: "",
         confirmPassword: "",
-        nameOfVenue: "",
-        typeOfVenue: "",
+        role: Roles.HOST
+    })
+
+
+    type VenueRegistrationData = {
+        name: string,
+        type: string,
+        capacity: string,
+        city: string,
+        street: string,
+        housenumber: string,
+        postcode: string,
+    };
+
+    const [venueRegistrationData, setVenueRegistrationData] = useState<VenueRegistrationData>({
+        name: "",
+        type: "",
         capacity: "",
-        cityOfVenue: "",
-        streetOfVenue: "",
-        housenumberOfVenue: "",
-        postcodeOfVenue: "",
+        city: "",
+        street: "",
+        housenumber: "",
+        postcode: "",
+    })    
+
+
+    type VenueBlobs = {
+        imageOne: Blob | null,
+        imageTwo: Blob | null,
+        imageThree: Blob | null,
+    }
+
+    const [venueBlobs, setVenueBlobs] = useState<VenueBlobs>({
         imageOne: null,
         imageTwo: null,
         imageThree: null,
-        role: Roles.HOST
     })
 
     const inputRefs = useRef<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>([])
@@ -98,15 +112,25 @@ function RegisterHostForm() {
     )    
 
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleHostDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const name = event.target.name
         const value = event.target.value
-        setHostFormData((prevData) => ({
+        setHostRegistrationData((prevData) => ({
             ...prevData,
             [name]: preventWrongInputType(name, value),
         }));
     }
+
+    const handleVenueDataChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        const name = event.target.name
+        const value = event.target.value
+        setVenueRegistrationData((prevData) => ({
+            ...prevData,
+            [name]: preventWrongInputType(name, value),
+        }));
+    }    
 
     const handleCheckbox = () => setCheck(prevdata => !prevdata)
 
@@ -115,50 +139,40 @@ function RegisterHostForm() {
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        console.log(hostFormData.imageTwo)
+        console.log(venueBlobs.imageTwo)
 
         console.log(inputRefs)
 
-        const isValid = await validateGuestForm({formData: hostFormData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
+        /** 
+        const isValid1 = await validateGuestForm({formData: hostRegistrationData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
 
-        if (!isValid) {
-            console.log("Input not valid")
+        if (!isValid1) {
+            // alert("Input1 not valid")
+            console.log("Input1 not valid")
             return
-        }
+        }         
+        */
+        
 
         async function fetchingData() {
 
-            const hostFormDataObject = new FormData();
-            hostFormDataObject.append("firstname", hostFormData.firstname)
-            hostFormDataObject.append("lastname", hostFormData.lastname)
-            hostFormDataObject.append("email", hostFormData.email)
-            hostFormDataObject.append("gender", hostFormData.gender)
-            hostFormDataObject.append("birthday", hostFormData.birthday)
-            hostFormDataObject.append("username", hostFormData.username)
-            hostFormDataObject.append("password", hostFormData.password)
-            hostFormDataObject.append("confirmPassword", hostFormData.confirmPassword)
-            hostFormDataObject.append("nameOfVenue", hostFormData.nameOfVenue)
-            hostFormDataObject.append("typeOfVenue", hostFormData.typeOfVenue)
-            hostFormDataObject.append("capacity", hostFormData.capacity)
-            hostFormDataObject.append("cityOfVenue", hostFormData.cityOfVenue)
-            hostFormDataObject.append("streetOfVenue", hostFormData.streetOfVenue)
-            hostFormDataObject.append("housenumberOfVenue", hostFormData.housenumberOfVenue)
-            hostFormDataObject.append("postcodeOfVenue", hostFormData.postcodeOfVenue)
-            hostFormDataObject.append("role", hostFormData.role)
-            hostFormDataObject.append("images[]", hostFormData.imageOne)
-            hostFormDataObject.append("images[]", hostFormData.imageTwo)
-            hostFormDataObject.append("images[]", hostFormData.imageThree)
+            const formData = new FormData();
+            formData.append("hostRegistrationData", new Blob([JSON.stringify(hostRegistrationData)], { type: "application/json" }));
+            formData.append("venueRegistrationData", new Blob([JSON.stringify(venueRegistrationData)], { type: "application/json" }));
+            formData.append("imagesRegistrationData", venueBlobs.imageOne)
+            formData.append("imagesRegistrationData", venueBlobs.imageTwo)
+            formData.append("imagesRegistrationData", venueBlobs.imageThree)
 
             const response = await fetch(`${apiUrl}/register/host`,
                 {
                     method: "POST",
-                    body: hostFormDataObject,
+                    body: formData,
                 }
             )
             // reseting form
-
             setCheck(false)
-            navigateTo("/login")
+            console.log(venueRegistrationData.capacity)
+            // navigateTo("/login")
         }
         fetchingData()
     }
@@ -171,7 +185,7 @@ function RegisterHostForm() {
       if (event.target.files && event.target.files[0]) {
         const file = event.target.files[0];
         console.log(file)
-        setHostFormData((prevData) => ({
+        setVenueBlobs((prevData) => ({
             ...prevData,
             [event.target.name] : file
         }))
@@ -188,7 +202,7 @@ function RegisterHostForm() {
 
     const genderList = ["male","female","divers"]
     
-    const typeOfVenueList = ["Nightclub", "Bar", "Restaurant", "Gallery", "Theater", "Hostel"]
+    const typeList = ["Nightclub", "Bar", "Restaurant", "Gallery", "Theater", "Hostel"]
 
     const cityList = ["berlin"]
 
@@ -223,63 +237,63 @@ function RegisterHostForm() {
                     
             <FormHeader>BASE</FormHeader>
                            
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' required value={hostFormData.firstname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='firstname'helperText='firstname*' required value={hostRegistrationData.firstname} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[0]}} key='textfield-firstname'/>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' required value={hostFormData.lastname} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} key='textfield-lastname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='lastname' helperText='lastname*' required value={hostRegistrationData.lastname} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[1]}} key='textfield-lastname'/>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' required value={hostFormData.email} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}} key='textfield-email'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='email' helperText='email*' required value={hostRegistrationData.email} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[2]}} key='textfield-email'/>
                         
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLOptionElement)} name='gender' helperText='gender' select slotProps={{select: {native: true}}} value={hostFormData.gender} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLOptionElement)} name='gender' helperText='gender' select slotProps={{select: {native: true}}} value={hostRegistrationData.gender} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[3]}} key='textfield-gender'> {/*select (non-native) prop sorgt für overlay und stören der Layouts*/} {/* Lösung von https://stackblitz.com/run?file=Demo.tsx Zeile 47 - 64)*/}
                 <option value='' disabled>{"▒"}</option>
                 {genderList.map((gender) => <option value={gender} key={gender}>{gender}</option>)}
             </FormTextField>
                               
             <LocalizedDatePicker inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} helperText='birthday' onChange={handleDateChange} name='birthday' format='YYYY-MM-DD' sx={{'& .MuiInputBase-input': emptyValueEffect[4]}} key={"CostumDatePicker"} maxDate={dayjs(Date.now() - 31556926 * 18 * 1000)} minDate={dayjs("1950-01-01T00:00:00.000") }></LocalizedDatePicker> {/** maxDate={dayjs.unix(Date.now() - 31556926)} */}
                             
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' required value={hostFormData.username} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='username' helperText='username*' required value={hostRegistrationData.username} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[5]}} key='textfield-username'/>
                            
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' type='password' helperText ='password*' required value={hostFormData.password} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'password' type='password' helperText ='password*' required value={hostRegistrationData.password} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[6]}} key='textfield-password'/>
                             
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'confirmPassword' type='password' helperText ='confirm password*' required value={hostFormData.confirmPassword} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-confirmPassword'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name= 'confirmPassword' type='password' helperText ='confirm password*' required value={hostRegistrationData.confirmPassword} onChange={handleHostDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[7]}} key='textfield-confirmPassword'/>
                               
             <FormHeader>VENUE RELATED</FormHeader>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='nameOfVenue'helperText='name of venue*' required value={hostFormData.nameOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-nameOfVenue'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='name'helperText='name of venue*' required value={venueRegistrationData.name} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-name'/>
                     
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='typeOfVenue'helperText='type of venue*' required select slotProps={{select: {native: true}}} value={hostFormData.typeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-typeOfVenue'>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='type'helperText='type of venue*' required select slotProps={{select: {native: true}}} value={venueRegistrationData.type} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-type'>
                 <option value='' disabled>{"▒"}</option>
-                {typeOfVenueList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
+                {typeList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
             </FormTextField>
                      
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity' value={hostFormData.capacity} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity' value={venueRegistrationData.capacity} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'/>
                     
             <FormHeader>ADDRESS OF VENUE</FormHeader>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='cityOfVenue'helperText='city*' select slotProps={{select: {native: true}}} required value={hostFormData.cityOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-cityOfVenue'>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='city'helperText='city*' select slotProps={{select: {native: true}}} required value={venueRegistrationData.city} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-city'>
                 <option value='' disabled>{"▒"}</option>
                 {cityList.map((city) => <option value={city} key={city}>{city}</option>)}
             </FormTextField>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='streetOfVenue'helperText='street*' required value={hostFormData.streetOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='street'helperText='street*' required value={venueRegistrationData.street} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumberOfVenue'helperText='housenumber*' required value={hostFormData.housenumberOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumber'helperText='housenumber*' required value={venueRegistrationData.housenumber} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcodeOfVenue'helperText='postcode*' required value={hostFormData.postcodeOfVenue} onChange={handleChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcode'helperText='postcode*' required value={venueRegistrationData.postcode} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
                     
-            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[15], height: `${hostFormData.imageOne ? '100%' : '20vh'}`}} >
+            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[15], height: `${venueBlobs.imageOne ? '100%' : '20vh'}`}} >
                 {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                 <input name='imageOne' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 0)}></input>
                 <img src={imageUrls[0]} style={{height: "100%", width: "100%"}} ></img>
             </PictureHolder>
                         
-            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[16], height: `${hostFormData.imageTwo ? '100%' : '20vh'}`}}>
+            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[16], height: `${venueBlobs.imageTwo ? '100%' : '20vh'}`}}>
                 {!imageUrls[1] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                 <input name='imageTwo' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 1)}></input>
                 <img src={imageUrls[1]} style={{height: "100%", width: "100%"}} ></img>
             </PictureHolder>
                     
-            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[17], height: `${hostFormData.imageThree ? '100%' : '20vh'}`}}>
+            <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[17], height: `${venueBlobs.imageThree ? '100%' : '20vh'}`}}>
                 {!imageUrls[2] && <ImageTypoH2>Upload an image</ImageTypoH2>}
                 <input name='imageThree' type='file' accept='image/*' style={{position: "absolute", top: 0, width: "100%", height: "100%", opacity: "0"}} onChange={(event) => handleFileChange(event, 2)}></input>
                 <img src={imageUrls[2]} style={{height: "100%", width: "100%"}} ></img>
