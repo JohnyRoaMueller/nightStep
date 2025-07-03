@@ -16,13 +16,6 @@ public class RegistrationHostDTO {
     private String birthday;
     private String username;
     private String password;
-    private String nameOfVenue;
-    private String typeOfVenue;
-    private String capacity;
-    private String cityOfVenue;
-    private String streetOfVenue;
-    private String housenumberOfVenue;
-    private String postcodeOfVenue;
     private List<MultipartFile> images;
     private Roles role;  
     private Venue venue;
@@ -37,12 +30,6 @@ public class RegistrationHostDTO {
         String birthday,
         String username,
         String password,
-        String nameOfVenue,
-        String typeOfVenue,
-        String capacity,
-        String cityOfVenue,
-        String housenumberOfVenue,
-        String postcodeOfVenue,
         List<MultipartFile> images,
         Roles role,
         Venue venue
@@ -56,12 +43,6 @@ public class RegistrationHostDTO {
         this.birthday = birthday;
         this.username = username;
         this.password = password;
-        this.nameOfVenue = nameOfVenue;
-        this.typeOfVenue = typeOfVenue;
-        this.capacity = capacity;
-        this.cityOfVenue = cityOfVenue;
-        this.housenumberOfVenue = housenumberOfVenue;
-        this.postcodeOfVenue = postcodeOfVenue;
         this.images = images;
         this.role = role;
         this.venue = venue;
@@ -92,27 +73,6 @@ public class RegistrationHostDTO {
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password = password;}
-
-    public String getNameOfVenue() {return nameOfVenue;}
-    public void setNameOfVenue(String nameOfVenue) {this.nameOfVenue = nameOfVenue;}
-
-    public String getTypeOfVenue() {return typeOfVenue;}
-    public void setTypeOfVenue(String typeOfVenue) {this.typeOfVenue = typeOfVenue;}
-
-    public String getCapacity() {return capacity;}
-    public void setCapacity(String capacity) {this.capacity = capacity;}
-
-    public String getCityOfVenue() {return cityOfVenue;}
-    public void setCityOfVenue(String cityOfVenue) {this.cityOfVenue = cityOfVenue;}
-
-    public String getStreetOfVenue() {return streetOfVenue;}
-    public void setStreetOfVenue(String streetOfVenue) {this.streetOfVenue = streetOfVenue;}
-
-    public String getHousenumberOfVenue() {return housenumberOfVenue;}
-    public void setHousenumberOfVenue(String housenumberOfVenue) {this.housenumberOfVenue = housenumberOfVenue;}
-
-    public String getPostcodeOfVenue() {return postcodeOfVenue;}
-    public void setPostcodeOfVenue(String postcodeOfVenue) {this.postcodeOfVenue = postcodeOfVenue;}
 
     public List<MultipartFile> getImages() {return images;}
     public void setImages (List<MultipartFile> images) {this.images = images;}

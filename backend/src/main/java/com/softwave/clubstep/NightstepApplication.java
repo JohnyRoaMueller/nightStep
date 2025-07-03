@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.EventDTO;
 import com.softwave.clubstep.DTO.RegistrationHostDTO;
+import com.softwave.clubstep.DTO.VenueDTO;
 import com.softwave.clubstep.controllers.EventController;
 import com.softwave.clubstep.controllers.RegistrationController;
 import com.softwave.clubstep.domain.repository.GuestRepository;
@@ -31,7 +32,6 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.enums.Roles;
 import com.softwave.clubstep.services.MockDataService;
-import com.softwave.clubstep.services.ServerstartService;
 
 import io.jsonwebtoken.io.IOException;
 
@@ -54,7 +54,6 @@ public class NightstepApplication implements CommandLineRunner {
 	private final VenueRepository venueRepository;
 	private final GuestRepository guestRepository;
 	private final HostRepository hostRepository;
-	private final ServerstartService serverstartService;
 
 	//*		        	CONTROLLER	    				 */
 	private final RegistrationController registrationController;
@@ -64,13 +63,12 @@ public class NightstepApplication implements CommandLineRunner {
     private final MockDataService mockDataService;
 
 
-	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, ServerstartService serverstartService, MockDataService mockDataService) {
+	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, MockDataService mockDataService) {
 		this.venueRepository = venueRepository;
 		this.guestRepository = guestRepository;
 		this.hostRepository = hostRepository;
 		this.registrationController = registrationController;
         this.eventController = eventController;
-		this.serverstartService = serverstartService;
         this.mockDataService = mockDataService;
 	}
 
@@ -157,11 +155,11 @@ class FileMultipartFile implements MultipartFile {
 	
 
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws java.io.IOException {
 
 
         // --- 6 Clubs in Berlin ---
-        // 1. Nachtwerk
+        // === Host 1: Nachtwerk ===
         RegistrationHostDTO host1 = new RegistrationHostDTO();
         host1.setFirstname("Max");
         host1.setLastname("Mustermann");
@@ -171,46 +169,51 @@ class FileMultipartFile implements MultipartFile {
         host1.setBirthday("1985-01-15");
         host1.setUsername("nachtwerk_max");
         host1.setPassword("password");
-        host1.setNameOfVenue("Nachtwerk");
-        host1.setTypeOfVenue("Nightclub");
-        host1.setCapacity("1200");
-        host1.setCityOfVenue("Berlin");
-        host1.setStreetOfVenue("Hauptstraße");
-        host1.setHousenumberOfVenue("5A");
-        host1.setPostcodeOfVenue("10115");
         host1.setRole(Roles.HOST);
 
-        List<File> eventImageFilesHost1Event1 = new ArrayList<>();
-        eventImageFilesHost1Event1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_blue.png"));
-        eventImageFilesHost1Event1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_green.png"));
-        eventImageFilesHost1Event1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\diagonal_red.png"));
-        List<MultipartFile> eventImageMultipartsHost1Event1 = filesToMultipart(eventImageFilesHost1Event1);
 
-        Event host1Event1 = new Event(
+        List<File> venueImageFiles1 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg")
+        );
+        List<MultipartFile> venueImages1 = filesToMultipart(venueImageFiles1);
+
+        VenueDTO venue1 = new VenueDTO();
+        venue1.setName("Nachtwerk");
+        venue1.setType("Nightclub");
+        venue1.setCapacity(1200);
+        venue1.setCity("Berlin");
+        venue1.setDistrict(null);
+        venue1.setStreet("Hauptstraße");
+        venue1.setHouseNumber("5A");
+        venue1.setPostalCode(10115);
+        venue1.setDescription(null);
+        venue1.setImageBlobs(venueImages1);
+
+
+        List<File> eventFiles1 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\90' Night vol. 3\\diagonal_blue.png"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\90' Night vol. 3\\diagonal_green.png"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\90' Night vol. 3\\diagonal_red.png")
+        );
+        List<MultipartFile> eventImages1 = filesToMultipart(eventFiles1);
+
+        EventDTO event1 = new EventDTO(
             "90' Night vol. 3",
             OffsetDateTime.parse("2025-07-04T22:00:00+02:00"),
             OffsetDateTime.parse("2025-07-06T20:00:00+02:00"),
             new BigDecimal("22.00"),
             0,
             "Get ready to dance all night to the best hits from the 90s! Join us for a nostalgic party filled with classic tunes, retro vibes, and unforgettable fun.",
-            "0",
-            eventController.extractImagePaths(eventImageMultipartsHost1Event1, "nachtwerk_max", "Nachtwerk", "90' Night vol. 3"),
-            null
-            );
-
-
-        List<File> venueImageFilesHost1 = new ArrayList<>();
-        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"));
-        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"));
-        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"));
-        venueImageFilesHost1.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg"));
-        List<MultipartFile> venueImageMultipartsHost1 = filesToMultipart(venueImageFilesHost1);
-        
-        
+            null,
+            eventImages1
+        );
 
 
 
-        // 2. Eclipse
+        // === Host 2: Eclipse ===
         RegistrationHostDTO host2 = new RegistrationHostDTO();
         host2.setFirstname("Anna");
         host2.setLastname("Schmidt");
@@ -220,25 +223,32 @@ class FileMultipartFile implements MultipartFile {
         host2.setBirthday("1990-04-10");
         host2.setUsername("eclipse_anna");
         host2.setPassword("password");
-        host2.setNameOfVenue("Eclipse");
-        host2.setTypeOfVenue("Nightclub");
-        host2.setCapacity("900");
-        host2.setCityOfVenue("Berlin");
-        host2.setStreetOfVenue("Unter den Linden");
-        host2.setHousenumberOfVenue("12");
-        host2.setPostcodeOfVenue("10117");
-        host2.setImages(new ArrayList<>());
         host2.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost2 = new ArrayList<>();
-        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_5.jpg"));
-        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_6.jpg"));
-        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_7.jpg"));
-        venueImageFilesHost2.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_8.jpg"));
-        List<MultipartFile> venueImageMultipartsHost2 = filesToMultipart(venueImageFilesHost2);
+
+        List<File> venueImageFiles2 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_5.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_6.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_7.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_8.jpg")
+        );
+        List<MultipartFile> venueImages2 = filesToMultipart(venueImageFiles2);
+
+        VenueDTO venue2 = new VenueDTO();
+        venue2.setName("Eclipse");
+        venue2.setType("Nightclub");
+        venue2.setCapacity(900);
+        venue2.setCity("Berlin");
+        venue2.setDistrict(null);
+        venue2.setStreet("Unter den Linden");
+        venue2.setHouseNumber("12");
+        venue2.setPostalCode(10117);
+        venue2.setDescription(null);
+        venue2.setImageBlobs(venueImages2);
 
 
-        // 3. Urban Pulse
+
+        // === Host 3: Urban Pulse ===
         RegistrationHostDTO host3 = new RegistrationHostDTO();
         host3.setFirstname("Lukas");
         host3.setLastname("Müller");
@@ -248,25 +258,32 @@ class FileMultipartFile implements MultipartFile {
         host3.setBirthday("1988-06-20");
         host3.setUsername("urbanpulse_lukas");
         host3.setPassword("password");
-        host3.setNameOfVenue("Urban Pulse");
-        host3.setTypeOfVenue("Nightclub");
-        host3.setCapacity("700");
-        host3.setCityOfVenue("Berlin");
-        host3.setStreetOfVenue("Rosenthaler Straße");
-        host3.setHousenumberOfVenue("27");
-        host3.setPostcodeOfVenue("10178");
-        host3.setImages(new ArrayList<>());
         host3.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost3 = new ArrayList<>();
-        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_9.jpg"));
-        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_10.jpg"));
-        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_11.jpg"));
-        venueImageFilesHost3.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_12.jpg"));
-        List<MultipartFile> venueImageMultipartsHost3 = filesToMultipart(venueImageFilesHost3);
+
+        List<File> venueImageFiles3 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_9.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_10.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_11.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_12.jpg")
+        );
+        List<MultipartFile> venueImages3 = filesToMultipart(venueImageFiles3);
+
+        VenueDTO venue3 = new VenueDTO();
+        venue3.setName("Urban Pulse");
+        venue3.setType("Nightclub");
+        venue3.setCapacity(700);
+        venue3.setCity("Berlin");
+        venue3.setDistrict(null);
+        venue3.setStreet("Rosenthaler Straße");
+        venue3.setHouseNumber("27");
+        venue3.setPostalCode(10178);
+        venue3.setDescription(null);
+        venue3.setImageBlobs(venueImages3);
 
 
-        // 4. Schattentanz
+
+        // === Host 4: Schattentanz ===
         RegistrationHostDTO host4 = new RegistrationHostDTO();
         host4.setFirstname("Julia");
         host4.setLastname("Fischer");
@@ -276,25 +293,32 @@ class FileMultipartFile implements MultipartFile {
         host4.setBirthday("1992-11-05");
         host4.setUsername("schattentanz_julia");
         host4.setPassword("password");
-        host4.setNameOfVenue("Schattentanz");
-        host4.setTypeOfVenue("Nightclub");
-        host4.setCapacity("800");
-        host4.setCityOfVenue("Berlin");
-        host4.setStreetOfVenue("Invalidenstraße");
-        host4.setHousenumberOfVenue("44");
-        host4.setPostcodeOfVenue("10115");
-        host4.setImages(new ArrayList<>());
         host4.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost4 = new ArrayList<>();
-        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_13.jpg"));
-        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_14.jpg"));
-        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_15.jpg"));
-        venueImageFilesHost4.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_16.jpg"));
-        List<MultipartFile> venueImageMultipartsHost4 = filesToMultipart(venueImageFilesHost4);
+
+        List<File> venueImageFiles4 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_13.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_14.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_15.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_16.jpg")
+        );
+        List<MultipartFile> venueImages4 = filesToMultipart(venueImageFiles4);
+
+        VenueDTO venue4 = new VenueDTO();
+        venue4.setName("Schattentanz");
+        venue4.setType("Nightclub");
+        venue4.setCapacity(800);
+        venue4.setCity("Berlin");
+        venue4.setDistrict(null);
+        venue4.setStreet("Invalidenstraße");
+        venue4.setHouseNumber("44");
+        venue4.setPostalCode(10115);
+        venue4.setDescription(null);
+        venue4.setImageBlobs(venueImages4);
 
 
-        // 5. Aurora Club
+
+        // === Host 5: Aurora Club ===
         RegistrationHostDTO host5 = new RegistrationHostDTO();
         host5.setFirstname("David");
         host5.setLastname("Klein");
@@ -304,25 +328,32 @@ class FileMultipartFile implements MultipartFile {
         host5.setBirthday("1987-09-12");
         host5.setUsername("aurora_david");
         host5.setPassword("password");
-        host5.setNameOfVenue("Aurora Club");
-        host5.setTypeOfVenue("Nightclub");
-        host5.setCapacity("1100");
-        host5.setCityOfVenue("Berlin");
-        host5.setStreetOfVenue("Potsdamer Straße");
-        host5.setHousenumberOfVenue("18");
-        host5.setPostcodeOfVenue("10785");
-        host5.setImages(new ArrayList<>());
         host5.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost5 = new ArrayList<>();
-        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_17.jpg"));
-        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_18.jpg"));
-        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_19.jpg"));
-        venueImageFilesHost5.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_20.jpg"));
-        List<MultipartFile> venueImageMultipartsHost5 = filesToMultipart(venueImageFilesHost5);
+
+        List<File> venueImageFiles5 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_17.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_18.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_19.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_20.jpg")
+        );
+        List<MultipartFile> venueImages5 = filesToMultipart(venueImageFiles5);
+
+        VenueDTO venue5 = new VenueDTO();
+        venue5.setName("Aurora Club");
+        venue5.setType("Nightclub");
+        venue5.setCapacity(1100);
+        venue5.setCity("Berlin");
+        venue5.setDistrict(null);
+        venue5.setStreet("Potsdamer Straße");
+        venue5.setHouseNumber("18");
+        venue5.setPostalCode(10785);
+        venue5.setDescription(null);
+        venue5.setImageBlobs(venueImages5);
 
 
-        // 6. Morgenlicht
+
+        // === Host 6: Morgenlicht ===
         RegistrationHostDTO host6 = new RegistrationHostDTO();
         host6.setFirstname("Sophia");
         host6.setLastname("Meier");
@@ -332,26 +363,32 @@ class FileMultipartFile implements MultipartFile {
         host6.setBirthday("1995-03-22");
         host6.setUsername("morgenlicht_sophia");
         host6.setPassword("password");
-        host6.setNameOfVenue("Morgenlicht");
-        host6.setTypeOfVenue("Nightclub");
-        host6.setCapacity("600");
-        host6.setCityOfVenue("Berlin");
-        host6.setStreetOfVenue("Kurfürstendamm");
-        host6.setHousenumberOfVenue("101");
-        host6.setPostcodeOfVenue("10707");
-        host6.setImages(new ArrayList<>());
         host6.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost6 = new ArrayList<>();
-        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_21.jpg"));
-        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_22.jpg"));
-        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_23.jpg"));
-        venueImageFilesHost6.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_24.jpg"));
-        List<MultipartFile> venueImageMultipartsHost6 = filesToMultipart(venueImageFilesHost6);
+
+        List<File> venueImageFiles6 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_21.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_22.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_23.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_24.jpg")
+        );
+        List<MultipartFile> venueImages6 = filesToMultipart(venueImageFiles6); 
+
+        VenueDTO venue6 = new VenueDTO();
+        venue6.setName("Morgenlicht");
+        venue6.setType("Nightclub");
+        venue6.setCapacity(600);
+        venue6.setCity("Berlin");
+        venue6.setDistrict(null);
+        venue6.setStreet("Kurfürstendamm");
+        venue6.setHouseNumber("101");
+        venue6.setPostalCode(10707);
+        venue6.setDescription(null);
+        venue6.setImageBlobs(venueImages6);
 
 
-        // --- 6 Bars in Berlin ---
-        // 7. Velvet Lounge
+
+        // === Host 7: Velvet Lounge ===
         RegistrationHostDTO host7 = new RegistrationHostDTO();
         host7.setFirstname("Jan");
         host7.setLastname("Schneider");
@@ -361,25 +398,32 @@ class FileMultipartFile implements MultipartFile {
         host7.setBirthday("1986-07-18");
         host7.setUsername("velvet_jan");
         host7.setPassword("password");
-        host7.setNameOfVenue("Velvet Lounge");
-        host7.setTypeOfVenue("Bar");
-        host7.setCapacity("150");
-        host7.setCityOfVenue("Berlin");
-        host7.setStreetOfVenue("Schönhauser Allee");
-        host7.setHousenumberOfVenue("30");
-        host7.setPostcodeOfVenue("10437");
-        host7.setImages(new ArrayList<>());
         host7.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost7 = new ArrayList<>();
-        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_1.jpg"));
-        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_2.jpg"));
-        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_3.jpg"));
-        venueImageFilesHost7.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_4.jpg"));
-        List<MultipartFile> venueImageMultipartsHost7 = filesToMultipart(venueImageFilesHost7);
+
+        List<File> venueImageFiles7 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_1.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_2.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_3.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_4.jpg")
+        );
+        List<MultipartFile> venueImages7 = filesToMultipart(venueImageFiles7);
+
+        VenueDTO venue7 = new VenueDTO();
+        venue7.setName("Velvet Lounge");
+        venue7.setType("Bar");
+        venue7.setCapacity(150);
+        venue7.setCity("Berlin");
+        venue7.setDistrict(null);
+        venue7.setStreet("Schönhauser Allee");
+        venue7.setHouseNumber("30");
+        venue7.setPostalCode(10437);
+        venue7.setDescription(null);
+        venue7.setImageBlobs(venueImages7);
 
 
-        // 8. Goldene Stunde
+
+        // === Host 8: Goldene Stunde ===
         RegistrationHostDTO host8 = new RegistrationHostDTO();
         host8.setFirstname("Laura");
         host8.setLastname("Becker");
@@ -389,25 +433,32 @@ class FileMultipartFile implements MultipartFile {
         host8.setBirthday("1991-12-03");
         host8.setUsername("goldenestunde_laura");
         host8.setPassword("password");
-        host8.setNameOfVenue("Goldene Stunde");
-        host8.setTypeOfVenue("Bar");
-        host8.setCapacity("250");
-        host8.setCityOfVenue("Berlin");
-        host8.setStreetOfVenue("Prenzlauer Allee");
-        host8.setHousenumberOfVenue("22");
-        host8.setPostcodeOfVenue("10405");
-        host8.setImages(new ArrayList<>());
         host8.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost8 = new ArrayList<>();
-        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_5.jpg"));
-        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_6.jpg"));
-        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_7.jpg"));
-        venueImageFilesHost8.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_8.jpg"));
-        List<MultipartFile> venueImageMultipartsHost8 = filesToMultipart(venueImageFilesHost8);
+
+        List<File> venueImageFiles8 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_5.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_6.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_7.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_8.jpg")
+        );
+        List<MultipartFile> venueImages8 = filesToMultipart(venueImageFiles8);
+
+        VenueDTO venue8 = new VenueDTO();
+        venue8.setName("Goldene Stunde");
+        venue8.setType("Bar");
+        venue8.setCapacity(250);
+        venue8.setCity("Berlin");
+        venue8.setDistrict(null);
+        venue8.setStreet("Prenzlauer Allee");
+        venue8.setHouseNumber("22");
+        venue8.setPostalCode(10405);
+        venue8.setDescription(null);
+        venue8.setImageBlobs(venueImages8);
 
 
-        // 9. Luna Bar
+
+        // === Host 9: Luna Bar ===
         RegistrationHostDTO host9 = new RegistrationHostDTO();
         host9.setFirstname("Felix");
         host9.setLastname("Richter");
@@ -417,25 +468,32 @@ class FileMultipartFile implements MultipartFile {
         host9.setBirthday("1989-05-25");
         host9.setUsername("lunabar_felix");
         host9.setPassword("password");
-        host9.setNameOfVenue("Luna Bar");
-        host9.setTypeOfVenue("Bar");
-        host9.setCapacity("180");
-        host9.setCityOfVenue("Berlin");
-        host9.setStreetOfVenue("Frankfurter Allee");
-        host9.setHousenumberOfVenue("15");
-        host9.setPostcodeOfVenue("10247");
-        host9.setImages(new ArrayList<>());
         host9.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost9 = new ArrayList<>();
-        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_9.jpg"));
-        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_10.jpg"));
-        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_11.jpg"));
-        venueImageFilesHost9.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_12.jpg"));
-        List<MultipartFile> venueImageMultipartsHost9 = filesToMultipart(venueImageFilesHost9);
+
+        List<File> venueImageFiles9 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_9.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_10.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_11.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_12.jpg")
+        );
+        List<MultipartFile> venueImages9 = filesToMultipart(venueImageFiles9);
+
+        VenueDTO venue9 = new VenueDTO();
+        venue9.setName("Luna Bar");
+        venue9.setType("Bar");
+        venue9.setCapacity(180);
+        venue9.setCity("Berlin");
+        venue9.setDistrict(null);
+        venue9.setStreet("Frankfurter Allee");
+        venue9.setHouseNumber("15");
+        venue9.setPostalCode(10247);
+        venue9.setDescription(null);
+        venue9.setImageBlobs(venueImages9);
 
 
-        // 10. Stadtklang
+
+        // === Host 10: Stadtklang ===
         RegistrationHostDTO host10 = new RegistrationHostDTO();
         host10.setFirstname("Emma");
         host10.setLastname("Schulz");
@@ -445,25 +503,32 @@ class FileMultipartFile implements MultipartFile {
         host10.setBirthday("1993-08-30");
         host10.setUsername("stadtklang_emma");
         host10.setPassword("password");
-        host10.setNameOfVenue("Stadtklang");
-        host10.setTypeOfVenue("Bar");
-        host10.setCapacity("100");
-        host10.setCityOfVenue("Berlin");
-        host10.setStreetOfVenue("Schlüterstraße");
-        host10.setHousenumberOfVenue("9");
-        host10.setPostcodeOfVenue("10707");
-        host10.setImages(new ArrayList<>());
         host10.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost10 = new ArrayList<>();
-        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_13.jpg"));
-        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_14.jpg"));
-        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_15.jpg"));
-        venueImageFilesHost10.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_16.jpg"));
-        List<MultipartFile> venueImageMultipartsHost10 = filesToMultipart(venueImageFilesHost10);
+
+        List<File> venueImageFiles10 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_13.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_14.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_15.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_16.jpg")
+        );
+        List<MultipartFile> venueImages10 = filesToMultipart(venueImageFiles10);
+
+        VenueDTO venue10 = new VenueDTO();
+        venue10.setName("Stadtklang");
+        venue10.setType("Bar");
+        venue10.setCapacity(100);
+        venue10.setCity("Berlin");
+        venue10.setDistrict(null);
+        venue10.setStreet("Schlüterstraße");
+        venue10.setHouseNumber("9");
+        venue10.setPostalCode(10707);
+        venue10.setDescription(null);
+        venue10.setImageBlobs(venueImages10);
 
 
-        // 11. Eckstein
+
+        // === Host 11: Eckstein ===
         RegistrationHostDTO host11 = new RegistrationHostDTO();
         host11.setFirstname("Paul");
         host11.setLastname("Hoffmann");
@@ -473,25 +538,32 @@ class FileMultipartFile implements MultipartFile {
         host11.setBirthday("1984-02-14");
         host11.setUsername("eckstein_paul");
         host11.setPassword("password");
-        host11.setNameOfVenue("Eckstein");
-        host11.setTypeOfVenue("Bar");
-        host11.setCapacity("80");
-        host11.setCityOfVenue("Berlin");
-        host11.setStreetOfVenue("Müllerstraße");
-        host11.setHousenumberOfVenue("3");
-        host11.setPostcodeOfVenue("13353");
-        host11.setImages(new ArrayList<>());
         host11.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost11 = new ArrayList<>();
-        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_17.jpg"));
-        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_18.jpg"));
-        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_19.jpg"));
-        venueImageFilesHost11.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_20.jpg"));
-        List<MultipartFile> venueImageMultipartsHost11 = filesToMultipart(venueImageFilesHost11);
+
+        List<File> venueImageFiles11 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_17.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_18.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_19.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_20.jpg")
+        );
+        List<MultipartFile> venueImages11 = filesToMultipart(venueImageFiles11);
+
+        VenueDTO venue11 = new VenueDTO();
+        venue11.setName("Eckstein");
+        venue11.setType("Bar");
+        venue11.setCapacity(80);
+        venue11.setCity("Berlin");
+        venue11.setDistrict(null);
+        venue11.setStreet("Müllerstraße");
+        venue11.setHouseNumber("3");
+        venue11.setPostalCode(13353);
+        venue11.setDescription(null);
+        venue11.setImageBlobs(venueImages11);
 
 
-        // 12. Kiezhaus
+
+        // === Host 12: Kiezhaus ===
         RegistrationHostDTO host12 = new RegistrationHostDTO();
         host12.setFirstname("Mia");
         host12.setLastname("Wagner");
@@ -501,29 +573,35 @@ class FileMultipartFile implements MultipartFile {
         host12.setBirthday("1994-10-07");
         host12.setUsername("kiezhaus_mia");
         host12.setPassword("password");
-        host12.setNameOfVenue("Kiezhaus");
-        host12.setTypeOfVenue("Bar");
-        host12.setCapacity("90");
-        host12.setCityOfVenue("Berlin");
-        host12.setStreetOfVenue("Warschauer Straße");
-        host12.setHousenumberOfVenue("55");
-        host12.setPostcodeOfVenue("10243");
-        host12.setImages(new ArrayList<>());
         host12.setRole(Roles.HOST);
 
-        List<File> venueImageFilesHost12 = new ArrayList<>();
-        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_21.jpg"));
-        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_22.jpg"));
-        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_23.jpg"));
-        venueImageFilesHost12.add(new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg"));
-        List<MultipartFile> venueImageMultipartsHost12 = filesToMultipart(venueImageFilesHost12);
+
+        List<File> venueImageFiles12 = List.of(
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_21.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_22.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_23.jpg"),
+            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg")
+        );
+        List<MultipartFile> venueImages12 = filesToMultipart(venueImageFiles12);
+
+        VenueDTO venue12 = new VenueDTO();
+        venue12.setName("Kiezhaus");
+        venue12.setType("Bar");
+        venue12.setCapacity(90);
+        venue12.setCity("Berlin");
+        venue12.setDistrict(null);
+        venue12.setStreet("Warschauer Straße");
+        venue12.setHouseNumber("55");
+        venue12.setPostalCode(10243);
+        venue12.setDescription(null);
+        venue12.setImageBlobs(venueImages12);
 
 
         List<RegistrationHostDTO> hostDTOs = new ArrayList<>(List.of(host1, host2, host3, host4, host5, host6, host7, host8, host9, host10, host11, host12));
-        List<List<MultipartFile>> venueImagesMultiparts = new ArrayList<>(List.of(venueImageMultipartsHost1, venueImageMultipartsHost2, venueImageMultipartsHost3, venueImageMultipartsHost4, venueImageMultipartsHost5, venueImageMultipartsHost6, venueImageMultipartsHost7, venueImageMultipartsHost8, venueImageMultipartsHost9, venueImageMultipartsHost10, venueImageMultipartsHost11, venueImageMultipartsHost12));
-        List<List<MultipartFile>> eventImagesMultiparts = new ArrayList<>(List.of(venueImageMultipartsHost1));
+        List<VenueDTO> venueDTOs = new ArrayList<>(List.of(venue1, venue2, venue3, venue4, venue5, venue6, venue7, venue8, venue9, venue10, venue11, venue12));
+        List<EventDTO> eventDTOs = new ArrayList<>(List.of(event1));
         
-        mockDataService.mockDataInitializer(hostDTOs, venueImagesMultiparts, eventImagesMultiparts);
+        mockDataService.mockDataInitializer(hostDTOs, venueDTOs, eventDTOs);
 
 		// serverstartService.createHostUserByServerstart(host1, imagesHost1, new ArrayList<>(List.of(host1Event1)));
 

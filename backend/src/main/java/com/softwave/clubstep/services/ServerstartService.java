@@ -26,6 +26,8 @@ import com.softwave.clubstep.domain.repository.VenueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+
 @Service
 public class ServerstartService {
 
@@ -33,7 +35,7 @@ public class ServerstartService {
     RegistrationService registrationService;
 
     @Autowired
-    UserService userService;
+    EntityFinder userService;
 
     @Autowired
     UploadService uploadService;
@@ -113,7 +115,7 @@ public class ServerstartService {
     }
 
 
-    Host host = userService.getHostOrNull(registeringHost.getUsername());
+    Host host = userService.getHostByUsernameOrNull(registeringHost.getUsername());
 
     System.out.println(registeringHost.getUsername());
 
@@ -132,3 +134,6 @@ public class ServerstartService {
 
     }
 }
+
+
+ */

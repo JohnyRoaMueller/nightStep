@@ -26,7 +26,7 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.RegistrationService;
 import com.softwave.clubstep.services.UploadService;
-import com.softwave.clubstep.services.UserService;
+import com.softwave.clubstep.services.EntityFinder;
 import com.softwave.clubstep.services.VenueService;
 
 @RestController
@@ -37,7 +37,7 @@ public class RegistrationController {
     RegistrationService registrationService;
 
     @Autowired
-    UserService userService;
+    EntityFinder userService;
 
     @Autowired
     UploadService uploadService;
@@ -51,6 +51,10 @@ public class RegistrationController {
     @Autowired 
     UserAuthRepository userAuthRepository;
 
+    @Autowired
+    EntityFinder EntityFinder;
+
+
     Logger logger = LoggerFactory.getLogger(RegistrationController.class);
     
 
@@ -59,7 +63,7 @@ public class RegistrationController {
 
         logger.info("hello from checkIfUserExists");
 
-        UserAuth user = userService.getUserAuthOrNull(username);
+        UserAuth user = userService.getUserAuthByUsernameOrNull(username);
 
         if (user == null) return ResponseEntity.ok("username avialabel");
         else return ResponseEntity.status(406).body("username not avialable");
@@ -86,12 +90,9 @@ public class RegistrationController {
 
         registrationService.registerHostUser(hostRegistrationData);
 
-        venueService.addVenue(venueRegistrationData);
+        Host host = EntityFinder.getHostOrNull(hostRepository.findByEmail(hostRegistrationData.getEmail()));
 
-        List<String> picAddresses = venueService.extractImagePaths(venueRegistrationData.getImageBlobs(), hostRegistrationData.getUsername(), venueRegistrationData.getName());
-        Host host = userService.getHostOrNull(hostRegistrationData.getUsername());
-
-        uploadService.addVenueImages(hostRegistrationData.getImages(), hostRegistrationData.getUsername(), hostRegistrationData.getNameOfVenue());
+        venueService.addVenue(venueRegistrationData, host);
 
         return ResponseEntity.ok("registration successfully");
 

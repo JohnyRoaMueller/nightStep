@@ -14,7 +14,7 @@ import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.CookieService;
 import com.softwave.clubstep.services.JwtService;
 import com.softwave.clubstep.services.PasswordService;
-import com.softwave.clubstep.services.UserService;
+import com.softwave.clubstep.services.EntityFinder;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -45,14 +45,14 @@ public class LoginController {
     CookieService cookieService;
 
     @Autowired
-    UserService userService;
+    EntityFinder userService;
 
 
     @PostMapping(value = "/login")
     public ResponseEntity<UserAuth> login(@RequestBody UserAuth loginRequest, HttpServletResponse response) {
         System.out.println("api/login erreicht");
 
-        UserAuth currentUser = userService.getUserAuthOrNull(loginRequest.getUsername());
+        UserAuth currentUser = userService.getUserAuthByUsernameOrNull(loginRequest.getUsername());
 
         /** checking if user exist, if not returning a error message */
         if (currentUser == null) {

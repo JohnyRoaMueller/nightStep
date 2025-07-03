@@ -20,7 +20,6 @@ public class EventDTO {
     private String description;
     private List<String> imagePaths;
     private Venue venue;
-    private String venueName;
     private List<MultipartFile> images;
 
 
@@ -34,7 +33,6 @@ public class EventDTO {
         int likes,
         String description,
         Venue venue,
-        String venueName,
         List<MultipartFile> images
     )
     {
@@ -45,7 +43,6 @@ public class EventDTO {
         this.likes = likes;
         this.description = description;
         this.venue = venue;
-        this.venueName = venueName;
         this.images = images;
     } 
 
@@ -67,11 +64,11 @@ public class EventDTO {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
+    public List<String> getImagePaths() { return imagePaths; }
+    public void setImagePaths(List<String> imagePaths) { this.imagePaths = imagePaths; }
+
     public Venue getVenue() { return venue; }
     public void setVenue(Venue venue) { this.venue = venue; }
-
-    public String getVenueName() { return venueName; }
-    public void setVenueName(String venueName) { this.venueName = venueName; }
 
     public List<MultipartFile> getImages() { return images; }
     public void setImages(List<MultipartFile> images) { this.images = images; }    

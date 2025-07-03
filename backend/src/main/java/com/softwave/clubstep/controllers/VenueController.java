@@ -24,7 +24,7 @@ import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.services.JwtService;
 import com.softwave.clubstep.services.UploadService;
-import com.softwave.clubstep.services.UserService;
+import com.softwave.clubstep.services.EntityFinder;
 import com.softwave.clubstep.services.VenueService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,8 +43,9 @@ public class VenueController {
     {/*--------------- Services --------------- */}
     private final VenueService venueService;
     private final JwtService jwtService;
-    private final UserService userService;
+    private final EntityFinder userService;
     private final UploadService uploadService;
+    private final EntityFinder entityFinder;
 
     
     public VenueController
@@ -52,10 +53,11 @@ public class VenueController {
         VenueRepository venueRepository,
         VenueService venueService,
         JwtService jwtService,
-        UserService userService,
+        EntityFinder userService,
         HostRepository hostRepository,
         UserAuthRepository userAuthRepository,
-        UploadService uploadService
+        UploadService uploadService,
+        EntityFinder entityFinder
         )
         {
         this.venueRepository = venueRepository;
@@ -65,6 +67,7 @@ public class VenueController {
         this.hostRepository = hostRepository;
         this.userAuthRepository = userAuthRepository;
         this.uploadService = uploadService;
+        this.entityFinder = entityFinder;
         }
 
 {/*
@@ -86,7 +89,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         logger.info("/venue/{venueName}");
 
-        Venue currentVenue = venueService.getVenueOrNull(venueName);
+        Venue currentVenue = entityFinder.getVenueByNameOrNull(venueName);
 
         if (currentVenue == null)
         {
@@ -138,7 +141,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         Host currentHost = currentUserAuth.getHost();
 
-        Venue venue = venueService.getVenueOfHostOrNull(currentHost);
+        Venue venue = entityFinder.getVenueOfHostOrNull(currentHost);
 
         logger.info(venue.toString());
 
@@ -161,7 +164,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         Host host = currentUserAuth.getHost();
 
-        Venue venue = venueService.getVenueOfHostOrNull(host);
+        Venue venue = entityFinder.getVenueOfHostOrNull(host);
 
         if (venue.getClass() == Venue.class) {
             logger.info("venue ist da");

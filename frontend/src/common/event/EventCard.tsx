@@ -21,6 +21,8 @@ function EventCard({isHost, imgSrc, eventName, venueName, date, startTime, endTi
 
     const navigateTo = useNavigate();
 
+    console.log(imgSrc)
+
     return(
         <>
         <EvenCardtContainer>

@@ -20,12 +20,12 @@ public class Venue  {
 
     private String name;
     private String type;
-    private String capacity;
+    private int capacity;
     private String city;
     private String district;
     private String street;
     private String houseNumber;
-    private String postalCode;
+    private int postalCode;
     private String description;
 
     @ElementCollection
@@ -60,12 +60,12 @@ public class Venue  {
         (
         String name,
         String type,
-        String capacity,
+        int capacity,
         String city,
         String district, 
         String street,
         String houseNumber,
-        String postalCode, 
+        int postalCode, 
         String description,
         List<String> imagePaths,
         Host host,
@@ -98,8 +98,8 @@ public class Venue  {
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 
-    public String getCapacity() { return capacity; }
-    public void setCapacity(String capacity) { this.capacity = capacity; }
+    public int getCapacity() { return capacity; }
+    public void setCapacity(int capacity) { this.capacity = capacity; }
 
     public String getCity() { return city; }
     public void setCity(String city) { this.city = city; }
@@ -113,8 +113,8 @@ public class Venue  {
     public String getHouseNumber() { return houseNumber; }
     public void setHouseNumber(String houseNumber) { this.houseNumber = houseNumber; }
 
-    public String getPostalCode() { return postalCode; }
-    public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
+    public int getPostalCode() { return postalCode; }
+    public void setPostalCode(int postalCode) { this.postalCode = postalCode; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }

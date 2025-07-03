@@ -36,7 +36,7 @@ public class RegistrationService {
     @Autowired
     private HostRepository hostRepo;
     @Autowired
-    private UserService userService;
+    private EntityFinder userService;
 
     public void registerGuestUser(RegistrationGuestDTO registeringUser) {
 

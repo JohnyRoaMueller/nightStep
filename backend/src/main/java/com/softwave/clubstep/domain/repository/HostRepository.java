@@ -13,7 +13,8 @@ import com.softwave.clubstep.domain.entities.UserAuth;
 public interface HostRepository extends CrudRepository<Host, Long> {
 
     Optional<Host> findByFirstname(String firstname);
-
     Optional<Host> findByUserAuth(UserAuth userAuth);
+    Optional<Host> findByEmail(String email);
+    
 
 }

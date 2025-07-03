@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,17 @@ public class VenueService {
     UserAuthRepository userAuthRepository;
 
     @Autowired
-    UserService userService;
+    EntityFinder userService;
 
     @Autowired
     UploadService uploadService;
 
+    @Autowired
+    EntityFinder entityFinder;
+
+
     
-    public void addVenue(VenueDTO venueData) throws IOException {
+    public void addVenue(VenueDTO venueData, Host host) throws IOException {
 
         String name = venueData.getName();
         String type = venueData.getType();
@@ -54,10 +59,15 @@ public class VenueService {
         String houseNumber = venueData.getHouseNumber();
         int postalCode = venueData.getPostalCode();
         String description = null;
-        List<String> picAddresses = extractImagePaths(venueData.getImageBlobs(), venueData.getUsername(), venueData.getName());
-        Host host = userService.getHostOrNull(registeringHost.getUsername());
+        List<MultipartFile> imageBlobs = venueData.getImageBlobs();
 
-        venueRepository.save(new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null));
+        UserAuth hostUserAuth = entityFinder.getUserAuthOrNull(userAuthRepository.findByHost(host));
+        List<String> picAddresses = extractVenueImagePaths(imageBlobs, hostUserAuth.getUsername(), name);
+        uploadService.addVenueImages(imageBlobs, hostUserAuth.getUsername(), name);    
+
+        Venue newVenue = new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null);
+
+        venueRepository.save(newVenue);
 
         logger.info("club added to db");
     }
@@ -78,13 +88,19 @@ public class VenueService {
         else return "Unbekannter Bezirk";
     }
 
-    public List<String> extractImagePaths(List<MultipartFile> images, String username, String nameOfVenue) {
+    public List<String> extractVenueImagePaths(List<MultipartFile> images, String username, String nameOfVenue) {
         List<String> imagePaths = new ArrayList<String>();
 
+
         for (MultipartFile image : images) {
-            if (image.getOriginalFilename().startsWith("./uploads/host_images/")) {
-            String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
-            String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename); 
+            logger.info(image.getOriginalFilename() + " original");
+        }
+       
+        for (MultipartFile image : images) {
+
+            if (image.getOriginalFilename().startsWith("./uploads/host_images/") ) {
+                String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
+                String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename); 
             imagePaths.add(path);
                 continue;
             }
@@ -101,58 +117,16 @@ public class VenueService {
         venue.setType(newVenueData.getType());
         venue.setCapacity(newVenueData.getCapacity());
         venue.setCity(newVenueData.getCity());
-        venue.setDistrict(defineDistrict(Integer.parseInt(newVenueData.getPostalCode())));
+        venue.setDistrict(defineDistrict(newVenueData.getPostalCode()));
         venue.setHouseNumber(newVenueData.getHouseNumber()); 
         venue.setPostalCode(newVenueData.getPostalCode());
         venue.setDescription(newVenueData.getDescription());
 
         if (newVenueData.getImageBlobs() != null) {
-            venue.setPicAddresses(extractImagePaths(newVenueData.getImageBlobs(), venue.getHost().getUserAuth().getUsername(), newVenueData.getName()));
+            venue.setPicAddresses(extractVenueImagePaths(newVenueData.getImageBlobs(), venue.getHost().getUserAuth().getUsername(), newVenueData.getName()));
         }
         venueRepository.save(venue);
         logger.info("update setted");
     }
-
-
-    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //
-    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //    
-    public Venue getVenueOrNull(String venuename) {
-        
-        Optional<Venue> venueOption = venueRepository.findByName(venuename);
-
-        if (venueOption.isPresent())
-        {
-            return venueOption.get();
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public Venue getVenueOfHostOrNull(Host host) {
-
-        Optional<Venue> venue = venueRepository.findByHost(host);
-
-        if (venue.isPresent()) return venue.get();
-        if (!venue.isPresent()) return null;
-
-        return null;
-
-    }
-    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //
-    // Get?OrNull //// Get?OrNull //// Get?OrNull //// Get?OrNull //   
+  
 }
-
-/*
- *  private String name;
-    private String type;
-    private int capacity;
-    private String city;
-    private String district;
-    private String street;
-    private String houseNumber;
-    private String postalCode;
-    private String description;
-    private List<String> picAddresses;
- */
