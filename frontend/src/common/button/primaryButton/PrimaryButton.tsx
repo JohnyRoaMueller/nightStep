@@ -1,12 +1,15 @@
+import { forwardRef } from "react";
 import { StyledButton } from "./PrimaryButton.Styles";
 import PrimaryButtonProps from "./PrimaryButton.Types";
 
-function PrimaryButton( { children, ...buttonProps }: PrimaryButtonProps) {
-    return(
-        <>
-        <StyledButton {...buttonProps}>{children}</StyledButton>
-        </>
-    )
-}
+// Wichtig: React.Ref<HTMLButtonElement> angeben
+const PrimaryButton = forwardRef<HTMLButtonElement, PrimaryButtonProps>(({ children, ...buttonProps }, ref) => {
+    return (
+      <StyledButton ref={ref} {...buttonProps}>
+        {children}
+      </StyledButton>
+    );
+  }
+);
 
-export default PrimaryButton
+export default PrimaryButton;

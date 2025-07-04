@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import theme from "../../theme/theme";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { FullscreenFlexBox, VerticalCentered } from "./baseStyles";
 import Footer from "./footer/Footer";
 import { Appbar } from "./appbar/Appbar";
@@ -8,20 +8,20 @@ import { Appbar } from "./appbar/Appbar";
 
 
 
-interface BaseProps {
-    children: React.ReactNode;
+interface BaseProps extends BoxProps {
+  children: React.ReactNode;
 }
 
 
-function Base({children}: BaseProps) {
+function Base({children, ...boxProps}: BaseProps) {
     return (
         <>
         <ThemeProvider theme={theme}>
-            <FullscreenFlexBox id="FullscreenFlexBox">
+            <FullscreenFlexBox {...boxProps} id="FullscreenFlexBox">
                 <Appbar/>
-                <VerticalCentered id="VerticalCentered">
+                <VerticalCentered {...boxProps} id="VerticalCentered">
                     {children}
-                </VerticalCentered>
+                </VerticalCentered >
                 <Footer/>
             </FullscreenFlexBox>
         </ThemeProvider>
