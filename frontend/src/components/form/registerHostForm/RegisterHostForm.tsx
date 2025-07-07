@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Roles from '../../../../enums/Roles.ts'
 import { HeaderWrapper, ImageTypoH2, PictureHolder, TermsWrapper } from './registerHostForm.Styles.ts'
 import { Checkbox, Fade } from '@mui/material'
@@ -79,7 +79,7 @@ function RegisterHostForm() {
         city: string,
         street: string,
         housenumber: string,
-        postcode: string,
+        postalCode: string,
     };
 
     const [venueRegistrationData, setVenueRegistrationData] = useState<VenueRegistrationData>({
@@ -89,7 +89,7 @@ function RegisterHostForm() {
         city: "",
         street: "",
         housenumber: "",
-        postcode: "",
+        postalCode: "",
     })    
 
 
@@ -134,24 +134,28 @@ function RegisterHostForm() {
 
     const handleCheckbox = () => setCheck(prevdata => !prevdata)
 
-    console.log(emptyValueEffect)
+
+    useEffect(() => {
+        console.log(venueRegistrationData)
+        console.log(hostRegistrationData)
+    }, [hostRegistrationData, venueRegistrationData])     
+
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        console.log(venueBlobs.imageTwo)
-
-        console.log(inputRefs)
-
-        /** 
-        const isValid1 = await validateGuestForm({formData: hostRegistrationData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
+        
+        const isValid1 = await validateGuestForm({formData: hostRegistrationData, formData2: venueRegistrationData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
 
         if (!isValid1) {
             // alert("Input1 not valid")
             console.log("Input1 not valid")
             return
-        }         
-        */
+        }   
+        else {
+            console.log("input is valid") 
+        }     
+             
         
 
         async function fetchingData() {
@@ -163,16 +167,29 @@ function RegisterHostForm() {
             formData.append("imagesRegistrationData", venueBlobs.imageTwo)
             formData.append("imagesRegistrationData", venueBlobs.imageThree)
 
+            return null;
+
             const response = await fetch(`${apiUrl}/register/host`,
                 {
                     method: "POST",
                     body: formData,
                 }
             )
-            // reseting form
-            setCheck(false)
-            console.log(venueRegistrationData.capacity)
-            // navigateTo("/login")
+            if (response.ok)
+            {
+                // reseting form
+                setCheck(false)
+                // navigateTo("/login")
+            }
+            else
+            {
+
+                setVenueBlobs({
+                    imageOne: venueBlobs.imageOne,
+                    imageTwo: venueBlobs.imageTwo,
+                    imageThree: venueBlobs.imageThree,
+                });
+            }
         }
         fetchingData()
     }
@@ -184,7 +201,7 @@ function RegisterHostForm() {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
       if (event.target.files && event.target.files[0]) {
         const file = event.target.files[0];
-        console.log(file)
+        // console.log(file)
         setVenueBlobs((prevData) => ({
             ...prevData,
             [event.target.name] : file
@@ -258,28 +275,28 @@ function RegisterHostForm() {
                               
             <FormHeader>VENUE RELATED</FormHeader>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='name'helperText='name of venue*' required value={venueRegistrationData.name} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-name'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='name' helperText='name of venue*' required value={venueRegistrationData.name} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[8]}} key='textfield-name'/>
                     
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='type'helperText='type of venue*' required select slotProps={{select: {native: true}}} value={venueRegistrationData.type} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-type'>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='type' helperText='type of venue*' required select slotProps={{select: {native: true}}} value={venueRegistrationData.type} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[9]}} key='textfield-type'>
                 <option value='' disabled>{"▒"}</option>
                 {typeList.map((venue) => <option value={venue} key={venue}>{venue}</option>)}
             </FormTextField>
                      
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity' value={venueRegistrationData.capacity} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='capacity' helperText='capacity*' value={venueRegistrationData.capacity} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[10]}} key='textfield-capacity'/>
                     
             <FormHeader>ADDRESS OF VENUE</FormHeader>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='city'helperText='city*' select slotProps={{select: {native: true}}} required value={venueRegistrationData.city} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-city'>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='city' helperText='city*' select slotProps={{select: {native: true}}} required value={venueRegistrationData.city} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[11]}} key='textfield-city'>
                 <option value='' disabled>{"▒"}</option>
                 {cityList.map((city) => <option value={city} key={city}>{city}</option>)}
             </FormTextField>
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='street'helperText='street*' required value={venueRegistrationData.street} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='street' helperText='street*' required value={venueRegistrationData.street} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[12]}} key='textfield-firstname'/> 
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumber'helperText='housenumber*' required value={venueRegistrationData.housenumber} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='housenumber' helperText='housenumber*' required value={venueRegistrationData.housenumber} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[13]}} key='textfield-firstname'/> 
                     
-            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postcode'helperText='postcode*' required value={venueRegistrationData.postcode} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
+            <FormTextField inputRef={domElement => inputRefs.current.push(domElement as HTMLInputElement)} name='postalCode' helperText='postcode*' required value={venueRegistrationData.postalCode} onChange={handleVenueDataChange} sx={{'& .MuiInputBase-input': emptyValueEffect[14]}} key='textfield-firstname'/>
                     
             <PictureHolder ref={domElement => inputRefs.current.push(domElement as HTMLDivElement)} sx={{...emptyValueEffect[15], height: `${venueBlobs.imageOne ? '100%' : '20vh'}`}} >
                 {!imageUrls[0] && <ImageTypoH2>Upload an image</ImageTypoH2>}

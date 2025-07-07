@@ -12,7 +12,6 @@ export default function RegistrationHost() {
             {/* ↑↑↑ My Content ↑↑↑ */}
 
         </>
-
       </Base>
     )
 }

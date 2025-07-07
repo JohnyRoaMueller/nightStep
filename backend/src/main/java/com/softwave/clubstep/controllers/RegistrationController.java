@@ -1,6 +1,7 @@
 package com.softwave.clubstep.controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -79,6 +80,8 @@ public class RegistrationController {
         registrationService.registerGuestUser(registeringGuest);
     }
 
+
+
     @PostMapping(value = "/register/host", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> createHost(
         @RequestPart("hostRegistrationData") RegistrationHostDTO hostRegistrationData,
@@ -90,12 +93,28 @@ public class RegistrationController {
 
         registrationService.registerHostUser(hostRegistrationData);
 
+
+        logger.info("=== Venue Data ===");
+        logger.info("  Name: {}", venueRegistrationData.getName());
+        logger.info("  Type: {}", venueRegistrationData.getType());
+        logger.info("  Capacity: {}", venueRegistrationData.getCapacity());
+        logger.info("  City: {}", venueRegistrationData.getCity());
+
+        int postalCode = venueRegistrationData.getPostalCode();
+        logger.info("  Street: {}", venueRegistrationData.getStreet());
+        logger.info("  House Number: {}", venueRegistrationData.getHouseNumber());
+        logger.info("  Postal Code: {}", postalCode);
+        logger.info("  Description: {}", venueRegistrationData.getDescription());        
+
+
+
         Host host = EntityFinder.getHostOrNull(hostRepository.findByEmail(hostRegistrationData.getEmail()));
 
+        venueRegistrationData.setImageBlobs(Arrays.asList(images));
         venueService.addVenue(venueRegistrationData, host);
 
-        return ResponseEntity.ok("registration successfully");
+        return ResponseEntity.ok("registration successfully");  
 
     }
-
-}
+  
+} 

@@ -75,7 +75,7 @@ function VenueCards(props: { venueType: string; }) {
     }, []);
 
 
-    if (loading)
+    if (loading || venues.length === 0)
     {
     return (
         <>

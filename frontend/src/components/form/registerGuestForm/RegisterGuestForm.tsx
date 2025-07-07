@@ -68,7 +68,7 @@ function RegisterGuestForm() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const isValid = await validateGuestForm({formData: guestFormData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
+        const isValid = await validateGuestForm({formData: guestFormData, formData2: null, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check})
         if (!isValid) return
 
             const apiUrl =import.meta.env.VITE_APP_API_URL

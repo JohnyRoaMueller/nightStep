@@ -46,7 +46,7 @@ type VenueRegistrationData = {
     city: string,
     street: string,
     housenumber: string,
-    postcode: string,
+    postalCode: string,
 };
 
 type VenueBlobs = {
@@ -61,6 +61,7 @@ export type EmptyValueEffectType = {
 
 type ValidateFormType = {
     formData: GuestFormData | HostRegistrationData | AddEventForm | VenueRegistrationData | VenueBlobs
+    formData2: null | VenueRegistrationData
     setEmptyValueEffect: React.Dispatch<React.SetStateAction<EmptyValueEffectType[]>>,
     setPopUpFlag: React.Dispatch<SetStateAction<boolean>>
     setWarningMessage: React.Dispatch<SetStateAction<string>>
@@ -68,7 +69,10 @@ type ValidateFormType = {
     inputRefs:React.MutableRefObject<(HTMLInputElement | HTMLButtonElement | HTMLDivElement | HTMLOptionElement)[]>,
     check: boolean
 }
-export async function validateGuestForm({formData, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check}: ValidateFormType) {  
+
+// I know that this is a mess 
+
+export async function validateGuestForm({formData, formData2, setEmptyValueEffect, setPopUpFlag, setWarningMessage, boxShadowAnimation, inputRefs, check}: ValidateFormType) {  
 
     /** checking if required fields got a value */
     for (let i = 0; i <= Object.values(formData).length - 1; i++) 
@@ -81,7 +85,7 @@ export async function validateGuestForm({formData, setEmptyValueEffect, setPopUp
                 setEmptyValueEffect((Prevdata) => {
                     const updateData = [...Prevdata]
                     updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
-                    console.log("updateData: ", updateData)
+                    // console.log("updateData: ", updateData)
                     return updateData;
                 })  
                 setTimeout(() => {
@@ -102,7 +106,7 @@ export async function validateGuestForm({formData, setEmptyValueEffect, setPopUp
                     setEmptyValueEffect((Prevdata) => {
                         const updateData = [...Prevdata]
                         updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
-                        console.log("updateData: ", updateData)
+                        // console.log("updateData: ", updateData)
                         return updateData;
                     })  
                     setTimeout(() => {
@@ -117,6 +121,62 @@ export async function validateGuestForm({formData, setEmptyValueEffect, setPopUp
                     return;
                 }
         }
+
+    console.log("formData2" + formData2)
+    console.log("formData2.length" +  Object.values(formData2).length)
+    console.log(Object.values(formData2))
+
+    if (formData2 != null) {
+        for (let i = 8; i <= Object.values(formData2).length + 7 - 1; i++) 
+            {
+                console.log(Object.keys(formData2))
+                /** checking if required fields value is empty */
+                if (Object.values(formData2)[i - 8] == "") 
+                {
+                    console.log("Object.keys(formData2)[i]: ", Object.keys(formData2)[i - 8])
+                    console.log("im here!! formData2 " + i)
+                    setEmptyValueEffect((Prevdata) => {
+                        const updateData = [...Prevdata]
+                        updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                        // console.log("updateData: ", updateData)
+                        return updateData;
+                    })  
+                    setTimeout(() => {
+                        setEmptyValueEffect((Prevdata) => {
+                            const updateData = [...Prevdata]
+                            updateData[i] =  {animation: ""}
+                            return updateData;
+                        })  
+                    }, 500)
+                    inputRefs?.current[i].focus()
+                    console.log("inputRefs.current[i]: ", inputRefs?.current[i])
+                    return;
+                }
+                if (Object.values(formData2)[i] instanceof Blob && Object.values(formData2)[i].size === 0 || Object.values(formData2)[i] == null) 
+                    {
+                        
+                        console.log("Object.keys(formData2)[i]: ", Object.keys(formData)[i])
+                        setEmptyValueEffect((Prevdata) => {
+                            const updateData = [...Prevdata]
+                            updateData[i] =  {animation: `${boxShadowAnimation} 0.5s ease-out`}
+                            // console.log("updateData: ", updateData)
+                            return updateData;
+                        })  
+                        setTimeout(() => {
+                            setEmptyValueEffect((Prevdata) => {
+                                const updateData = [...Prevdata]
+                                updateData[i] =  {animation: ""}
+                                return updateData;
+                            })  
+                        }, 500)
+                        inputRefs?.current[i].scrollIntoView({block: "center"})
+                        console.log("inputRefs.current[i]: ", inputRefs?.current[i])
+                        return;
+                    }
+            }    
+        }    
+
+
 
         // return true for formData of Type AddEventForm - the other types get checked further
         if ( Object.keys(formData).includes("price") ) return true
@@ -201,7 +261,6 @@ export function removeNonAlphabetic(value: string): string {
   return value.replace(/[^a-zA-Z]/g, "");
 }
 
-
 export function removeNonNumeric(value: string): string {
   return value.replace(/[^0-9]/g, "");
 }
@@ -209,13 +268,21 @@ export function removeNonNumeric(value: string): string {
 function removeSpaces(value: string) {
   return value.replace(/\s/g, "");
 }
+
+export function removeCommonNonNameChars(value: string): string {
+  return value.replace(/[^\p{L}\s'-]/gu, "");
+}
+
+function removeNonCommonHouseNumberChars(value: string): string {
+  return value.replace(/[^0-9a-zA-Z\s/-]/g, '');
+}
     
 export function preventWrongInputType(name: string, value: string) {
 
     // guestForm
-    if (name == "firstname") {return removeNonAlphabetic(value)}
-    if (name == "lastname") {return removeNonAlphabetic(value)}
-    if (name == "email") {return removeNonAlphabetic(value)}
+    if (name == "firstname") {return removeCommonNonNameChars(value)}
+    if (name == "lastname") {return removeCommonNonNameChars(value)}
+    if (name == "email") {return removeSpaces(value)}
     if (name == "username") {return removeSpaces(value)}
     if (name == "password") {return removeSpaces(value)}
     if (name == "confirmPassword") {return removeSpaces(value)}
@@ -223,8 +290,10 @@ export function preventWrongInputType(name: string, value: string) {
     // extra fields of hostForm
     if (name == "capacity") {return removeNonNumeric(value)}
     if (name == "street") {return removeNonAlphabetic(value)}
-    if (name == "housenumber") {return removeNonNumeric(value)}
-    if (name == "postcode") {return removeNonNumeric(value)}
+    if (name == "housenumber") {return removeNonCommonHouseNumberChars(value)}
+    if (name == "postalCode") {return removeNonNumeric(value)}
+
+    else return value
 
 } 
 

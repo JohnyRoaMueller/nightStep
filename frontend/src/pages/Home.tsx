@@ -7,6 +7,10 @@ export default function Home() {
       {/* ↓↓↓ My Content ↓↓↓ */}
       <VenueCards venueType="Nightclub"/>
       <VenueCards venueType="Bar"/>
+      <VenueCards venueType="Restaurant"/>
+      <VenueCards venueType='Gallery'/>
+      <VenueCards venueType='Theater'/>
+      <VenueCards venueType='Hostel'/>
       {/* ↑↑↑ My Content ↑↑↑ */}
     </Base>
   );
