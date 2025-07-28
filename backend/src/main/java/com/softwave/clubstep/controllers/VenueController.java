@@ -115,9 +115,11 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         UserAuth currentUserAuth = hostUserAuthOption.get();
 
-        Host currentHost = currentUserAuth.getHost();
+        Host currentHost = entityFinder.getHostOrNull(hostRepository.findByUserAuthId(currentUserAuth.getId()));
 
-        List<Venue> venues = currentHost.getOwnedVenues();
+        List<String> venueIds = currentHost.getOwnedVenueIds();
+
+        List<Venue> venues = venueRepository.findAllById(venueIds);
 
         logger.info(venues.toString());
 
@@ -139,7 +141,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         UserAuth currentUserAuth = hostUserAuthOption.get();
 
-        Host currentHost = currentUserAuth.getHost();
+        Host currentHost = entityFinder.getHostByUsernameOrNull(currentUserAuth.getUsername());
 
         Venue venue = entityFinder.getVenueOfHostOrNull(currentHost);
 
@@ -162,7 +164,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
 
         UserAuth currentUserAuth = hostUserAuthOption.get();
 
-        Host host = currentUserAuth.getHost();
+        Host host = entityFinder.getHostByUsernameOrNull(currentUserAuth.getUsername());
 
         Venue venue = entityFinder.getVenueOfHostOrNull(host);
 

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +58,7 @@ public class VenueService {
 
         UserAuth hostUserAuth = entityFinder.getUserAuthOrNull(userAuthRepository.findByUserRefId(host.getId()));
         List<String> picAddresses = extractVenueImagePaths(imageBlobs, hostUserAuth.getUsername(), name);
+        logger.info("not reached!");
         uploadService.addVenueImages(imageBlobs, hostUserAuth.getUsername(), name);
 
         // Venue speichert nur hostId, nicht Host-Objekt

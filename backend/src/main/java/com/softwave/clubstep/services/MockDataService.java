@@ -46,7 +46,7 @@ public class MockDataService {
     public void mockDataInitializer(List<RegistrationHostDTO> hostDTOs, List<VenueDTO> venueDTOs, List<EventDTO> eventDTOs) throws IOException {
         for (int i = 0; i < hostDTOs.size(); i++) {
 
-            if (hostRepository.findByEmail(hostDTOs.get(i).getEmail()).isPresent()) return;
+            if (hostRepository.findByEmail(hostDTOs.get(i).getEmail()).isPresent()) continue;
 
             registrationService.registerHostUser(hostDTOs.get(i));
 

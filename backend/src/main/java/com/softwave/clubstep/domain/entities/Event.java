@@ -1,6 +1,7 @@
 package com.softwave.clubstep.domain.entities;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class Event {
 
     private String name;
 
-    private OffsetDateTime startTimeDate;
-    private OffsetDateTime endTimeDate;
+    private Instant startTimeDate;
+    private Instant endTimeDate;
 
     private BigDecimal price;
 
@@ -38,8 +39,8 @@ public class Event {
 
     public Event(
         String name,
-        OffsetDateTime startTimeDate,
-        OffsetDateTime endTimeDate,
+        Instant startTimeDate,
+        Instant endTimeDate,
         BigDecimal price,
         int likes,
         String description,
@@ -66,11 +67,11 @@ public class Event {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public OffsetDateTime getStartTimeDate() { return startTimeDate; }
-    public void setStartTimeDate(OffsetDateTime startTimeDate) { this.startTimeDate = startTimeDate; }
+    public Instant getStartTimeDate() { return startTimeDate; }
+    public void setStartTimeDate(Instant startTimeDate) { this.startTimeDate = startTimeDate; }
 
-    public OffsetDateTime getEndTimeDate() { return endTimeDate; }
-    public void setEndTimeDate(OffsetDateTime endTimeDate) { this.endTimeDate = endTimeDate; }
+    public Instant getEndTimeDate() { return endTimeDate; }
+    public void setEndTimeDate(Instant endTimeDate) { this.endTimeDate = endTimeDate; }
 
     public BigDecimal getPrice() { return price; }
     public void setPrice(BigDecimal price) { this.price = price; }

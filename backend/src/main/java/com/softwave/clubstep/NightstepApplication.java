@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -11,14 +12,13 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,22 +32,13 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.enums.Roles;
 import com.softwave.clubstep.services.MockDataService;
-
-import io.jsonwebtoken.io.IOException;
-
-import com.softwave.clubstep.domain.entities.Event;
-
-import jakarta.persistence.EntityManager;
-import jakarta.security.auth.message.config.AuthConfigFactory.RegistrationContext;
-
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+@EnableMongoRepositories(basePackages = {"com.softwave.clubstep.domain.repository"}) // need this because spring default expect JPA repositories
 public class NightstepApplication implements CommandLineRunner {
 
-	@Autowired
-    private EntityManager entityManager;
 
 	
 	//*			        REPOSITORYS				 */

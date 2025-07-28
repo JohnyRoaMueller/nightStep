@@ -20,7 +20,6 @@ import com.softwave.clubstep.domain.repository.GuestRepository;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class RegistrationService {
@@ -60,8 +59,12 @@ public class RegistrationService {
             //-----------------------------------------------------//
             guestRepo.save(newGuest);
 
-                logger.info("new Guest created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
+            newUserAuth.setUserRefId(guestRepo.findByEmail(registeringUser.getEmail()).get().getId());
+            userAuthRepo.save(newUserAuth);
+
+            logger.info("new Guest created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
     }   
+    
 
     public void registerHostUser(RegistrationHostDTO registeringUser) {
 
@@ -85,6 +88,10 @@ public class RegistrationService {
             //-----------------------------------------------------//
             hostRepo.save(newHost);
 
+            newUserAuth.setUserRefId(hostRepo.findByEmail(registeringUser.getEmail()).get().getId());
+            userAuthRepo.save(newUserAuth);
+
+            logger.info(hostRepo.findByEmail(registeringUser.getEmail()).get().getId());
             logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
 
     }   

@@ -95,9 +95,10 @@ public class EventController {
 
         Venue venue = entityFinder.getVenueOfHostOrNull(host);
 
-        List<Event> eventList = venue.getEvents();
+        List<String> eventIds = venue.getEventIds();
+        List<Event> events = eventRepository.findAllById(eventIds);
 
-        return ResponseEntity.ok(eventList);
+        return ResponseEntity.ok(events);
 
     }
 }

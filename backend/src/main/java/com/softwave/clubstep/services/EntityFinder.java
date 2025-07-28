@@ -89,6 +89,6 @@ public class EntityFinder {
 
     public Venue getVenueOfHostOrNull(Host host) {
         if (host == null) return null;
-        return venueRepository.findByHost(host).orElse(null);
+        return venueRepository.findByHostId(host.getId()).orElse(null);
     }
 }
