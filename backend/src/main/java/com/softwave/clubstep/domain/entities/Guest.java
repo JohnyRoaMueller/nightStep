@@ -18,6 +18,9 @@ public class Guest extends BaseUser {
 
     {/*getter / setter*/}
 
+    public String getId() { return id; }
+    public void setId( String id ) { this.id = id; }
+
     public List<String> getFollowedClubIds() { return followedClubIds; }
     public void setFollowedClubIds(List<String> followedClubIds) { this.followedClubIds = followedClubIds; }
 

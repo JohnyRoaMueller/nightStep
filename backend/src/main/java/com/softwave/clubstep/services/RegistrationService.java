@@ -36,7 +36,7 @@ public class RegistrationService {
     @Autowired
     private HostRepository hostRepo;
     @Autowired
-    private EntityFinder userService;
+    private EntityFinder entityFinder;
 
     public void registerGuestUser(RegistrationGuestDTO registeringUser) {
 
@@ -48,15 +48,17 @@ public class RegistrationService {
             newUserAuth.setEmail(registeringUser.getEmail());
             newUserAuth.setRole(registeringUser.getRole()); 
             //-----------------------------------------------------//
+            userAuthRepo.save(newUserAuth);
+
+
             newGuest.setFirstname(registeringUser.getFirstname());
             newGuest.setLastname(registeringUser.getLastname());
             newGuest.setEmail(registeringUser.getEmail());
             newGuest.setGender(registeringUser.getGender());
             newGuest.setBirthday(registeringUser.getBirthday());
-            newGuest.setUserAuth(newUserAuth);
-
-            userAuthRepo.save(newUserAuth);
-                guestRepo.save(newGuest);
+            newGuest.setUserAuthId(entityFinder.getUserAuthOrNull(userAuthRepo.findByUsername(newUserAuth.getUsername())).getId());
+            //-----------------------------------------------------//
+            guestRepo.save(newGuest);
 
                 logger.info("new Guest created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
     }   
@@ -71,18 +73,19 @@ public class RegistrationService {
             newUserAuth.setEmail(registeringUser.getEmail());
             newUserAuth.setRole(registeringUser.getRole());  
             //-----------------------------------------------------//
+            userAuthRepo.save(newUserAuth);
+
+
             newHost.setFirstname(registeringUser.getFirstname());
             newHost.setLastname(registeringUser.getLastname());
             newHost.setEmail(registeringUser.getEmail());
             newHost.setGender(registeringUser.getGender());
             newHost.setBirthday(registeringUser.getBirthday());
-            newHost.setUserAuth(newUserAuth);
-
-            userAuthRepo.save(newUserAuth);
+            newHost.setUserAuthId(entityFinder.getUserAuthOrNull(userAuthRepo.findByUsername(newUserAuth.getUsername())).getId());
+            //-----------------------------------------------------//
             hostRepo.save(newHost);
 
             logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
-
 
     }   
 }

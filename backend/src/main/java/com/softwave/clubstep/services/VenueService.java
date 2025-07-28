@@ -23,6 +23,7 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 
+
 @Service
 public class VenueService {
 
@@ -38,39 +39,41 @@ public class VenueService {
     UserAuthRepository userAuthRepository;
 
     @Autowired
-    EntityFinder userService;
+    EntityFinder entityFinder;
 
     @Autowired
     UploadService uploadService;
 
-    @Autowired
-    EntityFinder entityFinder;
 
-
-    
     public void addVenue(VenueDTO venueData, Host host) throws IOException {
-
         String name = venueData.getName();
         String type = venueData.getType();
         int capacity = venueData.getCapacity();
         String city = venueData.getCity();
-        String disctrict = defineDistrict(venueData.getPostalCode());
+        String district = defineDistrict(venueData.getPostalCode());
         String street = venueData.getStreet();
         String houseNumber = venueData.getHouseNumber();
         int postalCode = venueData.getPostalCode();
-        String description = null;
+        String description = venueData.getDescription();
         List<MultipartFile> imageBlobs = venueData.getImageBlobs();
 
-        UserAuth hostUserAuth = entityFinder.getUserAuthOrNull(userAuthRepository.findByHost(host));
+        UserAuth hostUserAuth = entityFinder.getUserAuthOrNull(userAuthRepository.findByUserRefId(host.getId()));
         List<String> picAddresses = extractVenueImagePaths(imageBlobs, hostUserAuth.getUsername(), name);
-        uploadService.addVenueImages(imageBlobs, hostUserAuth.getUsername(), name);    
+        uploadService.addVenueImages(imageBlobs, hostUserAuth.getUsername(), name);
 
-        Venue newVenue = new Venue(name, type, capacity, city, disctrict, street, houseNumber, postalCode, description, picAddresses, host, null, null);
+        // Venue speichert nur hostId, nicht Host-Objekt
+        Venue newVenue = new Venue(
+            name, type, capacity, city, district,
+            street, houseNumber, postalCode, description,
+            picAddresses,
+            host.getId(),  // Nur hostId als Referenz
+            null, null);
 
         venueRepository.save(newVenue);
 
-        logger.info("club added to db");
+        logger.info("Venue added to DB: " + name);
     }
+
 
     public String defineDistrict(int postcode) {
         if (postcode >= 10585 && postcode <= 14199) return "Charlottenburg-Wilmersdorf";
@@ -88,24 +91,18 @@ public class VenueService {
         else return "Unbekannter Bezirk";
     }
 
+
     public List<String> extractVenueImagePaths(List<MultipartFile> images, String username, String nameOfVenue) {
-        List<String> imagePaths = new ArrayList<String>();
-
+        List<String> imagePaths = new ArrayList<>();
 
         for (MultipartFile image : images) {
-            logger.info(image.getOriginalFilename() + " original");
-        }
-       
-        for (MultipartFile image : images) {
-
-            if (image.getOriginalFilename().startsWith("./uploads/host_images/") ) {
+            if (image.getOriginalFilename().startsWith("./uploads/host_images/")) {
                 String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
-                String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename); 
-            imagePaths.add(path);
+                String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename);
+                imagePaths.add(path);
                 continue;
             }
-
-            String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, image.getOriginalFilename()); 
+            String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, image.getOriginalFilename());
             imagePaths.add(path);
         }
         return imagePaths;
@@ -118,15 +115,16 @@ public class VenueService {
         venue.setCapacity(newVenueData.getCapacity());
         venue.setCity(newVenueData.getCity());
         venue.setDistrict(defineDistrict(newVenueData.getPostalCode()));
-        venue.setHouseNumber(newVenueData.getHouseNumber()); 
+        venue.setHouseNumber(newVenueData.getHouseNumber());
         venue.setPostalCode(newVenueData.getPostalCode());
         venue.setDescription(newVenueData.getDescription());
 
         if (newVenueData.getImageBlobs() != null) {
-            venue.setPicAddresses(extractVenueImagePaths(newVenueData.getImageBlobs(), venue.getHost().getUserAuth().getUsername(), newVenueData.getName()));
+            UserAuth hostUserAuth = entityFinder.getUserAuthOrNull(userAuthRepository.findByUserRefId(venue.getHostId()));
+            venue.setPicAddresses(extractVenueImagePaths(newVenueData.getImageBlobs(), hostUserAuth.getUsername(), newVenueData.getName()));
         }
         venueRepository.save(venue);
-        logger.info("update setted");
+
+        logger.info("Venue updated: " + venue.getId());
     }
-  
 }

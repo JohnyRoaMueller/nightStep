@@ -15,14 +15,17 @@ public class Host extends BaseUser {
 
     private List<String> ownedVenueIds;
 
-    private String userAuthId;
-
     
     public Host() {}
 
     {/*getter / setter*/}
 
+    public String getId() { return id; }
+    public void setId( String id ) { this.id = id; }
+
     public List<String> getOwnedVenueIds() { return ownedVenueIds; }
     public void setOwnedVenueIds(List<String> ownedVenueIds) { this.ownedVenueIds = ownedVenueIds; }
+
+
 
 }
