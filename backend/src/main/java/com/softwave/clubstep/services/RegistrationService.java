@@ -92,7 +92,10 @@ public class RegistrationService {
             userAuthRepo.save(newUserAuth);
 
             logger.info(hostRepo.findByEmail(registeringUser.getEmail()).get().getId());
-            logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());   
+            logger.info("new Host created: " + "username: " + newUserAuth.getUsername() + " role: " + newUserAuth.getRole());  
+
 
     }   
 }
+
+// to set a seperation commit between backend and frontend refactor
