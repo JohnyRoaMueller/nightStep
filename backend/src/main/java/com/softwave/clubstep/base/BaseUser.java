@@ -1,17 +1,10 @@
 package com.softwave.clubstep.base;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import org.springframework.data.annotation.Id;
 
-@MappedSuperclass
+
 public class BaseUser {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-
+    
     private String gender;
     
     private String firstname;
@@ -27,6 +20,9 @@ public class BaseUser {
     private String housenumber;
 
     private String phonenumber;
+
+    //refs
+    private String userAuthId;
 
 
 
@@ -57,72 +53,33 @@ public class BaseUser {
     
                   {/*getter / setter */}
     {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
-    
 
-    public String getGender() {
-        return gender;
-    }
+    public String getGender() { return gender; }
+    public void setGender( String gender ) { this.gender = gender; }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    public String getFirstname() { return firstname; }
+    public void setFirstname( String firstname ) { this.firstname = firstname; }
 
-    public String getFirstname() {
-        return firstname;
-    }
+    public String getLastname() {return lastname;}
+    public void setLastname( String lastname ) { this.lastname = lastname; }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+    public String getBirthday() {return birthday;}
+    public void setBirthday( String birthday ) { this.birthday = birthday;}
 
-    public String getLastname() {
-        return lastname;
-    }
+    public String getEmail() {return email;}
+    public void setEmail( String email ) { this.email = email; }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+    public String getStreet() {return street;}
+    public void setStreet(String street) {this.street = street; }
 
-    public String getBirthday() {
-        return birthday;
-    }
+    public String getHousenumber() {return housenumber;}
+    public void setHousenumber(String housenumber) { this.housenumber = housenumber;}
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
+    public String getPhonenumber() {return phonenumber;}
+    public void setPhonenumber( String phonenumber ) { this.phonenumber = phonenumber; }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getHousenumber() {
-        return housenumber;
-    }
-
-    public void setHousenumber(String housenumber) {
-        this.housenumber = housenumber;
-    }
-
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
- 
+    public String getUserAuthId() { return userAuthId; }
+    public void setUserAuthId(String userAuthId) { this.userAuthId = userAuthId; }    
     
     {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
               {/*getter / setter */}

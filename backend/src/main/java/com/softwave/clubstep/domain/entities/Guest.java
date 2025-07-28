@@ -1,58 +1,24 @@
 package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.softwave.clubstep.DTO.RegistrationGuestDTO;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import com.softwave.clubstep.base.BaseUser;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+@Document(collection = "guests")
+public class Guest extends BaseUser {
+
+    @Id
+    private String id;
+
+    private List<String> followedClubIds;
 
 
-@Entity
-public class Guest extends BaseUser  {
-    
+    public Guest() {}
 
+    {/*getter / setter*/}
 
-    public Guest() {};
-
-
-    /** ↓↓↓ cardinalities  ↓↓↓*/
-    /** ↓↓↓ cardinalities  ↓↓↓*/
-    @ManyToMany(mappedBy = "followers")
-    private List<Venue> followedClubs;
-
-    @OneToOne
-    @JoinColumn(name = "userAuth_ID", nullable = false)
-    @JsonBackReference(value = "guestReference")
-    private UserAuth userAuth;
-    
-    /** ↑↑↑ cardinalities ↑↑↑ */
-    /** ↑↑↑ cardinalities ↑↑↑ */
-
-
-                {/*getter / setter */}
-    {/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}   
-    public List<Venue> getFollowedClub() {
-        return followedClubs;
-    }
-
-    public void setFollowedClub(List<Venue> followedClubs) {
-        this.followedClubs = followedClubs;
-    }
-
-    public UserAuth getUserAuth() {
-        return userAuth;
-    }
-
-    public void setUserAuth(UserAuth userAuth) {
-        this.userAuth = userAuth;
-    }
-    {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
-                {/*getter / setter */}
+    public List<String> getFollowedClubIds() { return followedClubIds; }
+    public void setFollowedClubIds(List<String> followedClubIds) { this.followedClubIds = followedClubIds; }
 
 }

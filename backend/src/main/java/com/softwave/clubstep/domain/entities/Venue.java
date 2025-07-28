@@ -1,22 +1,14 @@
 package com.softwave.clubstep.domain.entities;
 
 import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.*;
-
-import org.springframework.http.converter.HttpMessageNotWritableException;
-
-@Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Venue  {
+@Document(collection = "venues")
+public class Venue {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     private String name;
     private String type;
@@ -28,51 +20,32 @@ public class Venue  {
     private int postalCode;
     private String description;
 
-    @ElementCollection
-    @CollectionTable(name = "venue_image_Paths", joinColumns = @JoinColumn(name = "venue_id"))
-    @Column(name = "image_address", columnDefinition = "TEXT")
     private List<String> imagePaths;
 
-    /** Beziehungen */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "host_id", nullable = false)
-    @JsonBackReference(value = "ownedVenuesReference")
-    private Host host;
+    private String hostId;
 
+    private List<String> followerIds;
 
-    @ManyToMany
-    @JoinTable(
-        name = "venue_follower",
-        joinColumns = @JoinColumn(name = "venue_id"),
-        inverseJoinColumns = @JoinColumn(name = "follower_id")
-    )
-    private List<Guest> followers;
+    private List<String> eventIds;
 
-
-    @OneToMany(mappedBy = "venue")
-    @JsonManagedReference("eventsReference")
-    List<Event> events;
-
-    /** Konstruktoren */
+    
     public Venue() {}
 
-    public Venue
-        (
+    public Venue(
         String name,
         String type,
         int capacity,
         String city,
-        String district, 
+        String district,
         String street,
         String houseNumber,
-        int postalCode, 
+        int postalCode,
         String description,
         List<String> imagePaths,
-        Host host,
-        List<Guest> followers,
-        List<Event> events
-        )
-        {
+        String hostId,
+        List<String> followerIds,
+        List<String> eventIds
+    ) {
         this.name = name;
         this.type = type;
         this.capacity = capacity;
@@ -83,14 +56,15 @@ public class Venue  {
         this.postalCode = postalCode;
         this.description = description;
         this.imagePaths = imagePaths;
-        this.host = host;
-        this.followers = followers;
-        this.events = events;
-        }
+        this.hostId = hostId;
+        this.followerIds = followerIds;
+        this.eventIds = eventIds;
+    }
 
-    /** Getter & Setter */
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    {/*getter / setter*/}
+
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -122,13 +96,12 @@ public class Venue  {
     public List<String> getPicAddresses() { return imagePaths; }
     public void setPicAddresses(List<String> imagePaths) { this.imagePaths = imagePaths; }
 
-    public Host getHost() { return host; }
-    public void setHost(Host host) { this.host = host; }
+    public String getHostId() { return hostId; }
+    public void setHostId(String hostId) { this.hostId = hostId; }
 
-    public List<Guest> getFollower() { return followers; }
-    public void setFollower(List<Guest> follower) { this.followers = followers; }
+    public List<String> getFollowerIds() { return followerIds; }
+    public void setFollowerIds(List<String> followerIds) { this.followerIds = followerIds; }
 
-    public List<Event> getEvents() { return events; }
-    public void setEvents(List<Event> events) { this.events = events; }
-    /** getter & Setter */
+    public List<String> getEventIds() { return eventIds; }
+    public void setEventIds(List<String> eventIds) { this.eventIds = eventIds; }
 }
