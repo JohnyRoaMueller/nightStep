@@ -87,7 +87,7 @@ Spring abstracts this technology, allowing developers to work with annotations l
     @GetMapping("/venue/{venueName}")
     public ResponseEntity<Venue> getSingleVenue(@PathVariable("venueName") String venueName) {
 
-        logger.info("/venue/{venueName}");
+        logger.info("/venue/{venueName} reaced");
 
         Venue currentVenue = entityFinder.getVenueByNameOrNull(venueName);
 

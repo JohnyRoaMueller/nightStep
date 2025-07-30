@@ -9,19 +9,21 @@ import HoverOverlay from "../hoverOverlay/HoverOverlay";
 const apiUrl =import.meta.env.VITE_APP_API_URL
 
 export interface VenueType {
-    id: number;
+    id: string;
     name: string;
     type: string;
     capacity: number;
     city: string;
     district: string;
+    eventId: string[] | null;
+    hostId: string 
     street: string;
     houseNumber: string;
     postalCode: string;
     description: string;
     picAddresses: string[];
     picBlobs: Blob[];
-    events: Event[]
+    eventsIds: string[]
 }
 
 function VenueCards(props: { venueType: string; }) {

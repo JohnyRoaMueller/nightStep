@@ -2,6 +2,8 @@ package com.softwave.clubstep.security.authentication;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +30,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
+	Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+
 	@Autowired
 	JwtService jwtService;
 
@@ -37,7 +41,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 			throws ServletException, java.io.IOException {
 		// Get token from the Cookie header
 		String jws = request.getHeader(HttpHeaders.COOKIE);
+		logger.info("new request!");
 		if (jws != null) {
+			logger.info("jws is here!");
 			// Verify token and get user
 			UserAuth user = jwtService.getAuthUser(request);
 			// Authenticate

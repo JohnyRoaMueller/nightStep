@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -89,7 +91,6 @@ public class EventController {
 
         logger.info("events/showAllEvents reached");
 
-
         UserAuth userinfo = jwtService.getAuthUser(request);
         Host host = userService.getHostByUsernameOrNull(userinfo.getUsername());
 
@@ -99,6 +100,38 @@ public class EventController {
         List<Event> events = eventRepository.findAllById(eventIds);
 
         return ResponseEntity.ok(events);
-
     }
+
+    @GetMapping("/events/{venueName}")
+    public ResponseEntity<List<Event>> showEventsOfVenue(@PathVariable("venueName") String venueName) {
+
+        logger.info("/events/{venueName} reached");
+
+        Optional<Venue> venueOpt = venueRepository.findByName(venueName);
+
+
+        if (venueOpt.isPresent()) {
+
+            Venue venue = venueOpt.get();
+
+            logger.info("toString" + venue.getEventIds().toString());
+
+            List<Event> eventList = eventRepository.findAllById(venue.getEventIds());
+
+            System.out.println("the eventList" + eventList);
+
+            return ResponseEntity.ok().body(eventList);
+
+        }
+        else
+        {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/events/hello")
+    public void sayHello() {
+        System.out.println("hello!");
+    }
+
 }

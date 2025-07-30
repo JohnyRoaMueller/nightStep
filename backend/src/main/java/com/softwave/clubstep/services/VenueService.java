@@ -55,6 +55,8 @@ public class VenueService {
         int postalCode = venueData.getPostalCode();
         String description = venueData.getDescription();
         List<MultipartFile> imageBlobs = venueData.getImageBlobs();
+        List<String> followerIds = new ArrayList<>();
+        List<String> eventIds = new ArrayList<>();
 
         UserAuth hostUserAuth = entityFinder.getUserAuthOrNull(userAuthRepository.findByUserRefId(host.getId()));
         List<String> picAddresses = extractVenueImagePaths(imageBlobs, hostUserAuth.getUsername(), name);
@@ -67,7 +69,7 @@ public class VenueService {
             street, houseNumber, postalCode, description,
             picAddresses,
             host.getId(),  // Nur hostId als Referenz
-            null, null);
+            followerIds, eventIds);
 
         venueRepository.save(newVenue);
 

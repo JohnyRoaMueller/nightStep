@@ -12,33 +12,63 @@ import EventCard from "../../common/event/EventCard";
 
 
 
-const apiUrl =import.meta.env.VITE_APP_API_URL
+const apiUrl = import.meta.env.VITE_APP_API_URL
 
 // "/venue/:venuename"
 export default function VenueProfile() {
 
   const param = useParams();
   const [venue, setVenue] = useState<VenueType>();
+  const [eventsList, setEventList] = useState()
 
 
 
 
   useEffect(() => {
 
-    console.log("fetching to: ", `${apiUrl}/venue/${param.venuename}`)
       
     async function fetchData() {
 
+
+
+      console.log("fetching to: ", `${apiUrl}/venue/${param.venuename}`)
       const response = await fetch(`${apiUrl}/venue/${param.venuename}`)
+
 
       const dataJson = await response.json()
 
       setVenue(dataJson)
 
+      console.log("dataJson", dataJson)
+
+
+
+      console.log("fetching to: ", `${apiUrl}/events/`)
+      const eventResponse = await fetch(`${apiUrl}/events/${param.venuename}`)
+
+      if (eventResponse.status == 200) {
+
+          const eventDataJson = await eventResponse.json()
+
+          setEventList(eventDataJson)
+
+          console.log("eventDataJson" , eventDataJson)    
+
+      }
+
+
+      const helloResponse = await fetch(`${apiUrl}/events/hello`)
+
+
+
     }
     fetchData()
 
   }, [])
+
+
+
+  
 
   // user can upload 12 images
   function getImages() {
@@ -48,7 +78,7 @@ export default function VenueProfile() {
     for (let i = 0; i <= 11; i++) 
       if (venue?.picAddresses[i]) {
 
-        const image = <img src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}` }></img>
+        const image = <img src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}` } key={"image " + i}></img>
         imagesArray.push(image)
 
     } 
@@ -57,10 +87,6 @@ export default function VenueProfile() {
 
   const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events } = useDraggable(ref); // Now we pass the reference to the useDraggable hook:
-
-  useEffect(() => {
-    console.log('ref.current:', ref.current);
-  }, []);
 
 
   const [overlayOffset, setOverlayOffset] = useState(0);
@@ -123,11 +149,11 @@ function formatDateTime(dateString: string): string {
         </HeaderWrapper>
         <EventCardWrapper>
 
-        {venue?.events.length < 1 ?
+        {eventsList?.length < 1 ?
         (
           <NoEventsNotice><TypoH2>no current events</TypoH2></NoEventsNotice>
         ) : (
-          venue?.events.map((event) => <EventCard isHost={false} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={event.price} likes={event.likes} soldTickets={""}></EventCard>)
+          eventsList?.map((event) => <EventCard isHost={false} imgSrc={`${apiUrl}/images/${event.imagePaths[0].replace(/\//g, "-")}`} eventName={event.name} venueName={""} date={formatDate(event.startTimeDate)} startTime={formatDateTime(event.startTimeDate)} endTime={formatDateTime(event.endTimeDate)} price={event.price} likes={event.likes} soldTickets={""}></EventCard>)
         )  
         }
 

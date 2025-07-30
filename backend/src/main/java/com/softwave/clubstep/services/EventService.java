@@ -65,8 +65,8 @@ public class EventService {
 
         Event newEvent = new Event(
             eventDTO.getName(),
-            eventDTO.getStartTimeDate(),
-            eventDTO.getEndTimeDate(),
+            eventDTO.getStartTimeDate().toInstant(),
+            eventDTO.getEndTimeDate().toInstant(),
             eventDTO.getPrice(),
             eventDTO.getLikes(),
             eventDTO.getDescription(),
@@ -76,6 +76,11 @@ public class EventService {
         );
 
         eventRepository.save(newEvent);
+
+        Event event = eventRepository.findByName(eventDTO.getName()).get();
+
+        venue.getEventIds().add(event.getId());
+        venueRepository.save(venue);
 
         logger.info("Saved event with image paths: {}", String.join(", ", newEvent.getImagePaths()));
 
