@@ -141,7 +141,8 @@ export const EventCardWrapper = styled(Box)`
     overflow: auto;
 
     width: 100%;
-    max-height: 80vh;
+
+
 
     overflow-x: hidden;
 
@@ -153,8 +154,9 @@ export const EventCardWrapper = styled(Box)`
 
 
     @media(min-width: 600px) {
-
         width: 50%;
+        min-height: unset;
+        max-height: unset;
     }    
 
 `;

@@ -15,8 +15,11 @@ public class Host extends BaseUser {
 
     private List<String> ownedVenueIds;
 
-    
     public Host() {}
+
+    public Host(List<String> ownedVenuesIds) {
+        this.ownedVenueIds = ownedVenuesIds;
+    }
 
     {/*getter / setter*/}
 

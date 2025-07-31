@@ -24,11 +24,12 @@ function MyVenueUI() {
             else 
             {
                 alert("fetch not successfull")
-                console.log("fetch not successfull")
             }
         }
         fetchData()
     }, [])
+
+    console.log(venues.length)
 
     if (venues.length == 1) 
     { 
@@ -38,7 +39,7 @@ function MyVenueUI() {
 
     return (
         <>
-
+            you have more then one venue, which one you choose?
         </>
     )
 

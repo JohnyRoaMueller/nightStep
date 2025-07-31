@@ -20,6 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.EventDTO;
@@ -32,14 +33,17 @@ import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 import com.softwave.clubstep.enums.Roles;
 import com.softwave.clubstep.services.MockDataService;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.stereotype.Component;
 
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @EnableMongoRepositories(basePackages = {"com.softwave.clubstep.domain.repository"}) // need this because spring default expect JPA repositories
 public class NightstepApplication implements CommandLineRunner {
 
-
+    Logger logger = LoggerFactory.getLogger(getClass());
 	
 	//*			        REPOSITORYS				 */
 	private final VenueRepository venueRepository;
@@ -53,7 +57,6 @@ public class NightstepApplication implements CommandLineRunner {
     //*                  SERVICES                   */
     private final MockDataService mockDataService;
 
-
 	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, MockDataService mockDataService) {
 		this.venueRepository = venueRepository;
 		this.guestRepository = guestRepository;
@@ -63,14 +66,35 @@ public class NightstepApplication implements CommandLineRunner {
         this.mockDataService = mockDataService;
 	}
 
-    Logger logger = LoggerFactory.getLogger(getClass());
+@Component
+@Order(1) // Optional: bestimmt die Ausführungsreihenfolge
+public class DatabaseDropper implements CommandLineRunner {
+
+    private final MongoTemplate mongoTemplate;
+
+    public DatabaseDropper(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
+
+    public void dropDatabase() {
+        mongoTemplate.dropCollection("hosts");
+        mongoTemplate.dropCollection("venues");
+        mongoTemplate.dropCollection("events");
+        mongoTemplate.dropCollection("guests");
+        mongoTemplate.dropCollection("userAuths");
+        System.out.println("Collections dropped.");
+    }
+
+    @Override
+    public void run(String... args) {
+        dropDatabase();
+    }
+}
 
 
 	public static void main(String[] args) {
-		
 		SpringApplication.run(NightstepApplication.class, args);
 		System.out.println("Application started");
-
 	}
 
 class FileMultipartFile implements MultipartFile {

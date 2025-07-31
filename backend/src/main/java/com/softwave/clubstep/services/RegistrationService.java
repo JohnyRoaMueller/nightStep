@@ -85,6 +85,7 @@ public class RegistrationService {
             newHost.setGender(registeringUser.getGender());
             newHost.setBirthday(registeringUser.getBirthday());
             newHost.setUserAuthId(entityFinder.getUserAuthOrNull(userAuthRepo.findByUsername(newUserAuth.getUsername())).getId());
+            newHost.setOwnedVenueIds(new ArrayList<String>());
             //-----------------------------------------------------//
             hostRepo.save(newHost);
 

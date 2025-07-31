@@ -123,8 +123,8 @@ export async function validateGuestForm({formData, formData2, setEmptyValueEffec
         }
 
     console.log("formData2" + formData2)
-    console.log("formData2.length" +  Object.values(formData2).length)
-    console.log(Object.values(formData2))
+    // console.log("formData2.length" +  Object.values(formData2).length)
+    //console.log(Object.values(formData2))
 
     if (formData2 != null) {
         for (let i = 8; i <= Object.values(formData2).length + 7 - 1; i++) 

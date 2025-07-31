@@ -73,6 +73,9 @@ public class VenueService {
 
         venueRepository.save(newVenue);
 
+        host.getOwnedVenueIds().add(newVenue.getId());
+        hostRepository.save(host);
+
         logger.info("Venue added to DB: " + name);
     }
 

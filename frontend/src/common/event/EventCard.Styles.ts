@@ -1,7 +1,9 @@
 import { Box, styled } from "@mui/material";
 
 export const EvenCardtContainer = styled(Box)`
-    // border: 1px solid red;
+    // border: 10px solid red;
+
+    border-radius: 25px 25px;
 
     position: relative;
 
@@ -18,16 +20,12 @@ export const EvenCardtContainer = styled(Box)`
     box-sizing: content-box;
 
     align-items: center;
-    
-
 
     @media(min-width: 600px) {
         flex-direction: row;
         height: 100%;
         max-height: 40vh;        
     }
-
-
 `;
 
 
@@ -60,6 +58,7 @@ export const InfoBoxContainer = styled(Box)`
     display: flex;
     flex-direction: column;
 
+
     height: 100%;
     width: 100%;
 
@@ -69,11 +68,14 @@ export const InfoBoxContainer = styled(Box)`
 export const InfoBox = styled(Box)`
     // border: 1px solid red;
 
-    justify-items: center;
-
-    padding: 1%;
+    margin: 2%;
     
-
+  @media (min-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;                    
+  }
 `;
 
 
