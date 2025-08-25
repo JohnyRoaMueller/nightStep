@@ -101,13 +101,13 @@ public class VenueService {
         List<String> imagePaths = new ArrayList<>();
 
         for (MultipartFile image : images) {
-            if (image.getOriginalFilename().startsWith("./uploads/host_images/")) {
+            if (image.getOriginalFilename().startsWith("/home/jinux/dev/projects/nightStep/backend/uploads/host_images/")) {
                 String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
-                String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename);
+                String path = String.format("/home/jinux/dev/projects/nightStep/backend/uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename);
                 imagePaths.add(path);
                 continue;
             }
-            String path = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, image.getOriginalFilename());
+            String path = String.format("/home/jinux/dev/projects/nightStep/backend/uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, image.getOriginalFilename());
             imagePaths.add(path);
         }
         return imagePaths;

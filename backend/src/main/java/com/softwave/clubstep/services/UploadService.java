@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,9 @@ import com.softwave.clubstep.domain.entities.UserAuth;
 
 @Service
 public class UploadService {
+
+    @Value("${base.backend.path}")
+    private String baseBackendPath;
 
     Logger logger = LoggerFactory.getLogger(UploadService.class);
 
@@ -55,15 +59,15 @@ public class UploadService {
 
             logger.info("currentFileName:" + currentFileName);
 
-            if (currentFileName.startsWith("./uploads/host_images")) {
+            if (currentFileName.startsWith(String.format("%s/uploads/host_images", baseBackendPath))) {
                 logger.info("skip this: " + currentFileName);
                 continue;
             }
             logger.info("After checking if img already exists");
 
-            String newDirPath = String.format("./uploads/host_images/%s/venues/%s", username, nameOfVenue);            
+            String newDirPath = String.format("%s/uploads/host_images/%s/venues/%s", baseBackendPath, username, nameOfVenue);            
 
-            String newImagePath = String.format("./uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, currentFileName);
+            String newImagePath = String.format("%s/uploads/host_images/%s/venues/%s/%s", baseBackendPath, username, nameOfVenue, currentFileName);
 
             createDirIfNotExist(newDirPath);
             saveFile(image, newImagePath);
@@ -82,9 +86,9 @@ public class UploadService {
 
             if (currentFileName.startsWith("/uploads/host_images")) {continue;}
 
-            String newDirPath = String.format("./uploads/host_images/%s/venues/%s/events/%s", username, nameOfVenue, nameOfEvent);            
+            String newDirPath = String.format("%s/uploads/host_images/%s/venues/%s/events/%s", baseBackendPath, username, nameOfVenue, nameOfEvent);            
 
-            String newImagePath = String.format("./uploads/host_images/%s/venues/%s/events/%s/%s", username, nameOfVenue, nameOfEvent, currentFileName);
+            String newImagePath = String.format("%s/uploads/host_images/%s/venues/%s/events/%s/%s", baseBackendPath, username, nameOfVenue, nameOfEvent, currentFileName);
 
             createDirIfNotExist(newDirPath);
             saveFile(image, newImagePath);

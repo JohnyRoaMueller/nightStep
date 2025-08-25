@@ -15,6 +15,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,6 +43,9 @@ import org.springframework.stereotype.Component;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @EnableMongoRepositories(basePackages = {"com.softwave.clubstep.domain.repository"}) // need this because spring default expect JPA repositories
 public class NightstepApplication implements CommandLineRunner {
+
+    @Value("${base.mockimages.path}")
+    private String baseMockimagesPath;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -188,10 +192,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles1 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_1.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_2.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_3.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\club_image_4.jpg")
+            new File(String.format("%s/HostUser1/club_image_1.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser1/club_image_2.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser1/club_image_3.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser1/club_image_4.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages1 = filesToMultipart(venueImageFiles1);
 
@@ -209,9 +213,9 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> eventFiles1 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\90' Night vol. 3\\diagonal_blue.png"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\90' Night vol. 3\\diagonal_green.png"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser1\\events\\90' Night vol. 3\\diagonal_red.png")
+            new File(String.format("%s/HostUser1/events/90' Night vol. 3/diagonal_blue.png", baseMockimagesPath)),
+            new File(String.format("%s/HostUser1/events/90' Night vol. 3/diagonal_green.png", baseMockimagesPath)),
+            new File(String.format("%s/HostUser1/events/90' Night vol. 3/diagonal_red.png", baseMockimagesPath))
         );
         List<MultipartFile> eventImages1 = filesToMultipart(eventFiles1);
 
@@ -242,10 +246,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles2 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_5.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_6.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_7.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser2\\club_image_8.jpg")
+            new File(String.format("%s/HostUser2/club_image_5.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser2/club_image_6.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser2/club_image_7.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser2/club_image_8.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages2 = filesToMultipart(venueImageFiles2);
 
@@ -277,10 +281,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles3 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_9.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_10.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_11.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser3\\club_image_12.jpg")
+            new File(String.format("%s/HostUser3/club_image_9.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser3/club_image_10.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser3/club_image_11.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser3/club_image_12.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages3 = filesToMultipart(venueImageFiles3);
 
@@ -312,10 +316,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles4 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_13.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_14.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_15.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser4\\club_image_16.jpg")
+            new File(String.format("%s/HostUser4/club_image_13.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser4/club_image_14.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser4/club_image_15.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser4/club_image_16.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages4 = filesToMultipart(venueImageFiles4);
 
@@ -347,10 +351,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles5 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_17.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_18.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_19.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser5\\club_image_20.jpg")
+            new File(String.format("%s/HostUser5/club_image_17.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser5/club_image_18.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser5/club_image_19.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser5/club_image_20.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages5 = filesToMultipart(venueImageFiles5);
 
@@ -382,10 +386,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles6 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_21.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_22.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_23.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser6\\club_image_24.jpg")
+            new File(String.format("%s/HostUser6/club_image_21.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser6/club_image_22.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser6/club_image_23.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser6/club_image_24.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages6 = filesToMultipart(venueImageFiles6); 
 
@@ -417,10 +421,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles7 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_1.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_2.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_3.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser7\\bar_image_4.jpg")
+            new File(String.format("%s/HostUser7/bar_image_1.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser7/bar_image_2.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser7/bar_image_3.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser7/bar_image_4.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages7 = filesToMultipart(venueImageFiles7);
 
@@ -452,10 +456,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles8 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_5.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_6.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_7.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser8\\bar_image_8.jpg")
+            new File(String.format("%s/HostUser8/bar_image_5.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser8/bar_image_6.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser8/bar_image_7.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser8/bar_image_8.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages8 = filesToMultipart(venueImageFiles8);
 
@@ -487,10 +491,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles9 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_9.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_10.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_11.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser9\\bar_image_12.jpg")
+            new File(String.format("%s/HostUser9/bar_image_9.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser9/bar_image_10.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser9/bar_image_11.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser9/bar_image_12.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages9 = filesToMultipart(venueImageFiles9);
 
@@ -522,15 +526,15 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles10 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_13.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_14.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_15.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser10\\bar_image_16.jpg")
+            new File(String.format("%s/HostUser10/bar_image_13.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser10/bar_image_14.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser10/bar_image_15.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser10/bar_image_16.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages10 = filesToMultipart(venueImageFiles10);
 
         VenueDTO venue10 = new VenueDTO();
-        venue10.setName("Stadtklang");
+        venue10.setName("Stadtklang", baseMockimagesPath));
         venue10.setType("Bar");
         venue10.setCapacity(100);
         venue10.setCity("Berlin");
@@ -557,10 +561,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles11 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_17.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_18.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_19.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser11\\bar_image_20.jpg")
+            new File(String.format("%s/HostUser11/bar_image_17.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser11/bar_image_18.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser11/bar_image_19.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser11/bar_image_20.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages11 = filesToMultipart(venueImageFiles11);
 
@@ -592,10 +596,10 @@ class FileMultipartFile implements MultipartFile {
 
 
         List<File> venueImageFiles12 = List.of(
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_21.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_22.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_23.jpg"),
-            new File("C:\\vscode-projects\\nightstep-project\\MockAccountImages\\HostUser12\\bar_image_24.jpg")
+            new File(String.format("%s/HostUser12/bar_image_21.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser12/bar_image_22.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser12/bar_image_23.jpg", baseMockimagesPath)),
+            new File(String.format("%s/HostUser12/bar_image_24.jpg", baseMockimagesPath))
         );
         List<MultipartFile> venueImages12 = filesToMultipart(venueImageFiles12);
 

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ImageController {
 
+    @Value("${base.backend.path}")
+    private String baseBackendPath;
+
     Logger logger = LoggerFactory.getLogger(ImageController.class);
 
     @GetMapping("/images/{pseudoImagePath}")
@@ -25,12 +29,12 @@ public class ImageController {
 
         logger.info("pseudoImagePath: {}", pseudoImagePath);
 
-        String imagePath = pseudoImagePath.replace("-", "\\");
+        String imagePath = pseudoImagePath.replace("-", "/");
 
         logger.info("imagePath: {}", imagePath);
         
 
-        File imageFile = new File(String.format("C:\\vscode-projects\\nightstep-project%s", imagePath));
+        File imageFile = new File(String.format("%s", imagePath));
 
         if (!imageFile.exists()) { return ResponseEntity.notFound().build(); }
 

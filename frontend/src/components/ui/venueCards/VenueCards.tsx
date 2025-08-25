@@ -57,12 +57,7 @@ function VenueCards(props: { venueType: string; }) {
                 const slicedArray = shuffledArray.slice(0, 6)
 
                 setVenues(slicedArray)
-
-
                 setLoading(false)
-
-                
-
 
             } 
             catch (error) 

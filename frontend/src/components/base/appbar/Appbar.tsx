@@ -95,6 +95,8 @@ export function Appbar() {
         },
         credentials: "include",
       })
+      console.log("apiUrl")
+      console.log(apiUrl)
       if (response.ok) 
       {
         const responseJSON = await response.json();

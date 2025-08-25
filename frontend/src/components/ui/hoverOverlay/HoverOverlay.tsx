@@ -1,4 +1,4 @@
-import { StyledOverlay } from "./hoverOverlay.Styles"
+import { StyledOverlay } from "./HoverOverlay.Styles.ts"
 
 function HoverOverlay({...HoverOverlayProps}) {
     return(
