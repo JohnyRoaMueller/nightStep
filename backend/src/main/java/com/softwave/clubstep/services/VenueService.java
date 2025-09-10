@@ -2,12 +2,21 @@ package com.softwave.clubstep.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +35,9 @@ import com.softwave.clubstep.domain.repository.VenueRepository;
 @Service
 public class VenueService {
 
+    @Value("${base.backend.path}")
+    private String baseBackendPath;
+
     Logger logger = LoggerFactory.getLogger(VenueService.class);
 
     @Autowired
@@ -43,8 +55,55 @@ public class VenueService {
     @Autowired
     UploadService uploadService;
 
+    @Autowired
+    RedisTemplate redisTemplate;
 
-    public void addVenue(VenueDTO venueData, Host host) throws IOException {
+    @Autowired
+    CacheManager cacheManager;
+
+
+    public List<Venue> getRandomVenues() {
+        logger.info("Fetching random venues from Redis...");
+
+        int count = 12;
+
+        // Ensure Redis set exists
+        Set<Object> venueIds = redisTemplate.opsForSet().members("venues");
+        if (venueIds == null || venueIds.isEmpty()) {
+            // Populate Redis from DB
+            List<Venue> allVenues = venueRepository.findAll(); // fetch all DB venues
+            allVenues.forEach(v -> {
+                redisTemplate.opsForHash().put("venue:" + v.getId(), "data", v);
+                redisTemplate.opsForSet().add("venues", v.getId());
+            });
+            venueIds = redisTemplate.opsForSet().members("venues");
+        }
+
+        if (venueIds == null || venueIds.isEmpty()) {
+            return Collections.emptyList(); // DB is empty
+        }
+
+        // Pick random IDs
+        List<Object> idsList = new ArrayList<>(venueIds);
+        Collections.shuffle(idsList);
+        return idsList.stream()
+                .limit(Math.min(count, idsList.size()))
+                .map(id -> (Venue) redisTemplate.opsForHash().get("venue:" + id, "data"))
+                .filter(Objects::nonNull)
+                .toList();
+    }
+
+
+    public Venue getVenue(String venueId) {
+        Venue venue = (Venue) redisTemplate.opsForHash().get("venue:" + venueId, "data");
+        if (venue == null) {
+            venue = venueRepository.findById(venueId).orElse(null);
+        }
+        return venue;
+    }
+
+
+    public Venue addVenue(VenueDTO venueData, Host host) throws IOException {
         String name = venueData.getName();
         String type = venueData.getType();
         int capacity = venueData.getCapacity();
@@ -73,10 +132,12 @@ public class VenueService {
 
         venueRepository.save(newVenue);
 
+
         host.getOwnedVenueIds().add(newVenue.getId());
         hostRepository.save(host);
 
         logger.info("Venue added to DB: " + name);
+        return newVenue;
     }
 
 
@@ -101,13 +162,13 @@ public class VenueService {
         List<String> imagePaths = new ArrayList<>();
 
         for (MultipartFile image : images) {
-            if (image.getOriginalFilename().startsWith("/home/jinux/dev/projects/nightStep/backend/uploads/host_images/")) {
+            if (image.getOriginalFilename().startsWith(String.format("%s/uploads/host_images/", baseBackendPath))) {
                 String filename = image.getOriginalFilename().substring(image.getOriginalFilename().lastIndexOf("/") + 1);
-                String path = String.format("/home/jinux/dev/projects/nightStep/backend/uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, filename);
+                String path = String.format("%s/uploads/host_images/%s/venues/%s/%s", baseBackendPath, username, nameOfVenue, filename);
                 imagePaths.add(path);
                 continue;
             }
-            String path = String.format("/home/jinux/dev/projects/nightStep/backend/uploads/host_images/%s/venues/%s/%s", username, nameOfVenue, image.getOriginalFilename());
+            String path = String.format("%s/uploads/host_images/%s/venues/%s/%s", baseBackendPath, username, nameOfVenue, image.getOriginalFilename());
             imagePaths.add(path);
         }
         return imagePaths;

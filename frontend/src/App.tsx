@@ -60,13 +60,13 @@ function App() {
               {/** host */}
               <Route path="/myvenue" element={<MyVenue />} ></Route>
 
-              <Route path="/myvenue/:venuename" element={<MyVenueProfile />} ></Route>
+              <Route path="/myvenue/:venueId" element={<MyVenueProfile />} ></Route>
 
               <Route path="/myEvents" element={<MyEvents />} ></Route>
 
               <Route path="/myEvents/addEvent" element={<AddEvent />} ></Route>
 
-              <Route path="/venue/:venuename" element={<Venue />} ></Route>
+              <Route path="/venue/:venueId" element={<Venue />} ></Route>
 
               <Route path="/venue/:venuename/:eventname" element={<EventProfile />} ></Route>
               

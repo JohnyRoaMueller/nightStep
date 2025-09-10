@@ -45,6 +45,8 @@ function VenueCards(props: { venueType: string; }) {
 
                 const data = await response.json();
 
+                console.log(data)
+
                 const loadedVenues: VenueType[] = []
 
                 await data.forEach((venue: VenueType) => {
@@ -52,11 +54,8 @@ function VenueCards(props: { venueType: string; }) {
                         loadedVenues.push(venue)
                     }
                 });
-
-                const shuffledArray = loadedVenues.sort(() => 0.5 - Math.random());
-                const slicedArray = shuffledArray.slice(0, 6)
-
-                setVenues(slicedArray)
+                console.log(loadedVenues.length)
+                setVenues(loadedVenues)
                 setLoading(false)
 
             } 
@@ -94,7 +93,7 @@ function VenueCards(props: { venueType: string; }) {
                 {venues.map((venue) => (                                                                            
                     <GridItem>         
                                    {/**↓ PathVariable doesn't work with /image/path ↓*/}
-                        <VenueCard onClick={() => navigateTo(`/venue/${venue.name}`)}>{/**↓ so converting / to - and converting back in backend ↓*/}
+                        <VenueCard onClick={() => navigateTo(`/venue/${venue.id}`)}>{/**↓ so converting / to - and converting back in backend ↓*/}
                             <VenueCardMedia component="img" loading="eager" image={`${apiUrl}/images/${venue.picAddresses[0].replace(/\//g, "-")}`}/>
                             <VenueCardContent>
                                 <HoverOverlay/>

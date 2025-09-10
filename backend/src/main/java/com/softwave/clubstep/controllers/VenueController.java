@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,6 +48,8 @@ public class VenueController {
     private final EntityFinder userService;
     private final UploadService uploadService;
     private final EntityFinder entityFinder;
+    {/*--------------- Redis --------------- */}
+    private final RedisTemplate redisTemplate;
 
     
     public VenueController
@@ -57,7 +61,8 @@ public class VenueController {
         HostRepository hostRepository,
         UserAuthRepository userAuthRepository,
         UploadService uploadService,
-        EntityFinder entityFinder
+        EntityFinder entityFinder,
+        RedisTemplate redisTemplate
         )
         {
         this.venueRepository = venueRepository;
@@ -68,6 +73,7 @@ public class VenueController {
         this.userAuthRepository = userAuthRepository;
         this.uploadService = uploadService;
         this.entityFinder = entityFinder;
+        this.redisTemplate = redisTemplate;
         }
 
 {/*
@@ -78,18 +84,21 @@ Spring abstracts this technology, allowing developers to work with annotations l
 */}    
 
     @GetMapping("/venues")
-    public Iterable<Venue> getClubs() {
-        logger.info("/api/clubs reached");
-        return venueRepository.findAll();
+    public List<Venue> getVenues() {
+        logger.info("/api/venues reached");
+        return venueService.getRandomVenues();
+        // return venueRepository.findAll();
     }
 
   
-    @GetMapping("/venue/{venueName}")
-    public ResponseEntity<Venue> getSingleVenue(@PathVariable("venueName") String venueName) {
+    @GetMapping("/venue/{venueId}")
+    public ResponseEntity<Venue> getSingleVenue(@PathVariable("venueId") String venueId) {
 
         logger.info("/venue/{venueName} reaced");
 
-        Venue currentVenue = entityFinder.getVenueByNameOrNull(venueName);
+        Venue currentVenue = venueService.getVenue(venueId);
+
+        // Venue currentVenue = entityFinder.getVenueByNameOrNull(venueName);
 
         if (currentVenue == null)
         {

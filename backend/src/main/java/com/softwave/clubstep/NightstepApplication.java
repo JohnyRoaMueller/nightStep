@@ -37,6 +37,7 @@ import com.softwave.clubstep.services.MockDataService;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 
@@ -61,13 +62,17 @@ public class NightstepApplication implements CommandLineRunner {
     //*                  SERVICES                   */
     private final MockDataService mockDataService;
 
-	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, MockDataService mockDataService) {
+    //*                  REDIS                   */
+    private final RedisTemplate redisTemplate;
+
+	public NightstepApplication(VenueRepository venueRepository, GuestRepository guestRepository, HostRepository hostRepository, RegistrationController registrationController, EventController eventController, MockDataService mockDataService, RedisTemplate redisTemplate) {
 		this.venueRepository = venueRepository;
 		this.guestRepository = guestRepository;
 		this.hostRepository = hostRepository;
 		this.registrationController = registrationController;
         this.eventController = eventController;
         this.mockDataService = mockDataService;
+        this.redisTemplate = redisTemplate;
 	}
 
 @Component
@@ -92,6 +97,7 @@ public class DatabaseDropper implements CommandLineRunner {
     @Override
     public void run(String... args) {
         dropDatabase();
+        redisTemplate.getConnectionFactory().getConnection().serverCommands().flushAll();
     }
 }
 
@@ -534,7 +540,7 @@ class FileMultipartFile implements MultipartFile {
         List<MultipartFile> venueImages10 = filesToMultipart(venueImageFiles10);
 
         VenueDTO venue10 = new VenueDTO();
-        venue10.setName("Stadtklang", baseMockimagesPath));
+        venue10.setName("Stadtklang");
         venue10.setType("Bar");
         venue10.setCapacity(100);
         venue10.setCity("Berlin");

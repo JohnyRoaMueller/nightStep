@@ -102,17 +102,15 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/events/{venueName}")
-    public ResponseEntity<List<Event>> showEventsOfVenue(@PathVariable("venueName") String venueName) {
+    @GetMapping("/events/{venueId}")
+    public ResponseEntity<List<Event>> showEventsOfVenue(@PathVariable("venueId") String venueId) {
 
-        logger.info("/events/{venueName} reached");
+        logger.info("/events/{venueId} reached");
 
-        Optional<Venue> venueOpt = venueRepository.findByName(venueName);
+        Venue venue = venueRepository.findById(venueId).orElse(null);
 
 
-        if (venueOpt.isPresent()) {
-
-            Venue venue = venueOpt.get();
+        if (venue != null) {
 
             logger.info("toString" + venue.getEventIds().toString());
 

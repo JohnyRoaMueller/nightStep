@@ -30,9 +30,8 @@ export default function VenueProfile() {
     async function fetchData() {
 
 
-
-      console.log("fetching to: ", `${apiUrl}/venue/${param.venuename}`)
-      const response = await fetch(`${apiUrl}/venue/${param.venuename}`)
+      console.log("fetching to: ", `${apiUrl}/venue/${param.venueId}`)
+      const response = await fetch(`${apiUrl}/venue/${param.venueId}`)
 
 
       const dataJson = await response.json()
@@ -44,7 +43,7 @@ export default function VenueProfile() {
 
 
       console.log("fetching to: ", `${apiUrl}/events/`)
-      const eventResponse = await fetch(`${apiUrl}/events/${param.venuename}`)
+      const eventResponse = await fetch(`${apiUrl}/events/${param.venueId}`)
 
       if (eventResponse.status == 200) {
 
