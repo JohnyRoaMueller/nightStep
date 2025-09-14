@@ -6,7 +6,7 @@ import { TypoBody1, TypoBody2, TypoH1, TypoH2 } from "../../styled-components/st
 import { useDraggable } from "react-use-draggable-scroll";
 import React from "react";
 import { useDragScroll } from "../../hooks/useScrollDrag";
-import { Height, WidthFull } from "@mui/icons-material";
+import { Height, Style, WidthFull } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import EventCard from "../../common/event/EventCard";
 
@@ -20,6 +20,9 @@ export default function VenueProfile() {
   const param = useParams();
   const [venue, setVenue] = useState<VenueType>();
   const [eventsList, setEventList] = useState()
+
+  const [handleLoad, setHandleLoad] = useState(false)
+  const [allLoaded, setAllLoaded] = useState(false)
 
 
 
@@ -74,14 +77,18 @@ export default function VenueProfile() {
 
     const imagesArray = []
 
+
     for (let i = 0; i <= 11; i++) 
       if (venue?.picAddresses[i]) {
 
-        const image = <img src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}` } key={"image " + i}></img>
+        const image = <img onLoad={(e) => e.currentTarget.style.opacity = "1"} style={{opacity: 0, transition: "opacity 2s ease-in"}} src={`${apiUrl}/images/${venue?.picAddresses[i].replace(/\//g, "-")}` } key={"image " + i}></img>
         imagesArray.push(image)
-
+        
     } 
-    else return imagesArray;
+    else {
+      console.log(imagesArray)
+      return imagesArray;
+    }
   }
 
   const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
