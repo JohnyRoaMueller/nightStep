@@ -1,6 +1,7 @@
 package com.softwave.clubstep.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.softwave.clubstep.DTO.UserAuthDTO;
+import com.softwave.clubstep.domain.repository.GuestRepository;
 import com.softwave.clubstep.domain.repository.UserAuthRepository;
 import com.softwave.clubstep.services.CookieService;
 import com.softwave.clubstep.services.JwtService;
-
+import com.softwave.clubstep.domain.entities.Guest;
 import com.softwave.clubstep.domain.entities.UserAuth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api")
@@ -37,6 +41,9 @@ public class UserController {
 
     @Autowired
     CookieService cookieService;
+
+    @Autowired
+    GuestRepository guestRepository;
     
     
     @GetMapping("/me")
@@ -53,6 +60,12 @@ public class UserController {
       logger.info("userinfo parsing to frontend: " + userinfo);
       return ResponseEntity.ok(userinfo);
     }
+
+    @GetMapping("/community")
+    public List<Guest> getAllUsers() {
+        return guestRepository.findAll();
+    }
+    
 
 
     @GetMapping("/logout")

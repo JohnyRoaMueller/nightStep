@@ -19,6 +19,8 @@ public class BaseUser {
 
     private String housenumber;
 
+    private String district;
+
     private String phonenumber;
 
     //refs
@@ -37,6 +39,7 @@ public class BaseUser {
     String email,
     String street,
     String housenumber,
+    String district,
     String phonenumber
     )
     {
@@ -47,6 +50,7 @@ public class BaseUser {
     this.email = email;
     this.street = street;
     this.housenumber = housenumber;
+    this.district = district;
     this.phonenumber = phonenumber;
     };
 
@@ -74,6 +78,9 @@ public class BaseUser {
 
     public String getHousenumber() {return housenumber;}
     public void setHousenumber(String housenumber) { this.housenumber = housenumber;}
+
+    public String getDistrict() { return district;}
+    public void setDistrict(String district) {this.district = district;}
 
     public String getPhonenumber() {return phonenumber;}
     public void setPhonenumber( String phonenumber ) { this.phonenumber = phonenumber; }

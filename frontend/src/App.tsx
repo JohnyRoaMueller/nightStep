@@ -23,6 +23,7 @@ import MyEvents from "./pages/MyEvents";
 import AddEventForm from "./components/form/addEventForm/AddEventForm";
 import AddEvent from "./pages/AddEvent";
 import EventProfile from "./pages/EventProfile";
+import Community from "./pages/Community";
 
 function App() {
   return (
@@ -73,6 +74,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} ></Route>
               {/** guest */}
               <Route path="/user/:username" element={<User />} ></Route>
+
+              <Route path="/community" element={<Community/>} ></Route>
 
           </Routes>
 

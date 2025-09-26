@@ -9,16 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softwave.clubstep.DTO.EventDTO;
+import com.softwave.clubstep.DTO.RegistrationGuestDTO;
 import com.softwave.clubstep.DTO.RegistrationHostDTO;
 import com.softwave.clubstep.DTO.VenueDTO;
 import com.softwave.clubstep.domain.entities.Host;
 import com.softwave.clubstep.domain.entities.Venue;
 import com.softwave.clubstep.domain.repository.EventRepository;
+import com.softwave.clubstep.domain.repository.GuestRepository;
 import com.softwave.clubstep.domain.repository.HostRepository;
 import com.softwave.clubstep.domain.repository.VenueRepository;
 
 @Service
 public class MockDataService {
+
+    private final GuestRepository guestRepository;
 
     @Autowired
     private HostRepository hostRepository;
@@ -43,7 +47,11 @@ public class MockDataService {
 
     private static final Logger logger = LoggerFactory.getLogger(MockDataService.class);
 
-    public void mockDataInitializer(List<RegistrationHostDTO> hostDTOs, List<VenueDTO> venueDTOs, List<EventDTO> eventDTOs) throws IOException {
+    MockDataService(GuestRepository guestRepository) {
+        this.guestRepository = guestRepository;
+    }
+
+    public void mockDataInitializer(List<RegistrationHostDTO> hostDTOs, List<VenueDTO> venueDTOs, List<EventDTO> eventDTOs, List<RegistrationGuestDTO> guestDTOs) throws IOException {
         for (int i = 0; i < hostDTOs.size(); i++) {
 
             if (hostRepository.findByEmail(hostDTOs.get(i).getEmail()).isPresent()) continue;
@@ -57,6 +65,11 @@ public class MockDataService {
             if (i < eventDTOs.size() && eventDTOs.get(i) != null) {
                 eventService.addEvent(eventDTOs.get(i), venue);
             }
+        }
+        for (int i = 0; i < guestDTOs.size(); i++) {
+            if (guestRepository.findByEmail(guestDTOs.get(i).getEmail()).isPresent()) continue;
+
+            registrationService.registerGuestUser(guestDTOs.get(i));
         }
     }
 }

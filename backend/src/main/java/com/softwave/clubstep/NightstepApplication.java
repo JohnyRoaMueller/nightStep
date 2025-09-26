@@ -25,6 +25,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softwave.clubstep.DTO.EventDTO;
+import com.softwave.clubstep.DTO.RegistrationGuestDTO;
 import com.softwave.clubstep.DTO.RegistrationHostDTO;
 import com.softwave.clubstep.DTO.VenueDTO;
 import com.softwave.clubstep.controllers.EventController;
@@ -600,7 +601,7 @@ class FileMultipartFile implements MultipartFile {
         host12.setPassword("password");
         host12.setRole(Roles.HOST);
 
-
+        
         List<File> venueImageFiles12 = List.of(
             new File(String.format("%s/HostUser12/bar_image_21.jpg", baseMockimagesPath)),
             new File(String.format("%s/HostUser12/bar_image_22.jpg", baseMockimagesPath)),
@@ -622,11 +623,93 @@ class FileMultipartFile implements MultipartFile {
         venue12.setImageBlobs(venueImages12);
 
 
+
+        RegistrationGuestDTO guest1 = new RegistrationGuestDTO();
+        guest1.setFirstname("Lisa");
+        guest1.setLastname("Meyer");
+        guest1.setEmail("lisa.meyer@example.com");
+        guest1.setGender("Weiblich");
+        guest1.setBirthday("1994-03-21");
+        guest1.setStreet("Hauptstrasse");
+        guest1.setHousenumber("12");
+        guest1.setPhonenumber("+4915112345678");
+        guest1.setUsername("lisa123");
+        guest1.setPassword("password");
+        guest1.setRole(Roles.GUEST);
+
+        RegistrationGuestDTO guest2 = new RegistrationGuestDTO();
+        guest2.setFirstname("Tom");
+        guest2.setLastname("Schmidt");
+        guest2.setEmail("tom.schmidt@example.com");
+        guest2.setGender("Männlich");
+        guest2.setBirthday("1989-07-11");
+        guest2.setStreet("Bahnhofstrasse");
+        guest2.setHousenumber("45a");
+        guest2.setPhonenumber("+4917623456789");
+        guest2.setUsername("tom_guest");
+        guest2.setPassword("password");
+        guest2.setRole(Roles.GUEST);
+
+        RegistrationGuestDTO guest3 = new RegistrationGuestDTO();
+        guest3.setFirstname("Anna");
+        guest3.setLastname("Fischer");
+        guest3.setEmail("anna.fischer@example.com");
+        guest3.setGender("Weiblich");
+        guest3.setBirthday("1985-12-05");
+        guest3.setStreet("Berliner Allee");
+        guest3.setHousenumber("101");
+        guest3.setPhonenumber("+4917011122233");
+        guest3.setUsername("anna_fisch");
+        guest3.setPassword("password");
+        guest3.setRole(Roles.GUEST);
+
+        RegistrationGuestDTO guest4 = new RegistrationGuestDTO();
+        guest4.setFirstname("Max");
+        guest4.setLastname("Müller");
+        guest4.setEmail("max.mueller@example.com");
+        guest4.setGender("Männlich");
+        guest4.setBirthday("1992-09-14");
+        guest4.setStreet("Goethestrasse");
+        guest4.setHousenumber("7");
+        guest4.setPhonenumber("+4915222233444");
+        guest4.setUsername("max_guest");
+        guest4.setPassword("password");
+        guest4.setRole(Roles.GUEST);
+
+        RegistrationGuestDTO guest5 = new RegistrationGuestDTO();
+        guest5.setFirstname("Sophie");
+        guest5.setLastname("Klein");
+        guest5.setEmail("sophie.klein@example.com");
+        guest5.setGender("Weiblich");
+        guest5.setBirthday("1999-01-28");
+        guest5.setStreet("Ringstrasse");
+        guest5.setHousenumber("88");
+        guest5.setPhonenumber("+4915733344556");
+        guest5.setUsername("sophie99");
+        guest5.setPassword("password");
+        guest5.setRole(Roles.GUEST);
+
+        RegistrationGuestDTO guest6 = new RegistrationGuestDTO();
+        guest6.setFirstname("Daniel");
+        guest6.setLastname("Weber");
+        guest6.setEmail("daniel.weber@example.com");
+        guest6.setGender("Männlich");
+        guest6.setBirthday("1980-06-03");
+        guest6.setStreet("Schillerstrasse");
+        guest6.setHousenumber("23b");
+        guest6.setPhonenumber("+491601234567");
+        guest6.setUsername("daniel_guest");
+        guest6.setPassword("password");
+        guest6.setRole(Roles.GUEST);
+
+
+
         List<RegistrationHostDTO> hostDTOs = new ArrayList<>(List.of(host1, host2, host3, host4, host5, host6, host7, host8, host9, host10, host11, host12));
         List<VenueDTO> venueDTOs = new ArrayList<>(List.of(venue1, venue2, venue3, venue4, venue5, venue6, venue7, venue8, venue9, venue10, venue11, venue12));
         List<EventDTO> eventDTOs = new ArrayList<>(List.of(event1));
+        List<RegistrationGuestDTO> guestDTOs = new ArrayList<>(List.of(guest1, guest2, guest3, guest4, guest5, guest6));
         
-        mockDataService.mockDataInitializer(hostDTOs, venueDTOs, eventDTOs);
+        mockDataService.mockDataInitializer(hostDTOs, venueDTOs, eventDTOs ,guestDTOs);
 
 		// serverstartService.createHostUserByServerstart(host1, imagesHost1, new ArrayList<>(List.of(host1Event1)));
 

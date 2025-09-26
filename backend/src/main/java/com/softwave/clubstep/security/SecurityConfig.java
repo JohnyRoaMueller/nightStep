@@ -49,7 +49,7 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/login", "/api/venues", "/api/images/*", "/api/venue/**", "/api/images/**", "/api/logout", "/api/register/**", "/api/events/**").permitAll()
+                .requestMatchers("/api/login", "/api/venues", "/api/images/*", "/api/venue/**", "/api/images/**", "/api/logout", "/api/register/**", "/api/events/**", "/api/community/**").permitAll()
                 .requestMatchers("/api/me", "/api/myvenue/**", "/api/myvenue/update/**", "/api/user/**").authenticated()
 
             )

@@ -4,6 +4,7 @@ export const ImagesWrapper = styled(Box)`
 
     box-sizing: border-box;
 
+
     height: 60vh;
     overflow: hidden;
 
@@ -29,6 +30,7 @@ export const ImageBox = styled(Box)`
     overflow-x: auto;
 
     scrollbar-width: none;
+
 
 
     img {

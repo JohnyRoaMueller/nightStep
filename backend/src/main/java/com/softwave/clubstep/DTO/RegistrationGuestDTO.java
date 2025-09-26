@@ -28,6 +28,8 @@ public class RegistrationGuestDTO {
 
     private String housenumber;
 
+    private String district;
+
     private String phonenumber;
 
 
@@ -44,6 +46,7 @@ public class RegistrationGuestDTO {
     String birthday,
     String street,
     String housenumber,
+    String district,
     String phonenumber
     )
     {
@@ -57,6 +60,7 @@ public class RegistrationGuestDTO {
     this.birthday = birthday;
     this.street = street;
     this.housenumber = housenumber;
+    this.district = district;
     this.phonenumber = phonenumber;
     };
 
@@ -147,6 +151,9 @@ public class RegistrationGuestDTO {
     public void setHousenumber(String housenumber) {
         this.housenumber = housenumber;
     }
+
+    public String getDistrict() { return district;}
+    public void setDistrict(String district) {this.district = district;}    
 
     public String getPhonenumber() {
         return phonenumber;

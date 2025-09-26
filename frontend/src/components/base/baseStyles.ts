@@ -25,10 +25,10 @@ export const VerticalCentered = styled(Box)`
   height: auto;
   position: relative;
   margin: auto;
+  
 
   @media(min-width: 600px) {
     width: 75%;
-    paddding: 0;
   }
 
 `;

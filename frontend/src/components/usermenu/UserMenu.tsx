@@ -8,10 +8,10 @@ const apiUrl = import.meta.env.VITE_APP_API_URL
 function UserMenu() {
     const navigateTo = useNavigate();
 
-    const [username, setUsername] = useState(null);
+    const [username, setUsername] = useState("");
 
-    const handleLogout = () => {
-        fetch(`${apiUrl}/logout`, {
+    const handleLogout = async () => {
+        await fetch(`${apiUrl}/logout`, {
             credentials: "include",
         })
         navigateTo("/home");
